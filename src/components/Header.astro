@@ -28,10 +28,41 @@ const menuLabel = locale === "ar" ? "القائمة" : locale === "fr" ? "Menu" 
 const localeCodes: Record<Locale, string> = { en: "EN", ar: "AR", fr: "FR" };
 ---
 
-<!-- First header — the invocation alone, centered on its own band -->
+<!-- First header — the invocation alone, centered on its own band (variant C:
+     gold ink + flanking eight-pointed-star rules, all original geometry) -->
 <div class="invocation-header" lang="ar" dir="rtl">
+  <svg width="0" height="0" aria-hidden="true">
+    <defs>
+      <linearGradient id="inv-gold" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" style="stop-color: var(--gold-1)"></stop>
+        <stop offset="0.45" style="stop-color: var(--gold-2)"></stop>
+        <stop offset="0.6" style="stop-color: var(--gold-3)"></stop>
+        <stop offset="1" style="stop-color: var(--gold-4)"></stop>
+      </linearGradient>
+    </defs>
+  </svg>
   <div class="container">
-    <p class="invocation">﴿وَقُلْ رَبِّ زِدْنِي عِلْمًا ١١٤﴾</p>
+    <div class="invocation-row">
+      <svg class="invocation-orn" viewBox="0 0 120 24" aria-hidden="true">
+        <line x1="0" y1="12" x2="44" y2="12" stroke="url(#inv-gold)" stroke-width="1.2"></line>
+        <path
+          transform="translate(60 12)"
+          d="M0 -9 L3.5 -3.5 L9 0 L3.5 3.5 L0 9 L-3.5 3.5 L-9 0 L-3.5 -3.5 Z"
+          fill="url(#inv-gold)"></path>
+        <circle cx="60" cy="12" r="1.8" fill="url(#inv-gold)"></circle>
+        <line x1="76" y1="12" x2="120" y2="12" stroke="url(#inv-gold)" stroke-width="1.2"></line>
+      </svg>
+      <p class="invocation invocation-gold">﴿وَقُلْ رَبِّ زِدْنِي عِلْمًا ١١٤﴾</p>
+      <svg class="invocation-orn" viewBox="0 0 120 24" aria-hidden="true">
+        <line x1="0" y1="12" x2="44" y2="12" stroke="url(#inv-gold)" stroke-width="1.2"></line>
+        <path
+          transform="translate(60 12)"
+          d="M0 -9 L3.5 -3.5 L9 0 L3.5 3.5 L0 9 L-3.5 3.5 L-9 0 L-3.5 -3.5 Z"
+          fill="url(#inv-gold)"></path>
+        <circle cx="60" cy="12" r="1.8" fill="url(#inv-gold)"></circle>
+        <line x1="76" y1="12" x2="120" y2="12" stroke="url(#inv-gold)" stroke-width="1.2"></line>
+      </svg>
+    </div>
     <p class="invocation-cite" dir="auto" lang={locale}>{
       locale === "ar" ? "[طه:114]" : "[Tā-Hā 114]"
     }</p>
@@ -125,6 +156,51 @@ const localeCodes: Record<Locale, string> = { en: "EN", ar: "AR", fr: "FR" };
           }
         </ul>
       </div>
+      <button
+        type="button"
+        class="theme-toggle"
+        data-theme-toggle
+        aria-label={locale === "ar"
+          ? "تبديل بين الوضع النهاري والليلي"
+          : locale === "fr"
+            ? "Basculer entre le thème clair et sombre"
+            : "Toggle light and dark theme"}
+      >
+        <svg
+          class="icon-sun"
+          width="15"
+          height="15"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="4.2"></circle>
+          <line x1="12" y1="2.5" x2="12" y2="5"></line>
+          <line x1="12" y1="19" x2="12" y2="21.5"></line>
+          <line x1="2.5" y1="12" x2="5" y2="12"></line>
+          <line x1="19" y1="12" x2="21.5" y2="12"></line>
+          <line x1="5.3" y1="5.3" x2="7" y2="7"></line>
+          <line x1="17" y1="17" x2="18.7" y2="18.7"></line>
+          <line x1="5.3" y1="18.7" x2="7" y2="17"></line>
+          <line x1="17" y1="7" x2="18.7" y2="5.3"></line>
+        </svg>
+        <svg
+          class="icon-moon"
+          width="15"
+          height="15"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M20.2 13.2A8.2 8.2 0 1 1 10.8 3.8a6.5 6.5 0 0 0 9.4 9.4Z"></path>
+        </svg>
+      </button>
       <a
         class="github-link"
         href={ENGINE_URL}

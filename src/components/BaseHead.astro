@@ -71,6 +71,36 @@ const analyticsToken = import.meta.env.PUBLIC_CF_ANALYTICS_TOKEN;
   <script type="application/ld+json" set:html={JSON.stringify(entry)} />
 ))}
 
+{/* Theme: restore the visitor's choice before first paint (no flash). */}
+<script is:inline>
+  (function () {
+    try {
+      var t = localStorage.getItem("keel-theme");
+      if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  })();
+</script>
+
+{/* Theme toggle: one delegated listener per page; flips and persists. */}
+<script is:inline>
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-theme-toggle]");
+    if (!b) return;
+    var root = document.documentElement;
+    var current =
+      root.dataset.theme === "dark" || root.dataset.theme === "light"
+        ? root.dataset.theme
+        : matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+    var next = current === "dark" ? "light" : "dark";
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem("keel-theme", next);
+    } catch (e) {}
+  });
+</script>
+
 {
   analyticsToken && (
     <script

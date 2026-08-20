@@ -29,8 +29,9 @@ a failed fetch blocks the deploy by design.
    `https://<PAGES_PROJECT>.pages.dev` — **the site is live before the domain
    lands.**
 
-No other secrets exist — the site ships zero client JavaScript and holds no
-tokens in its output (Success criterion 9). `GITHUB_TOKEN` for the fetch
+No other secrets exist — the site ships no framework and exactly one inline
+script (the visitor's light/dark choice, persisted in localStorage), and holds
+no tokens in its output (Success criterion 9). `GITHUB_TOKEN` for the fetch
 scripts is unnecessary (public REST; rate limits are comfortably inside
 60/hr for an hourly build).
 
