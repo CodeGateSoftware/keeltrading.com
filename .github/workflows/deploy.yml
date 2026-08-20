@@ -47,10 +47,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # FR-4: the fetch runs inside the build and must fail loudly — a moved
-      # engine doc blocks the deploy by design.
+      # FR-4: `npm run build` chains the fetch scripts before astro build — a
+      # moved engine doc fails here and blocks the deploy by design. (Never
+      # call `astro build` directly in CI: the fetched content collection is
+      # gitignored and would silently render a site without the docs pages.)
       - name: Build site
-        run: npx astro build
+        run: npm run build
 
       - name: Skip deploy (Cloudflare not configured yet)
         if: env.PAGES_PROJECT == '' || env.HAS_DEPLOY_SECRETS != 'true'
