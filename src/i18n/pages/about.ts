@@ -17,12 +17,14 @@ export interface AboutContent {
   licenses: { title: string; body: string[] };
   faqTitle: string;
   faq: FaqItem[];
+  openSourceTitle: string;
+  openSourceFaq: FaqItem[];
   translatedFromRev?: string;
 }
 
 export const about: LocalizedPage<AboutContent> = {
   en: {
-    rev: "2026-08-19.2",
+    rev: "2026-08-20.1",
     title: "About keel — Name, License, keel.sh & KEEL FAQ",
     description:
       "Who runs keeltrading.com, licensing, and the brand FAQ — why this keel is not Kubernetes Keel (keel.sh) nor Keel Infrastructure (KEEL).",
@@ -70,11 +72,43 @@ export const about: LocalizedPage<AboutContent> = {
         ],
       },
     ],
+    openSourceTitle: "Open source — and the catch",
+    openSourceFaq: [
+      {
+        question: "What does “open source” actually mean?",
+        answer: [
+          "It means the source code — the actual instructions the program runs — is published where anyone can read it, use it, check what it really does, and change it. keel carries the Apache-2.0 license, one of the most standard open-source licenses in the world: you may run it for any purpose, study it, modify it, and even build a business on it.",
+          "For a tool that makes religious and financial claims, that is the whole point. You do not have to take our word for what keel does. You can read every line yourself, or have someone you trust read it — every rail, every gate, every number on this site traces back to code you can open.",
+        ],
+      },
+      {
+        question: "Why is keel open source — and free?",
+        answer: [
+          "Because keel's entire value is auditability. A compliance engine you cannot inspect is exactly the “trust me” model keel exists to replace: closed screening tools ask you to believe their verdicts; keel publishes the machinery and the rulings it enforces, with sources. Openness is not a marketing choice bolted on — it is the product.",
+          "And to be precise about “free”: the engine is free by license, not by trial. Apache-2.0 cannot be un-free'd — that copy of the license ships with every version.",
+        ],
+      },
+      {
+        question: "What's the catch? Competitors charge subscriptions — why doesn't keel?",
+        answer: [
+          "Screening services charge because the verdict is their product: they compute or author classifications and sell you access to them. keel deliberately does not sell verdicts — it enforces yours, and its own honest result says the reference rules don't beat their fees. There is nothing here to upsell you on performance, and we won't pretend otherwise.",
+          "The honest part of the answer: keel is also young and small, with no company behind it yet. Free is partly what an honest, early-stage project looks like. Running keel is not free, though — your time, a trading venue, and market-data access all cost real money, and we would rather say that than call trading free.",
+          "One deliberate detail: this website's prose and branding are copyrighted (© CodeGate Software), unlike the engine's code. That boundary is the extent of the current commercial thinking.",
+        ],
+      },
+      {
+        question: "When will keel charge money, and for what?",
+        answer: [
+          "There is no date, no price list, and no decided plan — inventing one would be exactly the kind of claim this project refuses to make. If paid services ever come, they will be services built around the engine — not the engine itself. You will read about it here and in GitHub Discussions first, with the same honesty as everything else: the announcement will say plainly what it is, what it costs, and why.",
+          "What can be promised today: the engine you can download now is licensed Apache-2.0, and that cannot be revoked or retracted. Any future paid offering would have to be worth paying for on top of a free engine — which is exactly the standard a project like this should hold itself to.",
+        ],
+      },
+    ],
   },
 
   ar: {
-    rev: "2026-08-19.2",
-    translatedFromRev: "2026-08-19.2",
+    rev: "2026-08-20.1",
+    translatedFromRev: "2026-08-20.1",
     title: "حول كيل — الاسم والترخيص وأسئلة keel.sh وKEEL",
     description:
       "من يُشغّل keeltrading.com، والتراخيص، والأسئلة الشائعة عن الاسم — لماذا لا نحن كيلَ Kubernetes‏ (keel.sh) ولا Keel Infrastructure‏ (KEEL).",
@@ -122,11 +156,43 @@ export const about: LocalizedPage<AboutContent> = {
         ],
       },
     ],
+    openSourceTitle: "المصدر المفتوح — وأين الحيلة",
+    openSourceFaq: [
+      {
+        question: "ماذا يعني «مفتوح المصدر» فعلًا؟",
+        answer: [
+          "يعني أن الشيفرة المصدرية — التعليمات الفعلية التي يُنفّذها البرنامج — منشورةٌ حيث يستطيع أيٌّ كان قراءتها واستخدامها والتحقّق مما تفعل فعلًا وتغييرها. ويحمل كيل ترخيص Apache-2.0، أحد أكثر تراخيص المصادر المفتوحة اعتياديًّا في العالم: لك أن تشغّله لأي غرض، وتدرسه، وتعدّله، بل وتبني عليه عملًا تجاريًّا.",
+          "لأداةٍ تقدّم دعاوى دينية ومالية، هذا هو بيت القصيد. لست مضطرًّا لأخذ كلامنا على محمل التصديق: يمكنك قراءة كل سطرٍ بنفسك، أو تكليف من تثق به بقراءته — كل سكةٍ وكل بوابةٍ وكل رقمٍ في هذا الموقع يعود إلى شيفرةٍ يمكنك فتحها.",
+        ],
+      },
+      {
+        question: "لماذا كيل مفتوح المصدر — ومجاني؟",
+        answer: [
+          "لأن قيمة كيل كلَّها في قابلية التدقيق. محرّكُ امتثالٍ لا تستطيع فحصَه هو بالضبط نموذجُ «ثِق بي» الذي وُجد كيل ليحلّ محله: أدوات الفرز المغلقة تطلب منك تصديق أحكامها؛ وكيل ينشر الآليات والأحكامَ التي يُنفّذها، بمصادرها. الانفتاح ليس قرارَ تسويقٍ مُلحقًا — بل هو المنتج.",
+          "ولتكون الدقة في «المجاني»: المحرّك مجاني بالترخيص لا بالتجربة. ترخيص Apache-2.0 لا يمكن إلغاؤه — نسخةُ الترخيص ترافق كلَّ إصدار.",
+        ],
+      },
+      {
+        question: "أين الحيلة؟ المنافسون يأخذون اشتراكات — فلماذا لا يأخذها كيل؟",
+        answer: [
+          "خدمات الفرز تتقاضى المال لأن الحكمَ منتجُها: هي تحسب التصنيفات أو تصوغها ثم تبيعك الوصول إليها. كيل عمدًا لا يبيع أحكامًا — بل ينفّذ أحكامك أنت، ونتيجته الصادقة تقول إن قواعده المرجعية لا تتغلب على رسومها. لا شيء هنا يُمكن الترفيع عليك بالأداء، ولن نتظاهر بغير ذلك.",
+          "والجزء الصادق من الجواب: كيل أيضًا فتيّ وصغير، ولا شركة خلفه بعد. المجانية جزءٌ من شكل أي مشروعٍ نزيهٍ في بدايته. على أن تشغيل كيل ليس مجانيًّا — وقتُك، ومنصّةُ تداول، ووصولُ بيانات السوق، كلّها تكلف مالًا حقيقيًّا، ونفضّل قول ذلك على تسمية التداول مجانيًّا.",
+          "وتفصيلٌ مقصود: نصوصُ هذا الموقع وهويّته محفوظة الحقوق (© CodeGate Software)، بخلاف شيفرة المحرّك. هذا الحدُّ هو مدى التفكير التجاري الحالي.",
+        ],
+      },
+      {
+        question: "متى سيتقاضى كيل مالًا، ومقابل أي خدمات؟",
+        answer: [
+          "لا موعد، ولا قائمة أسعار، ولا خطةً مقرّرة — اختلاقُها سيكون بالضبط نوع الدعوى التي يرفض هذا المشروع تقديمها. إن جاءت خدماتٌ مدفوعة يومًا فستكون خدماتٍ حول المحرّك — لا المحرّك نفسه. وستقرأ عنها هنا وفي نقاشات GitHub أولًا، بالصدق نفسه الذي في كل شيء هنا: الإعلان سيقول بوضوح ما هي، وكم تكلّف، ولماذا.",
+          "وما يمكن الوعدُ به اليوم: المحرّك الذي تنزّله الآن مرخّص Apache-2.0، ولا يمكن سحب ذلك. أي عرضٍ مدفوعٍ مستقبليٍّ سيكون عليه أن يستحق الدفع فوق محرّكٍ مجاني — وهذا بالضبط المعيار الذي ينبغي لمشروعٍ كهذا أن يحاسب نفسه عليه.",
+        ],
+      },
+    ],
   },
 
   fr: {
     rev: "2026-08-20.1",
-    translatedFromRev: "2026-08-19.2",
+    translatedFromRev: "2026-08-20.1",
     title: "À propos de keel — nom, licence et FAQ keel.sh & KEEL",
     description:
       "Qui tient keeltrading.com, les licences, et la FAQ de la marque — pourquoi ce keel n'est ni le Keel de Kubernetes (keel.sh) ni Keel Infrastructure (KEEL).",
@@ -171,6 +237,38 @@ export const about: LocalizedPage<AboutContent> = {
         question: "Qu'est-ce que CodeGate Software ?",
         answer: [
           "CodeGate Software est l'organisation qui maintient le projet. keel a commencé comme un outil personnel et est publié en open source pour que ses affirmations de conformité soient auditées plutôt que crues sur parole.",
+        ],
+      },
+    ],
+    openSourceTitle: "Open source — et le piège",
+    openSourceFaq: [
+      {
+        question: "Que signifie « open source » concrètement ?",
+        answer: [
+          "Que le code source — les instructions réelles que le programme exécute — est publié là où chacun peut le lire, l'utiliser, vérifier ce qu'il fait vraiment et le modifier. keel porte la licence Apache-2.0, l'une des licences open source les plus standard au monde : vous pouvez l'exécuter pour tout usage, l'étudier, le modifier, et même bâtir une entreprise dessus.",
+          "Pour un outil qui avance des affirmations religieuses et financières, c'est tout l'enjeu. Vous n'avez pas à nous croire sur parole : vous pouvez lire chaque ligne vous-même, ou faire lire par quelqu'un en qui vous avez confiance — chaque rail, chaque porte, chaque chiffre de ce site remonte à du code que vous pouvez ouvrir.",
+        ],
+      },
+      {
+        question: "Pourquoi keel est-il open source — et gratuit ?",
+        answer: [
+          "Parce que toute la valeur de keel tient dans l'auditabilité. Un moteur de conformité que vous ne pouvez pas inspecter est exactement le modèle « faites-moi confiance » que keel existe pour remplacer : les outils fermés vous demandent de croire leurs verdicts ; keel publie la machinerie et les règles qu'il applique, avec leurs sources. L'ouverture n'est pas un choix marketing plaqué dessus — c'est le produit.",
+          "Et pour être précis sur « gratuit » : le moteur est gratuit par licence, pas par essai. Apache-2.0 ne peut pas être dégratuité — une copie de la licence accompagne chaque version.",
+        ],
+      },
+      {
+        question: "Où est le piège ? Les concurrents facturent des abonnements — pourquoi pas keel ?",
+        answer: [
+          "Les services de screening facturent parce que le verdict est leur produit : ils calculent ou rédigent des classifications et vous en vendent l'accès. keel ne vend délibérément pas de verdicts — il applique les vôtres, et son propre résultat honnête dit que les règles de référence ne battent pas leurs frais. Il n'y a rien ici sur quoi vous revendre de la performance, et nous ne ferons pas semblant du contraire.",
+          "La part honnête de la réponse : keel est aussi jeune et petit, sans entreprise derrière lui pour l'instant. Gratuit, c'est en partie le visage d'un projet honnête à ses débuts. Faire tourner keel n'est pas gratuit pour autant — votre temps, une plateforme de trading et l'accès aux données de marché coûtent de l'argent réel, et nous préférons le dire que d'appeler le trading gratuit.",
+          "Un détail délibéré : les textes et l'identité de ce site sont sous droit d'auteur (© CodeGate Software), contrairement au code du moteur. Cette frontière est l'étendue exacte de la réflexion commerciale actuelle.",
+        ],
+      },
+      {
+        question: "Quand keel facturera-t-il, et pour quels services ?",
+        answer: [
+          "Il n'y a pas de date, pas de grille tarifaire, pas de plan arrêté — en inventer un serait précisément le genre d'affirmation que ce projet refuse de faire. Si des services payants arrivent un jour, ce seront des services autour du moteur — pas le moteur lui-même. Vous en lirez la nouvelle ici et sur GitHub Discussions en premier, avec la même honnêteté que tout le reste : l'annonce dira clairement ce que c'est, ce que ça coûte, et pourquoi.",
+          "Ce qui peut être promis aujourd'hui : le moteur que vous téléchargez maintenant est sous Apache-2.0, et cela ne peut pas être révoqué. Toute offre payante future devrait valoir d'être payée par-dessus un moteur gratuit — c'est exactement l'exigence qu'un projet comme celui-ci doit s'imposer.",
         ],
       },
     ],

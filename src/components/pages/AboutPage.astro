@@ -44,6 +44,20 @@ const c = about[locale];
           ))
         }
       </section>
+
+      <section id="open-source">
+        <h2>{c.openSourceTitle}</h2>
+        {
+          c.openSourceFaq.map((item) => (
+            <div class="feature-section">
+              <h3>{item.question}</h3>
+              {item.answer.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+            </div>
+          ))
+        }
+      </section>
     </div>
   </div>
 </Base>

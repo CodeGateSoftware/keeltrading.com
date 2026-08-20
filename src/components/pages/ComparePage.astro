@@ -80,6 +80,9 @@ const honestLinks = [
         <section>
           <h2>{c.readingTitle}</h2>
           {c.reading.map((paragraph) => <p>{paragraph}</p>)}
+          <p>
+            <a href={`/${locale}/about/#open-source`}>{c.catchLink} →</a>
+          </p>
         </section>
 
         <section>

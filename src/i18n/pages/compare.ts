@@ -21,6 +21,7 @@ export interface CompareContent {
   footnote: string;
   readingTitle: string;
   reading: string[];
+  catchLink: string;
   wontDoTitle: string;
   wontDo: string[];
   translatedFromRev?: string;
@@ -51,6 +52,7 @@ export const compare: LocalizedPage<CompareContent> = {
       "Every project here backtests strategies and can trade crypto. The differences that matter are structural: what the engine refuses to do, what it requires before a rule may trade live money, and whether compliance is machinery or nothing at all.",
       "None of the comparison cells are value judgments. Freqtrade's breadth, Jesse's research workflow, and Hummingbot's market-making depth are real strengths — keel has none of them, by design.",
     ],
+    catchLink: "Why is keel free when the others charge subscriptions? The honest answer is on the About page.",
     wontDoTitle: "What keel will not do",
     wontDo: [
       "Chase exchange coverage: Coinbase is the wired reference adapter; Robinhood and Alpaca adapters ship deliberately unwired.",
@@ -78,6 +80,7 @@ export const compare: LocalizedPage<CompareContent> = {
       "كلُّ مشروعٍ هنا يختبر القواعد رجعيًّا ويستطيع تداول العملات المشفّرة. الفروق التي تهم بنيوية: ما يرفض المحرّك فعله، وما يشترطه قبل أن تتداول قاعدةٌ مالًا حقيقيًّا، وهل الامتثال آلياتٌ أم لا شيء.",
       "لا خانةَ في المقارنة حكمُ قيمة. اتساع Freqtrade، وتدفّق بحث Jesse، وعمق صناعة السوق في Hummingbot نقاطُ قوة حقيقية — ولا يملك كيل أيًّا منها، عن قصد.",
     ],
+    catchLink: "لماذا كيل مجانيٌّ بينما يتقاضى الآخرون اشتراكات؟ الجواب الصادق في صفحة «حول».",
     wontDoTitle: "ما لن يفعله كيل",
     wontDo: [
       "مطاردة تغطية المنصّات: Coinbase هو المحوّل المرجعي الموصول؛ ومحوّلا Robinhood وAlpaca يُسلَّمان غير موصولَين عمدًا.",
@@ -105,6 +108,7 @@ export const compare: LocalizedPage<CompareContent> = {
       "Chaque projet ici fait du backtest de stratégies et peut trader de la crypto. Les différences qui comptent sont structurelles : ce que le moteur refuse de faire, ce qu'il exige avant qu'une règle puisse trader de l'argent réel, et si la conformité est une machinerie ou rien du tout.",
       "Aucune case de ce tableau n'est un jugement de valeur. L'ampleur de Freqtrade, le flux de recherche de Jesse et la profondeur de market-making de Hummingbot sont de vraies forces — keel n'en a aucune, par design.",
     ],
+    catchLink: "Pourquoi keel est-il gratuit quand les autres facturent des abonnements ? La réponse honnête est sur la page À propos.",
     wontDoTitle: "Ce que keel ne fera pas",
     wontDo: [
       "Courir après la couverture d'exchanges : Coinbase est l'adaptateur de référence câblé ; les adaptateurs Robinhood et Alpaca sont livrés délibérément non câblés.",
