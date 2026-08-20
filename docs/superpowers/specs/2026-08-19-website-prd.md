@@ -61,8 +61,11 @@ called Keel (keel.sh) and currently owns the bare-"keel" search results.
 ## 5. Functional requirements
 
 ### FR-1 Architecture
-Static-first Astro site, deployed on Cloudflare Pages from this repo's `main`; every PR
-gets a preview deployment. No server-side runtime except (optionally) one Cloudflare
+Static-first Astro site, deployed on Cloudflare Pages from this repo's `main`; deploys
+run when a PR is merged to `main` (plus an hourly content refresh and manual dispatch).
+PRs are validated by CI, which uploads a build artifact for inspection — no per-PR
+preview deployments (amended 2026-08-20; originally "every PR gets a preview
+deployment"). No server-side runtime except (optionally) one Cloudflare
 Worker scoped to proxying GitHub GraphQL/REST reads with the token (FR-5/6).
 
 ### FR-2 Site map (v1)
