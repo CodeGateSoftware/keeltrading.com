@@ -20,6 +20,7 @@
   --notice-ink: #4d3a0e;
   --notice-border: #c9a84c;
   --code-bg: #eef0ea;
+  --slogan-ink: #8a6d3b;
   --shadow: 0 1px 3px rgb(29 40 51 / 0.08);
 
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -49,6 +50,7 @@
     --notice-ink: #e8d9a8;
     --notice-border: #8a7638;
     --code-bg: #1a252e;
+    --slogan-ink: #c8a865;
     --shadow: 0 1px 3px rgb(0 0 0 / 0.4);
   }
 }
@@ -61,6 +63,15 @@
 
 html {
   color-scheme: light dark;
+}
+
+/* The invocation — Amiri Quran, subset to رَبِّ زِدْنِي عِلْمًا (12KB) */
+@font-face {
+  font-family: "Amiri Quran";
+  src: url("/fonts/amiri-quran-slogan.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 body {
@@ -311,6 +322,25 @@ section {
 
 .brand svg {
   color: var(--accent);
+}
+
+.brand-column {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brand-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.brand-slogan {
+  font-family: "Amiri Quran", "Geeza Pro", "Noto Naskh Arabic", serif;
+  font-size: 1.02rem;
+  line-height: 1.7;
+  margin-top: 0.3rem;
+  color: var(--slogan-ink);
 }
 
 .brand .domain {
@@ -989,10 +1019,10 @@ section {
 
 .slogan {
   margin: 0;
-  font-size: 1.35rem;
-  font-weight: 600;
+  font-family: "Amiri Quran", "Geeza Pro", "Noto Naskh Arabic", serif;
+  font-size: 1.5rem;
   line-height: 2.1; /* room for the harakat */
-  color: var(--ink);
+  color: var(--slogan-ink);
 }
 
 .slogan-meaning {
@@ -1454,4 +1484,14 @@ html[dir="rtl"] .hero .lede {
 html[dir="rtl"] .site-nav a,
 html[dir="rtl"] .locale-switch {
   font-size: 1rem;
+}
+
+/* French labels run long — keep the nav on one row beside the two-line brand */
+html[lang="fr"] .site-nav {
+  gap: 0.1rem 0.35rem;
+}
+
+html[lang="fr"] .site-nav a {
+  font-size: 0.87rem;
+  padding-inline: 0.35rem;
 }
