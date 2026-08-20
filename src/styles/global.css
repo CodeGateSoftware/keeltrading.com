@@ -63,7 +63,8 @@ html {
   color-scheme: light dark;
 }
 
-/* The invocation — Amiri Quran, subset to رَبِّ زِدْنِي عِلْمًا (12KB) */
+/* The invocation — Amiri Quran (SIL OFL, see fonts/AmiriQuran-OFL.txt),
+   subset to the full verse ﴿وَقُلْ رَبِّ زِدْنِي عِلْمًا ١١٤﴾ (16KB) */
 @font-face {
   font-family: "Amiri Quran";
   src: url("/fonts/amiri-quran-slogan.woff2") format("woff2");
