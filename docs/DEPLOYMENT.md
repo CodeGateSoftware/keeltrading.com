@@ -42,21 +42,30 @@ the hourly refresh must call the Pages deployments API with its own
 `CF_API_TOKEN`. The Actions model above needs no dashboard project at all;
 pick one and delete the other's triggers if you switch.
 
-## Custom domain (deferred — PRD §11)
+## Custom domain (PRD §11 — the registrar has released the domain)
 
-The domain keeltrading.com was purchased 2026-08-19 and is pending registration
-at the reseller (order 4166854662). Work proceeds on `*.pages.dev`. When it
-lands (#9):
+Work runs on `*.pages.dev` until the custom domain is wired. Steps (the
+canonical-URL side needs no changes — the build has always emitted
+`https://keeltrading.com`):
 
-1. Add the zone to the Cloudflare account; point the registrar's nameservers
-   at the assigned Cloudflare nameservers.
-2. Pages project → **Custom domains → Set up a custom domain →
-   keeltrading.com** (canonical URLs in the build already use
-   `https://keeltrading.com`).
-3. Add `www.keeltrading.com` with a redirect rule to the apex.
-4. Force HTTPS is on by default; verify the HTTP→HTTPS redirect.
-5. After the 60-day ICANN window, optionally transfer the registrar to
-   Cloudflare.
+1. Cloudflare dashboard → **Add a domain** → `keeltrading.com` (Free plan);
+   Cloudflare assigns two nameservers.
+2. GoDaddy (registrar) → nameservers → replace `ns35/36.domaincontrol.com`
+   with the assigned pair. Propagation can take up to 24–48 h.
+3. In the zone's DNS: `CNAME keeltrading.com → keeltrading-com.pages.dev`
+   (proxied) and `CNAME www → keeltrading-com.pages.dev` (proxied; apex CNAME
+   is flattened by Cloudflare automatically).
+4. Run the **Attach custom domain** workflow (Actions → manual dispatch) — it
+   attaches both hostnames to the Pages project via the API and reports
+   certificate provisioning. Alternatively: Pages project → Custom domains →
+   add both by hand.
+5. Redirect `www` → apex: Cloudflare **Rules → Redirect Rules** —
+   `www.keeltrading.com/*` → `https://keeltrading.com/$1` (301). (Zone-level;
+   not automatable with the Pages-scoped token.)
+6. HTTP→HTTPS is forced by Pages automatically once the domain is active.
+
+After the 60-day ICANN window (from 2026-08-19), optionally transfer the
+registrar to Cloudflare.
 
 ## Operating notes
 

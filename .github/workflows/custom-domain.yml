@@ -1,0 +1,60 @@
+name: Attach custom domain
+
+# One-time wiring for keeltrading.com (issue #9 / PRD §11). Run manually AFTER
+# the Cloudflare zone exists and DNS points at Pages (see docs/DEPLOYMENT.md):
+#   1. Cloudflare dashboard → Add a domain → keeltrading.com (Free plan)
+#   2. GoDaddy → nameservers → the two Cloudflare-assigned nameservers
+#   3. Cloudflare DNS → CNAME keeltrading.com → keeltrading-com.pages.dev
+#                        CNAME www → keeltrading-com.pages.dev  (both proxied)
+#   4. Run this workflow — attaches both hostnames to the Pages project
+# Certificates are provisioned automatically once DNS validates.
+# Idempotent: "domain already exists" counts as success.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  attach:
+    name: Attach keeltrading.com and www to the Pages project
+    runs-on: ubuntu-latest
+    env:
+      HAS_DEPLOY_SECRETS: ${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ACCOUNT_ID != '' && 'true' || 'false' }}
+    steps:
+      - name: Skip (Cloudflare not configured)
+        if: env.HAS_DEPLOY_SECRETS != 'true'
+        run: echo "CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID secrets missing — see docs/DEPLOYMENT.md"
+
+      - name: Attach domains
+        if: env.HAS_DEPLOY_SECRETS == 'true'
+        env:
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          PROJECT: ${{ vars.PAGES_PROJECT }}
+        run: |
+          for domain in "keeltrading.com" "www.keeltrading.com"; do
+            echo "— attaching ${domain}"
+            status=$(curl -sS -o /tmp/attach.json -w "%{http_code}" -X POST \
+              "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pages/projects/${PROJECT}/domains" \
+              -H "Authorization: Bearer ${CF_API_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d "{\"name\": \"${domain}\"}")
+            cat /tmp/attach.json; echo
+            if [ "$status" != "200" ] && [ "$status" != "409" ]; then
+              echo "::error::attaching ${domain} returned HTTP ${status}"; exit 1
+            fi
+          done
+
+      - name: Report domain status
+        if: env.HAS_DEPLOY_SECRETS == 'true'
+        env:
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          PROJECT: ${{ vars.PAGES_PROJECT }}
+        run: |
+          sleep 20
+          curl -sS "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pages/projects/${PROJECT}/domains" \
+            -H "Authorization: Bearer ${CF_API_TOKEN}" \
+            | python3 -c "import json,sys; d=json.load(sys.stdin); [print(f\"{x['name']}: status={x['status']}, certs={[(c['cert_authority'], c['state']) for c in x.get('certs', [])]}\") for x in d.get('result', [])]"
