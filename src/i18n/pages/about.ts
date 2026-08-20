@@ -195,80 +195,80 @@ export const about: LocalizedPage<AboutContent> = {
     translatedFromRev: "2026-08-20.1",
     title: "À propos de keel — nom, licence et FAQ keel.sh & KEEL",
     description:
-      "Qui tient keeltrading.com, les licences, et la FAQ de la marque — pourquoi ce keel n'est ni le Keel de Kubernetes (keel.sh) ni Keel Infrastructure (KEEL).",
+      "Qui édite keeltrading.com, les licences, et la FAQ de la marque — pourquoi ce keel n'est ni le Keel de Kubernetes (keel.sh) ni Keel Infrastructure (KEEL).",
     intro: [
-      "keeltrading.com est le site public de keel, le moteur de conformité Shariah open-source pour le trading de crypto en spot, maintenu par CodeGate Software. Le site est une couche en lecture seule au-dessus de GitHub : la documentation affiche des documents récupérés du dépôt du moteur au moment du build, le fil d'actualité lit les Discussions GitHub, et les boutons de téléchargement pointent vers GitHub Releases. Rien d'interactif ne se passe ici — publier, voter et poser des questions vivent sur GitHub.",
-      "Le site lui-même est open source ; son pipeline de build est conçu pour que le site ne puisse jamais contredire le dépôt qu'il présente.",
+      "keeltrading.com est le site public de keel, le moteur open-source de conformité Shariah pour le trading de cryptomonnaies au comptant, maintenu par CodeGate Software. Le site est une couche en lecture seule posée sur GitHub : la documentation affiche des documents récupérés dans le dépôt du moteur au moment du build, le fil d'actualité lit les Discussions GitHub, et les boutons de téléchargement pointent vers GitHub Releases. Rien d'interactif ne se passe ici : publier, voter, poser des questions, tout cela a lieu sur GitHub.",
+      "Le site lui-même est open source ; sa chaîne de build est conçue pour qu'il ne puisse jamais contredire le dépôt qu'il présente.",
     ],
     licenses: {
       title: "Licences",
       body: [
-        "Le moteur keel est sous licence Apache-2.0 par son propre dépôt (CodeGateSoftware/keel).",
-        "Le code de ce site est sous MIT. Le contenu du site — prose, traductions, marque — est © CodeGate Software ; la citation avec attribution est bienvenue (voir CONTENT-LICENSE.md).",
+        "Le moteur keel est publié sous licence Apache-2.0 dans son propre dépôt (CodeGateSoftware/keel).",
+        "Le code de ce site est sous licence MIT. Le contenu du site — textes, traductions, identité visuelle — est © CodeGate Software ; la citation avec attribution est bienvenue (voir CONTENT-LICENSE.md).",
       ],
     },
     faqTitle: "FAQ de la marque",
     faq: [
       {
-        question: "Est-ce le projet Kubernetes appelé Keel ?",
+        question: "Est-ce le projet Kubernetes appelé Keel ?",
         answer: [
-          "Non. Il existe un outil Kubernetes établi nommé Keel sur keel.sh, qui occupe aujourd'hui les résultats de recherche pour « keel » seul. Ce projet — keel par CodeGate Software — n'a aucun lien avec lui : ni code, ni historique, ni personnes en commun. Nous disons « keel trading » là où l'ambiguïté induirait en erreur, et ce site existe en partie pour rendre cette distinction facile à trouver.",
+          "Non. Il existe un outil Kubernetes bien établi, Keel, sur keel.sh, qui monopolise aujourd'hui les résultats de recherche sur le seul mot « keel ». Ce projet — keel, de CodeGate Software — n'a aucun lien avec lui : ni code, ni histoire, ni personnes en commun. Nous écrivons « keel trading » partout où l'ambiguïté pourrait induire en erreur, et ce site existe en partie pour rendre cette distinction facile à trouver.",
         ],
       },
       {
-        question: "Est-ce Keel Infrastructure, l'action KEEL ?",
+        question: "Est-ce Keel Infrastructure, l'action KEEL ?",
         answer: [
-          "Non. Une société de minage de bitcoin cotée au Nasdaq (ex-Bitfarms) trade sous le ticker KEEL, donc une recherche « keel trading » ou « keel crypto » peut afficher son graphique boursier. Elle n'a aucun lien avec ce projet. Ce keel est un moteur de conformité open-source par CodeGate Software — si vous êtes arrivé sur keeltrading.com, vous êtes au bon endroit.",
+          "Non. Une société de minage de bitcoin cotée au Nasdaq (ex-Bitfarms) est cotée sous le symbole KEEL : une recherche sur « keel trading » ou « keel crypto » peut donc faire remonter son cours de Bourse. Elle n'a aucun lien avec ce projet. Ce keel-ci est un moteur de conformité open-source signé CodeGate Software — si vous êtes arrivé sur keeltrading.com, vous êtes au bon endroit.",
         ],
       },
       {
-        question: "Pourquoi le nom keel ?",
+        question: "Pourquoi ce nom, keel ?",
         answer: [
-          "La quille (keel) est l'épine structurelle d'un navire — la pièce qui maintient tout droit et détermine le comportement de la coque. Le nom dit ce qu'est le moteur : ni les voiles, ni le vent, mais la partie dont le métier est de tenir le trading sur une ligne droite et auditable.",
+          "La quille (keel) est la colonne vertébrale d'un navire — la pièce qui maintient l'ensemble d'aplomb et détermine le comportement de la coque. Le nom dit ce qu'est le moteur : ni les voiles, ni le vent, mais la pièce dont le rôle est de tenir le trading sur une ligne droite et vérifiable.",
         ],
       },
       {
-        question: "Quel est le lien entre keeltrading.com et le dépôt du moteur ?",
+        question: "Quel est le lien entre keeltrading.com et le dépôt du moteur ?",
         answer: [
-          "Ce site est un dépôt séparé (CodeGateSoftware/keeltrading.com) dont le build récupère depuis le dépôt du moteur — les versions pour les numéros et liens d'artefacts, les Discussions pour l'actualité, et des documents épinglés pour la documentation. Si le moteur déplace un document, le build de ce site échoue exprès plutôt que d'afficher du périmé.",
+          "Ce site vit dans un dépôt distinct (CodeGateSoftware/keeltrading.com) dont le build va chercher ses données dans celui du moteur : les Releases pour les numéros de version et les liens de fichiers, les Discussions pour l'actualité, et des documents épinglés pour la documentation. Si le moteur déplace un document, le build de ce site échoue exprès, plutôt que d'afficher un contenu périmé.",
         ],
       },
       {
-        question: "Qu'est-ce que CodeGate Software ?",
+        question: "Qu'est-ce que CodeGate Software ?",
         answer: [
-          "CodeGate Software est l'organisation qui maintient le projet. keel a commencé comme un outil personnel et est publié en open source pour que ses affirmations de conformité soient auditées plutôt que crues sur parole.",
+          "CodeGate Software est l'organisation qui maintient le projet. keel a commencé comme un outil personnel ; il est publié en open source pour que ses affirmations de conformité soient auditées, plutôt que crues sur parole.",
         ],
       },
     ],
-    openSourceTitle: "Open source — et le piège",
+    openSourceTitle: "Open source — et où est le piège",
     openSourceFaq: [
       {
-        question: "Que signifie « open source » concrètement ?",
+        question: "Que veut dire « open source », concrètement ?",
         answer: [
-          "Que le code source — les instructions réelles que le programme exécute — est publié là où chacun peut le lire, l'utiliser, vérifier ce qu'il fait vraiment et le modifier. keel porte la licence Apache-2.0, l'une des licences open source les plus standard au monde : vous pouvez l'exécuter pour tout usage, l'étudier, le modifier, et même bâtir une entreprise dessus.",
-          "Pour un outil qui avance des affirmations religieuses et financières, c'est tout l'enjeu. Vous n'avez pas à nous croire sur parole : vous pouvez lire chaque ligne vous-même, ou faire lire par quelqu'un en qui vous avez confiance — chaque rail, chaque porte, chaque chiffre de ce site remonte à du code que vous pouvez ouvrir.",
+          "Que le code source — les instructions que le programme exécute réellement — est publié là où chacun peut le lire, l'utiliser, vérifier ce qu'il fait vraiment et le modifier. keel porte la licence Apache-2.0, l'une des licences open source les plus répandues au monde : vous pouvez l'exécuter pour n'importe quel usage, l'étudier, le modifier et même bâtir une entreprise dessus.",
+          "Pour un outil qui avance des affirmations religieuses et financières, c'est tout l'enjeu. Vous n'avez pas à nous croire sur parole : vous pouvez lire chaque ligne vous-même, ou la faire lire à quelqu'un en qui vous avez confiance — chaque garde-fou, chaque verrou, chaque chiffre de ce site remonte à du code que vous pouvez ouvrir.",
         ],
       },
       {
-        question: "Pourquoi keel est-il open source — et gratuit ?",
+        question: "Pourquoi keel est-il open source — et gratuit ?",
         answer: [
-          "Parce que toute la valeur de keel tient dans l'auditabilité. Un moteur de conformité que vous ne pouvez pas inspecter est exactement le modèle « faites-moi confiance » que keel existe pour remplacer : les outils fermés vous demandent de croire leurs verdicts ; keel publie la machinerie et les règles qu'il applique, avec leurs sources. L'ouverture n'est pas un choix marketing plaqué dessus — c'est le produit.",
-          "Et pour être précis sur « gratuit » : le moteur est gratuit par licence, pas par essai. Apache-2.0 ne peut pas être dégratuité — une copie de la licence accompagne chaque version.",
+          "Parce que toute la valeur de keel tient dans sa vérifiabilité. Un moteur de conformité que vous ne pouvez pas inspecter, c'est exactement le modèle « faites-nous confiance » que keel entend remplacer : les outils fermés vous demandent de croire leurs verdicts ; keel publie sa machinerie et les règles qu'il applique, sources comprises. L'ouverture n'est pas un argument marketing plaqué par-dessus — c'est le produit.",
+          "Et pour être précis sur le mot « gratuit » : le moteur est gratuit par licence, pas par période d'essai. La licence Apache-2.0 est irrévocable — une copie l'accompagne à chaque version.",
         ],
       },
       {
-        question: "Où est le piège ? Les concurrents facturent des abonnements — pourquoi pas keel ?",
+        question: "Où est le piège ? Les concurrents facturent un abonnement — pourquoi pas keel ?",
         answer: [
-          "Les services de screening facturent parce que le verdict est leur produit : ils calculent ou rédigent des classifications et vous en vendent l'accès. keel ne vend délibérément pas de verdicts — il applique les vôtres, et son propre résultat honnête dit que les règles de référence ne battent pas leurs frais. Il n'y a rien ici sur quoi vous revendre de la performance, et nous ne ferons pas semblant du contraire.",
-          "La part honnête de la réponse : keel est aussi jeune et petit, sans entreprise derrière lui pour l'instant. Gratuit, c'est en partie le visage d'un projet honnête à ses débuts. Faire tourner keel n'est pas gratuit pour autant — votre temps, une plateforme de trading et l'accès aux données de marché coûtent de l'argent réel, et nous préférons le dire que d'appeler le trading gratuit.",
-          "Un détail délibéré : les textes et l'identité de ce site sont sous droit d'auteur (© CodeGate Software), contrairement au code du moteur. Cette frontière est l'étendue exacte de la réflexion commerciale actuelle.",
+          "Les services de filtrage facturent parce que le verdict est leur produit : ils calculent ou rédigent des classifications et vous en vendent l'accès. keel, lui, ne vend délibérément aucun verdict — il applique les vôtres, et son propre résultat honnête dit que les règles de référence ne couvrent pas leurs frais. Il n'y a ici aucune performance à vous vendre, et nous ne ferons pas semblant du contraire.",
+          "La part honnête de la réponse : keel est aussi jeune et petit, et aucune entreprise ne le porte pour l'instant. La gratuité est aussi, pour partie, le visage d'un projet honnête à ses débuts. Faire tourner keel n'est pas gratuit pour autant : votre temps, une plateforme de trading et l'accès aux données de marché coûtent de l'argent réel, et nous préférons le dire plutôt que de parler de trading gratuit.",
+          "Un détail délibéré : les textes et l'identité visuelle de ce site sont protégés par le droit d'auteur (© CodeGate Software), contrairement au code du moteur. Cette frontière résume à elle seule la réflexion commerciale du moment.",
         ],
       },
       {
-        question: "Quand keel facturera-t-il, et pour quels services ?",
+        question: "Quand keel deviendra-t-il payant, et pour quels services ?",
         answer: [
-          "Il n'y a pas de date, pas de grille tarifaire, pas de plan arrêté — en inventer un serait précisément le genre d'affirmation que ce projet refuse de faire. Si des services payants arrivent un jour, ce seront des services autour du moteur — pas le moteur lui-même. Vous en lirez la nouvelle ici et sur GitHub Discussions en premier, avec la même honnêteté que tout le reste : l'annonce dira clairement ce que c'est, ce que ça coûte, et pourquoi.",
-          "Ce qui peut être promis aujourd'hui : le moteur que vous téléchargez maintenant est sous Apache-2.0, et cela ne peut pas être révoqué. Toute offre payante future devrait valoir d'être payée par-dessus un moteur gratuit — c'est exactement l'exigence qu'un projet comme celui-ci doit s'imposer.",
+          "Il n'y a ni date, ni grille tarifaire, ni plan arrêté — en inventer un relèverait précisément du genre d'affirmation que ce projet refuse de faire. Si des services payants voient le jour, ce seront des services autour du moteur, pas le moteur lui-même. Vous l'apprendrez ici et dans les Discussions GitHub en premier, avec la même honnêteté que pour le reste : l'annonce dira clairement de quoi il s'agit, ce que cela coûte, et pourquoi.",
+          "Ce que l'on peut promettre aujourd'hui : le moteur que vous téléchargez maintenant est sous Apache-2.0, et cela ne peut pas être révoqué. Toute offre payante à venir devra justifier son prix face à un moteur gratuit — c'est exactement l'exigence qu'un projet comme celui-ci doit s'imposer.",
         ],
       },
     ],

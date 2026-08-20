@@ -183,7 +183,7 @@ export const ui = {
       news: "Actualités",
       community: "Communauté",
       compliance: "Conformité",
-      compare: "Comparaison",
+      compare: "Comparatif",
       about: "À propos",
     },
     actions: {
@@ -191,71 +191,72 @@ export const ui = {
       readDocs: "Lire la documentation",
       viewOnGitHub: "Voir sur GitHub",
       readOnGitHub: "Lire sur GitHub",
-      viewSource: "Voir la source sur GitHub",
+      viewSource: "Voir le code source sur GitHub",
       seeReleases: "Voir les versions sur GitHub",
-      discussOnGitHub: "Discuter sur GitHub",
+      discussOnGitHub: "En discuter sur GitHub",
     },
     tracks: {
-      plainLabel: "En termes simples",
+      plainLabel: "En clair",
       operatorsLabel: "Pour les opérateurs",
       operatorsHint:
-        "Vous êtes technique ? Voici le même projet vu du siège de l'opérateur : runbooks, références CLI et code source du moteur.",
+        "Profil technique ? Voici le même projet vu du poste de l'opérateur : runbooks, références de la ligne de commande et code source du moteur.",
     },
     banner: {
-      staleTitle: "Cette traduction est peut-être en retard sur l'original anglais",
+      staleTitle: "Cette traduction a peut-être pris du retard sur l'original anglais",
       staleBody:
-        "La page anglaise a changé depuis la révision de cette traduction. Pour la formulation actuelle, lisez l'original anglais.",
-      staleLink: "Lire la page anglaise",
+        "La page anglaise a changé depuis la relecture de cette traduction. Pour la formulation en vigueur, reportez-vous à l'original.",
+      staleLink: "Lire la page en anglais",
     },
     marker: {
       translatedAgainst: (rev: string) =>
-        `Dernière traduction depuis la révision anglaise ${rev}.`,
+        `Traduit d'après la révision anglaise ${rev}.`,
       untranslatedOriginal: "Document original — affiché en anglais",
     },
     docs: {
       fetchedFrom: (repo: string, ref: string) =>
-        `Récupéré au moment du build depuis ${repo}@${ref}. Si un document est déplacé, le build échoue — ce site n'affiche jamais de documents périmés.`,
+        `Récupéré au moment du build depuis ${repo}@${ref}. Si un document change de place, le build échoue : ce site n'affiche jamais de documentation périmée.`,
       backToDocs: "Tous les documents",
-      fetchedAt: (date: string) => `Dernière récupération : ${date}.`,
+      fetchedAt: (date: string) => `Dernière récupération : ${date}.`,
       originalLanguageNote:
-        "Les documents du moteur sont publiés en anglais. L'édition française les résume ; les originaux restent le texte de référence.",
-      notTranslated: "Ce document n'est pas traduit ; il est affiché en anglais dans sa forme originale.",
+        "Les documents du moteur paraissent en anglais. L'édition française les résume ; les originaux font foi.",
+      notTranslated: "Ce document n'est pas traduit : il est affiché en anglais, dans sa forme d'origine.",
     },
     news: {
-      from: "Annonces des Discussions GitHub",
-      fetchedAt: (date: string) => `Flux actualisé le ${date} (reconstruction horaire).`,
+      from: "Annonces publiées dans les Discussions GitHub",
+      fetchedAt: (date: string) => `Flux actualisé le ${date} (reconstruction toutes les heures).`,
       empty:
-        "Aucune annonce récupérée pour l'instant. Lisez-les directement sur GitHub — le flux se remplira à la prochaine reconstruction.",
+        "Aucune annonce récupérée pour l'instant. Lisez-les directement sur GitHub : le flux se remplira à la prochaine reconstruction.",
       interactOnGitHub:
-        "Les textes s'affichent dans leur langue d'origine ; lecture et réponses ont lieu sur GitHub, pas ici.",
-      comments: (n: number) => (n === 1 ? "1 commentaire" : `${n} commentaires`),
+        "Les textes s'affichent dans leur langue d'origine ; la lecture et les réponses se passent sur GitHub, pas ici.",
+      comments: (n: number) =>
+        n === 0 ? "Aucun commentaire" : n === 1 ? "1 commentaire" : `${n} commentaires`,
       secondary: "Show and tell — ce que la communauté construit avec keel",
     },
     install: {
-      latest: (tag: string) => `Dernière version : ${tag}`,
-      unknown: "Dernière version inconnue pour l'instant — ouvrez la page des versions sur GitHub",
+      latest: (tag: string) => `Dernière version : ${tag}`,
+      unknown: "Dernière version indisponible pour l'instant — ouvrez la page des versions sur GitHub",
       neverMirrored:
-        "Les téléchargements pointent directement vers les fichiers GitHub. Ce site ne copie jamais les binaires.",
-      copiedAtBuild: (date: string) => `Données de version récupérées de GitHub au build, ${date}.`,
+        "Les téléchargements pointent directement vers les fichiers hébergés par GitHub. Ce site n'héberge aucun binaire.",
+      copiedAtBuild: (date: string) => `Données de version récupérées depuis GitHub au moment du build, le ${date}.`,
     },
     footer: {
       disclaimerTitle: "Avertissements permanents",
       disclaimer:
-        "keel est un outil personnel — ni conseil financier, ni fatwa, ni conseil religieux. Consultez un conseiller financier qualifié et un savant compétent avant de trader. Vous êtes seul responsable de vos décisions de trading et de vos propres attestations.",
+        "keel est un outil personnel : ni conseil financier, ni fatwa, ni conseil religieux. Consultez un conseiller financier qualifié et un savant compétent avant de trader. Vous restez seul responsable de vos décisions de trading et de vos propres attestations.",
       trademark:
-        "Alpaca, Coinbase et Robinhood sont des marques de leurs propriétaires respectifs. keel n'a aucun lien avec elles, ni aval, ni parrainage. Les noms de plateformes n'apparaissent que pour identifier ce à quoi le code s'adresse.",
+        "Alpaca, Coinbase et Robinhood sont des marques déposées par leurs propriétaires respectifs. keel n'a aucun lien avec elles et ne bénéficie ni de leur aval ni de leur parrainage. Leurs noms n'apparaissent ici que pour désigner ce à quoi le code se connecte.",
       keelsh:
-        "Sans lien avec le projet Kubernetes également nommé Keel (keel.sh).",
+        "Sans lien avec le projet Kubernetes qui porte lui aussi le nom Keel (keel.sh).",
       license:
-        "Moteur : Apache-2.0 (CodeGateSoftware/keel). Code de ce site : MIT. Contenu du site : © CodeGate Software — la citation avec attribution est bienvenue.",
-      honesty: "Le résultat honnête, dit d'abord",
+        "Moteur : Apache-2.0 (CodeGateSoftware/keel). Code de ce site : MIT. Contenu du site : © CodeGate Software — la citation avec attribution est bienvenue.",
+      honesty: "Le résultat honnête, annoncé d'emblée",
     },
     localeSwitcher: {
       label: "Langue",
     },
     notFound: {
       title: "Page introuvable",
-      body: "Cette page n'existe pas. Le site existe en plusieurs éditions :",
+      body: "Cette page n'existe pas. Le site est publié dans les éditions suivantes :",
     },
   },
 } as const;

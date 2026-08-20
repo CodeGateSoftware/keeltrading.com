@@ -161,58 +161,58 @@ export const home: LocalizedPage<HomeContent> = {
   fr: {
     rev: "2026-08-20.3",
     translatedFromRev: "2026-08-20.3",
-    title: "Keel : le moteur open-source de conformité Shariah pour le crypto",
+    title: "Keel : le moteur open-source de conformité Shariah pour les cryptomonnaies",
     description:
-      "keel est un moteur open-source qui applique la conformité Shariah au trading de crypto en spot : filtrage par attestation à échec fermé, rails incontournables, mesure honnête. Pas un moteur de fatwas.",
+      "Le moteur open-source qui applique la conformité Shariah au trading de crypto au comptant : un filtrage attesté qui bloque par défaut, des garde-fous qu'aucun ordre ne contourne. Pas un moteur de fatwas.",
     hero: {
       eyebrow: "Open source · Apache-2.0 · par CodeGate Software",
-      heading: "Une conformité Shariah que vous pouvez auditer, pas seulement croire",
-      sub: "keel est un moteur open-source pour le trading de crypto en spot. Avant tout ordre, il passe par des rails de sécurité qu'aucun code ne peut contourner et un filtre d'actifs qui refuse tout ce qui n'est pas attesté. Tout ce qu'il applique est écrit — règle par règle, avec les sources — pour que vous puissiez le vérifier vous-même.",
+      heading: "Une conformité Shariah que vous pouvez auditer, pas seulement croire sur parole",
+      sub: "keel est un moteur open-source pour le trading de crypto au comptant (spot). Avant qu'un ordre parte, il traverse des garde-fous qu'aucun code ne peut désactiver et un filtre d'actifs qui refuse tout ce qui n'est pas attesté. Tout ce qu'il applique est écrit — règle par règle, sources à l'appui — pour que vous puissiez le vérifier vous-même.",
     },
     honest: {
-      title: "Le résultat honnête, dit d'abord",
+      title: "Le résultat honnête, annoncé d'emblée",
       body: [
-        "Aucune famille de règles livrée n'est nette-positive aux frais preneur réellement payés sur Coinbase (~1,2 % par jambe) — 0 sur 90 configurations dans une matrice de mesure, 0 sur 82 dans une autre. Nous avons contre-vérifié une note de modélisation stochastique — redérivée sur les chiffres réels de keel — et elle a précisé le pourquoi : les frais preneur sont tout le résultat. À l'intérieur de l'allocation mensuelle sans frais de la place, les règles reconstruites se tiennent indissociablement au point mort (taux de réussite de 14,9 % contre un seuil de 14,88 %) ; un pas au-dehors, le seuil saute à 29 % et les mêmes règles deviennent nettement négatives. Le rail d'allocation n'est pas un plafond budgétaire — c'est la frontière de rentabilité.",
-        "Le but de ce projet est la machinerie d'application et la mesure honnête de ce qui la traverse — pas une promesse de profit. Chaque résultat est comparé à un repère d'achat périodique simple (DCA), et les règles de référence ne le battent pas après frais. Nous préférons que vous le sachiez dès la page d'accueil plutôt que de le découvrir vous-même. Et nous travaillons dur pour améliorer les résultats des algorithmes et des stratégies — nous vous tiendrons informés de nos progrès.",
+        "Aucune famille de règles livrée ne dégage un résultat net positif aux frais de preneur (taker) réellement payés sur Coinbase (~1,2 % par sens) — 0 configuration sur 90 dans une matrice de mesure, 0 sur 82 dans une autre. Nous avons recoupé une note de modélisation stochastique — en refaisant ses calculs sur les chiffres réels de keel — et elle a précisé le pourquoi : les frais de preneur font tout le résultat. Dans le quota mensuel sans frais offert par la plateforme, les règles reconstruites se situent au point mort, à l'indiscernable près (14,9 % de trades gagnants pour un seuil d'équilibre de 14,88 %) ; un pas au-delà, ce seuil bondit à 29 % et les mêmes règles deviennent nettement perdantes. Le garde-fou de quota n'est pas un plafond budgétaire : c'est la frontière de la rentabilité.",
+        "Ce projet a pour objet la machinerie d'application, et la mesure honnête de ce qui la traverse — pas une promesse de gain. Chaque résultat est comparé à une référence simple, l'achat périodique (DCA), et les règles de référence ne la battent pas une fois les frais déduits. Nous préférons que vous l'appreniez dès la page d'accueil plutôt que de le découvrir par vous-même. Nous nous employons à améliorer les résultats des algorithmes et des stratégies, et nous rendrons compte de nos progrès.",
       ],
       experimentLabel: "Lire le compte rendu de l'expérience",
       announcementLabel: "Lire l'annonce",
     },
     cards: [
       {
-        title: "Un filtrage qui échoue fermé",
-        body: "Les faits de marché sont calculés ; les classifications Shariah sont attestées par un humain — avec une source et un nom — jamais déduites des prix. Un actif sans attestation est rejeté, jamais accepté par défaut.",
+        title: "Un filtrage qui bloque par défaut",
+        body: "Les faits de marché se calculent ; les classifications Shariah, elles, sont attestées par un humain — avec une source et un nom — jamais déduites des cours. Un actif sans attestation est rejeté, pas admis par défaut.",
       },
       {
-        title: "Dix-huit rails qu'aucun ordre ne saute",
-        body: "Plafonds de dépense, disjoncteurs de drawdown, limites d'exposition, pas de martingale, contrôles de fraîcheur des données, un interrupteur d'arrêt à échec fermé — plus ceux dérivés du fiqh : l'attestation d'abonnement à la plateforme et le contrôle de possession constructive (qabd) : un actif qu'on ne peut pas retirer n'a peut-être jamais été possédé valablement.",
+        title: "Dix-huit garde-fous qu'aucun ordre ne contourne",
+        body: "Plafonds de dépense, disjoncteurs de perte maximale (drawdown), limites d'exposition, interdiction de la martingale, contrôles de fraîcheur des données, un coupe-circuit qui se ferme en cas de défaillance — auxquels s'ajoutent ceux qui découlent du fiqh : l'attestation d'abonnement à la plateforme et le contrôle de prise de possession (qabd), au motif qu'un actif impossible à retirer n'a peut-être jamais été valablement possédé.",
       },
       {
-        title: "Des portes qui refusent de flatter",
-        body: "Une règle parcourt candidate → papier → réel. La promotion franchit des planchers de performance et un contrôle de surapprentissage (PBO/CSCV) — une règle brillante sur un seul jeu de paramètres en échantillon est précisément ce que la seconde porte existe pour soupçonner.",
+        title: "Des verrous qui ne flattent personne",
+        body: "Une règle passe par trois états : candidate, papier, réel. Pour être promue, elle doit franchir des seuils de performance et un contrôle de surapprentissage (PBO/CSCV) — car une règle qui brille sur un seul jeu de paramètres, à l'intérieur de l'échantillon, est précisément ce dont le second verrou est là pour se méfier.",
       },
     ],
     fatwa: {
-      quote: "keel n'est pas un moteur de fatwas. C'est un moteur d'application d'une règle que vous fournissez.",
+      quote: "keel n'est pas un moteur de fatwas : c'est un moteur qui applique une règle que vous lui fournissez.",
       body: [
-        "keel ne déduit jamais une classification Shariah des données de marché. Vous l'enregistrez — avec une source et un nom attribué — et keel l'applique déterministement. La règle vit dans votre attestation, pas dans le code : deux opérateurs suivant des écoles différentes obtiennent des réponses différentes du même code, par conception.",
-        "Aucune revue savante de la base fiqh de keel n'a eu lieu. La base est la lecture sourcée d'un opérateur, publiée comme document précisément pour être auditée et contestée — et chaque opérateur est responsable de ses propres attestations.",
+        "keel ne déduit jamais une classification Shariah des données de marché. C'est vous qui l'enregistrez — avec une source et un nom — et keel l'applique de façon déterministe. La règle réside dans votre attestation, pas dans le code : deux opérateurs qui suivent des écoles différentes obtiennent, du même code, des réponses différentes. C'est voulu.",
+        "La base fiqh de keel n'a fait l'objet d'aucun examen par des savants. Elle est la lecture sourcée d'un seul opérateur, publiée sous forme de document précisément pour être auditée et contestée — et chaque opérateur répond de ses propres attestations.",
       ],
-      more: "Comment la conformité fonctionne, en termes simples",
+      more: "Comment fonctionne la conformité, en termes simples",
     },
     review: {
-      title: "Revue savante : non revue — une question ouverte, par design",
+      title: "Examen par des savants : aucun à ce jour — une question ouverte, par conception",
       body: [
-        "La base fiqh énonce clairement ce qu'une revue savante couvrirait et ce qu'elle signifierait ou non. Tant que personne ne parcourt ce chemin, le statut est : non revue.",
+        "La base fiqh dit clairement ce que couvrirait un examen par des savants, et ce qu'il signifierait ou non. Tant que personne n'a fait ce chemin, le statut reste : non examinée.",
       ],
       more: "Lire la base fiqh",
     },
     next: {
-      title: "Et maintenant ?",
+      title: "Et maintenant ?",
       items: [
-        { title: "Installation", body: "Essayez-le en cinq minutes, en lecture seule et côté papier. Aucun fonds ne bouge." },
-        { title: "La conformité, en termes simples", body: "Ce que keel applique, ce qu'il refuse de décider, et où commence votre responsabilité." },
-        { title: "Communauté", body: "Questions, idées et débats de classification se vivent sur GitHub Discussions." },
+        { title: "Installation", body: "Essayez keel en cinq minutes, en lecture seule et côté papier. Aucun mouvement de fonds." },
+        { title: "La conformité, en termes simples", body: "Ce que keel applique, ce qu'il refuse de trancher, et où commence votre responsabilité." },
+        { title: "Communauté", body: "Les questions, les idées et les débats de classification ont lieu dans les Discussions GitHub." },
       ],
     },
   },

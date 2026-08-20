@@ -87,19 +87,19 @@ export const docs: LocalizedPage<DocsContent> = {
   fr: {
     rev: "2026-08-20.1",
     translatedFromRev: "2026-08-19.2",
-    title: "Documentation keel : glossaire, base fiqh, runbooks",
+    title: "Documentation keel : glossaire, base fiqh, runbooks",
     description:
-      "Glossaire, base fiqh, runbooks opérateur et mise en production, comptes rendus d'expériences et recherche — récupérés au build depuis CodeGateSoftware/keel, jamais copiés à la main.",
+      "Glossaire, base fiqh, runbooks opérateur et de mise en production, comptes rendus d'expériences et travaux de recherche — récupérés au moment du build depuis CodeGateSoftware/keel, jamais recopiés à la main.",
     intro: [
-      "Ce sont les documents du moteur keel eux-mêmes, affichés ici au moment du build depuis CodeGateSoftware/keel. Rien dans cette page n'est ressaisi ni résumé à la main : si un document épinglé est déplacé ou disparaît en amont, le build de ce site échoue bruyamment plutôt que d'afficher quelque chose de périmé.",
+      "Ce sont les documents du moteur keel eux-mêmes, affichés ici tels qu'ils ont été récupérés dans CodeGateSoftware/keel au moment du build. Rien sur cette page n'est ressaisi ni résumé à la main : si un document épinglé change de place ou disparaît en amont, le build de ce site s'arrête net plutôt que d'afficher un contenu périmé.",
     ],
     howTitle: "Comment ça marche",
     how: [
-      "Un manifeste (engine-docs.manifest.json) épingle le chemin de chaque document dans le dépôt du moteur. À chaque build — y compris la reconstruction horaire — le script de récupération télécharge chacun, réécrit les liens relatifs pour pointer vers leurs sources GitHub, puis le build les affiche. Le build échoue volontairement si un chemin épinglé renvoie 404.",
+      "Un manifeste (engine-docs.manifest.json) fixe le chemin de chaque document dans le dépôt du moteur. À chaque build — y compris la reconstruction horaire — le script de récupération télécharge chacun d'eux, réécrit les liens relatifs pour les faire pointer vers leur source GitHub, puis le build les affiche. Le build échoue volontairement si un chemin épinglé renvoie une erreur 404.",
     ],
     editionNoteTitle: "À propos de l'édition française",
     editionNote: [
-      "Les documents du moteur sont publiés en anglais et constituent le texte de référence. L'édition française ci-dessous résume le glossaire et la base fiqh, et renvoie aux documents originaux complets dans leur langue d'origine.",
+      "Les documents du moteur paraissent en anglais et font foi. L'édition française ci-dessous résume le glossaire et la base fiqh, et renvoie aux documents originaux dans leur intégralité et dans leur langue d'origine.",
     ],
     summariesTitle: "Deux résumés en français",
     summaries: [
@@ -107,16 +107,16 @@ export const docs: LocalizedPage<DocsContent> = {
         slug: "glossary",
         title: "Résumé du glossaire",
         body: [
-          "Le glossaire est l'unique source du vocabulaire de keel : chaque terme qu'une interface de keel peut afficher y est défini, et nulle part ailleurs — la documentation pointe vers lui plutôt que de redéfinir et risquer la dérive. Il hérite deux règles d'honnêteté de la base fiqh : les termes fiqh sont ancrés, jamais inventés — leur définition est une citation littérale de la base fiqh, avec une ligne de source nommant le document et la section exacte — et là où la base ne statue pas sur un terme (comme le gharar), le glossaire le dit explicitement au lieu de combler le vide d'une paraphrase ressemblant à un avis juridique.",
-          "Les paramètres des règles n'y sont pas définis : ce que signifie entry_lookback dans turtle_breakout vit dans la classe qui le définit, affiché par introspection — un second tableau ici dériverait dès qu'une classe changerait.",
+          "Le glossaire est l'unique source du vocabulaire de keel : chaque terme qu'un écran de keel peut afficher y est défini, et nulle part ailleurs — la documentation y renvoie plutôt que de redéfinir et de risquer l'écart. Il hérite de deux règles d'honnêteté de la base fiqh : les termes du fiqh y sont ancrés, jamais inventés — leur définition est une citation littérale de la base fiqh, accompagnée d'une ligne de source nommant le document et la section exacte — et là où la base ne tranche pas sur un terme (comme le gharar), le glossaire le dit explicitement, au lieu de combler le vide par une paraphrase qui aurait des airs d'avis juridique.",
+          "Les paramètres des règles n'y sont pas définis : ce que signifie entry_lookback dans turtle_breakout réside dans la classe qui le définit et s'affiche par introspection — un second tableau, ici, se désynchroniserait dès qu'une classe changerait.",
         ],
       },
       {
         slug: "fiqh-basis",
         title: "Résumé de la base fiqh",
         body: [
-          "La base fiqh est écrite pour une développeuse ou un développeur musulman qui décide de confier de l'argent à keel. Elle énonce, règle par règle, le raisonnement Shariah encodé dans le dépôt, et où vit la source de chaque règle — pour que la base soit auditable par qui ne sait pas déjà où chercher. C'est de l'érudition par référence : chaque règle porte une citation vers une source du dépôt, et le code d'application porte les mêmes citations dans ses commentaires.",
-          "Ce qu'elle n'est pas : une fatwa, ni la prétention que keel puisse en produire. Aucun savant n'a revu ce document ; l'éventualité d'une telle revue est une question délibérément ouverte (#289), et rien ici ne doit être lu comme si elle avait eu lieu. Quand une source se tait sur un point, on écrit « non statué » — le vide n'est jamais comblé par une formulation qui ressemblerait à un avis.",
+          "La base fiqh est écrite pour une développeuse ou un développeur musulman qui envisage de confier de l'argent à keel. Elle expose, règle par règle, le raisonnement Shariah encodé dans le dépôt et l'endroit où se trouve la source de chaque règle — pour que l'ensemble soit vérifiable même par qui ne sait pas déjà où chercher. Le savoir y est cité, jamais reformulé : chaque règle porte un renvoi vers une source du dépôt, et le code d'application porte les mêmes renvois dans ses commentaires.",
+          "Ce qu'elle n'est pas : une fatwa, ni la prétention que keel puisse en produire. Aucun savant n'a examiné ce document ; l'éventualité d'un tel examen est une question délibérément ouverte (#289), et rien ici ne doit être lu comme s'il avait eu lieu. Quand une source se tait sur un point, on écrit « non tranché » — le vide n'est jamais comblé par une formule qui ressemblerait à un avis.",
         ],
       },
     ],
