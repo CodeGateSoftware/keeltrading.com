@@ -24,7 +24,7 @@ export interface AboutContent {
 
 export const about: LocalizedPage<AboutContent> = {
   en: {
-    rev: "2026-08-20.1",
+    rev: "2026-08-20.2",
     title: "About keel — Name, License, keel.sh & KEEL FAQ",
     description:
       "Who runs keeltrading.com, licensing, and the brand FAQ — why this keel is not Kubernetes Keel (keel.sh) nor Keel Infrastructure (KEEL).",
@@ -44,13 +44,13 @@ export const about: LocalizedPage<AboutContent> = {
       {
         question: "Is this the Kubernetes project called Keel?",
         answer: [
-          "No. There is an established Kubernetes deployment tool named Keel at keel.sh, and it currently owns the bare-\"keel\" search results. This project — keel by CodeGate Software — is unrelated to it: no shared code, history, or people. We call the project \"keel trading\" where ambiguity would mislead, and this site exists partly to make that distinction easy to find.",
+          "No. There is an established Kubernetes deployment tool named Keel at keel.sh, and it currently owns the bare-“keel” search results. This project — keel by CodeGate Software — is unrelated to it: no shared code, history, or people. We call the project “keel trading” where ambiguity would mislead, and this site exists partly to make that distinction easy to find.",
         ],
       },
       {
         question: "Is this Keel Infrastructure, the KEEL stock?",
         answer: [
-          "No. A Nasdaq-listed bitcoin-mining company (formerly Bitfarms) trades under the ticker KEEL, so a search for \"keel trading\" or \"keel crypto\" may show its stock chart near these results. It has no connection to this project. This keel is an open-source compliance engine by CodeGate Software — if you landed on keeltrading.com, you are in the right place.",
+          "No. A Nasdaq-listed bitcoin-mining company (formerly Bitfarms) trades under the ticker KEEL, so a search for “keel trading” or “keel crypto” may show its stock chart near these results. It has no connection to this project. This keel is an open-source compliance engine by CodeGate Software — if you landed on keeltrading.com, you are in the right place.",
         ],
       },
       {
@@ -85,7 +85,7 @@ export const about: LocalizedPage<AboutContent> = {
         question: "Why is keel open source — and free?",
         answer: [
           "Because keel's entire value is auditability. A compliance engine you cannot inspect is exactly the “trust me” model keel exists to replace: closed screening tools ask you to believe their verdicts; keel publishes the machinery and the rulings it enforces, with sources. Openness is not a marketing choice bolted on — it is the product.",
-          "And to be precise about “free”: the engine is free by license, not by trial. Apache-2.0 cannot be un-free'd — that copy of the license ships with every version.",
+          "And to be precise about “free”: the engine is free by license, not by trial. Apache-2.0 cannot be revoked: a copy of the license ships with every version.",
         ],
       },
       {
@@ -107,8 +107,8 @@ export const about: LocalizedPage<AboutContent> = {
   },
 
   ar: {
-    rev: "2026-08-20.1",
-    translatedFromRev: "2026-08-20.1",
+    rev: "2026-08-20.2",
+    translatedFromRev: "2026-08-20.2",
     title: "حول كيل — الاسم والترخيص وأسئلة keel.sh وKEEL",
     description:
       "مَن يُشغّل keeltrading.com، والتراخيص، والأسئلة الشائعة عن الاسم — ولماذا ليس هذا كيلَ Kubernetes‏ (keel.sh) ولا شركةَ Keel Infrastructure‏ (KEEL).",
@@ -191,8 +191,8 @@ export const about: LocalizedPage<AboutContent> = {
   },
 
   fr: {
-    rev: "2026-08-20.1",
-    translatedFromRev: "2026-08-20.1",
+    rev: "2026-08-20.2",
+    translatedFromRev: "2026-08-20.2",
     title: "À propos de keel — nom, licence et FAQ keel.sh & KEEL",
     description:
       "Qui édite keeltrading.com, les licences, et la FAQ de la marque — pourquoi ce keel n'est ni le Keel de Kubernetes (keel.sh) ni Keel Infrastructure (KEEL).",

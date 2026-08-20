@@ -40,17 +40,17 @@ export const compareColumns = [
 
 export const compare: LocalizedPage<CompareContent> = {
   en: {
-    rev: "2026-08-20.4",
+    rev: "2026-08-20.5",
     title: "How keel Compares to Other Trading Bots",
     description:
-      "keel compared with Freqtrade, Jesse, and Hummingbot: license, focus, strategy gates, and the compliance machinery none of them carry — structural facts from public repositories.",
+      "keel compared with Freqtrade, Jesse and Hummingbot: license, focus, strategy gates, and the compliance machinery none of them carry.",
     intro: [
       "Freqtrade, Jesse, and Hummingbot are established, capable open-source trading bots — far more mature than keel, with communities orders of magnitude larger. If you want general algorithmic trading with the widest exchange coverage, they are the better answer.",
       "This page states, factually and from public repositories, where keel differs: keel is not a better trading bot — it is a different thing, an enforcement engine for Shariah compliance you supply.",
     ],
     tableTitle: "Structural comparison",
     footnote:
-      "Facts from each project's public repository, August 2026. Community scale (GitHub stars, same date): Freqtrade ~53k, Hummingbot ~19.5k, Jesse ~8.3k — keel just launched. The Cost row was verified from each project's own site on 2026-08-20; Jesse's plugin pricing changes often — re-check at jesse.trade/pricing. Freqtrade, Jesse, Hummingbot, and QuantCrawler are projects of their maintainers; their names appear here solely to identify them. Alpaca is a brokerage, not a bot — keel ships a broker adapter for it under the venue port.",
+      "Facts from each project's public repository, August 2026. Community scale, measured in GitHub stars on the same date: Freqtrade about 53,000, Hummingbot about 19,500, Jesse about 8,300. keel has just launched. The Cost row was verified from each project's own site on 2026-08-20; Jesse's plugin pricing changes often, so re-check it at jesse.trade/pricing. Freqtrade, Jesse, Hummingbot and QuantCrawler are projects of their maintainers, and their names appear here solely to identify them. Alpaca is a brokerage, not a bot: keel ships a broker adapter for it under the venue port.",
     readingTitle: "How to read this",
     reading: [
       "Every project here backtests strategies and can trade crypto. The differences that matter are structural: what the engine refuses to do, what it requires before a rule may trade live money, and whether compliance is machinery or nothing at all.",
@@ -58,13 +58,13 @@ export const compare: LocalizedPage<CompareContent> = {
     ],
     paidTitle: "What about paid services?",
     paidBody: [
-      "QuantCrawler is the kind of paid service many retail traders meet first: $9.99/month after a 30-day free trial (verified 2026-08-20). It relays TradingView webhook alerts to your broker and copies trades across accounts — ten broker integrations, Coinbase among them, with a futures and prop-firm focus. It is closed-source and cloud-hosted: you connect your broker credentials to their platform, and execution runs on their servers.",
+      "QuantCrawler is the kind of paid service many retail traders meet first: $9.99 a month after a 30-day free trial (verified 2026-08-20). It relays TradingView webhook alerts to your broker and copies trades across accounts — ten broker integrations, Coinbase among them, with a futures and prop-firm focus. It is closed-source and cloud-hosted: you connect your broker credentials to their platform, and execution runs on their servers.",
       "keel is the opposite trade-off. Nothing hosted, nothing closed: the engine runs on your machine, your keys never leave it, and no rule may touch live money before clearing the promotion gate. What keel does not have is QuantCrawler's broker breadth or its TradingView-first workflow — if that is what you need, theirs is the fitting answer, at the price of entrusting a service with your credentials. Like the bots above, it carries no compliance machinery; that difference is keel's reason to exist.",
     ],
     venuesTitle: "Which venues, and why",
     venuesBody: [
-      "keel's Coinbase adapter is the live-proven reference: attested spot screening, real orders, the whole gauntlet exercised in production. Alpaca is wired for deployment on the equities side — the same enforcement, paper-first, with session-aware market clocks. The Robinhood adapter ships in the repository as an optional dev venue, deliberately outside deployments until its live-path prerequisites close.",
-      "What keel declines categorically: futures, margin, shorting, and derivatives of any kind — long-only spot is the whole surface, by fiqh posture and by design. Venue breadth is deliberately not chased; every new venue is a capability-verified adapter decision, not a growth metric.",
+      "keel's Coinbase adapter is the live-proven reference: attested spot screening, real orders, the whole gauntlet run in production. Alpaca is wired for deployment on the equities side — the same enforcement, paper-first, with session-aware market clocks. The Robinhood adapter ships in the repository as an optional dev venue, deliberately outside deployments until its live-path prerequisites close.",
+      "What keel declines categorically: futures, margin, shorting, and derivatives of any kind — long-only spot is the whole surface, by fiqh posture and by design. We deliberately do not chase venue breadth. Every new venue is an adapter decision, taken once its capabilities are verified, and never a growth metric.",
     ],
     catchLink: "Why is keel free when the others charge subscriptions? The honest answer is on the About page.",
     wontDoTitle: "What keel will not do",
@@ -72,13 +72,13 @@ export const compare: LocalizedPage<CompareContent> = {
       "Chase exchange coverage: Coinbase is the live-proven reference and Alpaca is wired for equities paper; the Robinhood adapter ships optional/dev, deliberately outside deployments.",
       "Trade anything but long-only spot: no leverage, no shorting, no derivatives.",
       "Promote a rule on backtest brilliance alone: the overfitting check (PBO/CSCV) can veto it.",
-      "Promise profit: no shipped rule family is net-positive at the taker fee actually paid, and the site says so on its front page.",
+      "Promise profit: no shipped rule family is net positive at the taker fee actually paid, and the site says so on its front page.",
     ],
   },
 
   ar: {
-    rev: "2026-08-20.4",
-    translatedFromRev: "2026-08-20.4",
+    rev: "2026-08-20.5",
+    translatedFromRev: "2026-08-20.5",
     title: "مقارنة كيل ببوتات التداول الأخرى",
     description:
       "مقارنة كيل بـ Freqtrade وJesse وHummingbot: الترخيص والغرض وبوابات الترقية وآلياتُ الامتثال التي لا يحملها أيٌّ منها — وقائعُ بنيويةٌ من المستودعات العمومية.",
@@ -115,8 +115,8 @@ export const compare: LocalizedPage<CompareContent> = {
   },
 
   fr: {
-    rev: "2026-08-20.4",
-    translatedFromRev: "2026-08-20.4",
+    rev: "2026-08-20.5",
+    translatedFromRev: "2026-08-20.5",
     title: "Comparer keel aux autres bots de trading",
     description:
       "keel face à Freqtrade, Jesse et Hummingbot : licence, finalité, verrous de promotion et la machinerie de conformité qu'aucun d'eux n'embarque — des faits structurels tirés des dépôts publics.",
@@ -340,7 +340,7 @@ export const compareRows = (locale: "en" | "ar" | "fr"): CompareRow[] => {
     {
       label: "Shariah compliance machinery",
       values: [
-        "Attested fail-closed screening + 18 un-overridable rails (incl. qabd)",
+        "Attested screening that fails closed + 18 rails no order can skip (including qabd)",
         "Not built in",
         "Not built in",
         "Not built in",

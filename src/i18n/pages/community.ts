@@ -26,14 +26,14 @@ const SLUG_BASE = "https://github.com/CodeGateSoftware/keel/discussions/categori
 
 export const community: LocalizedPage<CommunityContent> = {
   en: {
-    rev: "2026-08-19.2",
+    rev: "2026-08-20.2",
     title: "keel Community on GitHub Discussions",
     description:
       "Questions, ideas, polls, and classification debate happen on GitHub Discussions. The site only reads and links — interaction stays where the project lives.",
     intro: [
       "Everything community-shaped happens on GitHub Discussions — posting, voting, polling, answering. This website deliberately has none of that: it reads and links, because that is where the project, its history, and its moderation already live.",
     ],
-    note: "One category deserves a special mention: Compliance & classification. \"Should X be treated this way?\" is a question, not a bug — and there is a place for it.",
+    note: "One category deserves a special mention: Compliance & classification. “Should X be treated this way?” is a question, not a bug — and there is a place for it.",
     categories: [
       {
         name: "Announcements",
@@ -43,7 +43,7 @@ export const community: LocalizedPage<CommunityContent> = {
       {
         name: "Compliance & classification",
         slug: "compliance-classification",
-        description: "The \"should X be treated this way\" conversations — classification discussion is a question, not a bug, and must not be triaged as one.",
+        description: "The “should X be treated this way” conversations — classification discussion is a question, not a bug, and must not be triaged as one.",
       },
       {
         name: "Ideas",
@@ -74,8 +74,8 @@ export const community: LocalizedPage<CommunityContent> = {
   },
 
   ar: {
-    rev: "2026-08-19.2",
-    translatedFromRev: "2026-08-19.2",
+    rev: "2026-08-20.2",
+    translatedFromRev: "2026-08-20.2",
     title: "مجتمع كيل على نقاشات GitHub",
     description:
       "الأسئلة والأفكار واستطلاعات الرأي ونقاش التصنيف تجري في نقاشات GitHub. وهذا الموقع يقرأ ويربط فقط — ويبقى التفاعل حيث يعيش المشروع.",
@@ -123,8 +123,8 @@ export const community: LocalizedPage<CommunityContent> = {
   },
 
   fr: {
-    rev: "2026-08-20.1",
-    translatedFromRev: "2026-08-19.2",
+    rev: "2026-08-20.2",
+    translatedFromRev: "2026-08-20.2",
     title: "La communauté keel — sur GitHub, par choix",
     description:
       "Questions, idées, sondages et débats de classification ont lieu dans les Discussions GitHub de keel. Ce site se contente de lire et de renvoyer : l'échange reste là où vit le projet.",

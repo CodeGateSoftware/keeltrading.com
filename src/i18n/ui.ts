@@ -32,7 +32,7 @@ export const ui = {
       plainLabel: "Plain English",
       operatorsLabel: "For operators",
       operatorsHint:
-        "Technical? This is the same project from the operator's seat: runbooks, CLI references, and the engine source.",
+        "Technically minded? Here is the same project from the operator's seat: runbooks, CLI references and the engine source.",
     },
     banner: {
       staleTitle: "This translation may be behind the English original",
@@ -76,7 +76,7 @@ export const ui = {
       disclaimer:
         "keel is a personal tool — not financial advice, and not a fatwa or religious advice. Consult a qualified financial advisor and a knowledgeable scholar before trading. You are solely responsible for your trading decisions and for your own attestations.",
       trademark:
-        "Alpaca, Coinbase, and Robinhood are trademarks of their respective owners. keel has no affiliation with, endorsement from, or sponsorship from any of them. Venue names appear solely to identify what the code talks to.",
+        "Alpaca, Coinbase and Robinhood are trademarks of their respective owners. keel is not affiliated with, endorsed by, or sponsored by any of them. Venue names appear solely to identify what the code talks to.",
       keelsh:
         "Not affiliated with the Kubernetes project also named Keel (keel.sh).",
       license:
@@ -88,7 +88,7 @@ export const ui = {
     },
     notFound: {
       title: "Page not found",
-      body: "This page does not exist. The site lives in these editions:",
+      body: "This page does not exist. The site is published in these editions:",
     },
   },
 

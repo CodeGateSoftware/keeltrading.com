@@ -20,7 +20,7 @@ export interface ComplianceContent {
 
 export const compliance: LocalizedPage<ComplianceContent> = {
   en: {
-    rev: "2026-08-19.2",
+    rev: "2026-08-20.2",
     title: "Shariah Compliance Methodology, in Plain Terms",
     description:
       "How keel's Shariah compliance works: fail-closed attested screening, the per-(venue, product) attestation model, the qabd check — and what keel is not.",
@@ -30,20 +30,20 @@ export const compliance: LocalizedPage<ComplianceContent> = {
       {
         title: "Computed facts vs attested classifications",
         body: [
-          "Some things about an asset are knowable from the market and are simply computed. But whether a token's core purpose is a haram sector, whether it is asset-backed 'ayn or a claim dayn, whether it pays a riba-like yield — these are questions of fact-plus-scholarship about the world. No module in the repository derives them from candle data, and none pretends to. A human records them, with a source and an attributed name; keel enforces the record deterministically and rejects anything unattested.",
+          "Some things about an asset are knowable from the market, and those are simply computed. Others are not. Whether a token's core purpose is a haram sector, whether it is asset-backed ('ayn) or a claim on a debtor (dayn), whether it pays a riba-like yield — these are questions of fact and scholarship about the world. No module in the repository derives them from candle data, and none pretends to. A human records them, with a source and an attributed name. keel then enforces that record deterministically and rejects anything unattested.",
         ],
       },
       {
         title: "The per-(venue, product) attestation model",
         body: [
           "An attestation is scoped: it names the venue and the product, carries a source, and is attributed to a name. Two operators following different schools can hold different attestations and get different answers from the same code — by design, because the ruling lives in your attestation, not in the code.",
-          "The same model covers the venue itself: rail 14 refuses live BUYs until the operator attests the venue subscription, and rail 17 encodes §65.4 qabd — an asset that cannot be withdrawn may not have been validly possessed, so withdrawal capability is attested and enforced, not assumed.",
+          "The same model covers the venue itself. Rail 14 refuses live BUYs until the operator attests the venue subscription. Rail 17 encodes §65.4 qabd, the doctrine of constructive possession: an asset that cannot be withdrawn may never have been validly possessed. So withdrawal capability is attested and enforced, not assumed.",
         ],
       },
       {
         title: "Purification and the spot-only shape",
         body: [
-          "keel is long-only spot with no leverage, no shorting, and no derivatives; position sizing uses actual cash, so no riba enters through the position itself. Where an obligation cannot be enforced by code, it is stated rather than waved away: account-level duties no rail can see — disabling USDC rewards on idle balances, chiefly — are the operator's to verify, listed in the operator runbook.",
+          "keel is long-only spot with no leverage, no shorting, and no derivatives; position sizing uses actual cash, so no riba enters through the position itself. Where an obligation cannot be enforced by code, it is stated rather than waved away. Account-level duties no rail can see — chiefly, disabling USDC rewards on idle balances — are the operator's to verify. The operator runbook lists them.",
         ],
       },
     ],
@@ -54,7 +54,7 @@ export const compliance: LocalizedPage<ComplianceContent> = {
         "It is not financial advice and not religious (Shariah) advice.",
         "No scholarly review of keel's fiqh basis has occurred. The basis is one operator's sourced reading, published so it can be audited and challenged; until a review happens, the status is: not reviewed.",
         "Attestation is the operator's act and the operator's responsibility. keel is the enforcement machinery, not the authority.",
-        "It does not promise profit — no shipped rule family is net-positive at the taker fee actually paid, and the reference benchmark is simple DCA.",
+        "It does not promise profit. No shipped rule family is net positive at the taker fee actually paid, and the reference benchmark is simple DCA.",
       ],
     },
     attest: {
@@ -93,8 +93,8 @@ export const compliance: LocalizedPage<ComplianceContent> = {
   },
 
   ar: {
-    rev: "2026-08-19.2",
-    translatedFromRev: "2026-08-19.2",
+    rev: "2026-08-20.2",
+    translatedFromRev: "2026-08-20.2",
     title: "منهجية الامتثال الشرعي بلغةٍ مبسّطة",
     description:
       "كيف يعمل الامتثال الشرعي في كيل: فرزٌ موثَّق يرفض عند الفشل، ونموذجُ توثيقٍ لكل (منصّة، منتج)، وفحصُ القبض — وما لا يزعمه كيل.",
@@ -167,8 +167,8 @@ export const compliance: LocalizedPage<ComplianceContent> = {
   },
 
   fr: {
-    rev: "2026-08-20.1",
-    translatedFromRev: "2026-08-19.2",
+    rev: "2026-08-20.2",
+    translatedFromRev: "2026-08-20.2",
     title: "La méthodologie de conformité, en termes simples",
     description:
       "Comment fonctionne la conformité Shariah de keel : un filtrage attesté qui bloque par défaut, le modèle d'attestation par (plateforme, produit), le contrôle qabd — et ce que keel n'est pas : ni une fatwa, ni un conseil financier, et sans examen par des savants.",

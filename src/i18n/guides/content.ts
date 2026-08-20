@@ -122,7 +122,7 @@ export const guides: Guide[] = [
         title: "Step 4 — Read the report honestly",
         body: [
           "The report ends with GO-LIVE or TRAIN-MORE, naming every gate and its numbers: performance floors, the 100-trade sample floor, the overfitting check.",
-          "On the default rules it will very likely say TRAIN MORE. That is the engine working, not broken — keel refuses to flatter a backtest, and no shipped rule family is net-positive at the taker fee actually paid. The honesty is the feature.",
+          "On the default rules it will very likely say TRAIN-MORE. That is the engine working, not broken: keel refuses to flatter a backtest, and no shipped rule family is net positive at the taker fee actually paid. The honesty is the feature.",
         ],
       },
       {
@@ -163,12 +163,12 @@ export const guides: Guide[] = [
         code: "keel agent",
         shot: "/get-started/tui-rules.png",
         shotCaption:
-          "The Rules console (4): the tried-vs-used ledger — every rule with its lifecycle status. candidate → paper → live is the only road to live trading.",
+          "The Rules console (4): the lifecycle ledger — every rule with the stage it has reached. candidate → paper → live is the only road to live trading.",
       },
       {
         title: "Step 3 — Confirm every order",
         body: [
-          "By default the agent previews each order and asks you at the terminal; headless, it declines. keel autonomy on changes who is asked — never what is allowed. For the paper profile, answering prompts is the point: watch what the rails veto and why.",
+          "By default the agent previews each order and asks you at the terminal. Running headless, with no one to ask, it declines. keel autonomy on changes who is asked — never what is allowed. For the paper profile, answering prompts is the point: watch what the rails veto and why.",
         ],
       },
       {
@@ -238,7 +238,7 @@ export const guides: Guide[] = [
       {
         title: "Where this leads",
         body: [
-          "With attestations recorded, a rule promoted through its gates, and the go-live runbook followed, the supervised first live order is the same confirm prompt you practised in paper — with real consequences. Read the go-live runbook before that day.",
+          "With attestations recorded, a rule promoted through its gates, and the go-live runbook followed, the supervised first live order is the same confirm prompt you practiced in paper — with real consequences. Read the go-live runbook before that day.",
         ],
       },
     ],
