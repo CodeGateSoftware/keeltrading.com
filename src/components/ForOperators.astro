@@ -24,12 +24,19 @@ const defaultLinks =
         { label: "سجلّ التجارب كاملًا", href: `${localePath("ar", "docs")}experiment-honest-result-restated/` },
         { label: "شيفرة المحرّك", href: "https://github.com/CodeGateSoftware/keel" },
       ]
-    : [
-        { label: "Operator runbook (Docs)", href: `${localePath("en", "docs")}operator-runbook/` },
-        { label: "Go-live runbook (Docs)", href: `${localePath("en", "docs")}go-live-runbook/` },
-        { label: "The full experiment record", href: `${localePath("en", "docs")}experiment-honest-result-restated/` },
-        { label: "Engine source", href: "https://github.com/CodeGateSoftware/keel" },
-      ];
+    : locale === "fr"
+      ? [
+          { label: "Runbook opérateur (Documentation)", href: `${localePath("en", "docs")}operator-runbook/` },
+          { label: "Runbook de mise en production", href: `${localePath("en", "docs")}go-live-runbook/` },
+          { label: "Le compte rendu d'expérience complet", href: `${localePath("en", "docs")}experiment-honest-result-restated/` },
+          { label: "Code source du moteur", href: "https://github.com/CodeGateSoftware/keel" },
+        ]
+      : [
+          { label: "Operator runbook (Docs)", href: `${localePath("en", "docs")}operator-runbook/` },
+          { label: "Go-live runbook (Docs)", href: `${localePath("en", "docs")}go-live-runbook/` },
+          { label: "The full experiment record", href: `${localePath("en", "docs")}experiment-honest-result-restated/` },
+          { label: "Engine source", href: "https://github.com/CodeGateSoftware/keel" },
+        ];
 
 const items = links ?? defaultLinks;
 ---

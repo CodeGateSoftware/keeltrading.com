@@ -121,6 +121,55 @@ export const community: LocalizedPage<CommunityContent> = {
       },
     ],
   },
+
+  fr: {
+    rev: "2026-08-20.1",
+    translatedFromRev: "2026-08-19.2",
+    title: "La communauté keel — sur GitHub, par design",
+    description:
+      "Questions, idées, sondages et débats de classification se vivent dans les Discussions GitHub de keel. Ce site ne fait que lire et lier — l'interaction reste là où vit le projet.",
+    intro: [
+      "Tout ce qui a une dimension communautaire se passe sur GitHub Discussions — publier, voter, sonder, répondre. Ce site n'en a délibérément aucune : il lit et il lie, parce que le projet, son histoire et sa modération vivent déjà là-bas.",
+    ],
+    note: "Une catégorie mérite une mention particulière : Conformité & classification. « X devrait-il être traité ainsi ? » est une question, pas un bug — et elle a sa place dédiée.",
+    categories: [
+      {
+        name: "Announcements",
+        slug: "announcements",
+        description: "Les mises à jour des mainteneurs — le même flux qui alimente la page Actualités de ce site.",
+      },
+      {
+        name: "Compliance & classification",
+        slug: "compliance-classification",
+        description: "Les conversations « X devrait-il être traité ainsi ? » — le débat de classification est une question, pas un bug, et ne doit pas être trié comme tel.",
+      },
+      {
+        name: "Ideas",
+        slug: "ideas",
+        description: "Les propositions de ce que keel devrait faire ensuite. Les meilleures idées arrivent avec le problème qu'elles résolvent, écrit noir sur blanc.",
+      },
+      {
+        name: "Polls",
+        slug: "polls",
+        description: "Là où le projet demande à la communauté de trancher entre des options définies.",
+      },
+      {
+        name: "Q&A",
+        slug: "q-a",
+        description: "Les questions d'exécution, de configuration ou de compréhension de keel — répondues en public pour que le suivant trouve la réponse.",
+      },
+      {
+        name: "Show and tell",
+        slug: "show-and-tell",
+        description: "Ce que les gens construisent avec et autour de keel. (Prévu comme flux secondaire sur la page Actualités.)",
+      },
+      {
+        name: "General",
+        slug: "general",
+        description: "Tout ce qui ne rentre pas dans les catégories ci-dessus.",
+      },
+    ],
+  },
 };
 
 export const categoryUrl = (slug: string) => `${SLUG_BASE}/${slug}`;

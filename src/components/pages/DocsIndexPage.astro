@@ -25,11 +25,18 @@ const sections: { id: SectionId; extra?: boolean }[] = [
 ];
 
 const quickstart = {
-  title: locale === "ar" ? "جرّب كيل في خمس دقائق" : "Try keel in five minutes",
+  title:
+    locale === "ar"
+      ? "جرّب كيل في خمس دقائق"
+      : locale === "fr"
+        ? "Essayez keel en cinq minutes"
+        : "Try keel in five minutes",
   description:
     locale === "ar"
       ? "مسارٌ للقراءة فقط من جهة التداول الافتراضي: لا أموال، ولا أمر تداول."
-      : "A read-only, paper-side path: no funds, nothing can place an order.",
+      : locale === "fr"
+        ? "Un parcours en lecture seule, côté papier : aucun fonds, aucun ordre possible."
+        : "A read-only, paper-side path: no funds, nothing can place an order.",
   href: localePath(locale, "install"),
 };
 ---
@@ -63,10 +70,10 @@ const quickstart = {
         </div>
 
         {
-          c.arNoteTitle && c.arNote.length > 0 && (
+          c.editionNoteTitle && c.editionNote.length > 0 && (
             <section class="prose">
-              <h2>{c.arNoteTitle}</h2>
-              {c.arNote.map((paragraph) => (
+              <h2>{c.editionNoteTitle}</h2>
+              {c.editionNote.map((paragraph) => (
                 <p>{paragraph}</p>
               ))}
             </section>
@@ -98,7 +105,7 @@ const quickstart = {
                       <a href={`${localePath("en", "docs")}${doc.slug}/`}>
                         <h3>{doc.title}</h3>
                         <p dir={locale === "ar" ? "rtl" : undefined}>
-                          {locale === "ar" ? doc.ar : doc.en}
+                          {locale === "ar" ? doc.ar : locale === "fr" ? doc.fr : doc.en}
                         </p>
                       </a>
                     </li>

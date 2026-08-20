@@ -21,7 +21,7 @@ interface Props {
 const { locale, title, description, path, alternates = [], jsonLd = [] } = Astro.props;
 
 const canonical = new URL(path, SITE).href;
-const ogLocaleMap: Record<Locale, string> = { en: "en_US", ar: "ar_AR" };
+const ogLocaleMap: Record<Locale, string> = { en: "en_US", ar: "ar_AR", fr: "fr_FR" };
 
 const analyticsToken = import.meta.env.PUBLIC_CF_ANALYTICS_TOKEN;
 ---

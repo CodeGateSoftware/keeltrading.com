@@ -5,7 +5,7 @@
  * reserved in routing (astro.config.mjs) but ship no pages until their phase
  * (D4) — adding a locale must be content + config only.
  */
-export const locales = ["en", "ar"] as const;
+export const locales = ["en", "ar", "fr"] as const;
 export type Locale = (typeof locales)[number];
 
 export const defaultLocale: Locale = "en";
@@ -15,7 +15,7 @@ export function dirFor(locale: Locale): "ltr" | "rtl" {
 }
 
 export function isLocale(value: string | undefined): value is Locale {
-  return value === "en" || value === "ar";
+  return value === "en" || value === "ar" || value === "fr";
 }
 
 /** The site map (FR-2). Slugs stay identical across locales for v1. */
@@ -54,10 +54,12 @@ export const ENGINE_DISCUSSIONS_URL = "https://github.com/CodeGateSoftware/keel/
 export interface LocalizedPage<T> {
   en: T & { rev: string };
   ar: T & { rev: string; translatedFromRev: string };
+  fr: T & { rev: string; translatedFromRev: string };
 }
 
-export function isStaleTranslation<T>(page: LocalizedPage<T>): boolean {
-  return page.ar.translatedFromRev !== page.en.rev;
+export function isStaleTranslation<T>(page: LocalizedPage<T>, locale: Locale): boolean {
+  if (locale === "en") return false;
+  return page[locale].translatedFromRev !== page.en.rev;
 }
 
 /** Deterministic, locale-neutral date rendering (YYYY-MM-DD). */

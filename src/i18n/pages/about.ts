@@ -123,4 +123,56 @@ export const about: LocalizedPage<AboutContent> = {
       },
     ],
   },
+
+  fr: {
+    rev: "2026-08-20.1",
+    translatedFromRev: "2026-08-19.2",
+    title: "À propos de keel — nom, licence et FAQ keel.sh & KEEL",
+    description:
+      "Qui tient keeltrading.com, les licences, et la FAQ de la marque — pourquoi ce keel n'est ni le Keel de Kubernetes (keel.sh) ni Keel Infrastructure (KEEL).",
+    intro: [
+      "keeltrading.com est le site public de keel, le moteur de conformité Shariah open-source pour le trading de crypto en spot, maintenu par CodeGate Software. Le site est une couche en lecture seule au-dessus de GitHub : la documentation affiche des documents récupérés du dépôt du moteur au moment du build, le fil d'actualité lit les Discussions GitHub, et les boutons de téléchargement pointent vers GitHub Releases. Rien d'interactif ne se passe ici — publier, voter et poser des questions vivent sur GitHub.",
+      "Le site lui-même est open source ; son pipeline de build est conçu pour que le site ne puisse jamais contredire le dépôt qu'il présente.",
+    ],
+    licenses: {
+      title: "Licences",
+      body: [
+        "Le moteur keel est sous licence Apache-2.0 par son propre dépôt (CodeGateSoftware/keel).",
+        "Le code de ce site est sous MIT. Le contenu du site — prose, traductions, marque — est © CodeGate Software ; la citation avec attribution est bienvenue (voir CONTENT-LICENSE.md).",
+      ],
+    },
+    faqTitle: "FAQ de la marque",
+    faq: [
+      {
+        question: "Est-ce le projet Kubernetes appelé Keel ?",
+        answer: [
+          "Non. Il existe un outil Kubernetes établi nommé Keel sur keel.sh, qui occupe aujourd'hui les résultats de recherche pour « keel » seul. Ce projet — keel par CodeGate Software — n'a aucun lien avec lui : ni code, ni historique, ni personnes en commun. Nous disons « keel trading » là où l'ambiguïté induirait en erreur, et ce site existe en partie pour rendre cette distinction facile à trouver.",
+        ],
+      },
+      {
+        question: "Est-ce Keel Infrastructure, l'action KEEL ?",
+        answer: [
+          "Non. Une société de minage de bitcoin cotée au Nasdaq (ex-Bitfarms) trade sous le ticker KEEL, donc une recherche « keel trading » ou « keel crypto » peut afficher son graphique boursier. Elle n'a aucun lien avec ce projet. Ce keel est un moteur de conformité open-source par CodeGate Software — si vous êtes arrivé sur keeltrading.com, vous êtes au bon endroit.",
+        ],
+      },
+      {
+        question: "Pourquoi le nom keel ?",
+        answer: [
+          "La quille (keel) est l'épine structurelle d'un navire — la pièce qui maintient tout droit et détermine le comportement de la coque. Le nom dit ce qu'est le moteur : ni les voiles, ni le vent, mais la partie dont le métier est de tenir le trading sur une ligne droite et auditable.",
+        ],
+      },
+      {
+        question: "Quel est le lien entre keeltrading.com et le dépôt du moteur ?",
+        answer: [
+          "Ce site est un dépôt séparé (CodeGateSoftware/keeltrading.com) dont le build récupère depuis le dépôt du moteur — les versions pour les numéros et liens d'artefacts, les Discussions pour l'actualité, et des documents épinglés pour la documentation. Si le moteur déplace un document, le build de ce site échoue exprès plutôt que d'afficher du périmé.",
+        ],
+      },
+      {
+        question: "Qu'est-ce que CodeGate Software ?",
+        answer: [
+          "CodeGate Software est l'organisation qui maintient le projet. keel a commencé comme un outil personnel et est publié en open source pour que ses affirmations de conformité soient auditées plutôt que crues sur parole.",
+        ],
+      },
+    ],
+  },
 };

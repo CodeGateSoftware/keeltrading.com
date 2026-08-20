@@ -1,6 +1,6 @@
 ---
-import { localePath, type Locale, type PageKey } from "../i18n/config";
-import { t } from "../i18n/ui";
+import { localePath, locales, type Locale, type PageKey } from "../i18n/config";
+import { t, localeNames } from "../i18n/ui";
 import { ENGINE_URL } from "../i18n/config";
 
 interface Props {
@@ -22,8 +22,7 @@ const navItems: { key: Exclude<PageKey, "home">; label: string }[] = [
   { key: "about", label: chrome.nav.about },
 ];
 
-const otherLocale: Locale = locale === "en" ? "ar" : "en";
-const menuLabel = locale === "ar" ? "القائمة" : "Menu";
+const menuLabel = locale === "ar" ? "القائمة" : locale === "fr" ? "Menu" : "Menu";
 ---
 
 <header class="site-header">
@@ -63,18 +62,20 @@ const menuLabel = locale === "ar" ? "القائمة" : "Menu";
     </nav>
 
     <div class="header-actions">
-      <a
-        class="locale-switch"
-        href={pageKey ? localePath(otherLocale, pageKey) : `/${otherLocale}/`}
-        lang={otherLocale}
-        aria-label={
-          locale === "en"
-            ? "العربية — read the Arabic edition"
-            : "English — read the English edition"
-        }
-      >
-        {chrome.localeSwitcher.other[locale]}
-      </a>
+      {
+        locales
+          .filter((candidate) => candidate !== locale)
+          .map((other) => (
+            <a
+              class="locale-switch"
+              href={pageKey ? localePath(other, pageKey) : `/${other}/`}
+              lang={other}
+              aria-label={`${localeNames[other]} — ${chrome.localeSwitcher.label}`}
+            >
+              {localeNames[other]}
+            </a>
+          ))
+      }
       <a
         class="github-link"
         href={ENGINE_URL}

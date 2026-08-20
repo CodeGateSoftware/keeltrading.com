@@ -85,11 +85,10 @@ export const ui = {
     },
     localeSwitcher: {
       label: "Language",
-      other: { en: "العربية", ar: "English" } as Record<Locale, string>,
     },
     notFound: {
       title: "Page not found",
-      body: "This page does not exist. The site lives in two editions:",
+      body: "This page does not exist. The site lives in these editions:",
     },
   },
 
@@ -167,14 +166,106 @@ export const ui = {
     },
     localeSwitcher: {
       label: "اللغة",
-      other: { en: "العربية", ar: "English" } as Record<Locale, string>,
     },
     notFound: {
       title: "الصفحة غير موجودة",
       body: "هذه الصفحة غير موجودة. للموقع طبعتان:",
     },
   },
+
+  fr: {
+    skip: "Aller au contenu",
+    nav: {
+      home: "Accueil",
+      features: "Fonctionnalités",
+      install: "Installation",
+      docs: "Documentation",
+      news: "Actualités",
+      community: "Communauté",
+      compliance: "Conformité",
+      compare: "Comparaison",
+      about: "À propos",
+    },
+    actions: {
+      install: "Installer",
+      readDocs: "Lire la documentation",
+      viewOnGitHub: "Voir sur GitHub",
+      readOnGitHub: "Lire sur GitHub",
+      viewSource: "Voir la source sur GitHub",
+      seeReleases: "Voir les versions sur GitHub",
+      discussOnGitHub: "Discuter sur GitHub",
+    },
+    tracks: {
+      plainLabel: "En termes simples",
+      operatorsLabel: "Pour les opérateurs",
+      operatorsHint:
+        "Vous êtes technique ? Voici le même projet vu du siège de l'opérateur : runbooks, références CLI et code source du moteur.",
+    },
+    banner: {
+      staleTitle: "Cette traduction est peut-être en retard sur l'original anglais",
+      staleBody:
+        "La page anglaise a changé depuis la révision de cette traduction. Pour la formulation actuelle, lisez l'original anglais.",
+      staleLink: "Lire la page anglaise",
+    },
+    marker: {
+      translatedAgainst: (rev: string) =>
+        `Dernière traduction depuis la révision anglaise ${rev}.`,
+      untranslatedOriginal: "Document original — affiché en anglais",
+    },
+    docs: {
+      fetchedFrom: (repo: string, ref: string) =>
+        `Récupéré au moment du build depuis ${repo}@${ref}. Si un document est déplacé, le build échoue — ce site n'affiche jamais de documents périmés.`,
+      backToDocs: "Tous les documents",
+      fetchedAt: (date: string) => `Dernière récupération : ${date}.`,
+      originalLanguageNote:
+        "Les documents du moteur sont publiés en anglais. L'édition française les résume ; les originaux restent le texte de référence.",
+      notTranslated: "Ce document n'est pas traduit ; il est affiché en anglais dans sa forme originale.",
+    },
+    news: {
+      from: "Annonces des Discussions GitHub",
+      fetchedAt: (date: string) => `Flux actualisé le ${date} (reconstruction horaire).`,
+      empty:
+        "Aucune annonce récupérée pour l'instant. Lisez-les directement sur GitHub — le flux se remplira à la prochaine reconstruction.",
+      interactOnGitHub:
+        "Les textes s'affichent dans leur langue d'origine ; lecture et réponses ont lieu sur GitHub, pas ici.",
+      comments: (n: number) => (n === 1 ? "1 commentaire" : `${n} commentaires`),
+      secondary: "Show and tell — ce que la communauté construit avec keel",
+    },
+    install: {
+      latest: (tag: string) => `Dernière version : ${tag}`,
+      unknown: "Dernière version inconnue pour l'instant — ouvrez la page des versions sur GitHub",
+      neverMirrored:
+        "Les téléchargements pointent directement vers les fichiers GitHub. Ce site ne copie jamais les binaires.",
+      copiedAtBuild: (date: string) => `Données de version récupérées de GitHub au build, ${date}.`,
+    },
+    footer: {
+      disclaimerTitle: "Avertissements permanents",
+      disclaimer:
+        "keel est un outil personnel — ni conseil financier, ni fatwa, ni conseil religieux. Consultez un conseiller financier qualifié et un savant compétent avant de trader. Vous êtes seul responsable de vos décisions de trading et de vos propres attestations.",
+      trademark:
+        "Alpaca, Coinbase et Robinhood sont des marques de leurs propriétaires respectifs. keel n'a aucun lien avec elles, ni aval, ni parrainage. Les noms de plateformes n'apparaissent que pour identifier ce à quoi le code s'adresse.",
+      keelsh:
+        "Sans lien avec le projet Kubernetes également nommé Keel (keel.sh).",
+      license:
+        "Moteur : Apache-2.0 (CodeGateSoftware/keel). Code de ce site : MIT. Contenu du site : © CodeGate Software — la citation avec attribution est bienvenue.",
+      honesty: "Le résultat honnête, dit d'abord",
+    },
+    localeSwitcher: {
+      label: "Langue",
+    },
+    notFound: {
+      title: "Page introuvable",
+      body: "Cette page n'existe pas. Le site existe en plusieurs éditions :",
+    },
+  },
 } as const;
+
+/** Native names, shown in the header's language pills. */
+export const localeNames: Record<Locale, string> = {
+  en: "English",
+  ar: "العربية",
+  fr: "Français",
+};
 
 export type Ui = (typeof ui)["en"];
 

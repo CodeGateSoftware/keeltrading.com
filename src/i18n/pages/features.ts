@@ -152,4 +152,69 @@ export const features: LocalizedPage<FeaturesContent> = {
       ],
     },
   },
+
+  fr: {
+    rev: "2026-08-20.1",
+    translatedFromRev: "2026-08-19.2",
+    title: "Fonctionnalités du moteur de conformité — keel",
+    description:
+      "Filtrage par attestation à échec fermé, dix-huit rails incontournables, portes de promotion avec contrôle de surapprentissage, mesure honnête contre DCA — chaque fonctionnalité renvoie à sa source dans le code.",
+    intro:
+      "Cette page ne décrit que ce que le dépôt du moteur peut montrer. Chaque section renvoie à la source qui le prouve — si une affirmation s'écarte un jour du code, le lien est là pour nous prendre la main.",
+    verifyNote: "Vérifier dans le dépôt",
+    features: [
+      {
+        title: "Filtrage d'actifs par attestation — échec fermé",
+        body: "L'admission sur la liste autorisée est scindée selon ce qui est connaissable. Les faits de marché sont calculés. Les classifications Shariah — le cœur du token est-il un secteur interdit (§28.4), est-ce un 'ayn adossé à un actif ou une créance dayn (§65.5/§67.2), verse-t-il un rendement assimilable au riba — sont attestées, jamais déduites, via keel assets attest. Une attestation absente est un rejet, pas une acceptation par défaut.",
+        verify: { label: "compliance/screen.py", href: "https://github.com/CodeGateSoftware/keel/blob/main/keel/compliance/screen.py" },
+      },
+      {
+        title: "Les rails — dix-huit contrôles qu'aucun ordre ne saute",
+        body: "Des gardes déterministes que rien ne peut contourner, pas même le mode autonomie :",
+        points: [
+          "La liste autorisée halal, les plafonds de dépense par ordre et par jour, les plafonds d'exposition et de concentration",
+          "Dimensionnement sensible à la corrélation, plancher de mouvement minimal, pas de martingale ni d'élargissement de stop",
+          "Disjoncteurs de drawdown total et hebdomadaire, disjoncteur de pertes consécutives / d'érosion d'edge",
+          "Contrôles de fraîcheur des données et d'équilibre des cotations",
+          "Rail 14 — attestations d'abonnement/retrait de la plateforme : les BUY réels sont refusés tant que l'opérateur n'a pas attesté",
+          "Rail 17 — qabd §65.4 : la capacité de retrait est attestée et appliquée, car un actif qu'on ne peut pas retirer n'a peut-être jamais été possédé valablement",
+          "Une porte d'entrée à spread maximal qui refuse les BUY réels à 50 points de base ou plus, à échec fermé sur un carnet illisible",
+          "Un veto de rail se nomme lui-même et nomme la commande qui le lève",
+        ],
+        verify: { label: "execution/guards.py", href: "https://github.com/CodeGateSoftware/keel/blob/main/keel/execution/guards.py" },
+      },
+      {
+        title: "Portes de stratégie — candidate → papier → réel",
+        body: "Une règle doit franchir trois étapes avant de toucher de l'argent réel. La promotion passe une porte en deux volets : planchers de performance et contrôle de surapprentissage (PBO/CSCV). Le plancher de 100 transactions peut être atteint par le backtest de la règle ou par le pool des mêmes paramètres sur d'autres produits en papier — à condition qu'au moins cinq produits contribuent chacun dix transactions, car un pool d'échantillons corrélées surestime sa puissance.",
+        verify: { label: "agent.py — RULE_REGISTRY", href: "https://github.com/CodeGateSoftware/keel/blob/main/keel/agent.py" },
+      },
+      {
+        title: "Mesure honnête, contre DCA",
+        body: "keel simulate rejoue les règles réelles sur l'historique récupéré, compare au repère DCA, et écrit un rapport GO-LIVE / TRAIN-MORE nommant chaque porte et ses chiffres. Le backtesteur tarife un glissement par produit à l'échelle de sa liquidité réelle (5–50 pb), pour que les résultats ne puissent pas être flatteurs sur des carnets fins. Sur les règles par défaut, il vous dira très probablement TRAIN MORE — c'est le moteur qui travaille, pas une panne.",
+        verify: { label: "le registre des expériences", href: "https://github.com/CodeGateSoftware/keel/tree/main/docs/experiments" },
+      },
+      {
+        title: "Trois profils de déploiement qui ne partagent rien",
+        body: "Papier quotidien, réel, et un profil horaire de collecte de preuves (paper-hourly) — chacun avec sa base de données et sa configuration. Le profil horaire existe parce que l'horloge quotidienne mesure 2,15 signaux par actif-année (une revue à 100 transactions dans 31 à 84 ans), quand les mêmes règles sur bougies ONE_HOUR en déclenchent 49,4 — environ 940 signaux d'entrée par an en pool, rapprochant la revue de preuves à des semaines au lieu de décennies. Lui aussi est mesuré net-négatif : il existe pour collecter des preuves admissibles, pas du profit.",
+        verify: { label: "le runbook opérateur", href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/operator-runbook.md" },
+      },
+      {
+        title: "Un port courtier, pas un enfermement",
+        body: "Les adaptateurs implémentent un seul contrat — le port keel-broker-api — et s'enregistrent sous le point d'entrée keel.brokers. Coinbase Advanced Trade est l'adaptateur de référence ; Robinhood est livré comme plateforme optionnelle délibérément non câblée ; un adaptateur Alpaca a rejoint en v0.10.0. Une plateforme factive délibérément divergente garde le port honnête : la suite de conformité (~3 000 tests) tourne sur les deux.",
+        verify: { label: "packages/", href: "https://github.com/CodeGateSoftware/keel/tree/main/packages" },
+      },
+      {
+        title: "Confirmation par défaut ; l'autonomie change qui on interroge",
+        body: "keel prévisualise chaque ordre et demande au terminal ; sans opérateur, il décline. keel autonomy on change qui on interroge, jamais ce qui est permis. Pour arrêter de trader : keel kill — l'interrupteur échoue fermé.",
+        verify: { label: "le README, « How keel works »", href: "https://github.com/CodeGateSoftware/keel#how-keel-works" },
+      },
+    ],
+    inert: {
+      title: "keel est livré inerte",
+      body: [
+        "Rien ne trade tant que vous n'avez pas promu une règle, attesté l'abonnement à la plateforme, alimenté le compte et — en mode confirmation — tapé y. Spot long uniquement : pas de levier, pas de vente à découvert, pas de produits dérivés, et le dimensionnement utilise du cash réel, donc pas de riba.",
+        "Les obligations au niveau du compte qu'aucun rail ne voit (désactiver les récompenses USDC sur les soldes oisifs, principalement) restent à vérifier par l'opérateur — le runbook opérateur les liste.",
+      ],
+    },
+  },
 };

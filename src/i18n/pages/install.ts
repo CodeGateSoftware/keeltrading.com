@@ -100,4 +100,39 @@ export const install: LocalizedPage<InstallContent> = {
       warning: "لا تثبّت بالاسم المجرد أبدًا. التوزيعة اسمها keel-trader؛ أما اسم keel على PyPI فلمشروعٍ آخر لا علاقة له بنا، فأمر pip install keel يجلب حزمة غيرنا. والبنية التي تُظهر DIRTY أو [checkout] ليست إصدارًا ويُمنع تشغيلها على أموالٍ حيّة.",
     },
   },
+
+  fr: {
+    rev: "2026-08-20.1",
+    translatedFromRev: "2026-08-19.2",
+    title: "Installer keel — depuis les sources ou les versions GitHub",
+    description:
+      "Deux façons d'obtenir keel : l'essayer en cinq minutes depuis les sources (lecture seule, côté papier), ou installer les wheels d'une version. Numéros de version et liens viennent de GitHub Releases au build.",
+    fromSource: {
+      title: "Essayez-le en cinq minutes — depuis les sources",
+      lead: "Tout dans ce parcours est en lecture seule et côté papier : aucun fonds, et rien ici ne peut passer d'ordre. Il vous faut uv et une clé API Coinbase Developer Platform (CDP) gratuite en lecture seule — l'historique de chandeliers passe par le client authentifié, donc keel fetch sans clé échoue avec une AuthenticationError ; dit d'avance pour que l'étape 4 ne soit pas une surprise.",
+      requirements: ["uv (le gestionnaire de paquets Python)", "Python 3.11 ou plus (le dépôt se développe sur 3.14)", "Une clé CDP gratuite en lecture seule — données de marché uniquement"],
+      expectTitle: "À quoi vous attendre",
+      expect: "keel simulate rejoue les règles réelles de façon déterministe sur l'historique récupéré, compare au repère DCA et écrit un rapport GO-LIVE / TRAIN-MORE. Sur les règles par défaut, il vous dira très probablement TRAIN MORE en nommant les portes qui échouent — c'est le moteur qui fonctionne, pas une panne ; l'honnêteté est la fonctionnalité.",
+      next: "Les étapes suivantes — promouvoir une règle par la porte, lancer l'agent papier, un premier ordre réel supervisé — sont dans le runbook de mise en production.",
+    },
+    fromRelease: {
+      title: "Installer une version",
+      lead: "Les versions sont livrées en jeux de wheels sur GitHub Releases. Les boutons ci-dessous pointent directement vers GitHub — ce site ne copie jamais les binaires.",
+      steps: [
+        {
+          title: "Télécharger toutes les wheels dans un répertoire",
+          body: "Prenez chaque wheel de la page de la dernière version dans un seul répertoire (les boutons ci-dessous y mènent — jamais un miroir).",
+        },
+        {
+          title: "Installer keel_trader par chemin",
+          body: "pip install --find-links . ./keel_trader-<version>-py3-none-any.whl — la commande exacte pour la version en cours est dans le panneau ci-dessus.",
+        },
+        {
+          title: "Vérifier avec keel versions — pas --version",
+          body: "keel versions rapporte chaque distribution keel du venv et échoue si une distribution sœur est restée à une version plus ancienne — ce que --version ne voit pas.",
+        },
+      ],
+      warning: "N'installez jamais par nom nu. La distribution s'appelle keel-trader ; le nom keel sur PyPI appartient à un projet sans rapport, donc pip install keel récupère le paquet de quelqu'un d'autre. Un build qui affiche DIRTY ou [checkout] n'est pas une version et ne doit jamais tourner sur des fonds réels.",
+    },
+  },
 };

@@ -22,6 +22,7 @@ const honestExperiment =
 const editionLinks = [
   { label: "English", locale: "en" as Locale },
   { label: "العربية", locale: "ar" as Locale },
+  { label: "Français", locale: "fr" as Locale },
 ];
 ---
 
@@ -34,14 +35,14 @@ const editionLinks = [
       </section>
 
       <section>
-        <h2>{locale === "ar" ? "قانوني" : "Legal"}</h2>
+        <h2>{locale === "ar" ? "قانوني" : locale === "fr" ? "Mentions légales" : "Legal"}</h2>
         <p>{chrome.footer.trademark}</p>
         <p>{chrome.footer.keelsh}</p>
         <p>{chrome.footer.license}</p>
       </section>
 
       <section>
-        <h2>{locale === "ar" ? "المشروع" : "The project"}</h2>
+        <h2>{locale === "ar" ? "المشروع" : locale === "fr" ? "Le projet" : "The project"}</h2>
         <ul>
           <li><a href={ENGINE_URL}>{chrome.actions.viewOnGitHub}</a></li>
           <li><a href={ENGINE_RELEASES_URL}>{chrome.actions.seeReleases}</a></li>
@@ -51,14 +52,14 @@ const editionLinks = [
           </li>
           <li>
             <a href="https://github.com/CodeGateSoftware/keeltrading.com">
-              {locale === "ar" ? "شيفرة هذا الموقع" : "This site's source"}
+              {locale === "ar" ? "شيفرة هذا الموقع" : locale === "fr" ? "Le code source de ce site" : "This site's source"}
             </a>
           </li>
         </ul>
       </section>
 
       <section>
-        <h2>{locale === "ar" ? "الطبعات" : "Editions"}</h2>
+        <h2>{locale === "ar" ? "الطبعات" : locale === "fr" ? "Éditions" : "Editions"}</h2>
         <ul>
           {
             editionLinks.map((edition) => (
@@ -74,8 +75,8 @@ const editionLinks = [
             ))
           }
           <li>
-            <span aria-hidden="true">Français · Español</span>
-            {locale === "ar" ? " (لاحقًا)" : " (later)"}
+            <span aria-hidden="true">Español</span>
+            {locale === "ar" ? " (لاحقًا)" : locale === "fr" ? " (à venir)" : " (later)"}
           </li>
         </ul>
       </section>
@@ -83,7 +84,7 @@ const editionLinks = [
 
     <div class="fineprint">
       <span>© 2026 CodeGate Software</span>
-      <span>{c.honest.title} — <a href={honestExperiment}>{locale === "ar" ? "سجلّ التجربة" : "the experiment record"}</a></span>
+      <span>{c.honest.title} — <a href={honestExperiment}>{locale === "ar" ? "سجلّ التجربة" : locale === "fr" ? "le compte rendu de l'expérience" : "the experiment record"}</a></span>
     </div>
   </div>
 </footer>

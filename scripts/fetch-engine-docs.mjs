@@ -124,6 +124,7 @@ for (const doc of manifest.docs) {
     title: doc.title,
     en: doc.en,
     ar: doc.ar,
+    fr: doc.fr ?? doc.en,
     section: doc.section ?? "reference",
     sourceUrl: `https://github.com/${manifest.repo}/blob/${manifest.ref}/${doc.path}`,
   });

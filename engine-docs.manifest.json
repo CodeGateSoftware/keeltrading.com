@@ -8,7 +8,8 @@
       "title": "Glossary",
       "en": "The single source for keel's vocabulary — every term a keel screen can show, defined here and nowhere else.",
       "ar": "المصدر الوحيد لمصطلحات كيل — كل مصطلح يمكن أن يعرضه سطر الأوامر معرَّفٌ هنا وحده.",
-      "section": "reference"
+      "section": "reference",
+      "fr": "L'unique source du vocabulaire de keel — chaque terme qu'un écran keel peut afficher est défini ici et nulle part ailleurs."
     },
     {
       "path": "docs/fiqh-basis.md",
@@ -16,7 +17,8 @@
       "title": "The fiqh basis",
       "en": "The Shariah reasoning keel encodes, ruling by ruling, each with its in-repo source — published so it can be audited and challenged.",
       "ar": "الاستدلال الفقهي الذي يشفّره كيل، حكمًا حكمًا، مع مصدره داخل المستودع — نُشر ليُدقَّق ويُعترَض عليه.",
-      "section": "reference"
+      "section": "reference",
+      "fr": "Le raisonnement Shariah que keel encode, règle par règle, chacun avec sa source dans le dépôt — publié pour être audité et contesté."
     },
     {
       "path": "docs/operator-runbook.md",
@@ -24,7 +26,8 @@
       "title": "Operator runbook",
       "en": "Operating a deployment: the account-level obligations no rail can enforce, upgrades, and the three deployment profiles.",
       "ar": "تشغيل النشر: الالتزامات على مستوى الحساب التي لا يراها أي سكة أمان، والترقيات، وأنماط النشر الثلاثة.",
-      "section": "guides"
+      "section": "guides",
+      "fr": "Exploiter un déploiement : les obligations au niveau du compte qu'aucun rail ne peut faire respecter, les mises à niveau et les trois profils de déploiement."
     },
     {
       "path": "docs/go-live-runbook.md",
@@ -32,7 +35,8 @@
       "title": "Go-live runbook",
       "en": "The path to a first supervised live order — promotion, paper, and the human-in-the-loop steps.",
       "ar": "الطريق إلى أول أمر حقيقي خاضعٍ لإشراف بشري — الترقية، والتجريبي، وخطوات الإشراف.",
-      "section": "guides"
+      "section": "guides",
+      "fr": "Le chemin vers un premier ordre réel supervisé — promotion, papier et étapes avec supervision humaine."
     },
     {
       "path": "docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
@@ -40,7 +44,8 @@
       "title": "Experiment: the honest result, restated",
       "en": "The full record of the measured result: no shipped rule family is net-positive at the taker fee actually paid — every number and the defects that forced a restatement.",
       "ar": "السجل الكامل للنتيجة المقيسة: لا عائلة قواعد مُصدَّرة تحقق ربحًا صافيًا عند رسوم الآخذ الفعلية — بكل أرقامها والعيوب التي فرضت إعادة البيان.",
-      "section": "research"
+      "section": "research",
+      "fr": "Le compte rendu complet du résultat mesuré : aucune famille de règles livrée n'est nette-positive aux frais preneur réellement payés — tous les chiffres et les défauts qui ont forcé une reformulation."
     },
     {
       "path": "docs/experiments/2026-08-11-hourly-backtest-turtle-breakout.md",
@@ -48,7 +53,8 @@
       "title": "Experiment: the hourly backtest",
       "en": "Why the hourly profile exists: the same rules measured on ONE_HOUR bars fire 49.4 signals per asset-year instead of 2.15.",
       "ar": "لماذا يوجد النمط الساعي: القواعد نفسها على شموع الساعة تُطلق 49.4 إشارة لكل أصل-سنة بدل 2.15.",
-      "section": "research"
+      "section": "research",
+      "fr": "Pourquoi le profil horaire existe : les mêmes règles mesurées sur bougies ONE_HOUR déclenchent 49,4 signaux par actif-année au lieu de 2,15."
     },
     {
       "path": "docs/research/2026-08-18-lahlou-speculation-risk-sources.md",
@@ -56,7 +62,8 @@
       "title": "Research: speculation risk sources (Lahlou)",
       "en": "Source review on the risk sources of speculation — part of the research corpus behind the fiqh basis.",
       "ar": "مراجعة مصادر حول منابع خطر المضاربة — من سجل البحث الذي يقف خلف الأساس الفقهي.",
-      "section": "research"
+      "section": "research",
+      "fr": "Revue de sources sur les sources de risque de la spéculation — partie du corpus de recherche derrière la base fiqh."
     },
     {
       "path": "docs/research/2026-08-18-money-management-and-fiqh-source-review.md",
@@ -64,29 +71,34 @@
       "title": "Research: money management & fiqh sources",
       "en": "Source review on money management in trading and its fiqh treatment.",
       "ar": "مراجعة مصادر حول إدارة المال في التداول ومعالجتها الفقهية.",
-      "section": "research"
+      "section": "research",
+      "fr": "Revue de sources sur la gestion de l'argent dans le trading et son traitement fiqh."
     }
   ],
   "sections": [
     {
       "id": "get-started",
       "en": "Get started",
-      "ar": "البداية"
+      "ar": "البداية",
+      "fr": "Premiers pas"
     },
     {
       "id": "guides",
       "en": "Guides",
-      "ar": "أدلة"
+      "ar": "أدلة",
+      "fr": "Guides"
     },
     {
       "id": "reference",
       "en": "Reference",
-      "ar": "مرجع"
+      "ar": "مرجع",
+      "fr": "Référence"
     },
     {
       "id": "research",
       "en": "Research & experiments",
-      "ar": "البحث والتجارب"
+      "ar": "البحث والتجارب",
+      "fr": "Recherche et expérimentations"
     }
   ]
 }

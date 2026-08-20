@@ -28,6 +28,7 @@ export interface DocMeta {
   title: string;
   en: string;
   ar: string;
+  fr: string;
   section: SectionId;
   sourceUrl: string;
 }
@@ -36,6 +37,7 @@ export interface SectionMeta {
   id: SectionId;
   en: string;
   ar: string;
+  fr: string;
 }
 
 interface MetaFile {
@@ -78,8 +80,13 @@ export function sectionIconSvg(section: SectionId): string {
   return `<svg width="18" height="18" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${sectionIcons[section]}</svg>`;
 }
 
-export function sectionLabel(section: SectionMeta, locale: "en" | "ar"): string {
-  return locale === "ar" ? section.ar : section.en;
+export function sectionLabel(
+  section: SectionMeta,
+  locale: "en" | "ar" | "fr",
+): string {
+  if (locale === "ar") return section.ar;
+  if (locale === "fr") return section.fr;
+  return section.en;
 }
 
 export interface NavDoc {

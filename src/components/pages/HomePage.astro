@@ -73,7 +73,9 @@ const honestLinks = [
 ];
 
 const fiqhHref =
-  locale === "en" ? `${localePath("en", "docs")}fiqh-basis/` : localePath("ar", "docs");
+  locale === "en"
+    ? `${localePath("en", "docs")}fiqh-basis/`
+    : localePath(locale, "docs");
 ---
 
 <Base
@@ -114,7 +116,7 @@ const fiqhHref =
 
     <div class="narrow">
       <section class="prose">
-        <h2>{locale === "ar" ? "حدود المحرّك، بلسانه" : "The engine's boundary, in its own words"}</h2>
+        <h2>{locale === "ar" ? "حدود المحرّك، بلسانه" : locale === "fr" ? "Les limites du moteur, dans ses propres mots" : "The engine's boundary, in its own words"}</h2>
         <blockquote>{c.fatwa.quote}</blockquote>
         {c.fatwa.body.map((paragraph) => <p>{paragraph}</p>)}
         <p><a class="button secondary" href={localePath(locale, "compliance")}>{c.fatwa.more} →</a></p>

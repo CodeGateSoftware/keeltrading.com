@@ -86,9 +86,86 @@ export const compare: LocalizedPage<CompareContent> = {
       "الوعد بربح: لا عائلة قواعد مُصدَّرة تحقق ربحًا صافيًا عند رسوم الآخذ الفعلية، والموقع يقول ذلك في صفحته الأولى.",
     ],
   },
+
+  fr: {
+    rev: "2026-08-20.1",
+    translatedFromRev: "2026-08-20.1",
+    title: "Comparer keel aux autres bots de trading",
+    description:
+      "keel comparé à Freqtrade, Jesse et Hummingbot : licence, finalité, portes de promotion, et la machinerie de conformité qu'aucun d'eux n'emporte — des faits structurels tirés des dépôts publics.",
+    intro: [
+      "Freqtrade, Jesse et Hummingbot sont des bots de trading open-source établis et capables — bien plus mûrs que keel, avec des communautés ordres de grandeur plus grandes. Si vous voulez du trading algorithmique généraliste avec la couverture d'exchanges la plus large, ils sont la meilleure réponse.",
+      "Cette page énonce, factuellement et depuis les dépôts publics, où keel diffère : keel n'est pas un meilleur bot de trading — c'est une autre chose, un moteur d'application d'une conformité Shariah que vous fournissez.",
+    ],
+    tableTitle: "Comparaison structurelle",
+    footnote:
+      "Faits tirés du dépôt public de chaque projet, août 2026. Taille de communauté (étoiles GitHub, même date) : Freqtrade ~53k, Hummingbot ~19,5k, Jesse ~8,3k — keel vient de lancer. Freqtrade, Jesse et Hummingbot appartiennent à leurs mainteneurs ; leurs noms n'apparaissent ici que pour les identifier.",
+    readingTitle: "Comment lire ceci",
+    reading: [
+      "Chaque projet ici fait du backtest de stratégies et peut trader de la crypto. Les différences qui comptent sont structurelles : ce que le moteur refuse de faire, ce qu'il exige avant qu'une règle puisse trader de l'argent réel, et si la conformité est une machinerie ou rien du tout.",
+      "Aucune case de ce tableau n'est un jugement de valeur. L'ampleur de Freqtrade, le flux de recherche de Jesse et la profondeur de market-making de Hummingbot sont de vraies forces — keel n'en a aucune, par design.",
+    ],
+    wontDoTitle: "Ce que keel ne fera pas",
+    wontDo: [
+      "Courir après la couverture d'exchanges : Coinbase est l'adaptateur de référence câblé ; les adaptateurs Robinhood et Alpaca sont livrés délibérément non câblés.",
+      "Trader autre chose que le spot long : pas de levier, pas de vente à découvert, pas de produits dérivés.",
+      "Promouvoir une règle sur la seule brillance d'un backtest : le contrôle de surapprentissage (PBO/CSCV) peut opposer son veto.",
+      "Promettre du profit : aucune famille de règles livrée n'est nette-positive aux frais preneur réellement payés, et le site le dit sur sa page d'accueil.",
+    ],
+  },
 };
 
-export const compareRows = (locale: "en" | "ar"): CompareRow[] => {
+export const compareRows = (locale: "en" | "ar" | "fr"): CompareRow[] => {
+  if (locale === "fr") {
+    return [
+      { label: "Licence", values: ["Apache-2.0", "GPL-3.0", "MIT", "Apache-2.0"] },
+      { label: "Langage", values: ["Python", "Python", "Python", "Python"] },
+      {
+        label: "Finalité",
+        values: [
+          "Appliquer la conformité Shariah que vous fournissez, sur le spot",
+          "Développement généraliste de bots de trading",
+          "Recherche de stratégies et trading",
+          "Market making / stratégies haute fréquence",
+        ],
+      },
+      {
+        label: "Adaptateurs de plateformes",
+        values: [
+          "Coinbase (référence) ; Robinhood & Alpaca livrés non câblés",
+          "Beaucoup de grandes plateformes",
+          "Plusieurs plateformes",
+          "Beaucoup de CEX et de DEX",
+        ],
+      },
+      {
+        label: "Backtesting",
+        values: ["Fidèle à la production, glissement à l'échelle de la liquidité", "Oui", "Oui", "Oui"],
+      },
+      {
+        label: "Porte obligatoire avant le réel",
+        values: [
+          "Deux volets : planchers de performance + contrôle de surapprentissage (PBO/CSCV), plancher de 100 transactions",
+          "Non",
+          "Non",
+          "Non",
+        ],
+      },
+      {
+        label: "Machinerie de conformité Shariah",
+        values: [
+          "Filtrage attesté à échec fermé + 18 rails incontournables (dont qabd)",
+          "Intégrée nulle part",
+          "Intégrée nulle part",
+          "Intégrée nulle part",
+        ],
+      },
+      {
+        label: "Résultat honnête énoncé sur ses propres règles",
+        values: ["Oui — en page d'accueil", "Non publié", "Non publié", "Non publié"],
+      },
+    ];
+  }
   if (locale === "ar") {
     return [
       {

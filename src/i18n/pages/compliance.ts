@@ -165,4 +165,78 @@ export const compliance: LocalizedPage<ComplianceContent> = {
       ],
     },
   },
+
+  fr: {
+    rev: "2026-08-20.1",
+    translatedFromRev: "2026-08-19.2",
+    title: "La méthodologie de conformité, en termes simples",
+    description:
+      "Comment fonctionne la conformité Shariah de keel : filtrage attesté à échec fermé, le modèle d'attestation par (plateforme, produit), le contrôle qabd — et ce que keel n'est pas : pas une fatwa, pas un conseil financier, non revu par des savants.",
+    intro:
+      "La conformité de keel est conçue pour que chaque règle qu'il applique soit écrite, sourcée et fournie par vous — l'opérateur. Rien de religieux n'est déduit, imposé par défaut ou caché dans le code. Cette page explique ce modèle en langage simple ; le document de base fiqh en est l'énoncé de référence, règle par règle.",
+    sections: [
+      {
+        title: "Faits calculés contre classifications attestées",
+        body: [
+          "Certaines choses sur un actif se connaissent depuis le marché et se calculent simplement. Mais : le cœur du token est-il un secteur interdit, est-ce un 'ayn adossé à un actif ou une créance dayn, verse-t-il un rendement assimilable au riba — ce sont des questions de fait-plus-érudition sur le monde. Aucun module du dépôt ne les déduit des chandeliers, et aucun ne fait semblant. Un humain les enregistre, avec une source et un nom attribué ; keel applique l'enregistrement de façon déterministe et refuse tout ce qui n'est pas attesté.",
+        ],
+      },
+      {
+        title: "Le modèle d'attestation par (plateforme, produit)",
+        body: [
+          "Une attestation est bornée : elle nomme la plateforme et le produit, porte une source et est attribuée à un nom. Deux opérateurs suivant des écoles différentes peuvent détenir des attestations différentes et obtenir des réponses différentes du même code — par conception, parce que la règle vit dans votre attestation, pas dans le code.",
+          "Le même modèle couvre la plateforme elle-même : le rail 14 refuse les BUY réels tant que l'opérateur n'a pas attesté l'abonnement, et le rail 17 encode le qabd §65.4 — un actif qu'on ne peut pas retirer n'a peut-être jamais été possédé valablement, donc la capacité de retrait est attestée et appliquée, jamais supposée.",
+        ],
+      },
+      {
+        title: "Purification et la forme spot uniquement",
+        body: [
+          "keel est du spot long uniquement, sans levier, sans vente à découvert, sans produits dérivés ; le dimensionnement utilise du cash réel, donc pas de riba par la position elle-même. Là où une obligation ne peut pas être appliquée par le code, elle est énoncée plutôt que balayée : les devoirs au niveau du compte qu'aucun rail ne voit — désactiver les récompenses USDC sur les soldes oisifs, principalement — restent à vérifier par l'opérateur, listés dans le runbook opérateur.",
+        ],
+      },
+    ],
+    doesNot: {
+      title: "Ce que keel ne fait pas",
+      items: [
+        "Ce n'est pas une fatwa et il ne peut pas en produire. keel ne déduit jamais une classification Shariah des données de marché ; il applique la règle que vous fournissez.",
+        "Ce n'est pas un conseil financier et pas un conseil religieux (Shariah).",
+        "Aucune revue savante de la base fiqh de keel n'a eu lieu. La base est la lecture sourcée d'un opérateur, publiée pour être auditée et contestée ; tant qu'une revue n'a pas lieu, le statut est : non revue.",
+        "L'attestation est l'acte et la responsabilité de l'opérateur. keel est la machinerie d'application, pas l'autorité.",
+        "Il ne promet pas de profit — aucune famille de règles livrée n'est nette-positive aux frais preneur réellement payés, et le repère est le simple DCA.",
+      ],
+    },
+    attest: {
+      title: "La commande qui compte",
+      body: [
+        "Une seule commande enregistre une classification avec sa source et un nom attribué. Tout ce que keel applique ensuite à cet actif remonte à cet enregistrement.",
+      ],
+      command: "keel assets attest",
+      commandNote: "Enregistrez une classification Shariah — avec une source et un nom attribué — que keel appliquera ensuite de façon déterministe.",
+    },
+    links: {
+      title: "Sources premières",
+      items: [
+        {
+          label: "La base fiqh (docs/fiqh-basis.md)",
+          note: "Le raisonnement Shariah que keel encode, règle par règle, avec sa source dans le dépôt.",
+          href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/fiqh-basis.md",
+        },
+        {
+          label: "Statut de la revue savante",
+          note: "Ce qu'une revue savante couvrirait, ce qu'elle signifierait ou non — et le statut actuel : non revue.",
+          href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/fiqh-basis.md#scholarly-review-status",
+        },
+        {
+          label: "Le résultat honnête — compte rendu de l'expérience",
+          note: "Aucune famille de règles livrée n'est nette-positive aux frais preneur réellement payés ; tous les chiffres sont énoncés.",
+          href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
+        },
+        {
+          label: "Le glossaire (docs/glossary.md)",
+          note: "L'unique source du vocabulaire — les termes fiqh sont ancrés, jamais inventés.",
+          href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/glossary.md",
+        },
+      ],
+    },
+  },
 };

@@ -374,6 +374,7 @@ section {
 @media (max-width: 63.99rem) {
   .site-header .inner {
     flex-wrap: nowrap;
+    gap: 0.5rem;
   }
 
   .header-actions {
@@ -464,6 +465,26 @@ section {
   border: 1px solid var(--border);
   border-radius: 999px;
   background: var(--surface);
+  white-space: nowrap;
+}
+
+/* Very narrow phones: two language pills + brand + burger must fit */
+@media (max-width: 30rem) {
+  .header-actions {
+    gap: 0.4rem;
+  }
+
+  .locale-switch {
+    padding: 0.28rem 0.5rem;
+    font-size: 0.82rem;
+  }
+}
+
+@media (max-width: 23rem) {
+  .github-link {
+    /* Still reachable in the footer and the docs panel */
+    display: none;
+  }
 }
 
 .locale-switch:hover {

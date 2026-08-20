@@ -24,7 +24,8 @@ const chrome = t(locale);
 // FR-8 — translation honesty: banner + revision marker on every translated page.
 const dict = pageKey ? pageDicts[pageKey] : undefined;
 const showTranslationChrome = locale !== "en" && dict !== undefined;
-const translationStale = dict !== undefined && isStaleTranslation(dict);
+const translationStale = dict !== undefined && isStaleTranslation(dict, locale);
+const translatedRev = dict && locale !== "en" ? dict[locale].translatedFromRev : "";
 const englishPath = pageKey ? localePath("en", pageKey) : "/en/";
 ---
 
@@ -50,9 +51,7 @@ const englishPath = pageKey ? localePath("en", pageKey) : "/en/";
       {
         showTranslationChrome && dict && (
           <div class="container">
-            <p class="rev-marker">
-              {chrome.marker.translatedAgainst(dict.ar.translatedFromRev)}
-            </p>
+            <p class="rev-marker">{chrome.marker.translatedAgainst(translatedRev)}</p>
           </div>
         )
       }

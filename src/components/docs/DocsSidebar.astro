@@ -16,9 +16,12 @@ interface Props {
 const { locale, current } = Astro.props;
 const meta = loadDocsMeta();
 
-const quickstartLabel = locale === "ar" ? "جرّبه في خمس دقائق" : "Try keel in five minutes";
-const quickstartDesc = locale === "ar" ? "من صفحة التثبيت" : "on the Install page";
-void quickstartDesc;
+const quickstartLabel =
+  locale === "ar"
+    ? "جرّبه في خمس دقائق"
+    : locale === "fr"
+      ? "Essayez keel en cinq minutes"
+      : "Try keel in five minutes";
 ---
 
 <nav class="docs-sidebar" aria-label={locale === "ar" ? "تنقّل الوثائق" : "Docs navigation"}>

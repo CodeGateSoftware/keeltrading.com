@@ -157,4 +157,63 @@ export const home: LocalizedPage<HomeContent> = {
       ],
     },
   },
+
+  fr: {
+    rev: "2026-08-20.1",
+    translatedFromRev: "2026-08-19.2",
+    title: "Keel : le moteur open-source de conformité Shariah pour le crypto",
+    description:
+      "keel est un moteur open-source qui applique la conformité Shariah au trading de crypto en spot : filtrage par attestation à échec fermé, rails incontournables, mesure honnête. Pas un moteur de fatwas.",
+    hero: {
+      eyebrow: "Open source · Apache-2.0 · par CodeGate Software",
+      heading: "Une conformité Shariah que vous pouvez auditer, pas seulement croire",
+      sub: "keel est un moteur open-source pour le trading de crypto en spot. Avant tout ordre, il passe par des rails de sécurité qu'aucun code ne peut contourner et un filtre d'actifs qui refuse tout ce qui n'est pas attesté. Tout ce qu'il applique est écrit — règle par règle, avec les sources — pour que vous puissiez le vérifier vous-même.",
+    },
+    honest: {
+      title: "Le résultat honnête, dit d'abord",
+      body: [
+        "Aucune famille de règles livrée n'est nette-positive aux frais preneur (taker) réellement payés sur Coinbase (~1,2 % par jambe). L'intersection viable paramètres/frais est vide en exécution fidèle à la production — 0 sur 90 configurations dans une matrice de mesure, 0 sur 82 dans une autre. Le facteur contraignant, c'est le coût, pas la qualité du signal.",
+        "Le but de ce projet est la machinerie d'application et la mesure honnête de ce qui la traverse — pas une promesse de profit. Chaque résultat est comparé à un repère d'achat périodique simple (DCA), et les règles de référence ne le battent pas après frais. Nous préférons que vous le sachiez dès la page d'accueil plutôt que de le découvrir vous-même.",
+      ],
+      experimentLabel: "Lire le compte rendu de l'expérience",
+      announcementLabel: "Lire l'annonce",
+    },
+    cards: [
+      {
+        title: "Un filtrage qui échoue fermé",
+        body: "Les faits de marché sont calculés ; les classifications Shariah sont attestées par un humain — avec une source et un nom — jamais déduites des prix. Un actif sans attestation est rejeté, jamais accepté par défaut.",
+      },
+      {
+        title: "Dix-huit rails qu'aucun ordre ne saute",
+        body: "Plafonds de dépense, disjoncteurs de drawdown, limites d'exposition, pas de martingale, contrôles de fraîcheur des données, un interrupteur d'arrêt à échec fermé — plus ceux dérivés du fiqh : l'attestation d'abonnement à la plateforme et le contrôle de possession constructive (qabd) : un actif qu'on ne peut pas retirer n'a peut-être jamais été possédé valablement.",
+      },
+      {
+        title: "Des portes qui refusent de flatter",
+        body: "Une règle parcourt candidate → papier → réel. La promotion franchit des planchers de performance et un contrôle de surapprentissage (PBO/CSCV) — une règle brillante sur un seul jeu de paramètres en échantillon est précisément ce que la seconde porte existe pour soupçonner.",
+      },
+    ],
+    fatwa: {
+      quote: "keel n'est pas un moteur de fatwas. C'est un moteur d'application d'une règle que vous fournissez.",
+      body: [
+        "keel ne déduit jamais une classification Shariah des données de marché. Vous l'enregistrez — avec une source et un nom attribué — et keel l'applique déterministement. La règle vit dans votre attestation, pas dans le code : deux opérateurs suivant des écoles différentes obtiennent des réponses différentes du même code, par conception.",
+        "Aucune revue savante de la base fiqh de keel n'a eu lieu. La base est la lecture sourcée d'un opérateur, publiée comme document précisément pour être auditée et contestée — et chaque opérateur est responsable de ses propres attestations.",
+      ],
+      more: "Comment la conformité fonctionne, en termes simples",
+    },
+    review: {
+      title: "Revue savante : non revue — une question ouverte, par design",
+      body: [
+        "La base fiqh énonce clairement ce qu'une revue savante couvrirait et ce qu'elle signifierait ou non. Tant que personne ne parcourt ce chemin, le statut est : non revue.",
+      ],
+      more: "Lire la base fiqh",
+    },
+    next: {
+      title: "Et maintenant ?",
+      items: [
+        { title: "Installation", body: "Essayez-le en cinq minutes, en lecture seule et côté papier. Aucun fonds ne bouge." },
+        { title: "La conformité, en termes simples", body: "Ce que keel applique, ce qu'il refuse de décider, et où commence votre responsabilité." },
+        { title: "Communauté", body: "Questions, idées et débats de classification se vivent sur GitHub Discussions." },
+      ],
+    },
+  },
 };
