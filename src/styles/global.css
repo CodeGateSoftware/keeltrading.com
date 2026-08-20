@@ -287,6 +287,7 @@ section {
 .site-header {
   border-bottom: 1px solid var(--border);
   background: var(--surface);
+  position: relative; /* anchor for the mobile nav panel */
 }
 
 .site-header .inner {
@@ -341,6 +342,112 @@ section {
 .site-nav a[aria-current="page"] {
   color: var(--accent);
   font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile hamburger — pure CSS checkbox toggle (zero client JS). The checkbox
+   is visually hidden but focusable (keyboard: Tab + Space); the label is the
+   visible burger and morphs to an X when open.
+   -------------------------------------------------------------------------- */
+
+.nav-toggle.visually-hidden-checkbox {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.hamburger {
+  display: none;
+}
+
+.nav-toggle:focus-visible ~ .hamburger {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 63.99rem) {
+  .site-header .inner {
+    flex-wrap: nowrap;
+  }
+
+  .header-actions {
+    order: 2;
+    margin-inline-start: auto;
+  }
+
+  .hamburger {
+    order: 3;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    padding: 11px;
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    cursor: pointer;
+  }
+
+  .hamburger .bar {
+    display: block;
+    width: 100%;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--ink);
+    transition:
+      transform 0.18s ease,
+      opacity 0.18s ease;
+  }
+
+  .site-nav {
+    display: none;
+  }
+
+  .nav-toggle:checked ~ .hamburger .bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .nav-toggle:checked ~ .hamburger .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav-toggle:checked ~ .hamburger .bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .nav-toggle:checked ~ .site-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: absolute;
+    inset-inline: 0;
+    top: 100%;
+    margin: 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    padding: 0.35rem 1.25rem 1rem;
+  }
+
+  .nav-toggle:checked ~ .site-nav a {
+    padding: 0.8rem 0.55rem;
+    font-size: 1.02rem;
+    border-bottom: 1px solid var(--border);
+    border-radius: 0;
+  }
+
+  .nav-toggle:checked ~ .site-nav a:last-child {
+    border-bottom: 0;
+  }
 }
 
 .header-actions {

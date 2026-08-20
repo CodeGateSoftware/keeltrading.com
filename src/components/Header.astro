@@ -23,6 +23,7 @@ const navItems: { key: Exclude<PageKey, "home">; label: string }[] = [
 ];
 
 const otherLocale: Locale = locale === "en" ? "ar" : "en";
+const menuLabel = locale === "ar" ? "القائمة" : "Menu";
 ---
 
 <header class="site-header">
@@ -40,6 +41,13 @@ const otherLocale: Locale = locale === "en" ? "ar" : "en";
       </svg>
       <span>keel</span>
     </a>
+
+    <input type="checkbox" id="nav-toggle" class="nav-toggle visually-hidden-checkbox" aria-label={menuLabel} />
+    <label class="hamburger" for="nav-toggle" aria-hidden="true">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </label>
 
     <nav class="site-nav" aria-label={locale === "ar" ? "التنقّل الرئيسي" : "Main navigation"}>
       {
