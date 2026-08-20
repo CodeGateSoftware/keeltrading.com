@@ -47,6 +47,31 @@ npm run check   # astro check (type-check) — must pass
 `npm run build` fetches from `api.github.com`; export `GITHUB_TOKEN` locally
 if you hit rate limits (CI passes its built-in token).
 
+## Prose style
+
+Site copy is edited to newspaper style. The register is the product's — dry,
+declarative, honest result first — and headlines like "Gates that refuse to
+flatter" are doing real work. The rules below are about legibility, not voice.
+
+- **One dash-set aside per sentence.** Past that, split the sentence.
+- **Sentences under ~35 words.** Longer only when the length is doing something
+  a break would lose, such as a parallel enumeration.
+- **Gloss jargon on first use, per page.** Each page is a standalone article for
+  a reader arriving from search: `PBO/CSCV`, basis points, "per leg", "taker
+  fee" and "fails closed" all get expanded where they first appear on a page.
+- **Figures:** `about`, not `~`, in prose; keep the tilde for tables and
+  parentheses. Spell out one through nine, figures from 10 up.
+- **`keel` is always lowercase**, including sentence-initial and in `<title>`.
+- **Curly quotes** in prose; straight quotes only inside code.
+- **CLI literals keep their exact form** — `GO-LIVE`, `TRAIN-MORE`, never
+  `TRAIN MORE`.
+- **Spelling is US** (`summarize`, `practiced`).
+- **Meta descriptions stay under 160 characters** so they do not truncate in
+  search results.
+
+Arabic follows Modern Standard Arabic, with one settled rendering per technical
+term — see the terminology table in #34.
+
 ## Honesty rules (FR-9)
 
 No profit claims, no testimonial walls, results stated exactly as the engine

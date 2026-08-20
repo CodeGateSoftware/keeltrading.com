@@ -25,17 +25,17 @@ export interface FeaturesContent {
 
 export const features: LocalizedPage<FeaturesContent> = {
   en: {
-    rev: "2026-08-20.2",
+    rev: "2026-08-20.3",
     title: "Shariah Compliance Engine Features — keel",
     description:
-      "Attested fail-closed screening, 18 un-overridable rails, overfitting-checked strategy gates, and honest DCA-benchmarked measurement — all mapped to source.",
+      "Attested screening that fails closed, 18 rails no order can skip, gates checked for overfitting, and honest measurement against DCA — all mapped to source.",
     intro:
       "This page describes only what the engine repository can show. Each section links to the source that proves it — if a claim ever drifts from the code, the link is how you catch us.",
     verifyNote: "Verify in the repository",
     features: [
       {
         title: "Attested asset screening — fails closed",
-        body: "Admission to the allowlist is split by what is knowable. Market facts are computed. Shariah classifications — is the core purpose a haram sector, is the token asset-backed 'ayn or a claim dayn, does it pay a riba-like yield — are attested, never inferred, via keel assets attest. An absent attestation is a rejection, not a default pass.",
+        body: "Admission to the allowlist is split by what is knowable. Market facts are computed. The Shariah questions are not: whether a token's core purpose is a haram sector, whether it is asset-backed ('ayn) or a claim on a debtor (dayn), and whether it pays a riba-like yield. Those are attested through keel assets attest, never inferred. An absent attestation is a rejection, not a default pass.",
         verify: { label: "compliance/screen.py", href: "https://github.com/CodeGateSoftware/keel/blob/main/keel/compliance/screen.py" },
       },
       {
@@ -44,38 +44,38 @@ export const features: LocalizedPage<FeaturesContent> = {
         points: [
           "The halal allowlist, per-order and per-day spend caps, exposure and concentration caps",
           "Correlation-aware sizing, a minimum-move floor, no-martingale and no-stop-widening",
-          "Total and weekly drawdown breakers, a consecutive-loss/edge-decay breaker",
+          "Total and weekly drawdown breakers, plus a breaker for consecutive losses and edge decay",
           "Feed-staleness and quote-balance checks",
           "Rail 14 — venue subscription/withdrawal attestations: live BUYs are refused until the operator attests",
           "Rail 17 — §65.4 qabd: withdrawal capability is attested and enforced, because an asset that cannot be withdrawn may not have been validly possessed",
-          "A max-spread entry gate that refuses live BUYs at or beyond 50bp spread, fail-closed on an unreadable book",
-          "A rail veto names itself and the command that clears it",
+          "A maximum-spread entry gate that refuses live BUYs at a spread of 50 basis points or wider, and refuses outright if the order book cannot be read",
+          "A rail veto names the rail that fired and the command that clears it",
         ],
         verify: { label: "execution/guards.py", href: "https://github.com/CodeGateSoftware/keel/blob/main/keel/execution/guards.py" },
       },
       {
         title: "Strategy gates — candidate → paper → live",
-        body: "A rule must walk three stages before it can touch live money. Promotion clears a two-part gate: performance floors and an overfitting check (PBO/CSCV). The 100-trade sample floor may be met by the rule's own backtest or pooled across products in paper — provided at least five products each contribute ten trades, because a pool of correlated samples overstates its power.",
+        body: "A rule must walk three stages before it can touch live money. Promotion clears a two-part gate: performance floors, and an overfitting check (PBO/CSCV). The 100-trade sample floor can be met by the rule's own backtest, or pooled across products in paper. Pooling requires at least five products contributing ten trades each, because a pool of correlated samples overstates its own power.",
         verify: { label: "agent.py — RULE_REGISTRY", href: "https://github.com/CodeGateSoftware/keel/blob/main/keel/agent.py" },
       },
       {
         title: "Honest measurement, against DCA",
-        body: "keel simulate replays the real rules over fetched history, compares against a simple DCA benchmark, and writes a GO-LIVE / TRAIN-MORE report naming every gate and its numbers. The backtester prices per-product slippage scaled from each asset's real liquidity (5–50bp), so results cannot be flattered by thin books. On the default rules it will very likely tell you TRAIN MORE — that is the engine working, not broken.",
+        body: "keel simulate replays the real rules over fetched history, compares against a simple DCA benchmark, and writes a GO-LIVE / TRAIN-MORE report naming every gate and its numbers. The backtester prices per-product slippage scaled from each asset's real liquidity, from 5 to 50 basis points, so results cannot be flattered by thin order books. On the default rules it will very likely tell you TRAIN-MORE. That is the engine working, not broken.",
         verify: { label: "the experiment record", href: "https://github.com/CodeGateSoftware/keel/tree/main/docs/experiments" },
       },
       {
         title: "Three deployment profiles that share nothing",
-        body: "Daily paper, live, and an hourly evidence profile (paper-hourly) — each with its own database and config. The hourly profile exists because the daily clock measures 2.15 signals per asset-year (a 100-trade review 31–84 years away), while the same rules on ONE_HOUR bars fire 49.4 — about 940 entry signals per year pooled, putting forward-evidence review weeks away instead of decades. It is measured net-negative too: it exists to collect admissible forward evidence, not profit.",
+        body: "Daily paper, live, and an hourly evidence profile (paper-hourly) — each with its own database and config. The hourly profile exists because the daily clock measures only 2.15 signals per asset-year, which puts a 100-trade review 31 to 84 years away. The same rules on ONE_HOUR bars fire 49.4 signals per asset-year, about 940 entry signals a year once pooled. That moves a forward-evidence review to weeks instead of decades. The hourly profile is measured net negative too: it exists to collect admissible forward evidence, not profit.",
         verify: { label: "operator runbook", href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/operator-runbook.md" },
       },
       {
         title: "A broker port, not a broker lock-in",
-        body: "Adapters implement one contract — the keel-broker-api port — and register under the keel.brokers entry point. Coinbase Advanced Trade is the reference adapter; Robinhood ships as an optional, deliberately unwired venue; an Alpaca adapter joined in v0.10.0. A deliberately divergent fake venue keeps the port honest: the conformance suite (~3,000 tests) runs against both.",
+        body: "Adapters implement one contract — the keel-broker-api port — and register under the keel.brokers entry point. Coinbase Advanced Trade is the reference adapter; Robinhood ships as an optional, deliberately unwired venue; an Alpaca adapter joined in v0.10.0. A deliberately divergent fake venue keeps the port honest: the conformance suite, about 3,000 tests, runs against both.",
         verify: { label: "packages/", href: "https://github.com/CodeGateSoftware/keel/tree/main/packages" },
       },
       {
         title: "Confirm by default; autonomy changes who is asked",
-        body: "keel previews each order and asks at the terminal; headless, it declines. keel autonomy on changes who is asked, never what is allowed. To stop trading, keel kill — the kill-switch fails closed.",
+        body: "keel previews each order and asks you at the terminal. Running headless, with no one to ask, it declines. keel autonomy on changes who is asked, never what is allowed. To stop trading, keel kill — the kill-switch fails closed.",
         verify: { label: "the README, 'How keel works'", href: "https://github.com/CodeGateSoftware/keel#how-keel-works" },
       },
     ],
@@ -84,14 +84,14 @@ export const features: LocalizedPage<FeaturesContent> = {
       body: [
         "Nothing trades until you promote a rule, attest the venue subscription, fund the account, and — in confirm mode — type y. Long-only spot only: no leverage, no shorting, no derivatives, and sizing uses actual cash, so no riba.",
         "Account-level obligations no rail can see (disabling USDC rewards on idle balances, chiefly) are the operator's to verify — the operator runbook lists them.",
-        "And the paper profile is where every rule starts — free, simulated fills, nothing at risk, no funded venue account or trading credentials (a free read-only market-data key is all it asks). It is not a demo: the same parameter set's paper trades count toward the promotion gate's minimum, so paper evidence is the first stage of the gauntlet.",
+        "And the paper profile is where every rule starts: free, with simulated fills and nothing at risk. It needs no funded venue account and no trading credentials — a free, read-only market-data key is all it asks for. It is not a demo. Paper trades from the same parameter set count toward the promotion gate's minimum, which makes paper evidence the first stage of the gauntlet.",
       ],
     },
   },
 
   ar: {
-    rev: "2026-08-20.2",
-    translatedFromRev: "2026-08-20.2",
+    rev: "2026-08-20.3",
+    translatedFromRev: "2026-08-20.3",
     title: "خصائص محرّك الامتثال الشرعي — كيل",
     description:
       "فرزٌ موثَّق يرفض عند الفشل، و18 سكةَ أمانٍ لا تُتجاوَز، وبواباتُ ترقيةٍ تفحص الإفراط في المُلاءمة، وقياسٌ صادقٌ مقابل مؤشّر DCA — وكلُّ خاصيةٍ تشير إلى مصدرها في الشيفرة.",
@@ -126,7 +126,7 @@ export const features: LocalizedPage<FeaturesContent> = {
       },
       {
         title: "قياسٌ صادق، مقابل الشراء الدوري المنتظم",
-        body: "يعيد الأمر keel simulate تشغيلَ القواعد الحقيقية على التاريخ المجلوب، ويقارنها بمؤشّرٍ مرجعيٍّ بسيطٍ هو الشراء الدوري المنتظم (DCA)، ويكتب تقرير GO-LIVE أو TRAIN-MORE مسمّيًا كلَّ بوابةٍ وأرقامَها. ويُسعّر المحرّك الرجعي الانزلاقَ لكلِّ منتجٍ على قدر سيولته الفعلية (5–50 نقطة أساس)، فلا يمكن تجميلُ النتائج بدفاترِ أوامرَ ضعيفةِ السيولة. وعلى القواعد الافتراضية سيقول لك على الأرجح TRAIN MORE — وهذا دليلُ عمل المحرّك لا دليلُ عطبه.",
+        body: "يعيد الأمر keel simulate تشغيلَ القواعد الحقيقية على التاريخ المجلوب، ويقارنها بمؤشّرٍ مرجعيٍّ بسيطٍ هو الشراء الدوري المنتظم (DCA)، ويكتب تقرير GO-LIVE أو TRAIN-MORE مسمّيًا كلَّ بوابةٍ وأرقامَها. ويُسعّر المحرّك الرجعي الانزلاقَ لكلِّ منتجٍ على قدر سيولته الفعلية (5–50 نقطة أساس)، فلا يمكن تجميلُ النتائج بدفاترِ أوامرَ ضعيفةِ السيولة. وعلى القواعد الافتراضية سيقول لك على الأرجح TRAIN-MORE — وهذا دليلُ عمل المحرّك لا دليلُ عطبه.",
         verify: { label: "سجلّ التجارب", href: "https://github.com/CodeGateSoftware/keel/tree/main/docs/experiments" },
       },
       {
@@ -156,8 +156,8 @@ export const features: LocalizedPage<FeaturesContent> = {
   },
 
   fr: {
-    rev: "2026-08-20.2",
-    translatedFromRev: "2026-08-20.2",
+    rev: "2026-08-20.3",
+    translatedFromRev: "2026-08-20.3",
     title: "Fonctionnalités du moteur de conformité — keel",
     description:
       "Filtrage par attestation à échec fermé, dix-huit rails incontournables, portes de promotion avec contrôle de surapprentissage, mesure honnête contre DCA — chaque fonctionnalité renvoie à sa source dans le code.",
@@ -192,7 +192,7 @@ export const features: LocalizedPage<FeaturesContent> = {
       },
       {
         title: "Mesure honnête, contre DCA",
-        body: "keel simulate rejoue les règles réelles sur l'historique récupéré, compare au repère DCA, et écrit un rapport GO-LIVE / TRAIN-MORE nommant chaque porte et ses chiffres. Le backtesteur tarife un glissement par produit à l'échelle de sa liquidité réelle (5–50 pb), pour que les résultats ne puissent pas être flatteurs sur des carnets fins. Sur les règles par défaut, il vous dira très probablement TRAIN MORE — c'est le moteur qui travaille, pas une panne.",
+        body: "keel simulate rejoue les règles réelles sur l'historique récupéré, compare au repère DCA, et écrit un rapport GO-LIVE / TRAIN-MORE nommant chaque porte et ses chiffres. Le backtesteur tarife un glissement par produit à l'échelle de sa liquidité réelle (5–50 pb), pour que les résultats ne puissent pas être flatteurs sur des carnets fins. Sur les règles par défaut, il vous dira très probablement TRAIN-MORE — c'est le moteur qui travaille, pas une panne.",
         verify: { label: "le registre des expériences", href: "https://github.com/CodeGateSoftware/keel/tree/main/docs/experiments" },
       },
       {

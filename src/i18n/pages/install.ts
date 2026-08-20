@@ -78,7 +78,7 @@ export interface InstallContent {
 
 export const install: LocalizedPage<InstallContent> = {
   en: {
-    rev: "2026-08-20.5",
+    rev: "2026-08-20.6",
     title: "Download keel — macOS & Windows",
     description:
       "Download keel for macOS or Windows. Version and links come from GitHub Releases at build time; the five-minute source path is here too.",
@@ -103,7 +103,7 @@ export const install: LocalizedPage<InstallContent> = {
     thenTitle: "Then install the wheels",
     allFilesTitle: "All release files",
     paperFirstTitle: "Start on paper — free, and nothing at risk",
-    paperFirstBody: "For the cautious first step: the paper profile is free and educational — simulated fills, no real orders — built for learning the workflow before any live decision. It needs no funded venue account and no trading credentials; the only key it asks for is a free, read-only market-data key to fetch candle history. The live profile is deliberately harder to reach: attestations, the promotion gauntlet, and typed human confirmations stand in the way.",
+    paperFirstBody: "For the cautious first step: the paper profile is free and educational, with simulated fills and no real orders. It is built for learning the workflow before any live decision. It needs no funded venue account and no trading credentials; the only key it asks for is a free, read-only market-data key, used to fetch candle history. The live profile is deliberately harder to reach — attestations, the promotion gauntlet and typed human confirmations all stand in the way.",
     getStarted: {
       title: "New here? Start with the Get Started guide",
       body: "A step-by-step walkthrough — first simulation, the paper profile, the operator console — with screenshots of every screen.",
@@ -111,10 +111,10 @@ export const install: LocalizedPage<InstallContent> = {
     },
     fromSource: {
       title: "From source — try it in five minutes",
-      lead: "Everything in this path is read-only and paper-side: no funds, and nothing here can place an order. You need uv and a free, read-only Coinbase Developer Platform (CDP) API key — candle history is fetched through the authenticated client, so keel fetch without a key fails with an AuthenticationError. Said upfront so step four is not a surprise.",
+      lead: "Everything in this path is read-only and paper-side: no funds, and nothing here can place an order. You need uv and a free, read-only Coinbase Developer Platform (CDP) API key — candle history is fetched through the authenticated client, so keel fetch without a key fails with an AuthenticationError. We say so here rather than let it surprise you at step four.",
       requirements: ["uv (the Python package manager)", "Any Python 3.11+ (the repo develops on 3.14)", "A free, read-only CDP API key — market data only"],
       expectTitle: "What you should expect",
-      expect: "keel simulate replays the real rules deterministically over the fetched history, compares against a DCA benchmark, and writes a GO-LIVE / TRAIN-MORE report. On the default rules it will very likely tell you TRAIN MORE and name the gates that fail — that is the engine working, not broken; the honesty is the feature.",
+      expect: "keel simulate replays the real rules deterministically over the fetched history, compares against a DCA benchmark, and writes a GO-LIVE / TRAIN-MORE report. On the default rules it will very likely tell you TRAIN-MORE and name the gates that failed. That is the engine working, not broken. The honesty is the feature.",
       next: "The next steps — promoting a rule through the gate, running the paper agent, a supervised first live order — are in the go-live runbook.",
     },
     fromReleaseWarning:
@@ -123,7 +123,7 @@ export const install: LocalizedPage<InstallContent> = {
       title: "Your computer will warn you about this download",
       lead: "The macOS and Windows builds are not code-signed, so your operating system will refuse the first open and tell you it cannot verify the developer. Nothing is broken, and nothing was detected — your computer simply does not know who wrote the program.",
       reason:
-        "Code signing is a paid certificate, and keel cannot currently afford either one: Apple's is $99 per year, and Azure Trusted Signing for Windows is about $120 per year — more than Apple's, and since 2024 it does not even buy an instant SmartScreen pass, because reputation is earned from download volume over time. There is no cheaper tier and no free open-source option on either platform, and a certificate we made ourselves would do nothing at all, because macOS trusts only certificates Apple issued.",
+        "Code signing means a paid certificate, and keel cannot currently afford either platform's. Apple's costs $99 a year. Azure Trusted Signing for Windows costs about $120 a year, more than Apple's. And since 2024 it does not even buy an instant SmartScreen pass, because reputation is earned from download volume over time. There is no cheaper tier and no free open-source option on either platform. A certificate we made ourselves would do nothing at all, because macOS trusts only certificates Apple issued.",
       macosTitle: "macOS",
       macosSteps: [
         "Open the downloaded .dmg, then drag keel.app into your Applications folder.",
@@ -140,7 +140,7 @@ export const install: LocalizedPage<InstallContent> = {
         "At the bottom of the General tab, tick Unblock if it is there, then OK. This is the step people miss, and skipping it brings the warning back on a later launch.",
         "Right-click the .zip → Extract All…, into a folder you own — for example C:\\Users\\<you>\\keel. Not Program Files: keel does not need administrator rights and should not be given them.",
         "Open the extracted folder and double-click keel.exe.",
-        "If SmartScreen appears — \"Windows protected your PC\" — click More info, then Run anyway.",
+        "If SmartScreen appears — “Windows protected your PC” — click More info, then Run anyway.",
       ],
       verifyTitle: "Please check what you downloaded first",
       verifyLead:
@@ -155,15 +155,15 @@ export const install: LocalizedPage<InstallContent> = {
       ],
       avoidTitle: "First — you may not need to deal with this at all",
       avoidBody:
-        "The five-minute path below installs the same engine with no installer and no warning on any platform, because nothing is downloaded as an application — pip and uv fetch the published wheels directly, and no operating system objects to that. It needs a terminal and Python 3.11 or later, which is exactly the friction the desktop app exists to remove; but if you already have both, it is the shorter road and the rest of this note does not apply to you.",
+        "The five-minute path below installs the same engine with no installer and no warning on any platform. Nothing is downloaded as an application: pip and uv fetch the published wheels directly, and no operating system objects to that. It does need a terminal and Python 3.11 or later — exactly the friction the desktop app exists to remove. But if you already have both, it is the shorter road, and the rest of this note does not apply to you.",
       avoidLink: "Try it in five minutes",
       more: "Full explanation, including how to verify what you downloaded",
     },
   },
 
   ar: {
-    rev: "2026-08-20.5",
-    translatedFromRev: "2026-08-20.5",
+    rev: "2026-08-20.6",
+    translatedFromRev: "2026-08-20.6",
     title: "تنزيل كيل — macOS وWindows",
     description:
       "نزّل كيل لنظام macOS أو Windows. ويأتي رقمُ الإصدار وروابطه من GitHub Releases وقت البناء؛ ومسارُ التثبيت من المصدر في خمس دقائق هنا أيضًا.",
@@ -199,7 +199,7 @@ export const install: LocalizedPage<InstallContent> = {
       lead: "كلُّ ما في هذا المسار بصلاحية القراءة فقط وعلى جانب التداول التجريبي: لا أموال، ولا شيء هنا يستطيع تقديم أمر تداول. وتحتاج إلى uv وإلى مفتاح API مجّانيٍّ للقراءة فقط من منصّة Coinbase Developer Platform‏ (CDP) — إذ تُجلب بيانات الشموع عبر العميل المُصادَق عليه، ولذلك يفشل الأمر keel fetch من دون مفتاحٍ بخطأ AuthenticationError؛ نقولها مقدَّمًا كي لا تكون مفاجأةً في الخطوة الرابعة.",
       requirements: ["‏uv (مدير حزم Python)", "أيُّ إصدارٍ من Python 3.11 فما فوق (يُطوَّر المستودع على 3.14)", "مفتاح CDP مجّاني للقراءة فقط — لبيانات السوق حصرًا"],
       expectTitle: "ما ينبغي أن تتوقّعه",
-      expect: "يعيد الأمر keel simulate تشغيلَ القواعد الحقيقية تشغيلًا حتميًّا على التاريخ المجلوب، ويقارنها بمؤشّر الشراء الدوري المنتظم (DCA) المرجعي، ويكتب تقرير GO-LIVE أو TRAIN-MORE. وعلى القواعد الافتراضية سيقول لك على الأرجح TRAIN MORE ويسمّي البوابات التي أخفقت — وهذا دليلُ عمل المحرّك لا دليلُ عطبه؛ فالصدق نفسه هو الميزة.",
+      expect: "يعيد الأمر keel simulate تشغيلَ القواعد الحقيقية تشغيلًا حتميًّا على التاريخ المجلوب، ويقارنها بمؤشّر الشراء الدوري المنتظم (DCA) المرجعي، ويكتب تقرير GO-LIVE أو TRAIN-MORE. وعلى القواعد الافتراضية سيقول لك على الأرجح TRAIN-MORE ويسمّي البوابات التي أخفقت — وهذا دليلُ عمل المحرّك لا دليلُ عطبه؛ فالصدق نفسه هو الميزة.",
       next: "أمّا الخطوات التالية — ترقيةُ قاعدةٍ عبر البوابة، وتشغيلُ الوكيل في التداول التجريبي، وأوّلُ أمرٍ حيٍّ خاضعٍ لإشرافٍ بشري — فتجدها في كتاب الانتقال إلى التشغيل الحيّ (go-live runbook).",
     },
     fromReleaseWarning:
@@ -247,8 +247,8 @@ export const install: LocalizedPage<InstallContent> = {
   },
 
   fr: {
-    rev: "2026-08-20.5",
-    translatedFromRev: "2026-08-20.5",
+    rev: "2026-08-20.6",
+    translatedFromRev: "2026-08-20.6",
     title: "Télécharger keel — macOS et Windows",
     description:
       "Téléchargez keel pour macOS ou Windows. Version et liens viennent de GitHub Releases au build ; le parcours en cinq minutes depuis les sources est là aussi.",
@@ -284,7 +284,7 @@ export const install: LocalizedPage<InstallContent> = {
       lead: "Tout dans ce parcours est en lecture seule et côté papier : aucun fonds, et rien ici ne peut passer d'ordre. Il vous faut uv et une clé API Coinbase Developer Platform (CDP) gratuite en lecture seule — l'historique de chandeliers passe par le client authentifié, donc keel fetch sans clé échoue avec une AuthenticationError ; dit d'avance pour que l'étape 4 ne soit pas une surprise.",
       requirements: ["uv (le gestionnaire de paquets Python)", "Python 3.11 ou plus (le dépôt se développe sur 3.14)", "Une clé CDP gratuite en lecture seule — données de marché uniquement"],
       expectTitle: "À quoi vous attendre",
-      expect: "keel simulate rejoue les règles réelles de façon déterministe sur l'historique récupéré, compare au repère DCA et écrit un rapport GO-LIVE / TRAIN-MORE. Sur les règles par défaut, il vous dira très probablement TRAIN MORE en nommant les portes qui échouent — c'est le moteur qui fonctionne, pas une panne ; l'honnêteté est la fonctionnalité.",
+      expect: "keel simulate rejoue les règles réelles de façon déterministe sur l'historique récupéré, compare au repère DCA et écrit un rapport GO-LIVE / TRAIN-MORE. Sur les règles par défaut, il vous dira très probablement TRAIN-MORE en nommant les portes qui échouent — c'est le moteur qui fonctionne, pas une panne ; l'honnêteté est la fonctionnalité.",
       next: "Les étapes suivantes — promouvoir une règle par la porte, lancer l'agent papier, un premier ordre réel supervisé — sont dans le runbook de mise en production.",
     },
     fromReleaseWarning:

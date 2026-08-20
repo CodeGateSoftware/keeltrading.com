@@ -33,8 +33,8 @@ export interface HomeContent {
 
 export const home: LocalizedPage<HomeContent> = {
   en: {
-    rev: "2026-08-20.3",
-    title: "Keel: Open-Source Shariah Compliance Engine for Crypto",
+    rev: "2026-08-20.4",
+    title: "keel: the open-source Shariah compliance engine for crypto",
     description:
       "The open-source engine that enforces Shariah compliance on spot crypto: attested screening that fails closed and rails no order can skip. Not a fatwa engine.",
     hero: {
@@ -45,8 +45,8 @@ export const home: LocalizedPage<HomeContent> = {
     honest: {
       title: "The honest result, stated first",
       body: [
-        "No shipped rule family is net-positive at the taker fee actually paid on Coinbase (~1.2% per leg) — 0 of 90 configurations in one measurement matrix, 0 of 82 in another. We cross-verified a stochastic modelling note — re-derived its mathematics against keel's real numbers — and it sharpened the why: the taker fee is the entire result. Inside the venue's fee-free monthly allowance the reconstructed rules sit indistinguishably at break-even (a 14.9% win rate against a 14.88% break-even); one step outside it, break-even jumps to 29% and the same rules are decisively negative. The allowance rail is not a budget cap — it is the profitability boundary.",
-        "The point of this project is the enforcement machinery and the honest measurement of what runs through it — not a claim of profit. Every result is compared against a simple buy-every-period (DCA) benchmark, and the reference rules currently do not beat it after fees. We would rather you know that on the front page than discover it yourself. And we are working hard to improve the algorithms' and strategies' results — we will keep you updated with our progress.",
+        "No shipped rule family is net positive at the taker fee actually paid on Coinbase — about 1.2% on each side of a trade. In one measurement matrix, 0 of 90 configurations cleared; in another, 0 of 82. We then cross-verified a stochastic modelling note, re-deriving its mathematics against keel's real numbers, and it sharpened the why: the taker fee is the entire result. Inside the venue's fee-free monthly allowance, the reconstructed rules sit indistinguishably at break-even — a 14.9% win rate against a 14.88% break-even. One step outside it, break-even jumps to 29% and the same rules are decisively negative. The allowance rail is not a budget cap. It is the profitability boundary.",
+        "The point of this project is the enforcement machinery and the honest measurement of what runs through it, not a claim of profit. Every result is compared against a simple buy-every-period (DCA) benchmark, and the reference rules currently do not beat it after fees. We would rather you know that on the front page than discover it yourself. And we are working hard to improve the results of the algorithms and the strategies. We will report our progress here.",
       ],
       experimentLabel: "Read the experiment record",
       announcementLabel: "Read the announcement",
@@ -58,11 +58,11 @@ export const home: LocalizedPage<HomeContent> = {
       },
       {
         title: "Eighteen rails no order can skip",
-        body: "Spend caps, drawdown breakers, exposure limits, no-martingale, feed-staleness checks, a fail-closed kill-switch — plus the fiqh-derived ones: the venue subscription attestation and the constructive-possession (qabd) check that an asset which cannot be withdrawn may not have been validly possessed.",
+        body: "Spend caps, drawdown breakers, exposure limits, no-martingale, feed-staleness checks, and a kill-switch that fails closed: when something breaks, it refuses rather than allows. Then the fiqh-derived rails — the venue subscription attestation, and the constructive-possession (qabd) check, which holds that an asset you cannot withdraw may never have been validly possessed.",
       },
       {
         title: "Gates that refuse to flatter",
-        body: "A rule walks candidate → paper → live. Promotion clears performance floors and an overfitting check (PBO/CSCV) — a rule that looks brilliant on one in-sample parameter set is exactly what the second gate exists to be suspicious of.",
+        body: "A rule walks candidate → paper → live. Promotion clears performance floors and an overfitting check: the probability of backtest overfitting, computed by combinatorially symmetric cross-validation (PBO/CSCV). A rule that looks brilliant on a single in-sample parameter set is exactly what that second gate exists to distrust.",
       },
     ],
     fatwa: {
@@ -100,8 +100,8 @@ export const home: LocalizedPage<HomeContent> = {
   },
 
   ar: {
-    rev: "2026-08-20.3",
-    translatedFromRev: "2026-08-20.3",
+    rev: "2026-08-20.4",
+    translatedFromRev: "2026-08-20.4",
     title: "كيل: محرّك امتثال شرعي مفتوح المصدر للعملات المشفّرة",
     description:
       "المحرّك مفتوح المصدر الذي يُنفِّذ الامتثال الشرعي في التداول الفوري للعملات المشفّرة: فرزٌ موثَّق يرفض عند الفشل، وسككُ أمانٍ لا يتجاوزها أيُّ أمر. وليس محرّك فتاوى.",
@@ -130,7 +130,7 @@ export const home: LocalizedPage<HomeContent> = {
       },
       {
         title: "بواباتٌ لا تُجامِل",
-        body: "تنتقل القاعدة من مرشَّحةٍ إلى تجريبيةٍ (paper) إلى حيّة. ولا تُرقَّى إلا إذا اجتازت حدودًا دنيا للأداء وفحصًا للإفراط في المُلاءمة (PBO/CSCV) — فالقاعدة التي تبدو عبقريةً على مجموعةِ وسائطَ واحدةٍ داخل العيّنة هي بالضبط ما وُجدت البوابةُ الثانية للارتياب فيه.",
+        body: "تنتقل القاعدة من مرشَّحةٍ إلى تجريبيةٍ (paper) إلى حيّة. ولا تُرقَّى إلا إذا اجتازت حدودًا دنيا للأداء وفحصًا للإفراط في المُلاءمة — أي احتمالَ إفراط الاختبار الرجعي في المُلاءمة، محسوبًا بالتحقّق المتقاطع المتناظر توفيقيًّا (PBO/CSCV) — فالقاعدة التي تبدو عبقريةً على مجموعةِ وسائطَ واحدةٍ داخل العيّنة هي بالضبط ما وُجدت البوابةُ الثانية للارتياب فيه.",
       },
     ],
     fatwa: {
@@ -159,9 +159,9 @@ export const home: LocalizedPage<HomeContent> = {
   },
 
   fr: {
-    rev: "2026-08-20.3",
-    translatedFromRev: "2026-08-20.3",
-    title: "Keel : le moteur open-source de conformité Shariah pour le crypto",
+    rev: "2026-08-20.4",
+    translatedFromRev: "2026-08-20.4",
+    title: "keel : le moteur open-source de conformité Shariah pour le crypto",
     description:
       "keel est un moteur open-source qui applique la conformité Shariah au trading de crypto en spot : filtrage par attestation à échec fermé, rails incontournables, mesure honnête. Pas un moteur de fatwas.",
     hero: {
@@ -189,7 +189,7 @@ export const home: LocalizedPage<HomeContent> = {
       },
       {
         title: "Des portes qui refusent de flatter",
-        body: "Une règle parcourt candidate → papier → réel. La promotion franchit des planchers de performance et un contrôle de surapprentissage (PBO/CSCV) — une règle brillante sur un seul jeu de paramètres en échantillon est précisément ce que la seconde porte existe pour soupçonner.",
+        body: "Une règle parcourt candidate → papier → réel. La promotion franchit des planchers de performance et un contrôle de surapprentissage — la probabilité que le backtest soit surajusté, calculée par validation croisée combinatoirement symétrique (PBO/CSCV) — une règle brillante sur un seul jeu de paramètres en échantillon est précisément ce que la seconde porte existe pour soupçonner.",
       },
     ],
     fatwa: {
