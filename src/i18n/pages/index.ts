@@ -8,6 +8,7 @@ import { community, type CommunityContent } from "./community";
 import { compliance, type ComplianceContent } from "./compliance";
 import { compare, type CompareContent } from "./compare";
 import { about, type AboutContent } from "./about";
+import { changelog, type ChangelogContent } from "./changelog";
 
 /**
  * FR-8 — the layout reads this registry to stamp every translated page with
@@ -26,6 +27,7 @@ export const pageDicts: Record<Exclude<PageKey, "guides">, LocalizedPage<unknown
   compliance,
   compare,
   about,
+  changelog,
 };
 
 export type {
@@ -38,4 +40,5 @@ export type {
   ComplianceContent,
   CompareContent,
   AboutContent,
+  ChangelogContent,
 };

@@ -29,6 +29,7 @@ export const pageKeys = [
   "compliance",
   "compare",
   "about",
+  "changelog",
   "guides",
 ] as const;
 export type PageKey = (typeof pageKeys)[number];

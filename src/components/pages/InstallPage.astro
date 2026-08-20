@@ -96,6 +96,9 @@ const venvCommands = (os: "mac" | "win"): string => {
         }
       </p>
       <p class="requirements">{c.requirements}</p>
+      <p class="requirements">
+        <a href={localePath(locale, "changelog")}>{c.historyLink}</a>
+      </p>
 
       <div class="download-grid">
         {
