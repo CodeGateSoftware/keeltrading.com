@@ -53,6 +53,12 @@ jobs:
       # gitignored and would silently render a site without the docs pages.)
       - name: Build site
         run: npm run build
+        env:
+          # The fetch scripts hit api.github.com; unauthenticated calls from
+          # shared Actions runner IPs are rate-limited (60/hr per IP), which
+          # silently degraded the Install and News pages to their fallbacks.
+          # The workflow's built-in token removes the limit — no new secrets.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Skip deploy (Cloudflare not configured yet)
         if: env.PAGES_PROJECT == '' || env.HAS_DEPLOY_SECRETS != 'true'
