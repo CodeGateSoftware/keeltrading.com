@@ -28,6 +28,18 @@ const editionLinks = [
 
 <footer class="site-footer">
   <div class="container">
+    <div class="slogan-block" lang="ar" dir="rtl">
+      <p class="slogan">رَبِّ زِدْنِي عِلْمًا</p>
+      <p class="slogan-meaning" dir="auto">
+        {
+          locale === "ar"
+            ? "وَقُلْ رَبِّ زِدْنِي عِلْمًا — طه ١١٤"
+            : locale === "fr"
+              ? "« Seigneur, accrois mon savoir » — Coran, Ṭā-Hā 114"
+              : "“My Lord, increase me in knowledge” — Qur’an, Ṭā-Hā 114"
+        }
+      </p>
+    </div>
     <div class="inner">
       <section>
         <h2>{chrome.footer.disclaimerTitle}</h2>

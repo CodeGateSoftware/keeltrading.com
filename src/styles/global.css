@@ -981,6 +981,26 @@ section {
   font-size: 0.9rem;
 }
 
+/* The project's invocation — Arabic in every edition, source cited beneath */
+.slogan-block {
+  text-align: center;
+  padding-top: 2.25rem;
+}
+
+.slogan {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 2.1; /* room for the harakat */
+  color: var(--ink);
+}
+
+.slogan-meaning {
+  margin: 0.15rem 0 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
 .site-footer .inner {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
