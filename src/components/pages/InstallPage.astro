@@ -46,6 +46,13 @@ const macAsset = platformAsset(["darwin", "macos", ".dmg", ".pkg"]);
 const winAsset = platformAsset(["windows", "win32", "win64", ".exe", ".msi", ".zip"]);
 const cardTargets = [macAsset, winAsset];
 
+/**
+ * Whether this release ships anything an operating system will refuse to open. Gates the
+ * unsigned-build note: the wheels are not signed either, but pip does not warn about them, so a
+ * Gatekeeper explanation shown beside a wheels-only release would be a warning about nothing.
+ */
+const hasPlatformBundle = Boolean(macAsset || winAsset);
+
 const venvCommands = (os: "mac" | "win"): string => {
   const whl = "keel_trader-" + (version ?? "<version>") + "-py3-none-any.whl";
   if (os === "mac") {
@@ -129,6 +136,54 @@ const venvCommands = (os: "mac" | "win"): string => {
     </section>
 
     <div class="narrow prose">
+      {
+        /*
+         * Shown ONLY when the release actually carries a platform bundle. Until one exists there
+         * is nothing for an operating system to warn about, and a note about Gatekeeper beside a
+         * page that only offers wheels would be a warning about nothing.
+         */
+        hasPlatformBundle && (
+          <section class="unsigned-note" role="note">
+            <h2>{c.unsigned.title}</h2>
+            <p>{c.unsigned.lead}</p>
+            <p><strong>{c.unsigned.reason}</strong></p>
+
+            <div class="unsigned-steps">
+              <div>
+                <h3>{c.unsigned.macosTitle}</h3>
+                <ol>{c.unsigned.macosSteps.map((step) => <li>{step}</li>)}</ol>
+              </div>
+              <div>
+                <h3>{c.unsigned.windowsTitle}</h3>
+                <ol>{c.unsigned.windowsSteps.map((step) => <li>{step}</li>)}</ol>
+              </div>
+            </div>
+
+            <h3>{c.unsigned.verifyTitle}</h3>
+            <p>{c.unsigned.verifyLead}</p>
+            <pre class="verify-command"><code>gh attestation verify &lt;the file you downloaded&gt; --repo CodeGateSoftware/keel</code></pre>
+            <p><strong>{c.unsigned.verifyFail}</strong></p>
+
+            <h3>{c.unsigned.notMeaningTitle}</h3>
+            <ul>{c.unsigned.notMeaning.map((item) => <li>{item}</li>)}</ul>
+
+            {/* The friction-free alternative, offered here rather than left further down the
+                page: someone reading a security warning is deciding whether to proceed, and
+                "there is a path with no warning at all" is the most useful thing to hand them
+                at that exact moment. */}
+            <h3>{c.unsigned.avoidTitle}</h3>
+            <p>{c.unsigned.avoidBody}</p>
+            <p><a class="button" href="#from-source">{c.unsigned.avoidLink} →</a></p>
+
+            <p>
+              <a href="https://github.com/CodeGateSoftware/keel/blob/main/docs/desktop-install.md">
+                {c.unsigned.more} →
+              </a>
+            </p>
+          </section>
+        )
+      }
+
       <section>
         <div class="stale-banner" role="note">
           <strong>{c.fromReleaseWarning}</strong>
@@ -158,7 +213,7 @@ const venvCommands = (os: "mac" | "win"): string => {
         <p><a class="button" href="/en/guides/first-run/">{c.getStarted.link} →</a></p>
       </section>
 
-      <section>
+      <section id="from-source">
         <h2>{c.fromSource.title}</h2>
         <p>{c.fromSource.lead}</p>
         <ul>

@@ -923,6 +923,51 @@ section {
 }
 
 /* --------------------------------------------------------------------------
+   Unsigned-build note (install page)
+
+   Reuses the notice palette rather than an alarm colour. The message is "your
+   computer will stop you, here is why and here is how to check what you have"
+   -- not "something is wrong". A red box would say the second.
+   -------------------------------------------------------------------------- */
+
+.unsigned-note {
+  border: 1px solid var(--notice-border);
+  background: var(--notice-bg);
+  color: var(--notice-ink);
+  border-radius: var(--radius);
+  padding: 1.4rem 1.6rem;
+  margin-block: 2rem;
+}
+
+.unsigned-note h2 {
+  margin-top: 0;
+  font-size: 1.15rem;
+}
+
+.unsigned-note h3 {
+  font-size: 0.95rem;
+  margin-block: 1.4rem 0.4rem;
+}
+
+.unsigned-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0 2rem;
+}
+
+.unsigned-steps h3 {
+  margin-top: 1.2rem;
+}
+
+.verify-command {
+  overflow-x: auto;
+  font-size: 0.85rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: var(--radius);
+  background: var(--code-bg, rgba(0, 0, 0, 0.06));
+}
+
+/* --------------------------------------------------------------------------
    Stale translation banner (FR-8)
    -------------------------------------------------------------------------- */
 
