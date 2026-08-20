@@ -1,0 +1,37 @@
+# keeltrading.com
+
+> The public website of keel — the open-source, auditable Shariah-compliance
+> engine for spot crypto trading, by CodeGate Software.
+
+keel enforces rulings you supply: attested screening that fails closed,
+eighteen un-overridable execution rails, promotion gates with an overfitting
+check, and honest DCA-benchmarked measurement. It is not a fatwa engine and
+never derives a Shariah classification from market data; no scholarly review
+of its fiqh basis has occurred. The site states its own honest result first:
+no shipped rule family is net-positive at the taker fee actually paid on
+Coinbase. Not financial advice; not a fatwa; attestation is the operator's
+responsibility.
+
+## Facts
+
+- Engine: https://github.com/CodeGateSoftware/keel (Apache-2.0)
+- Site source: https://github.com/CodeGateSoftware/keeltrading.com (code MIT, content © CodeGate Software)
+- Editions: English (/en/) and Arabic (/ar/, RTL); French and Spanish reserved
+- Docs on this site are fetched from the engine repository at build time and
+  are shown in their original English
+- Downloads link directly to GitHub Releases; binaries are never mirrored
+- Not affiliated with the Kubernetes project Keel (keel.sh) or Keel
+  Infrastructure (Nasdaq: KEEL); not affiliated with any exchange
+
+## Key pages
+
+- What keel is: https://keeltrading.com/en/
+- Compliance methodology in plain terms: https://keeltrading.com/en/compliance/
+- Features, each mapped to proving source: https://keeltrading.com/en/features/
+- Install (source or releases): https://keeltrading.com/en/install/
+- Docs (glossary, fiqh basis, runbooks, experiments): https://keeltrading.com/en/docs/
+- The fiqh basis, ruling by ruling: https://keeltrading.com/en/docs/fiqh-basis/
+- The glossary, single source of terms: https://keeltrading.com/en/docs/glossary/
+- The honest result, restated (experiment record): https://keeltrading.com/en/docs/experiment-honest-result-restated/
+- News from GitHub Discussions: https://keeltrading.com/en/news/
+- Arabic edition: https://keeltrading.com/ar/

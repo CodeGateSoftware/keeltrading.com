@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
+import { rehypeTableHeaders } from "./src/plugins/rehype-table-headers.mjs";
 
 // D4: i18n in the architecture from day one, phased in content.
 // `fr` and `es` are reserved in routing but ship no pages until their phase.
@@ -26,4 +27,12 @@ export default defineConfig({
       },
     }),
   ],
+  markdown: {
+    rehypePlugins: [rehypeTableHeaders],
+    shikiConfig: {
+      // Dual themes so code tokens keep contrast in light and dark mode;
+      // the dark side is switched in global.css via the --shiki-dark vars.
+      themes: { light: "github-light", dark: "github-dark" },
+    },
+  },
 });

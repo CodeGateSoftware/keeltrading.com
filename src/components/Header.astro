@@ -60,7 +60,11 @@ const otherLocale: Locale = locale === "en" ? "ar" : "en";
         class="locale-switch"
         href={pageKey ? localePath(otherLocale, pageKey) : `/${otherLocale}/`}
         lang={otherLocale}
-        aria-label={chrome.localeSwitcher.label}
+        aria-label={
+          locale === "en"
+            ? "العربية — read the Arabic edition"
+            : "English — read the English edition"
+        }
       >
         {chrome.localeSwitcher.other[locale]}
       </a>

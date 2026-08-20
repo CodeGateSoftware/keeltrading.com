@@ -168,6 +168,28 @@ pre code {
   padding: 0;
 }
 
+/* Shiki dual-theme switch: inline colors are the light theme; flip to the
+   dark palette when the OS prefers dark. Keeps token contrast AA in both. */
+@media (prefers-color-scheme: dark) {
+  .astro-code,
+  .astro-code span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+  }
+}
+
+/* GitHub's comment gray (#6A737D) misses AA contrast on both theme
+   backgrounds — darken it in light mode, lighten it in dark. */
+pre span[style*="color:#6A737D"] {
+  color: #57606a !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  pre span[style*="color:#6A737D"] {
+    color: #949aa3 !important;
+  }
+}
+
 blockquote {
   margin: 1.5em 0;
   padding: 0.25em 1.25em;
@@ -459,6 +481,7 @@ section {
   box-shadow: var(--shadow);
 }
 
+.card h2,
 .card h3 {
   margin: 0 0 0.5em;
   font-size: 1.05rem;

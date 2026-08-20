@@ -29,11 +29,13 @@ mkdirSync(join(root, "data"), { recursive: true });
 const EXTERNAL_DEST = /^(https?:|mailto:|data:|\/\/)/i;
 
 /**
- * Demote every ATX heading by one level, outside code fences, so the page
- * template's H1 stays the single H1. Heading IDs derive from text, not level,
- * so in-page anchors are unaffected.
+ * Demote level-1 ATX headings to level 2, outside code fences, so the page
+ * template's H1 stays the single H1 and mid-document `#` sections (e.g. the
+ * runbook's "# Part 2") become proper H2s. Deeper levels are left alone —
+ * the original H2 sections already sit correctly under the template H1.
+ * Heading IDs derive from text, not level, so in-page anchors are unaffected.
  */
-function demoteHeadings(markdown) {
+function demoteTopLevelHeadings(markdown) {
   let inFence = false;
   return markdown
     .split("\n")
@@ -42,7 +44,7 @@ function demoteHeadings(markdown) {
         inFence = !inFence;
         return line;
       }
-      if (!inFence && /^#{1,5}\s/.test(line)) return `#${line}`;
+      if (!inFence && /^# \S/.test(line)) return `#${line}`;
       return line;
     })
     .join("\n");
@@ -112,7 +114,7 @@ for (const doc of manifest.docs) {
   // Drop the document's own H1 title: the site renders the manifest title as
   // the page's single H1 (one-h1-per-page). Heading IDs are unaffected.
   markdown = markdown.replace(/^#\s+.+\n/, "");
-  markdown = demoteHeadings(markdown);
+  markdown = demoteTopLevelHeadings(markdown);
   markdown = rewriteRelativeLinks(markdown, doc.path, manifest.repo, manifest.ref);
   writeFileSync(join(DOCS_DIR, `${doc.slug}.md`), markdown);
   meta.docs.push({

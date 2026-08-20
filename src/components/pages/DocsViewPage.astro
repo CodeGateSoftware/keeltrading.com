@@ -58,11 +58,11 @@ function slugifyHeading(text: string): string {
     .replace(/\s+/g, "-");
 }
 
-// The glossary's terms are `## term` headings upstream, demoted to `###` by the
-// fetch script — extract them for DefinedTermSet (SEO roadmap item 1.6).
+// The glossary's terms are `## term` headings (unchanged by the fetch
+// script's H1-only demotion) — extract them for DefinedTermSet (SEO roadmap item 1.6).
 const glossaryTerms =
   entry.id === "glossary" && entry.body
-    ? Array.from(entry.body.matchAll(/^### (.+)$/gm))
+    ? Array.from(entry.body.matchAll(/^## (.+)$/gm))
         .map((match) => match[1]!.trim())
         .filter((term) => term.length > 0)
     : [];

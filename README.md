@@ -13,10 +13,11 @@ surfaces and translates, it never duplicates.
 
 **Status: v1 implemented** against the
 [PRD](docs/superpowers/specs/2026-08-19-website-prd.md) (`Phase 15 — Public
-website v1`). Deployment wiring is documented in
-[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md); the custom domain is pending its
-registrar (PRD §11) — preview deployments unblock everything until it lands.
-SEO strategy and roadmap: [docs/seo/](docs/seo/SEO-STRATEGY.md).
+website v1`). Deploys run from GitHub Actions (add two repo secrets + one
+variable per [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) and the site goes live
+on `*.pages.dev` immediately); the custom domain is deferred until its
+registrar completes (PRD §11). SEO strategy and roadmap:
+[docs/seo/](docs/seo/SEO-STRATEGY.md).
 
 ## What is in here
 
