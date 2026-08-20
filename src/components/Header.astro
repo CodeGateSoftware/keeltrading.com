@@ -23,6 +23,9 @@ const navItems: { key: Exclude<PageKey, "home">; label: string }[] = [
 ];
 
 const menuLabel = locale === "ar" ? "القائمة" : locale === "fr" ? "Menu" : "Menu";
+
+/** Compact codes next to the globe glyph; native names live in aria-label/title. */
+const localeCodes: Record<Locale, string> = { en: "EN", ar: "AR", fr: "FR" };
 ---
 
 <header class="site-header">
@@ -71,8 +74,25 @@ const menuLabel = locale === "ar" ? "القائمة" : locale === "fr" ? "Menu" 
               href={pageKey ? localePath(other, pageKey) : `/${other}/`}
               lang={other}
               aria-label={`${localeNames[other]} — ${chrome.localeSwitcher.label}`}
+              title={localeNames[other]}
             >
-              {localeNames[other]}
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M3 12h18"></path>
+                <path
+                  d="M12 3a14.5 14.5 0 0 1 3.8 9A14.5 14.5 0 0 1 12 21a14.5 14.5 0 0 1-3.8-9A14.5 14.5 0 0 1 12 3Z"
+                ></path>
+              </svg>
+              {localeCodes[other]}
             </a>
           ))
       }

@@ -458,14 +458,24 @@ section {
 }
 
 .locale-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   color: var(--muted);
   text-decoration: none;
-  font-size: 0.95rem;
-  padding: 0.35rem 0.7rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 0.35rem 0.65rem;
   border: 1px solid var(--border);
   border-radius: 999px;
   background: var(--surface);
   white-space: nowrap;
+}
+
+.locale-switch:hover {
+  color: var(--ink);
+  border-color: var(--accent);
 }
 
 /* Very narrow phones: two language pills + brand + burger must fit */
@@ -476,7 +486,6 @@ section {
 
   .locale-switch {
     padding: 0.28rem 0.5rem;
-    font-size: 0.82rem;
   }
 }
 
