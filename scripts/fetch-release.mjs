@@ -11,7 +11,7 @@
  * A failed fetch never breaks the build; the Install page falls back to a
  * plain link to the Releases page.
  */
-import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -62,4 +62,58 @@ try {
     writeFileSync(OUT, JSON.stringify({ ...FALLBACK }, null, 2) + "\n");
     console.warn(`  WARN: release fetch failed (${error.message}); Install page will link to the Releases page`);
   }
+}
+
+// ---------------------------------------------------------------------------
+// #41 — the changelog page. The full release list, newest first, written into
+// the `changelog` content collection (gitignored; this script is the only
+// writer, exactly like the engine docs). Same failure policy: a failed fetch
+// never breaks the build — the page falls back to a plain Releases link.
+const CHANGELOG_DIR = join(root, "src/content/changelog");
+const LIST_API = "https://api.github.com/repos/CodeGateSoftware/keel/releases?per_page=100";
+
+/** Demote every ATX heading one level, outside code fences, so each release's
+ *  version heading (an H2 from the page template) stays the section's H2. */
+function demoteHeadings(markdown) {
+  let inFence = false;
+  return markdown
+    .split("\n")
+    .map((line) => {
+      if (/^\s*(```|~~~)/.test(line)) {
+        inFence = !inFence;
+        return line;
+      }
+      if (!inFence && /^#{1,5} \S/.test(line)) return `#${line}`;
+      return line;
+    })
+    .join("\n");
+}
+
+try {
+  const response = await fetch(LIST_API, { headers });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  const releases = (await response.json()).filter((release) => !release.draft);
+
+  mkdirSync(CHANGELOG_DIR, { recursive: true });
+  for (const stale of readdirSync(CHANGELOG_DIR)) {
+    if (stale.endsWith(".md")) rmSync(join(CHANGELOG_DIR, stale));
+  }
+  for (const release of releases) {
+    const frontmatter = [
+      "---",
+      `tag: ${JSON.stringify(release.tag_name)}`,
+      `name: ${JSON.stringify(release.name ?? release.tag_name)}`,
+      `publishedAt: ${JSON.stringify(release.published_at ?? "")}`,
+      `url: ${JSON.stringify(release.html_url)}`,
+      "---",
+      "",
+    ].join("\n");
+    writeFileSync(
+      join(CHANGELOG_DIR, `${release.tag_name}.md`),
+      frontmatter + demoteHeadings(release.body ?? "") + "\n",
+    );
+  }
+  console.log(`  changelog: ${releases.length} releases -> src/content/changelog/`);
+} catch (error) {
+  console.warn(`  WARN: changelog fetch failed (${error.message}); keeping any existing files`);
 }

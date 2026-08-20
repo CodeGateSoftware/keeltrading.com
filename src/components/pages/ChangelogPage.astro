@@ -1,0 +1,106 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+import { changelog } from "../../i18n/pages/changelog";
+import {
+  alternatesFor,
+  formatDate,
+  localePath,
+  ENGINE_RELEASES_URL,
+  type Locale,
+} from "../../i18n/config";
+import { t } from "../../i18n/ui";
+
+/**
+ * #41 — every keel release, newest first, rendered from the `changelog`
+ * content collection that scripts/fetch-release.mjs fills at build time
+ * (same pattern as the engine docs: fetched markdown, never hand-copied).
+ * Release notes stay in English — the canonical wording — on every locale.
+ */
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const c = changelog[locale];
+const chrome = t(locale);
+
+const entries = (await getCollection("changelog"))
+  .slice()
+  .sort((a, b) => b.data.publishedAt.localeCompare(a.data.publishedAt));
+const rendered = await Promise.all(
+  entries.map(async (entry) => ({ entry, Content: (await render(entry)).Content })),
+);
+const latestTag = entries[0]?.data.tag ?? null;
+
+/** Fragment-safe anchor ids: v0.10.0 → v0-10-0 */
+const anchorFor = (tag: string) => tag.replace(/\./g, "-");
+---
+
+<Base
+  locale={locale}
+  pageKey="changelog"
+  title={c.title}
+  description={c.description}
+  path={localePath(locale, "changelog")}
+  alternates={alternatesFor("changelog")}
+>
+  <div class="container">
+    <section class="hero">
+      <h1>{c.title}</h1>
+      <p class="lede">{c.intro}</p>
+      <p class="doc-meta">{c.englishOnly}</p>
+    </section>
+
+    <div class="narrow">
+      {
+        rendered.length === 0 ? (
+          <div class="stale-banner" role="note">
+            <p>{c.empty}</p>
+            <p>
+              <a href={ENGINE_RELEASES_URL}>{chrome.actions.seeReleases} →</a>
+            </p>
+          </div>
+        ) : (
+          <>
+            <nav class="changelog-toc" aria-label={c.tocLabel}>
+              <p class="toc-label">{c.tocLabel}</p>
+              <ul>
+                {entries.map((entry) => (
+                  <li>
+                    <a href={`#${anchorFor(entry.data.tag)}`}>
+                      {entry.data.tag}
+                      {entry.data.tag === latestTag && (
+                        <span class="latest-chip">{c.latestLabel}</span>
+                      )}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            {rendered.map(({ entry, Content }) => (
+              <article class="release" id={anchorFor(entry.data.tag)}>
+                <h2>
+                  <a href={`#${anchorFor(entry.data.tag)}`}>{entry.data.tag}</a>
+                </h2>
+                <p class="meta">
+                  {entry.data.publishedAt && (
+                    <time datetime={entry.data.publishedAt}>
+                      {formatDate(entry.data.publishedAt)}
+                    </time>
+                  )}
+                  <span class="dot" aria-hidden="true">·</span>
+                  <a href={entry.data.url}>{c.viewRelease} ↗</a>
+                </p>
+                <div class="prose">
+                  <Content />
+                </div>
+              </article>
+            ))}
+          </>
+        )
+      }
+    </div>
+  </div>
+</Base>

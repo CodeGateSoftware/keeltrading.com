@@ -57,6 +57,7 @@ export interface InstallContent {
   versionPrefix: string;
   requirements: string;
   otherPlatforms: string;
+  historyLink: string;
   cards: PlatformCardCopy[];
   thenTitle: string;
   allFilesTitle: string;
@@ -78,7 +79,7 @@ export interface InstallContent {
 
 export const install: LocalizedPage<InstallContent> = {
   en: {
-    rev: "2026-08-20.6",
+    rev: "2026-08-20.7",
     title: "Download keel — macOS & Windows",
     description:
       "Download keel for macOS or Windows. Version and links come from GitHub Releases at build time; the five-minute source path is here too.",
@@ -86,6 +87,7 @@ export const install: LocalizedPage<InstallContent> = {
     versionPrefix: "Latest release",
     requirements: "Requires Python 3.11 or later · downloaded from GitHub Releases — never mirrored here",
     otherPlatforms: "Linux and everything else: same wheels from the release page.",
+    historyLink: "Every version, newest first — the full changelog",
     cards: [
       {
         name: "macOS",
@@ -162,8 +164,8 @@ export const install: LocalizedPage<InstallContent> = {
   },
 
   ar: {
-    rev: "2026-08-20.6",
-    translatedFromRev: "2026-08-20.6",
+    rev: "2026-08-20.7",
+    translatedFromRev: "2026-08-20.7",
     title: "تنزيل كيل — macOS وWindows",
     description:
       "نزّل كيل لنظام macOS أو Windows. ويأتي رقمُ الإصدار وروابطه من GitHub Releases وقت البناء؛ ومسارُ التثبيت من المصدر في خمس دقائق هنا أيضًا.",
@@ -171,6 +173,7 @@ export const install: LocalizedPage<InstallContent> = {
     versionPrefix: "أحدث إصدار",
     requirements: "يتطلّب Python 3.11 أو أحدث · التنزيل من GitHub Releases — ولا يُنسخ هنا أبدًا",
     otherPlatforms: "لينكس وغيره: حزم wheel نفسها متاحةٌ في صفحة الإصدار.",
+    historyLink: "كلُّ الإصدارات، من الأحدث إلى الأقدم — السجلُّ الكامل للتغييرات",
     cards: [
       {
         name: "macOS",
@@ -247,8 +250,8 @@ export const install: LocalizedPage<InstallContent> = {
   },
 
   fr: {
-    rev: "2026-08-20.6",
-    translatedFromRev: "2026-08-20.6",
+    rev: "2026-08-20.7",
+    translatedFromRev: "2026-08-20.7",
     title: "Télécharger keel — macOS et Windows",
     description:
       "Téléchargez keel pour macOS ou Windows. Le numéro de version et les liens proviennent de GitHub Releases, récupérés au moment du build ; le parcours en cinq minutes depuis les sources figure également ici.",
@@ -256,6 +259,7 @@ export const install: LocalizedPage<InstallContent> = {
     versionPrefix: "Dernière version",
     requirements: "Nécessite Python 3.11 ou plus · téléchargé depuis GitHub Releases — jamais recopié ici",
     otherPlatforms: "Linux et le reste : les mêmes wheels, depuis la page des versions.",
+    historyLink: "Toutes les versions, de la plus récente à la plus ancienne — le journal complet",
     cards: [
       {
         name: "macOS",
