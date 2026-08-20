@@ -302,12 +302,53 @@ section {
   z-index: 20; /* keep the language dropdown above sticky page content */
 }
 
+.masthead {
+  text-align: center;
+  padding-block: 0.85rem 0.15rem;
+}
+
+.invocation {
+  margin: 0;
+  font-family: "Amiri Quran", "Geeza Pro", "Noto Naskh Arabic", serif;
+  font-size: 1.2rem;
+  line-height: 1.9;
+  color: var(--accent);
+}
+
+.invocation-cite {
+  margin: 0;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+/* brand centered; hamburger left, actions right */
 .site-header .inner {
-  display: flex;
-  flex-wrap: wrap;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
   align-items: center;
-  gap: 0.75rem 1.5rem;
-  padding-block: 0.8rem;
+  padding-block: 0.7rem;
+}
+
+.site-header .header-actions {
+  grid-column: 2;
+  justify-self: end;
+}
+
+.site-header .hamburger {
+  grid-column: 1;
+  justify-self: start;
+}
+
+/* optically centered regardless of side-column widths */
+.site-header .brand {
+  position: absolute;
+  inset-inline: 0;
+  justify-self: center;
+  width: max-content;
+  margin-inline: auto;
+  z-index: 1;
 }
 
 .brand {
@@ -324,24 +365,6 @@ section {
   color: var(--accent);
 }
 
-.brand-column {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
-}
-
-.brand-name {
-  font-size: 1.15rem;
-  font-weight: 700;
-}
-
-.brand-slogan {
-  font-family: "Amiri Quran", "Geeza Pro", "Noto Naskh Arabic", serif;
-  font-size: 1.02rem;
-  line-height: 1.7;
-  margin-top: 0.3rem;
-  color: var(--accent); /* bonds the invocation to the brand mark */
-}
 
 .brand .domain {
   color: var(--muted);
@@ -353,8 +376,9 @@ section {
 .site-nav {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 0.1rem 0.9rem;
-  margin-inline-end: auto;
+  padding-block: 0.25rem 0.75rem;
 }
 
 .site-nav a {
@@ -403,24 +427,18 @@ section {
   display: none;
 }
 
-.nav-toggle:focus-visible ~ .hamburger {
+.site-header:has(.nav-toggle:focus-visible) .hamburger {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
 @media (max-width: 63.99rem) {
   .site-header .inner {
-    flex-wrap: nowrap;
+    grid-template-columns: auto 1fr auto;
     gap: 0.5rem;
   }
 
-  .header-actions {
-    order: 2;
-    margin-inline-start: auto;
-  }
-
   .hamburger {
-    order: 3;
     display: inline-flex;
     flex-direction: column;
     justify-content: center;
@@ -450,19 +468,19 @@ section {
     display: none;
   }
 
-  .nav-toggle:checked ~ .hamburger .bar:nth-child(1) {
+  .site-header:has(.nav-toggle:checked) .hamburger .bar:nth-child(1) {
     transform: translateY(7px) rotate(45deg);
   }
 
-  .nav-toggle:checked ~ .hamburger .bar:nth-child(2) {
+  .site-header:has(.nav-toggle:checked) .hamburger .bar:nth-child(2) {
     opacity: 0;
   }
 
-  .nav-toggle:checked ~ .hamburger .bar:nth-child(3) {
+  .site-header:has(.nav-toggle:checked) .hamburger .bar:nth-child(3) {
     transform: translateY(-7px) rotate(-45deg);
   }
 
-  .nav-toggle:checked ~ .site-nav {
+  .site-header:has(.nav-toggle:checked) .site-nav {
     display: flex;
     flex-direction: column;
     gap: 0;
@@ -476,18 +494,18 @@ section {
     padding: 0.35rem 1.25rem 1rem;
   }
 
-  .nav-toggle:checked ~ .site-nav a {
+  .site-header:has(.nav-toggle:checked) .site-nav a {
     padding: 0.8rem 0.55rem;
     font-size: 1.02rem;
     border-bottom: 1px solid var(--border);
     border-radius: 0;
   }
 
-  .nav-toggle:checked ~ .site-nav a:last-child {
+  .site-header:has(.nav-toggle:checked) .site-nav a:last-child {
     border-bottom: 0;
   }
 
-  .nav-toggle:checked ~ .site-nav .nav-panel-langs {
+  .site-header:has(.nav-toggle:checked) .site-nav .nav-panel-langs {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;

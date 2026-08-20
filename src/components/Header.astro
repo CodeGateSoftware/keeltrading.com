@@ -29,6 +29,12 @@ const localeCodes: Record<Locale, string> = { en: "EN", ar: "AR", fr: "FR" };
 ---
 
 <header class="site-header">
+  <div class="masthead container" lang="ar" dir="rtl">
+    <p class="invocation">رَبِّ زِدْنِي عِلْمًا</p>
+    <p class="invocation-cite" dir="auto" lang={locale}>{
+      locale === "ar" ? "طه ١١٤" : locale === "fr" ? "Ṭā-Hā 114" : "Ṭā-Hā 114"
+    }</p>
+  </div>
   <div class="container inner">
     <a class="brand" href={localePath(locale, "home")} aria-label="keel">
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -41,10 +47,7 @@ const localeCodes: Record<Locale, string> = { en: "EN", ar: "AR", fr: "FR" };
           fill="none"
         ></path>
       </svg>
-      <span class="brand-column">
-        <span class="brand-name">keel</span>
-        <span class="brand-slogan" lang="ar" dir="rtl">رَبِّ زِدْنِي عِلْمًا</span>
-      </span>
+      <span>keel</span>
     </a>
 
     <input type="checkbox" id="nav-toggle" class="nav-toggle visually-hidden-checkbox" aria-label={menuLabel} />
@@ -54,30 +57,7 @@ const localeCodes: Record<Locale, string> = { en: "EN", ar: "AR", fr: "FR" };
       <span class="bar"></span>
     </label>
 
-    <nav class="site-nav" aria-label={locale === "ar" ? "التنقّل الرئيسي" : "Main navigation"}>
-      {
-        navItems.map((item) => (
-          <a
-            href={localePath(locale, item.key)}
-            aria-current={pageKey === item.key ? "page" : undefined}
-          >
-            {item.label}
-          </a>
-        ))
-      }
-      <div class="nav-panel-langs">
-        {
-          locales
-            .filter((candidate) => candidate !== locale)
-            .map((other) => (
-              <a href={pageKey ? localePath(other, pageKey) : `/${other}/`} lang={other}>
-                {localeNames[other]}
-              </a>
-            ))
-        }
-      </div>
-    </nav>
-
+    
     <div class="header-actions">
       <div class="locale-menu">
         <p class="locale-switch" title={chrome.localeSwitcher.label}>
@@ -131,4 +111,27 @@ const localeCodes: Record<Locale, string> = { en: "EN", ar: "AR", fr: "FR" };
       </a>
     </div>
   </div>
+<nav class="site-nav container" aria-label={locale === "ar" ? "التنقّل الرئيسي" : "Main navigation"}>
+      {
+        navItems.map((item) => (
+          <a
+            href={localePath(locale, item.key)}
+            aria-current={pageKey === item.key ? "page" : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <div class="nav-panel-langs">
+        {
+          locales
+            .filter((candidate) => candidate !== locale)
+            .map((other) => (
+              <a href={pageKey ? localePath(other, pageKey) : `/${other}/`} lang={other}>
+                {localeNames[other]}
+              </a>
+            ))
+        }
+      </div>
+    </nav>
 </header>
