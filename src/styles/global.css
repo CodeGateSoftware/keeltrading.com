@@ -949,14 +949,23 @@ section {
   margin-block: 1.4rem 0.4rem;
 }
 
-.unsigned-steps {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  gap: 0 2rem;
+/* The no-warning route, set apart at the top of the note: it is an answer, not a caveat. */
+.unsigned-first {
+  border-inline-start: 3px solid var(--accent, currentColor);
+  padding-inline-start: 1rem;
+  margin-block: 1rem 1.6rem;
 }
 
-.unsigned-steps h3 {
-  margin-top: 1.2rem;
+.unsigned-first h3 {
+  margin-top: 0;
+}
+
+.unsigned-note ol {
+  padding-inline-start: 1.4rem;
+}
+
+.unsigned-note ol li {
+  margin-block: 0.35rem;
 }
 
 .verify-command {
