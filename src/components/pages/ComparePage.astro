@@ -91,6 +91,11 @@ const honestLinks = [
         </section>
 
         <section>
+          <h2>{c.venuesTitle}</h2>
+          {c.venuesBody.map((paragraph) => <p>{paragraph}</p>)}
+        </section>
+
+        <section>
           <h2>{c.wontDoTitle}</h2>
           <ul>
             {c.wontDo.map((item) => <li>{item}</li>)}
