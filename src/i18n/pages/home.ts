@@ -46,7 +46,7 @@ export const home: LocalizedPage<HomeContent> = {
       title: "The honest result, stated first",
       body: [
         "No shipped rule family is net-positive at the taker fee actually paid on Coinbase (~1.2% per leg) — 0 of 90 configurations in one measurement matrix, 0 of 82 in another. A cross-verified modelling review (Dr. Issam Elhattab's stochastic note, re-derived against keel's real numbers) sharpened the why: the taker fee is the entire result. Inside the venue's fee-free monthly allowance the reconstructed rules sit indistinguishably at break-even (a 14.9% win rate against a 14.88% break-even); one step outside it, break-even jumps to 29% and the same rules are decisively negative. The allowance rail is not a budget cap — it is the profitability boundary.",
-        "The point of this project is the enforcement machinery and the honest measurement of what runs through it — not a claim of profit. Every result is compared against a simple buy-every-period (DCA) benchmark, and the reference rules currently do not beat it after fees. We would rather you know that on the front page than discover it yourself.",
+        "The point of this project is the enforcement machinery and the honest measurement of what runs through it — not a claim of profit. Every result is compared against a simple buy-every-period (DCA) benchmark, and the reference rules currently do not beat it after fees. We would rather you know that on the front page than discover it yourself. And we are working hard to improve the algorithms' and strategies' results — we will keep you updated with our progress.",
       ],
       experimentLabel: "Read the experiment record",
       announcementLabel: "Read the announcement",
@@ -114,7 +114,7 @@ export const home: LocalizedPage<HomeContent> = {
       title: "النتيجة الصادقة، نقولها نحن أولًا",
       body: [
         "لا توجد عائلة قواعد مُصدَّرة تحقق ربحًا صافيًا عند رسوم الآخذ المدفوعة فعليًا على Coinbase‏ (~1.2٪ للاتجاه الواحد) — صفرٌ من 90 تكوينًا في مصفوفة قياس، وصفرٌ من 82 في أخرى. مراجعةُ نمذجةٍ جرى التحقق المرجعي منها (مذكرة النمذجة العشوائية للدكتور عصام الهتّاب، أُعيد اشتقاقها على أرقام كيل الحقيقية) حدّدت السبب بدقّة: رسوم الآخذ هي النتيجة كلها. داخل بدل الحجم الشهري الخالي من الرسوم في المنصّة تجلس القواعد المُعاد بناؤها عند التعادل تمامًا (معدل فوز 14.9٪ مقابل نقطة تعادل 14.88٪)؛ وبخطوةٍ خارجه تقفز نقطة التعادل إلى 29٪ فتصبح القواعد نفسها سالبةً بوضوح. سكة البدل ليست سقفَ ميزانية — إنما هي حدُّ الربحية.",
-        "جوهر هذا المشروع هو آليات الإنفاذ والقياس الصادق لما يمرّ عبرها — لا ادّعاء ربح. تُقارَن كل نتيجة بمقياس الشراء الدوري المنتظم (DCA)، والقواعد المرجعية لا تتغلب عليه بعد الرسوم. نفضّل أن تعرف ذلك من الصفحة الأولى على أن تكتشفه بنفسك.",
+        "جوهر هذا المشروع هو آليات الإنفاذ والقياس الصادق لما يمرّ عبرها — لا ادّعاء ربح. تُقارَن كل نتيجة بمقياس الشراء الدوري المنتظم (DCA)، والقواعد المرجعية لا تتغلب عليه بعد الرسوم. نفضّل أن تعرف ذلك من الصفحة الأولى على أن تكتشفه بنفسك. ونعمل بجدٍّ على تحسين نتائج الخوارزميات والاستراتيجيات — وسنوافيكم بتقدّمنا أولًا بأول.",
       ],
       experimentLabel: "اقرأ سجلّ التجربة",
       announcementLabel: "اقرأ الإعلان",
@@ -173,7 +173,7 @@ export const home: LocalizedPage<HomeContent> = {
       title: "Le résultat honnête, dit d'abord",
       body: [
         "Aucune famille de règles livrée n'est nette-positive aux frais preneur réellement payés sur Coinbase (~1,2 % par jambe) — 0 sur 90 configurations dans une matrice de mesure, 0 sur 82 dans une autre. Une revue de modélisation contre-vérifiée (la note stochastique du Dr Issam Elhattab, redérivée sur les chiffres réels de keel) a précisé le pourquoi : les frais preneur sont tout le résultat. À l'intérieur de l'allocation mensuelle sans frais de la place, les règles reconstruites se tiennent indissociablement au point mort (taux de réussite de 14,9 % contre un seuil de 14,88 %) ; un pas au-dehors, le seuil saute à 29 % et les mêmes règles deviennent nettement négatives. Le rail d'allocation n'est pas un plafond budgétaire — c'est la frontière de rentabilité.",
-        "Le but de ce projet est la machinerie d'application et la mesure honnête de ce qui la traverse — pas une promesse de profit. Chaque résultat est comparé à un repère d'achat périodique simple (DCA), et les règles de référence ne le battent pas après frais. Nous préférons que vous le sachiez dès la page d'accueil plutôt que de le découvrir vous-même.",
+        "Le but de ce projet est la machinerie d'application et la mesure honnête de ce qui la traverse — pas une promesse de profit. Chaque résultat est comparé à un repère d'achat périodique simple (DCA), et les règles de référence ne le battent pas après frais. Nous préférons que vous le sachiez dès la page d'accueil plutôt que de le découvrir vous-même. Et nous travaillons dur pour améliorer les résultats des algorithmes et des stratégies — nous vous tiendrons informés de nos progrès.",
       ],
       experimentLabel: "Lire le compte rendu de l'expérience",
       announcementLabel: "Lire l'annonce",
