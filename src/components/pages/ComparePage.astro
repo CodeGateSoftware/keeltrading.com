@@ -85,10 +85,15 @@ const honestLinks = [
           </p>
         </section>
 
-        <section>
-          <h2>{c.paidTitle}</h2>
-          {c.paidBody.map((paragraph) => <p>{paragraph}</p>)}
-        </section>
+        {[
+          { title: c.paidTitle, body: c.paidBody },
+          { title: c.venuesTitle, body: c.venuesBody },
+        ].map((section) => (
+          <section>
+            <h2>{section.title}</h2>
+            {section.body.map((paragraph) => <p>{paragraph}</p>)}
+          </section>
+        ))}
 
         <section>
           <h2>{c.wontDoTitle}</h2>

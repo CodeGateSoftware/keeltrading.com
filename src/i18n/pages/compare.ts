@@ -23,6 +23,8 @@ export interface CompareContent {
   reading: string[];
   paidTitle: string;
   paidBody: string[];
+  venuesTitle: string;
+  venuesBody: string[];
   catchLink: string;
   wontDoTitle: string;
   wontDo: string[];
@@ -38,7 +40,7 @@ export const compareColumns = [
 
 export const compare: LocalizedPage<CompareContent> = {
   en: {
-    rev: "2026-08-20.3",
+    rev: "2026-08-20.4",
     title: "How keel Compares to Other Trading Bots",
     description:
       "keel compared with Freqtrade, Jesse, and Hummingbot: license, focus, strategy gates, and the compliance machinery none of them carry — structural facts from public repositories.",
@@ -59,10 +61,15 @@ export const compare: LocalizedPage<CompareContent> = {
       "QuantCrawler is the kind of paid service many retail traders meet first: $9.99/month after a 30-day free trial (verified 2026-08-20). It relays TradingView webhook alerts to your broker and copies trades across accounts — ten broker integrations, Coinbase among them, with a futures and prop-firm focus. It is closed-source and cloud-hosted: you connect your broker credentials to their platform, and execution runs on their servers.",
       "keel is the opposite trade-off. Nothing hosted, nothing closed: the engine runs on your machine, your keys never leave it, and no rule may touch live money before clearing the promotion gate. What keel does not have is QuantCrawler's broker breadth or its TradingView-first workflow — if that is what you need, theirs is the fitting answer, at the price of entrusting a service with your credentials. Like the bots above, it carries no compliance machinery; that difference is keel's reason to exist.",
     ],
+    venuesTitle: "Which venues, and why",
+    venuesBody: [
+      "keel's Coinbase adapter is the live-proven reference: attested spot screening, real orders, the whole gauntlet exercised in production. Alpaca is wired for deployment on the equities side — the same enforcement, paper-first, with session-aware market clocks. The Robinhood adapter ships in the repository as an optional dev venue, deliberately outside deployments until its live-path prerequisites close.",
+      "What keel declines categorically: futures, margin, shorting, and derivatives of any kind — long-only spot is the whole surface, by fiqh posture and by design. Venue breadth is deliberately not chased; every new venue is a capability-verified adapter decision, not a growth metric.",
+    ],
     catchLink: "Why is keel free when the others charge subscriptions? The honest answer is on the About page.",
     wontDoTitle: "What keel will not do",
     wontDo: [
-      "Chase exchange coverage: Coinbase is the wired reference adapter; Robinhood and Alpaca adapters ship deliberately unwired.",
+      "Chase exchange coverage: Coinbase is the live-proven reference and Alpaca is wired for equities paper; the Robinhood adapter ships optional/dev, deliberately outside deployments.",
       "Trade anything but long-only spot: no leverage, no shorting, no derivatives.",
       "Promote a rule on backtest brilliance alone: the overfitting check (PBO/CSCV) can veto it.",
       "Promise profit: no shipped rule family is net-positive at the taker fee actually paid, and the site says so on its front page.",
@@ -70,8 +77,8 @@ export const compare: LocalizedPage<CompareContent> = {
   },
 
   ar: {
-    rev: "2026-08-20.3",
-    translatedFromRev: "2026-08-20.3",
+    rev: "2026-08-20.4",
+    translatedFromRev: "2026-08-20.4",
     title: "مقارنة كيل ببوتات التداول الأخرى",
     description:
       "مقارنة كيل بـ Freqtrade وJesse وHummingbot: الترخيص والتوجه وبوابات الترقية وآليات الامتثال التي لا يحملها أيٌّ منها — وقائع بنيوية من المستودعات العمومية.",
@@ -92,10 +99,15 @@ export const compare: LocalizedPage<CompareContent> = {
       "‏QuantCrawler نمطُ الخدمات المدفوعة التي يقابلها كثير من المتداولين الأفراد أولًا: 9.99$ شهريًّا بعد تجربة مجانية ثلاثين يومًا (تحقّقنا منها بتاريخ 2026-08-20). يُمرّر تنبيهات TradingView إلى وسيطك وينسخ الصفقات بين الحسابات — عشر تكاملات وسطاء بينها Coinbase، مع تركيز على العقود المستقبلية وحسابات شركات التمويل. خدمة سحابية مغلقة المصدر: تربط بيانات وسيطك بمنصّتهم، ويجري التنفيذ على خوادمهم.",
       "وكيل هو المقايضة المعاكسة: لا استضافة ولا مصدر مغلق. يعمل المحرّك على جهازك، ومفاتيحك لا تغادره، ولا يمكن لأي قاعدة أن تمسّ مالًا حقيقيًّا قبل اجتياز بوابة الترقية. وما يملكه QuantCrawler ولا يملكه كيل: اتساع الوسطاء وسير عمل TradingView أولًا — إن كان ذلك ما تحتاجه فجوابهم هو المناسب، بثمن ائتمان خدمةٍ ببياناتك. ومثل البوتات أعلاه، لا يحمل آليات امتثال — وهذا الفرق كلُّ سبب وجود كيل.",
     ],
+    venuesTitle: "أي المنصّات، ولماذا",
+    venuesBody: [
+      "محوّل Coinbase في كيل هو المرجع المُثبت حيًّا: فرزٌ موثَّق للفوري، وأوامر حقيقية، والدورة كاملة تُمارَس في الإنتاج. وAlpaca موصولٌ للنشر في جانب الأسهم — الإنفاذ نفسه، ورقيًّا أولًا، مع ساعات سوق واعية بالجلسات. ومحوّل Robinhood يُسلَّم في المستودع منصّةَ تطويرٍ اختيارية، خارج عمليات النشر عمدًا حتى تُستوفى متطلبات مساره الحيّ.",
+      "وما يرفضه كيل رفضًا قاطعًا: العقود المستقبلية والهامش والبيع على المكشوف وكل المشتقات — الفوري الطويل هو السطح كله، بقِوامٍ شرعيٍّ وبالتصميم. وتوسيع تغطية المنصّات لا يُطارد عمدًا؛ كل منصّة جديدة قرارُ محوّلٍ تُتحقَّق قدراته، لا مقياسَ نموّ.",
+    ],
     catchLink: "لماذا كيل مجانيٌّ بينما يتقاضى الآخرون اشتراكات؟ الجواب الصادق في صفحة «حول».",
     wontDoTitle: "ما لن يفعله كيل",
     wontDo: [
-      "مطاردة تغطية المنصّات: Coinbase هو المحوّل المرجعي الموصول؛ ومحوّلا Robinhood وAlpaca يُسلَّمان غير موصولَين عمدًا.",
+      "مطاردة تغطية المنصّات: Coinbase هو المحوّل المرجعي المُثبت حيًّا وAlpaca موصولٌ للأسهم الورقية؛ ومحوّل Robinhood اختياري/تطويري، خارج عمليات النشر عمدًا.",
       "تداول أي شيءٍ غير الفوري الطويل: لا رافعة، لا بيعًا على المكشوف، لا مشتقّات.",
       "ترقية قاعدةٍ على بريق اختبارٍ رجعيٍّ وحده: فحص فرط المواءمة (PBO/CSCV) يستطيع نقضها.",
       "الوعد بربح: لا عائلة قواعد مُصدَّرة تحقق ربحًا صافيًا عند رسوم الآخذ الفعلية، والموقع يقول ذلك في صفحته الأولى.",
@@ -103,8 +115,8 @@ export const compare: LocalizedPage<CompareContent> = {
   },
 
   fr: {
-    rev: "2026-08-20.3",
-    translatedFromRev: "2026-08-20.3",
+    rev: "2026-08-20.4",
+    translatedFromRev: "2026-08-20.4",
     title: "Comparer keel aux autres bots de trading",
     description:
       "keel comparé à Freqtrade, Jesse et Hummingbot : licence, finalité, portes de promotion, et la machinerie de conformité qu'aucun d'eux n'emporte — des faits structurels tirés des dépôts publics.",
@@ -125,10 +137,15 @@ export const compare: LocalizedPage<CompareContent> = {
       "QuantCrawler est le genre de service payant que beaucoup de particuliers rencontrent d'abord : 9,99 $/mois après un essai gratuit de 30 jours (vérifié le 2026-08-20). Il relaie les alertes webhook TradingView vers votre courtier et copie les trades entre comptes — dix intégrations de courtiers dont Coinbase, avec un accent sur les futures et les comptes prop. C'est un service cloud au code fermé : vous connectez vos identifiants de courtier à leur plateforme, et l'exécution se fait sur leurs serveurs.",
       "keel est le compromis inverse : rien d'hébergé, rien de fermé. Le moteur tourne sur votre machine, vos clés ne la quittent jamais, et aucune règle ne peut toucher de l'argent réel avant de franchir la porte de promotion. Ce que keel n'a pas : l'étendue de courtiers de QuantCrawler ni son flux TradingView d'abord — si c'est ce qu'il vous faut, leur réponse est la bonne, au prix de confier vos identifiants à un service. Comme les bots ci-dessus, il n'emporte aucune machinerie de conformité — et cette différence est toute la raison d'être de keel.",
     ],
+    venuesTitle: "Quelles places, et pourquoi",
+    venuesBody: [
+      "L'adaptateur Coinbase de keel est la référence éprouvée en réel : screening spot attesté, ordres réels, tout le parcours exercé en production. Alpaca est câblé pour le déploiement côté actions — la même application, en papier d'abord, avec horloges de marché conscientes des sessions. L'adaptateur Robinhood est livré dans le dépôt comme place optionnelle de développement, délibérément hors des déploiements jusqu'à la fermeture de ses prérequis de mise en réel.",
+      "Ce que keel refuse catégoriquement : futures, marge, vente à découvert et tout produit dérivé — le spot long-only est toute la surface, par posture fiqh et par design. L'élargissement des places n'est pas poursuivi ; chaque nouvelle place est une décision d'adaptateur à capacités vérifiées, pas une métrique de croissance.",
+    ],
     catchLink: "Pourquoi keel est-il gratuit quand les autres facturent des abonnements ? La réponse honnête est sur la page À propos.",
     wontDoTitle: "Ce que keel ne fera pas",
     wontDo: [
-      "Courir après la couverture d'exchanges : Coinbase est l'adaptateur de référence câblé ; les adaptateurs Robinhood et Alpaca sont livrés délibérément non câblés.",
+      "Courir après la couverture d'exchanges : Coinbase est l'adaptateur de référence éprouvé en réel et Alpaca est câblé pour les actions papier ; l'adaptateur Robinhood est optionnel/dev, délibérément hors des déploiements.",
       "Trader autre chose que le spot long : pas de levier, pas de vente à découvert, pas de produits dérivés.",
       "Promouvoir une règle sur la seule brillance d'un backtest : le contrôle de surapprentissage (PBO/CSCV) peut opposer son veto.",
       "Promettre du profit : aucune famille de règles livrée n'est nette-positive aux frais preneur réellement payés, et le site le dit sur sa page d'accueil.",
@@ -162,7 +179,7 @@ export const compareRows = (locale: "en" | "ar" | "fr"): CompareRow[] => {
       {
         label: "Adaptateurs de plateformes",
         values: [
-          "Coinbase (référence) ; Robinhood & Alpaca livrés non câblés",
+          "Coinbase (référence éprouvée en réel) + Alpaca (câblé, actions papier) ; adaptateur Robinhood optionnel/dev",
           "Beaucoup de grandes plateformes",
           "Plusieurs plateformes",
           "Beaucoup de CEX et de DEX",
@@ -227,7 +244,7 @@ export const compareRows = (locale: "en" | "ar" | "fr"): CompareRow[] => {
       {
         label: "محوّلات المنصّات",
         values: [
-          "‏Coinbase (مرجعي)؛ ومحوّلا Robinhood وAlpaca غير موصولَين",
+          "‏Coinbase (مرجعي مثبت حيًّا) + Alpaca (موصول، أسهم ورقية)؛ محوّل Robinhood اختياري/تطويري",
           "منصّات كبرى عديدة",
           "عدة منصّات",
           "منصّات مركزية ولا مركزية عديدة",
@@ -296,7 +313,7 @@ export const compareRows = (locale: "en" | "ar" | "fr"): CompareRow[] => {
     {
       label: "Venue adapters",
       values: [
-        "Coinbase (reference); Robinhood & Alpaca ship unwired",
+        "Coinbase (live-proven reference) + Alpaca (wired, equities paper); Robinhood adapter ships optional/dev",
         "Many major exchanges",
         "Several exchanges",
         "Many CEXs and DEXs",
