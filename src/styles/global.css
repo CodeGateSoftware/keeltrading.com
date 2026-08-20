@@ -83,6 +83,10 @@ html[lang="ar"] body {
 main {
   flex: 1;
   width: 100%;
+  /* Engine docs contain long bare tokens (paths, identifiers, URLs) as plain
+     text nodes — wrap them rather than letting them widen the page. Inherited;
+     only kicks in when a token cannot fit a line on its own. */
+  overflow-wrap: anywhere;
 }
 
 h1,
@@ -151,6 +155,13 @@ samp {
   padding: 0.12em 0.4em;
   border-radius: 5px;
   font-size: 0.9em;
+  /* Long unbroken tokens (paths, identifiers) must wrap on narrow screens */
+  overflow-wrap: anywhere;
+}
+
+kbd,
+samp {
+  overflow-wrap: anywhere;
 }
 
 pre {
@@ -788,6 +799,11 @@ section {
 
 .prose {
   max-width: var(--prose);
+}
+
+/* Bare-URL link text in engine documents is one unbreakable token */
+.prose a {
+  overflow-wrap: anywhere;
 }
 
 .prose ul,
