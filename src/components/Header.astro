@@ -65,37 +65,52 @@ const localeCodes: Record<Locale, string> = { en: "EN", ar: "AR", fr: "FR" };
     </nav>
 
     <div class="header-actions">
-      {
-        locales
-          .filter((candidate) => candidate !== locale)
-          .map((other) => (
-            <a
-              class="locale-switch"
-              href={pageKey ? localePath(other, pageKey) : `/${other}/`}
-              lang={other}
-              aria-label={`${localeNames[other]} — ${chrome.localeSwitcher.label}`}
-              title={localeNames[other]}
-            >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.8"
-                stroke-linecap="round"
-                aria-hidden="true"
-              >
-                <circle cx="12" cy="12" r="9"></circle>
-                <path d="M3 12h18"></path>
-                <path
-                  d="M12 3a14.5 14.5 0 0 1 3.8 9A14.5 14.5 0 0 1 12 21a14.5 14.5 0 0 1-3.8-9A14.5 14.5 0 0 1 12 3Z"
-                ></path>
-              </svg>
-              {localeCodes[other]}
-            </a>
-          ))
-      }
+      <div class="locale-menu">
+        <input
+          type="checkbox"
+          id="lang-toggle"
+          class="lang-toggle visually-hidden-checkbox"
+          aria-label={chrome.localeSwitcher.label}
+          aria-haspopup="true"
+        />
+        <label class="locale-switch" for="lang-toggle">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M3 12h18"></path>
+            <path
+              d="M12 3a14.5 14.5 0 0 1 3.8 9A14.5 14.5 0 0 1 12 21a14.5 14.5 0 0 1-3.8-9A14.5 14.5 0 0 1 12 3Z"
+            ></path>
+          </svg>
+          {localeCodes[locale]}
+          <span class="locale-caret" aria-hidden="true">▾</span>
+        </label>
+        <ul class="locale-list">
+          {
+            locales
+              .filter((candidate) => candidate !== locale)
+              .map((other) => (
+                <li>
+                  <a
+                    href={pageKey ? localePath(other, pageKey) : `/${other}/`}
+                    lang={other}
+                    aria-label={`${localeNames[other]} — ${chrome.localeSwitcher.label}`}
+                  >
+                    {localeNames[other]}
+                  </a>
+                </li>
+              ))
+          }
+        </ul>
+      </div>
       <a
         class="github-link"
         href={ENGINE_URL}

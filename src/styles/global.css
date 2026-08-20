@@ -288,6 +288,7 @@ section {
   border-bottom: 1px solid var(--border);
   background: var(--surface);
   position: relative; /* anchor for the mobile nav panel */
+  z-index: 20; /* keep the language dropdown above sticky page content */
 }
 
 .site-header .inner {
@@ -457,12 +458,18 @@ section {
   gap: 0.75rem;
 }
 
+/* Language menu: pill shows the current locale; hover / focus / tap slides
+   the other languages down. Pure CSS — hover for mouse, focus-within for
+   keyboard, hidden checkbox pins it open for touch. */
+.locale-menu {
+  position: relative;
+}
+
 .locale-switch {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   color: var(--muted);
-  text-decoration: none;
   font-size: 0.88rem;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -471,14 +478,79 @@ section {
   border-radius: 999px;
   background: var(--surface);
   white-space: nowrap;
+  cursor: pointer;
 }
 
-.locale-switch:hover {
+.locale-menu:hover .locale-switch,
+.lang-toggle:focus-visible ~ .locale-switch,
+.lang-toggle:checked ~ .locale-switch {
   color: var(--ink);
   border-color: var(--accent);
 }
 
-/* Very narrow phones: two language pills + brand + burger must fit */
+.lang-toggle:focus-visible ~ .locale-switch {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.locale-caret {
+  font-size: 0.7em;
+  opacity: 0.7;
+  transition: transform 0.16s ease;
+}
+
+.lang-toggle:checked ~ .locale-switch .locale-caret,
+.locale-menu:hover .locale-caret {
+  transform: rotate(180deg);
+}
+
+.locale-list {
+  position: absolute;
+  top: calc(100% + 0.45rem);
+  inset-inline-end: 0;
+  min-width: 9rem;
+  margin: 0;
+  padding: 0.35rem;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition:
+    opacity 0.16s ease,
+    transform 0.16s ease;
+  z-index: 60;
+}
+
+.locale-menu:hover .locale-list,
+.locale-menu:focus-within .locale-list,
+.lang-toggle:checked ~ .locale-list {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.locale-list a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 6px;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.locale-list a:hover {
+  background: var(--surface-2);
+  color: var(--accent);
+}
+
+/* Very narrow phones: language pill + brand + burger must fit */
 @media (max-width: 30rem) {
   .header-actions {
     gap: 0.4rem;
