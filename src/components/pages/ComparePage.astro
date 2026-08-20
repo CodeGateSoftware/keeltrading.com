@@ -1,0 +1,91 @@
+---
+import Base from "../../layouts/Base.astro";
+import HonestBox from "../HonestBox.astro";
+import { compare, compareColumns, compareRows } from "../../i18n/pages/compare";
+import { home } from "../../i18n/pages/home";
+import { alternatesFor, localePath, type Locale } from "../../i18n/config";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const c = compare[locale];
+const columns = compareColumns;
+const rows = compareRows(locale);
+const h = home[locale];
+
+const honestLinks = [
+  {
+    label: locale === "ar" ? "سجلّ التجربة" : "The experiment record",
+    href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
+  },
+];
+---
+
+<Base
+  locale={locale}
+  pageKey="compare"
+  title={c.title}
+  description={c.description}
+  path={localePath(locale, "compare")}
+  alternates={alternatesFor("compare")}
+>
+  <div class="container">
+    <section class="hero">
+      <h1>{c.title}</h1>
+      {c.intro.map((paragraph) => <p class="lede">{paragraph}</p>)}
+    </section>
+
+    <div class="narrow">
+      <section aria-label={c.tableTitle}>
+        <h2>{c.tableTitle}</h2>
+        <div class="table-wrap">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th scope="col"><span class="visually-hidden">{locale === "ar" ? "الخصيصة" : "Property"}</span></th>
+                {
+                  columns.map((column) => (
+                    <th scope="col">
+                      <a href={column.href}>{column.name}</a>
+                    </th>
+                  ))
+                }
+              </tr>
+            </thead>
+            <tbody>
+              {
+                rows.map((row) => (
+                  <tr>
+                    <th scope="row">{row.label}</th>
+                    {row.values.map((value, index) => (
+                      <td class={index === 0 ? "keel-col" : undefined}>{value}</td>
+                    ))}
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+        <p class="doc-meta">{c.footnote}</p>
+      </section>
+
+      <div class="prose">
+        <section>
+          <h2>{c.readingTitle}</h2>
+          {c.reading.map((paragraph) => <p>{paragraph}</p>)}
+        </section>
+
+        <section>
+          <h2>{c.wontDoTitle}</h2>
+          <ul>
+            {c.wontDo.map((item) => <li>{item}</li>)}
+          </ul>
+        </section>
+
+        <HonestBox title={h.honest.title} paragraphs={[h.honest.body[0]!]} links={honestLinks} />
+      </div>
+    </div>
+  </div>
+</Base>

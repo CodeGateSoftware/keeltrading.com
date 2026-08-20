@@ -1,8 +1,6 @@
 ---
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
-import { dirname, join } from "node:path";
 import Base from "../../layouts/Base.astro";
+import { readDataFile } from "../docs/nav";
 import { news } from "../../i18n/pages/news";
 import { alternatesFor, formatDate, localePath, type Locale } from "../../i18n/config";
 import { t } from "../../i18n/ui";
@@ -31,18 +29,13 @@ interface DiscussionsFile {
   items: DiscussionItem[];
 }
 
-const root = dirname(dirname(dirname(fileURLToPath(import.meta.url))));
-let feed: DiscussionsFile = {
-  category: "announcements",
-  categoryUrl: "https://github.com/CodeGateSoftware/keel/discussions/categories/announcements",
-  fetchedAt: null,
-  items: [],
-};
-try {
-  feed = JSON.parse(readFileSync(join(root, "data/discussions.json"), "utf8"));
-} catch {
-  // fetch script writes it before every build
-}
+const feed: DiscussionsFile =
+  readDataFile<DiscussionsFile>("discussions.json") ?? {
+    category: "announcements",
+    categoryUrl: "https://github.com/CodeGateSoftware/keel/discussions/categories/announcements",
+    fetchedAt: null,
+    items: [],
+  };
 ---
 
 <Base

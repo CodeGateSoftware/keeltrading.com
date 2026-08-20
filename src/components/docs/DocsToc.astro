@@ -1,0 +1,46 @@
+---
+/**
+ * "On this page" — right-side TOC built at build time from the document's
+ * markdown H2 headings (the fetch script leaves section headings at level 2).
+ * Anchor slugs use the same rule Astro's heading-id generator applies.
+ */
+interface TocEntry {
+  text: string;
+  id: string;
+}
+
+interface Props {
+  title: string;
+  entries: TocEntry[];
+  localeTitle: string;
+}
+
+const { title, entries, localeTitle } = Astro.props;
+
+function slugifyHeading(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\p{L}\p{N}\s-]/gu, "")
+    .replace(/\s/g, "-");
+}
+const prepared = entries.map((entry) => ({ ...entry, id: entry.id || slugifyHeading(entry.text) }));
+---
+
+<nav class="docs-toc" aria-label={localeTitle}>
+  <p class="docs-toc-title">{localeTitle}</p>
+  {
+    title ? (
+      <a class="docs-toc-link current" href="#top">
+        {title}
+      </a>
+    ) : null
+  }
+  {
+    prepared.map((entry) => (
+      <a class="docs-toc-link" href={`#${entry.id}`}>
+        {entry.text}
+      </a>
+    ))
+  }
+</nav>

@@ -27,6 +27,7 @@ export const pageKeys = [
   "news",
   "community",
   "compliance",
+  "compare",
   "about",
 ] as const;
 export type PageKey = (typeof pageKeys)[number];

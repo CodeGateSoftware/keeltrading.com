@@ -18,6 +18,7 @@ const navItems: { key: Exclude<PageKey, "home">; label: string }[] = [
   { key: "news", label: chrome.nav.news },
   { key: "community", label: chrome.nav.community },
   { key: "compliance", label: chrome.nav.compliance },
+  { key: "compare", label: chrome.nav.compare },
   { key: "about", label: chrome.nav.about },
 ];
 
@@ -26,9 +27,8 @@ const otherLocale: Locale = locale === "en" ? "ar" : "en";
 
 <header class="site-header">
   <div class="container inner">
-    <a class="brand" href={localePath(locale, "home")} aria-label="keel — keeltrading.com">
+    <a class="brand" href={localePath(locale, "home")} aria-label="keel">
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <title>keel</title>
         <path
           d="M12 2v13M12 2l-4 5M12 2l4 5M12 15c-5 0-8 2.2-9.5 6h19C20 17.2 17 15 12 15Z"
           stroke="currentColor"
@@ -39,7 +39,6 @@ const otherLocale: Locale = locale === "en" ? "ar" : "en";
         ></path>
       </svg>
       <span>keel</span>
-      <span class="domain">keeltrading.com</span>
     </a>
 
     <nav class="site-nav" aria-label={locale === "ar" ? "التنقّل الرئيسي" : "Main navigation"}>

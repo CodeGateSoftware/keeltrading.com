@@ -1,0 +1,58 @@
+---
+import { loadDocsMeta, sectionIconSvg, sectionLabel } from "./nav";
+import { localePath, type Locale } from "../../i18n/config";
+
+/**
+ * Aiven-style docs sidebar: grouped sections with line icons, a Quickstart
+ * entry, and the current page marked. Static markup — no JS, no collapsing
+ * (eight documents stay expanded). Hidden below the lg breakpoint in CSS.
+ */
+interface Props {
+  locale: Locale;
+  /** Slug of the current doc page, if rendering a doc view. */
+  current?: string;
+}
+
+const { locale, current } = Astro.props;
+const meta = loadDocsMeta();
+
+const quickstartLabel = locale === "ar" ? "جرّبه في خمس دقائق" : "Try keel in five minutes";
+const quickstartDesc = locale === "ar" ? "من صفحة التثبيت" : "on the Install page";
+void quickstartDesc;
+---
+
+<nav class="docs-sidebar" aria-label={locale === "ar" ? "تنقّل الوثائق" : "Docs navigation"}>
+  <a class="docs-side-link quickstart" href={localePath(locale, "install")}>
+    <span class="docs-side-icon" set:html={sectionIconSvg("get-started")} />
+    {quickstartLabel}
+  </a>
+
+  {
+    (["guides", "reference", "research"] as const).map((sectionId) => {
+      const section = meta.sections.find((s) => s.id === sectionId);
+      const docs = meta.docs.filter((doc) => doc.section === sectionId);
+      if (!section || docs.length === 0) return null;
+      return (
+        <div class="docs-side-section">
+          <p class="docs-side-heading">
+            <span class="docs-side-icon" set:html={sectionIconSvg(sectionId)} />
+            {sectionLabel(section, locale)}
+          </p>
+          <ul>
+            {docs.map((doc) => (
+              <li>
+                <a
+                  class:list={["docs-side-link", { current: current === doc.slug }]}
+                  href={`${localePath("en", "docs")}${doc.slug}/`}
+                  aria-current={current === doc.slug ? "page" : undefined}
+                >
+                  {doc.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    })
+  }
+</nav>

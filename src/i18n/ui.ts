@@ -16,6 +16,7 @@ export const ui = {
       news: "News",
       community: "Community",
       compliance: "Compliance",
+      compare: "Compare",
       about: "About",
     },
     actions: {
@@ -102,6 +103,7 @@ export const ui = {
       news: "الأخبار",
       community: "المجتمع",
       compliance: "الامتثال",
+      compare: "مقارنة",
       about: "حول",
     },
     actions: {

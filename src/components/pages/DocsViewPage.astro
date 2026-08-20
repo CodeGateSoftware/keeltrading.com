@@ -1,9 +1,9 @@
 ---
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
-import { dirname, join } from "node:path";
 import { render, type CollectionEntry } from "astro:content";
 import Base from "../../layouts/Base.astro";
+import DocsSidebar from "../docs/DocsSidebar.astro";
+import DocsToc from "../docs/DocsToc.astro";
+import { loadDocsMeta, neighbors } from "../docs/nav";
 import { docs } from "../../i18n/pages/docs";
 import { formatDate, localePath, SITE } from "../../i18n/config";
 import { t } from "../../i18n/ui";
@@ -12,6 +12,8 @@ import { t } from "../../i18n/ui";
  * FR-4 — a single engine document, rendered from the content collection that
  * the fetch script filled. English only by design: engine documents are
  * published in English; the Arabic edition summarizes and links (FR-7/8).
+ * Layout follows the Aiven docs model: sidebar, breadcrumb, on-this-page
+ * TOC, prev/next — all static, zero client JS.
  */
 interface Props {
   entry: CollectionEntry<"engine-docs">;
@@ -23,49 +25,36 @@ const { Content } = await render(entry);
 const chrome = t("en");
 const c = docs.en;
 
-const root = dirname(dirname(dirname(fileURLToPath(import.meta.url))));
-interface DocMeta {
-  slug: string;
-  path: string;
-  title: string;
-  en: string;
-  ar: string;
-  sourceUrl: string;
-}
-interface MetaFile {
-  repo: string;
-  ref: string;
-  fetchedAt: string;
-  docs: DocMeta[];
-}
-let meta: MetaFile = { repo: "CodeGateSoftware/keel", ref: "main", fetchedAt: "", docs: [] };
-try {
-  meta = JSON.parse(readFileSync(join(root, "data/docs-meta.json"), "utf8"));
-} catch {
-  // fetch script writes it before every build
-}
+const meta = loadDocsMeta();
 const docMeta = meta.docs.find((doc) => doc.slug === entry.id);
+const sectionMeta = meta.sections.find((section) => section.id === docMeta?.section);
 const title = docMeta?.title ?? entry.id;
 const path = `/en/docs/${entry.id}/`;
 const canonicalUrl = new URL(path, SITE).href;
 
-/** Anchor slugs follow github-slugger (Astro's heading-id generator). */
+/** Anchor slugs follow github-slugger (Astro's heading-id generator):
+    lowercase, punctuation dropped (commas, colons…), whitespace → hyphens. */
 function slugifyHeading(text: string): string {
   return text
     .toLowerCase()
     .trim()
-    .replace(/['’]/g, "")
-    .replace(/\s+/g, "-");
+    .replace(/[^\p{L}\p{N}\s-]/gu, "")
+    .replace(/\s/g, "-");
 }
 
-// The glossary's terms are `## term` headings (unchanged by the fetch
-// script's H1-only demotion) — extract them for DefinedTermSet (SEO roadmap item 1.6).
+// Glossary terms for DefinedTermSet (SEO roadmap item 1.6) + TOC entries:
+// both are level-2 headings in the fetched markdown.
+const h2Headings =
+  entry.body?.match(/^## (.+)$/gm)?.map((line) => line.replace(/^## /, "").trim()) ?? [];
+const cleanText = (text: string) => text.replace(/[`*]/g, "").trim();
+const tocEntries = h2Headings.map((text) => ({ text: cleanText(text), id: slugifyHeading(cleanText(text)) }));
+
 const glossaryTerms =
-  entry.id === "glossary" && entry.body
-    ? Array.from(entry.body.matchAll(/^## (.+)$/gm))
-        .map((match) => match[1]!.trim())
-        .filter((term) => term.length > 0)
+  entry.id === "glossary"
+    ? h2Headings.map((text) => cleanText(text)).filter((term) => term.length > 0)
     : [];
+
+const { prev, next } = neighbors(entry.id);
 
 const jsonLd: object[] = [
   {
@@ -112,28 +101,63 @@ if (glossaryTerms.length > 0) {
   jsonLd={jsonLd}
 >
   <div class="container">
-    <div class="narrow">
-      <p><a href={localePath("en", "docs")}>← {chrome.docs.backToDocs}</a></p>
-      <h1>{title}</h1>
-      {
-        docMeta && (
-          <p class="doc-meta">
-            {chrome.docs.fetchedFrom(meta.repo, meta.ref)}
-            {meta.fetchedAt && ` ${chrome.docs.fetchedAt(formatDate(meta.fetchedAt))}`}{" "}
-            <a href={docMeta.sourceUrl}>{chrome.actions.viewSource}</a>.
-          </p>
-        )
-      }
-      <div class="prose">
-        <Content />
-      </div>
-      {
-        docMeta && (
-          <p class="doc-meta">
-            <a href={docMeta.sourceUrl}>{chrome.actions.viewSource} — {docMeta.path}</a>
-          </p>
-        )
-      }
+    <div class="docs-layout">
+      <DocsSidebar locale="en" current={entry.id} />
+
+      <article class="docs-content" id="top">
+        <nav class="docs-breadcrumb" aria-label="Breadcrumb">
+          <a href={localePath("en", "docs")}>Docs</a>
+          <span aria-hidden="true">›</span>
+          {sectionMeta && <span>{sectionMeta.en}</span>}
+          <span aria-hidden="true">›</span>
+          <span aria-current="page">{title}</span>
+        </nav>
+
+        <h1>{title}</h1>
+
+        {
+          docMeta && (
+            <p class="doc-meta">
+              {chrome.docs.fetchedFrom(meta.repo, meta.ref)}
+              {meta.fetchedAt && ` ${chrome.docs.fetchedAt(formatDate(meta.fetchedAt))}`}{" "}
+              <a href={docMeta.sourceUrl}>{chrome.actions.viewSource}</a>.
+            </p>
+          )
+        }
+
+        <div class="prose">
+          <Content />
+        </div>
+
+        {
+          docMeta && (
+            <p class="doc-meta">
+              <a href={docMeta.sourceUrl}>{chrome.actions.viewSource} — {docMeta.path}</a>
+            </p>
+          )
+        }
+
+        <nav class="docs-pager" aria-label="Document navigation">
+          {prev ? (
+            <a class="docs-pager-link prev" href={`${localePath("en", "docs")}${prev.slug}/`}>
+              <span class="docs-pager-dir">← Previous</span>
+              <span class="docs-pager-title">{prev.title}</span>
+            </a>
+          ) : (
+            <span />
+          )}
+          {next ? (
+            <a class="docs-pager-link next" href={`${localePath("en", "docs")}${next.slug}/`}>
+              <span class="docs-pager-dir">Next →</span>
+              <span class="docs-pager-title">{next.title}</span>
+            </a>
+          ) : (
+            <span />
+          )}
+        </nav>
+      </article>
+
+      <DocsToc title="" entries={tocEntries} localeTitle="On this page" />
     </div>
   </div>
 </Base>

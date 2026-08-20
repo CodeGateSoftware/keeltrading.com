@@ -6,6 +6,7 @@ import { docs, type DocsContent } from "./docs";
 import { news, type NewsContent } from "./news";
 import { community, type CommunityContent } from "./community";
 import { compliance, type ComplianceContent } from "./compliance";
+import { compare, type CompareContent } from "./compare";
 import { about, type AboutContent } from "./about";
 
 /**
@@ -21,6 +22,7 @@ export const pageDicts: Record<PageKey, LocalizedPage<unknown>> = {
   news,
   community,
   compliance,
+  compare,
   about,
 };
 
@@ -32,5 +34,6 @@ export type {
   NewsContent,
   CommunityContent,
   ComplianceContent,
+  CompareContent,
   AboutContent,
 };

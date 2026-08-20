@@ -1,9 +1,7 @@
 ---
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
-import { dirname, join } from "node:path";
 import Base from "../../layouts/Base.astro";
 import ForOperators from "../ForOperators.astro";
+import { readDataFile } from "../docs/nav";
 import { install } from "../../i18n/pages/install";
 import { alternatesFor, formatDate, localePath, type Locale } from "../../i18n/config";
 import { t } from "../../i18n/ui";
@@ -16,7 +14,6 @@ const { locale } = Astro.props;
 const c = install[locale];
 const chrome = t(locale);
 
-const root = dirname(dirname(dirname(fileURLToPath(import.meta.url))));
 interface ReleaseData {
   tag: string | null;
   name: string | null;
@@ -25,19 +22,15 @@ interface ReleaseData {
   assets: { name: string; url: string; size: number }[];
   fetchedAt: string | null;
 }
-let release: ReleaseData = {
-  tag: null,
-  name: null,
-  url: "https://github.com/CodeGateSoftware/keel/releases/latest",
-  publishedAt: null,
-  assets: [],
-  fetchedAt: null,
-};
-try {
-  release = JSON.parse(readFileSync(join(root, "data/release.json"), "utf8"));
-} catch {
-  // fetch script writes it before every build; empty is a fallback of a fallback
-}
+const release: ReleaseData =
+  readDataFile<ReleaseData>("release.json") ?? {
+    tag: null,
+    name: null,
+    url: "https://github.com/CodeGateSoftware/keel/releases/latest",
+    publishedAt: null,
+    assets: [],
+    fetchedAt: null,
+  };
 
 const version = release.tag?.replace(/^v/, "") ?? null;
 const traderAsset = release.assets.find((asset) => /^keel_trader-.*\.whl$/.test(asset.name));

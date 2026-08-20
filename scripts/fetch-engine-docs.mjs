@@ -90,6 +90,7 @@ const meta = {
   repo: manifest.repo,
   ref: manifest.ref,
   fetchedAt,
+  sections: manifest.sections ?? [],
   docs: [],
 };
 
@@ -123,6 +124,7 @@ for (const doc of manifest.docs) {
     title: doc.title,
     en: doc.en,
     ar: doc.ar,
+    section: doc.section ?? "reference",
     sourceUrl: `https://github.com/${manifest.repo}/blob/${manifest.ref}/${doc.path}`,
   });
   console.log(`  fetched ${doc.path} -> engine-docs/${doc.slug}.md`);

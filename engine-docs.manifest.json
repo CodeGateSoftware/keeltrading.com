@@ -7,56 +7,86 @@
       "slug": "glossary",
       "title": "Glossary",
       "en": "The single source for keel's vocabulary — every term a keel screen can show, defined here and nowhere else.",
-      "ar": "المصدر الوحيد لمصطلحات كيل — كل مصطلح يمكن أن يعرضه سطر الأوامر معرَّفٌ هنا وحده."
+      "ar": "المصدر الوحيد لمصطلحات كيل — كل مصطلح يمكن أن يعرضه سطر الأوامر معرَّفٌ هنا وحده.",
+      "section": "reference"
     },
     {
       "path": "docs/fiqh-basis.md",
       "slug": "fiqh-basis",
       "title": "The fiqh basis",
       "en": "The Shariah reasoning keel encodes, ruling by ruling, each with its in-repo source — published so it can be audited and challenged.",
-      "ar": "الاستدلال الفقهي الذي يشفّره كيل، حكمًا حكمًا، مع مصدره داخل المستودع — نُشر ليُدقَّق ويُعترَض عليه."
+      "ar": "الاستدلال الفقهي الذي يشفّره كيل، حكمًا حكمًا، مع مصدره داخل المستودع — نُشر ليُدقَّق ويُعترَض عليه.",
+      "section": "reference"
     },
     {
       "path": "docs/operator-runbook.md",
       "slug": "operator-runbook",
       "title": "Operator runbook",
       "en": "Operating a deployment: the account-level obligations no rail can enforce, upgrades, and the three deployment profiles.",
-      "ar": "تشغيل النشر: الالتزامات على مستوى الحساب التي لا يراها أي سكة أمان، والترقيات، وأنماط النشر الثلاثة."
+      "ar": "تشغيل النشر: الالتزامات على مستوى الحساب التي لا يراها أي سكة أمان، والترقيات، وأنماط النشر الثلاثة.",
+      "section": "guides"
     },
     {
       "path": "docs/go-live-runbook.md",
       "slug": "go-live-runbook",
       "title": "Go-live runbook",
       "en": "The path to a first supervised live order — promotion, paper, and the human-in-the-loop steps.",
-      "ar": "الطريق إلى أول أمر حقيقي خاضعٍ لإشراف بشري — الترقية، والتجريبي، وخطوات الإشراف."
+      "ar": "الطريق إلى أول أمر حقيقي خاضعٍ لإشراف بشري — الترقية، والتجريبي، وخطوات الإشراف.",
+      "section": "guides"
     },
     {
       "path": "docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
       "slug": "experiment-honest-result-restated",
       "title": "Experiment: the honest result, restated",
       "en": "The full record of the measured result: no shipped rule family is net-positive at the taker fee actually paid — every number and the defects that forced a restatement.",
-      "ar": "السجل الكامل للنتيجة المقيسة: لا عائلة قواعد مُصدَّرة تحقق ربحًا صافيًا عند رسوم الآخذ الفعلية — بكل أرقامها والعيوب التي فرضت إعادة البيان."
+      "ar": "السجل الكامل للنتيجة المقيسة: لا عائلة قواعد مُصدَّرة تحقق ربحًا صافيًا عند رسوم الآخذ الفعلية — بكل أرقامها والعيوب التي فرضت إعادة البيان.",
+      "section": "research"
     },
     {
       "path": "docs/experiments/2026-08-11-hourly-backtest-turtle-breakout.md",
       "slug": "experiment-hourly-backtest",
       "title": "Experiment: the hourly backtest",
       "en": "Why the hourly profile exists: the same rules measured on ONE_HOUR bars fire 49.4 signals per asset-year instead of 2.15.",
-      "ar": "لماذا يوجد النمط الساعي: القواعد نفسها على شموع الساعة تُطلق 49.4 إشارة لكل أصل-سنة بدل 2.15."
+      "ar": "لماذا يوجد النمط الساعي: القواعد نفسها على شموع الساعة تُطلق 49.4 إشارة لكل أصل-سنة بدل 2.15.",
+      "section": "research"
     },
     {
       "path": "docs/research/2026-08-18-lahlou-speculation-risk-sources.md",
       "slug": "research-lahlou-speculation-risk",
       "title": "Research: speculation risk sources (Lahlou)",
       "en": "Source review on the risk sources of speculation — part of the research corpus behind the fiqh basis.",
-      "ar": "مراجعة مصادر حول منابع خطر المضاربة — من سجل البحث الذي يقف خلف الأساس الفقهي."
+      "ar": "مراجعة مصادر حول منابع خطر المضاربة — من سجل البحث الذي يقف خلف الأساس الفقهي.",
+      "section": "research"
     },
     {
       "path": "docs/research/2026-08-18-money-management-and-fiqh-source-review.md",
       "slug": "research-money-management",
       "title": "Research: money management & fiqh sources",
       "en": "Source review on money management in trading and its fiqh treatment.",
-      "ar": "مراجعة مصادر حول إدارة المال في التداول ومعالجتها الفقهية."
+      "ar": "مراجعة مصادر حول إدارة المال في التداول ومعالجتها الفقهية.",
+      "section": "research"
+    }
+  ],
+  "sections": [
+    {
+      "id": "get-started",
+      "en": "Get started",
+      "ar": "البداية"
+    },
+    {
+      "id": "guides",
+      "en": "Guides",
+      "ar": "أدلة"
+    },
+    {
+      "id": "reference",
+      "en": "Reference",
+      "ar": "مرجع"
+    },
+    {
+      "id": "research",
+      "en": "Research & experiments",
+      "ar": "البحث والتجارب"
     }
   ]
 }

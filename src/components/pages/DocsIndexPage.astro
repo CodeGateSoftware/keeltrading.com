@@ -1,27 +1,10 @@
 ---
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
-import { dirname, join } from "node:path";
 import Base from "../../layouts/Base.astro";
-import ForOperators from "../ForOperators.astro";
+import DocsSidebar from "../docs/DocsSidebar.astro";
+import { loadDocsMeta, sectionIconSvg, sectionLabel, type SectionId } from "../docs/nav";
 import { docs } from "../../i18n/pages/docs";
 import { alternatesFor, formatDate, localePath, type Locale } from "../../i18n/config";
 import { t } from "../../i18n/ui";
-
-interface DocMeta {
-  slug: string;
-  path: string;
-  title: string;
-  en: string;
-  ar: string;
-  sourceUrl: string;
-}
-interface MetaFile {
-  repo: string;
-  ref: string;
-  fetchedAt: string;
-  docs: DocMeta[];
-}
 
 interface Props {
   locale: Locale;
@@ -31,14 +14,24 @@ const { locale } = Astro.props;
 const c = docs[locale];
 const chrome = t(locale);
 
-const root = dirname(dirname(dirname(fileURLToPath(import.meta.url))));
-let meta: MetaFile = { repo: "CodeGateSoftware/keel", ref: "main", fetchedAt: "", docs: [] };
-try {
-  meta = JSON.parse(readFileSync(join(root, "data/docs-meta.json"), "utf8"));
-} catch {
-  // fetch script writes it before every build
-}
+const meta = loadDocsMeta();
 const fetchedDate = formatDate(meta.fetchedAt);
+
+const sections: { id: SectionId; extra?: boolean }[] = [
+  { id: "get-started", extra: true },
+  { id: "guides" },
+  { id: "reference" },
+  { id: "research" },
+];
+
+const quickstart = {
+  title: locale === "ar" ? "جرّب كيل في خمس دقائق" : "Try keel in five minutes",
+  description:
+    locale === "ar"
+      ? "مسارٌ للقراءة فقط من جهة التداول الافتراضي: لا أموال، ولا أمر تداول."
+      : "A read-only, paper-side path: no funds, nothing can place an order.",
+  href: localePath(locale, "install"),
+};
 ---
 
 <Base
@@ -50,84 +43,98 @@ const fetchedDate = formatDate(meta.fetchedAt);
   alternates={alternatesFor("docs")}
 >
   <div class="container">
-    <section class="hero">
-      <h1>{c.title}</h1>
-      {
-        c.intro.map((paragraph) => (
-          <p class="lede">{paragraph}</p>
-        ))
-      }
-    </section>
+    <div class="docs-layout">
+      <DocsSidebar locale={locale} />
 
-    <div class="narrow">
-      <p class="doc-meta">
-        {chrome.docs.fetchedFrom(meta.repo, meta.ref)}
-        {fetchedDate && ` ${chrome.docs.fetchedAt(fetchedDate)}`}
-      </p>
+      <div class="docs-content">
+        <section class="hero">
+          <h1>{c.title}</h1>
+          {c.intro.map((paragraph) => <p class="lede">{paragraph}</p>)}
+        </section>
 
-      <div class="prose">
-        <h2>{c.howTitle}</h2>
-        {c.how.map((paragraph) => <p>{paragraph}</p>)}
-      </div>
+        <p class="doc-meta">
+          {chrome.docs.fetchedFrom(meta.repo, meta.ref)}
+          {fetchedDate && ` ${chrome.docs.fetchedAt(fetchedDate)}`}
+        </p>
 
-      {
-        c.arNoteTitle && c.arNote.length > 0 && (
-          <section class="prose">
-            <h2>{c.arNoteTitle}</h2>
-            {c.arNote.map((paragraph) => (
-              <p>{paragraph}</p>
-            ))}
-          </section>
-        )
-      }
+        <div class="prose">
+          <h2>{c.howTitle}</h2>
+          {c.how.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
 
-      {
-        c.summaries && c.summaries.length > 0 && (
-          <section class="prose">
-            <h2>{c.summariesTitle}</h2>
-            {c.summaries.map((summary) => {
-              const original = meta.docs.find((doc) => doc.slug === summary.slug);
-              return (
-                <div class="feature-section">
-                  <h3>{summary.title}</h3>
-                  {summary.body.map((paragraph) => (
-                    <p>{paragraph}</p>
-                  ))}
-                  {original && (
-                    <p>
-                      <a href={`${localePath("en", "docs")}${original.slug}/`} lang="en">
-                        {c.readOriginal} (EN) →
+        {
+          c.arNoteTitle && c.arNote.length > 0 && (
+            <section class="prose">
+              <h2>{c.arNoteTitle}</h2>
+              {c.arNote.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+            </section>
+          )
+        }
+
+        {
+          sections.map(({ id: sectionId, extra }) => {
+            const section = meta.sections.find((s) => s.id === sectionId);
+            if (!section) return null;
+            const sectionDocs = meta.docs.filter((doc) => doc.section === sectionId);
+            return (
+              <section class="docs-section" aria-labelledby={`sec-${sectionId}`}>
+                <h2 id={`sec-${sectionId}`} class="docs-section-title">
+                  <span class="docs-side-icon" set:html={sectionIconSvg(sectionId)} />
+                  {sectionLabel(section, locale)}
+                </h2>
+                <ul class="docs-card-grid">
+                  {extra && (
+                    <li class="card arrow">
+                      <a href={quickstart.href}>
+                        <h3>{quickstart.title}</h3>
+                        <p>{quickstart.description}</p>
                       </a>
-                    </p>
+                    </li>
                   )}
-                </div>
-              );
-            })}
-          </section>
-        )
-      }
+                  {sectionDocs.map((doc) => (
+                    <li class="card arrow">
+                      <a href={`${localePath("en", "docs")}${doc.slug}/`}>
+                        <h3>{doc.title}</h3>
+                        <p dir={locale === "ar" ? "rtl" : undefined}>
+                          {locale === "ar" ? doc.ar : doc.en}
+                        </p>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            );
+          })
+        }
 
-      <section>
-        <h2>{chrome.marker.untranslatedOriginal}</h2>
-        <ul class="doc-list" lang={locale === "ar" ? "en" : undefined}>
-          {
-            meta.docs.map((doc) => {
-              const description = locale === "ar" ? doc.ar : doc.en;
-              return (
-                <li>
-                  <h3>
-                    <a href={`${localePath("en", "docs")}${doc.slug}/`}>{doc.title}</a>
-                  </h3>
-                  <p dir={locale === "ar" ? "rtl" : undefined}>{description}</p>
-                  <p class="source">{doc.path}</p>
-                </li>
-              );
-            })
-          }
-        </ul>
-      </section>
-
-      <ForOperators locale={locale} />
+        {
+          c.summaries && c.summaries.length > 0 && (
+            <section class="prose">
+              <h2>{c.summariesTitle}</h2>
+              {c.summaries.map((summary) => {
+                const original = meta.docs.find((doc) => doc.slug === summary.slug);
+                return (
+                  <div class="feature-section">
+                    <h3>{summary.title}</h3>
+                    {summary.body.map((paragraph) => (
+                      <p>{paragraph}</p>
+                    ))}
+                    {original && (
+                      <p>
+                        <a href={`${localePath("en", "docs")}${original.slug}/`} lang="en">
+                          {c.readOriginal} (EN) →
+                        </a>
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
+            </section>
+          )
+        }
+      </div>
     </div>
   </div>
 </Base>
