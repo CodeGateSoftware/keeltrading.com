@@ -21,6 +21,8 @@ export interface CompareContent {
   footnote: string;
   readingTitle: string;
   reading: string[];
+  paidTitle: string;
+  paidBody: string[];
   catchLink: string;
   wontDoTitle: string;
   wontDo: string[];
@@ -36,7 +38,7 @@ export const compareColumns = [
 
 export const compare: LocalizedPage<CompareContent> = {
   en: {
-    rev: "2026-08-20.2",
+    rev: "2026-08-20.3",
     title: "How keel Compares to Other Trading Bots",
     description:
       "keel compared with Freqtrade, Jesse, and Hummingbot: license, focus, strategy gates, and the compliance machinery none of them carry — structural facts from public repositories.",
@@ -46,11 +48,16 @@ export const compare: LocalizedPage<CompareContent> = {
     ],
     tableTitle: "Structural comparison",
     footnote:
-      "Facts from each project's public repository, August 2026. Community scale (GitHub stars, same date): Freqtrade ~53k, Hummingbot ~19.5k, Jesse ~8.3k — keel just launched. The Cost row was verified from each project's own site on 2026-08-20; Jesse's plugin pricing changes often — re-check at jesse.trade/pricing. Freqtrade, Jesse, and Hummingbot are projects of their maintainers; their names appear here solely to identify them.",
+      "Facts from each project's public repository, August 2026. Community scale (GitHub stars, same date): Freqtrade ~53k, Hummingbot ~19.5k, Jesse ~8.3k — keel just launched. The Cost row was verified from each project's own site on 2026-08-20; Jesse's plugin pricing changes often — re-check at jesse.trade/pricing. Freqtrade, Jesse, Hummingbot, and QuantCrawler are projects of their maintainers; their names appear here solely to identify them. Alpaca is a brokerage, not a bot — keel ships a broker adapter for it under the venue port.",
     readingTitle: "How to read this",
     reading: [
       "Every project here backtests strategies and can trade crypto. The differences that matter are structural: what the engine refuses to do, what it requires before a rule may trade live money, and whether compliance is machinery or nothing at all.",
       "None of the comparison cells are value judgments. Freqtrade's breadth, Jesse's research workflow, and Hummingbot's market-making depth are real strengths — keel has none of them, by design.",
+    ],
+    paidTitle: "What about paid services?",
+    paidBody: [
+      "QuantCrawler is the kind of paid service many retail traders meet first: $9.99/month after a 30-day free trial (verified 2026-08-20). It relays TradingView webhook alerts to your broker and copies trades across accounts — ten broker integrations, Coinbase among them, with a futures and prop-firm focus. It is closed-source and cloud-hosted: you connect your broker credentials to their platform, and execution runs on their servers.",
+      "keel is the opposite trade-off. Nothing hosted, nothing closed: the engine runs on your machine, your keys never leave it, and no rule may touch live money before clearing the promotion gate. What keel does not have is QuantCrawler's broker breadth or its TradingView-first workflow — if that is what you need, theirs is the fitting answer, at the price of entrusting a service with your credentials. Like the bots above, it carries no compliance machinery; that difference is keel's reason to exist.",
     ],
     catchLink: "Why is keel free when the others charge subscriptions? The honest answer is on the About page.",
     wontDoTitle: "What keel will not do",
@@ -63,8 +70,8 @@ export const compare: LocalizedPage<CompareContent> = {
   },
 
   ar: {
-    rev: "2026-08-20.2",
-    translatedFromRev: "2026-08-20.2",
+    rev: "2026-08-20.3",
+    translatedFromRev: "2026-08-20.3",
     title: "مقارنة كيل ببوتات التداول الأخرى",
     description:
       "مقارنة كيل بـ Freqtrade وJesse وHummingbot: الترخيص والتوجه وبوابات الترقية وآليات الامتثال التي لا يحملها أيٌّ منها — وقائع بنيوية من المستودعات العمومية.",
@@ -74,11 +81,16 @@ export const compare: LocalizedPage<CompareContent> = {
     ],
     tableTitle: "مقارنة بنيوية",
     footnote:
-      "وقائع من المستودع العمومي لكل مشروع، أغسطس 2026. حجم المجتمع (نجوم GitHub، التاريخ نفسه): Freqtrade نحو 53 ألفًا، Hummingbot نحو 19.5 ألفًا، Jesse نحو 8.3 آلاف — وكيل بدأ للتو. خانة التكلفة جرى التحقق منها من موقع كل مشروع بتاريخ 2026-08-20؛ وتسعير إضافة Jesse يتغيّر كثيرًا — راجع jesse.trade/pricing. Freqtrade وJesse وHummingbot مشاريع مشرفيها؛ ولا تظهر أسماؤها هنا إلا لتعريفها.",
+      "وقائع من المستودع العمومي لكل مشروع، أغسطس 2026. حجم المجتمع (نجوم GitHub، التاريخ نفسه): Freqtrade نحو 53 ألفًا، Hummingbot نحو 19.5 ألفًا، Jesse نحو 8.3 آلاف — وكيل بدأ للتو. خانة التكلفة جرى التحقق منها من موقع كل مشروع بتاريخ 2026-08-20؛ وتسعير إضافة Jesse يتغيّر كثيرًا — راجع jesse.trade/pricing. Freqtrade وJesse وHummingbot وQuantCrawler مشاريع مشرفيها؛ ولا تظهر أسماؤها هنا إلا لتعريفها. أما Alpaca فوسيطُ وساطةٍ لا بوت — وكيل يُسلّم محوّلًا له ضمن منفذ المنصّات.",
     readingTitle: "كيف تقرأ هذا",
     reading: [
       "كلُّ مشروعٍ هنا يختبر القواعد رجعيًّا ويستطيع تداول العملات المشفّرة. الفروق التي تهم بنيوية: ما يرفض المحرّك فعله، وما يشترطه قبل أن تتداول قاعدةٌ مالًا حقيقيًّا، وهل الامتثال آلياتٌ أم لا شيء.",
       "لا خانةَ في المقارنة حكمُ قيمة. اتساع Freqtrade، وتدفّق بحث Jesse، وعمق صناعة السوق في Hummingbot نقاطُ قوة حقيقية — ولا يملك كيل أيًّا منها، عن قصد.",
+    ],
+    paidTitle: "ماذا عن الخدمات المدفوعة؟",
+    paidBody: [
+      "‏QuantCrawler نمطُ الخدمات المدفوعة التي يقابلها كثير من المتداولين الأفراد أولًا: 9.99$ شهريًّا بعد تجربة مجانية ثلاثين يومًا (تحقّقنا منها بتاريخ 2026-08-20). يُمرّر تنبيهات TradingView إلى وسيطك وينسخ الصفقات بين الحسابات — عشر تكاملات وسطاء بينها Coinbase، مع تركيز على العقود المستقبلية وحسابات شركات التمويل. خدمة سحابية مغلقة المصدر: تربط بيانات وسيطك بمنصّتهم، ويجري التنفيذ على خوادمهم.",
+      "وكيل هو المقايضة المعاكسة: لا استضافة ولا مصدر مغلق. يعمل المحرّك على جهازك، ومفاتيحك لا تغادره، ولا يمكن لأي قاعدة أن تمسّ مالًا حقيقيًّا قبل اجتياز بوابة الترقية. وما يملكه QuantCrawler ولا يملكه كيل: اتساع الوسطاء وسير عمل TradingView أولًا — إن كان ذلك ما تحتاجه فجوابهم هو المناسب، بثمن ائتمان خدمةٍ ببياناتك. ومثل البوتات أعلاه، لا يحمل آليات امتثال — وهذا الفرق كلُّ سبب وجود كيل.",
     ],
     catchLink: "لماذا كيل مجانيٌّ بينما يتقاضى الآخرون اشتراكات؟ الجواب الصادق في صفحة «حول».",
     wontDoTitle: "ما لن يفعله كيل",
@@ -91,8 +103,8 @@ export const compare: LocalizedPage<CompareContent> = {
   },
 
   fr: {
-    rev: "2026-08-20.2",
-    translatedFromRev: "2026-08-20.2",
+    rev: "2026-08-20.3",
+    translatedFromRev: "2026-08-20.3",
     title: "Comparer keel aux autres bots de trading",
     description:
       "keel comparé à Freqtrade, Jesse et Hummingbot : licence, finalité, portes de promotion, et la machinerie de conformité qu'aucun d'eux n'emporte — des faits structurels tirés des dépôts publics.",
@@ -102,11 +114,16 @@ export const compare: LocalizedPage<CompareContent> = {
     ],
     tableTitle: "Comparaison structurelle",
     footnote:
-      "Faits tirés du dépôt public de chaque projet, août 2026. Taille de communauté (étoiles GitHub, même date) : Freqtrade ~53k, Hummingbot ~19,5k, Jesse ~8,3k — keel vient de lancer. La ligne Coût a été vérifiée sur le site de chaque projet le 2026-08-20 ; le prix du plugin Jesse change souvent — revérifiez sur jesse.trade/pricing. Freqtrade, Jesse et Hummingbot appartiennent à leurs mainteneurs ; leurs noms n'apparaissent ici que pour les identifier.",
+      "Faits tirés du dépôt public de chaque projet, août 2026. Taille de communauté (étoiles GitHub, même date) : Freqtrade ~53k, Hummingbot ~19,5k, Jesse ~8,3k — keel vient de lancer. La ligne Coût a été vérifiée sur le site de chaque projet le 2026-08-20 ; le prix du plugin Jesse change souvent — revérifiez sur jesse.trade/pricing. Freqtrade, Jesse, Hummingbot et QuantCrawler appartiennent à leurs mainteneurs ; leurs noms n'apparaissent ici que pour les identifier. Alpaca est un courtier, pas un bot — keel livre un adaptateur courtier pour lui via le port venues.",
     readingTitle: "Comment lire ceci",
     reading: [
       "Chaque projet ici fait du backtest de stratégies et peut trader de la crypto. Les différences qui comptent sont structurelles : ce que le moteur refuse de faire, ce qu'il exige avant qu'une règle puisse trader de l'argent réel, et si la conformité est une machinerie ou rien du tout.",
       "Aucune case de ce tableau n'est un jugement de valeur. L'ampleur de Freqtrade, le flux de recherche de Jesse et la profondeur de market-making de Hummingbot sont de vraies forces — keel n'en a aucune, par design.",
+    ],
+    paidTitle: "Et les services payants ?",
+    paidBody: [
+      "QuantCrawler est le genre de service payant que beaucoup de particuliers rencontrent d'abord : 9,99 $/mois après un essai gratuit de 30 jours (vérifié le 2026-08-20). Il relaie les alertes webhook TradingView vers votre courtier et copie les trades entre comptes — dix intégrations de courtiers dont Coinbase, avec un accent sur les futures et les comptes prop. C'est un service cloud au code fermé : vous connectez vos identifiants de courtier à leur plateforme, et l'exécution se fait sur leurs serveurs.",
+      "keel est le compromis inverse : rien d'hébergé, rien de fermé. Le moteur tourne sur votre machine, vos clés ne la quittent jamais, et aucune règle ne peut toucher de l'argent réel avant de franchir la porte de promotion. Ce que keel n'a pas : l'étendue de courtiers de QuantCrawler ni son flux TradingView d'abord — si c'est ce qu'il vous faut, leur réponse est la bonne, au prix de confier vos identifiants à un service. Comme les bots ci-dessus, il n'emporte aucune machinerie de conformité — et cette différence est toute la raison d'être de keel.",
     ],
     catchLink: "Pourquoi keel est-il gratuit quand les autres facturent des abonnements ? La réponse honnête est sur la page À propos.",
     wontDoTitle: "Ce que keel ne fera pas",
