@@ -1,0 +1,797 @@
+/* ==========================================================================
+   keeltrading.com — global stylesheet
+   Plain, calm, dark-mode friendly, RTL designed-in from the first component
+   (FR-7): logical properties only; code stays LTR inside RTL pages.
+   Zero client JS: light/dark via prefers-color-scheme, no toggle.
+   ========================================================================== */
+
+:root {
+  --bg: #f8f7f3;
+  --surface: #fffefb;
+  --surface-2: #f1efe7;
+  --ink: #1d2833;
+  --muted: #4b5b69;
+  --accent: #0c5d52;
+  --accent-strong: #0a4a41;
+  --accent-contrast: #ffffff;
+  --link: #0c5d52;
+  --border: #d9d4c8;
+  --notice-bg: #fbf3df;
+  --notice-ink: #4d3a0e;
+  --notice-border: #c9a84c;
+  --code-bg: #eef0ea;
+  --shadow: 0 1px 3px rgb(29 40 51 / 0.08);
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", "Noto Kufi Arabic", "Geeza Pro", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas,
+    "Liberation Mono", monospace;
+
+  --container: 68rem;
+  --prose: 66ch;
+  --radius: 10px;
+  --space: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f171d;
+    --surface: #162128;
+    --surface-2: #1b2831;
+    --ink: #e9e7e0;
+    --muted: #a4b4be;
+    --accent: #57c5af;
+    --accent-strong: #7ad6c3;
+    --accent-contrast: #06231e;
+    --link: #6fd0bb;
+    --border: #2b3a44;
+    --notice-bg: #26200f;
+    --notice-ink: #e8d9a8;
+    --notice-border: #8a7638;
+    --code-bg: #1a252e;
+    --shadow: 0 1px 3px rgb(0 0 0 / 0.4);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light dark;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  -webkit-text-size-adjust: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+html[lang="ar"] body {
+  line-height: 1.9;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(1.85rem, 4vw, 2.55rem);
+  margin: 0 0 0.75em;
+}
+
+h2 {
+  font-size: clamp(1.35rem, 2.6vw, 1.65rem);
+  margin: 2.25em 0 0.6em;
+}
+
+h3 {
+  font-size: 1.15rem;
+  margin: 1.75em 0 0.5em;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+a {
+  color: var(--link);
+  text-decoration-thickness: from-font;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  text-decoration-thickness: 0.15em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--font-mono);
+}
+
+/* Code is LTR even inside RTL pages */
+pre,
+code,
+kbd,
+samp {
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+:not(pre) > code {
+  background: var(--code-bg);
+  padding: 0.12em 0.4em;
+  border-radius: 5px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1em 1.1em;
+  overflow-x: auto;
+  line-height: 1.55;
+  font-size: 0.92em;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+}
+
+blockquote {
+  margin: 1.5em 0;
+  padding: 0.25em 1.25em;
+  border-inline-start: 4px solid var(--accent);
+  background: var(--surface);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-style: italic;
+}
+
+[dir="rtl"] blockquote {
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 2.5em 0;
+}
+
+table {
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: 1.25em 0;
+  font-size: 0.95em;
+}
+
+th,
+td {
+  border: 1px solid var(--border);
+  padding: 0.45em 0.75em;
+  text-align: start;
+  vertical-align: top;
+}
+
+th {
+  background: var(--surface-2);
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Layout primitives
+   -------------------------------------------------------------------------- */
+
+.container {
+  width: min(var(--container), 100% - 2.5rem);
+  margin-inline: auto;
+}
+
+.narrow {
+  width: min(var(--prose), 100% - 2.5rem);
+  margin-inline: auto;
+}
+
+section {
+  margin-block: 3rem;
+}
+
+/* Skip link — first focusable element on every page */
+.skip-link {
+  position: absolute;
+  inset-inline-start: -100vw;
+  top: 0.5rem;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  z-index: 100;
+}
+
+.skip-link:focus {
+  inset-inline-start: 0.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Header
+   -------------------------------------------------------------------------- */
+
+.site-header {
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.site-header .inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  padding-block: 0.8rem;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+.brand svg {
+  color: var(--accent);
+}
+
+.brand .domain {
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 0.8rem;
+  margin-inline-start: 0.15rem;
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.1rem 0.9rem;
+  margin-inline-end: auto;
+}
+
+.site-nav a {
+  color: var(--muted);
+  text-decoration: none;
+  padding: 0.3rem 0.55rem;
+  border-radius: 6px;
+  font-size: 0.98rem;
+}
+
+.site-nav a:hover {
+  color: var(--ink);
+  background: var(--surface-2);
+}
+
+.site-nav a[aria-current="page"] {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.locale-switch {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+}
+
+.locale-switch:hover {
+  color: var(--ink);
+  border-color: var(--accent);
+}
+
+.github-link {
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem;
+  border-radius: 6px;
+}
+
+.github-link:hover {
+  color: var(--ink);
+  background: var(--surface-2);
+}
+
+/* --------------------------------------------------------------------------
+   Hero
+   -------------------------------------------------------------------------- */
+
+.hero {
+  padding-block: 3.5rem 2.5rem;
+}
+
+.hero .eyebrow {
+  color: var(--muted);
+  font-size: 0.88rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.9rem;
+}
+
+.hero .lede {
+  font-size: 1.18rem;
+  color: var(--muted);
+  max-width: 58ch;
+}
+
+.hero .cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0.65rem 1.25rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+}
+
+.button:hover {
+  background: var(--accent-strong);
+  color: var(--accent-contrast);
+}
+
+.button.secondary {
+  background: transparent;
+  color: var(--link);
+  border-color: var(--border);
+}
+
+.button.secondary:hover {
+  border-color: var(--accent);
+  background: var(--surface);
+}
+
+/* --------------------------------------------------------------------------
+   Honest-result callout — the voice of the site (FR-9)
+   -------------------------------------------------------------------------- */
+
+.honest-box {
+  border: 1px solid var(--notice-border);
+  background: var(--notice-bg);
+  color: var(--notice-ink);
+  border-radius: var(--radius);
+  padding: 1.4rem 1.6rem;
+  margin-block: 2rem;
+}
+
+.honest-box h2,
+.honest-box h3 {
+  margin: 0 0 0.6em;
+  color: inherit;
+}
+
+.honest-box p {
+  margin-bottom: 0.75em;
+}
+
+.honest-box p:last-of-type {
+  margin-bottom: 0.5em;
+}
+
+.honest-box a {
+  color: inherit;
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Cards & grids
+   -------------------------------------------------------------------------- */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+  gap: 1rem;
+  padding: 0;
+  margin: 1.5rem 0;
+  list-style: none;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.4rem;
+  box-shadow: var(--shadow);
+}
+
+.card h3 {
+  margin: 0 0 0.5em;
+  font-size: 1.05rem;
+}
+
+.card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+
+.card a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.card.arrow {
+  transition: border-color 0.15s ease;
+}
+
+.card.arrow:hover {
+  border-color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   Feature sections with verify links
+   -------------------------------------------------------------------------- */
+
+.feature-section {
+  border-top: 1px solid var(--border);
+  padding-top: 1.75rem;
+}
+
+.feature-section .verify {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.feature-points {
+  margin: 0.75em 0 1em;
+  padding-inline-start: 1.4em;
+}
+
+.feature-points li {
+  margin-bottom: 0.45em;
+}
+
+/* --------------------------------------------------------------------------
+   Stale translation banner (FR-8)
+   -------------------------------------------------------------------------- */
+
+.stale-banner {
+  border: 1px solid var(--notice-border);
+  background: var(--notice-bg);
+  color: var(--notice-ink);
+  border-radius: var(--radius);
+  padding: 1rem 1.4rem;
+  margin-block: 1.5rem;
+  font-size: 0.98rem;
+}
+
+.stale-banner strong {
+  display: block;
+  margin-bottom: 0.25em;
+}
+
+/* Revision marker line */
+.rev-marker {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-block: 2.5rem 0;
+}
+
+/* --------------------------------------------------------------------------
+   Track labels (FR-3 — two reading levels)
+   -------------------------------------------------------------------------- */
+
+.track-label {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.2rem 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.operators-aside {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-inline-start: 4px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin-block: 2rem;
+}
+
+.operators-aside h2,
+.operators-aside h3 {
+  margin: 0 0 0.5em;
+  font-size: 1.05rem;
+}
+
+.operators-aside p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 0.75em;
+}
+
+/* --------------------------------------------------------------------------
+   News list
+   -------------------------------------------------------------------------- */
+
+.news-list {
+  list-style: none;
+  margin: 1.5rem 0;
+  padding: 0;
+}
+
+.news-list li {
+  border-bottom: 1px solid var(--border);
+  padding-block: 1.1rem;
+}
+
+.news-list li:last-child {
+  border-bottom: 0;
+}
+
+.news-item .meta {
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin-bottom: 0.3em;
+}
+
+.news-item .title {
+  font-weight: 600;
+  font-size: 1.08rem;
+  line-height: 1.45;
+}
+
+.news-item .excerpt {
+  color: var(--muted);
+  font-size: 0.97rem;
+  margin: 0.4em 0 0.5em;
+}
+
+.news-item .meta .dot {
+  margin-inline: 0.4em;
+  opacity: 0.6;
+}
+
+/* --------------------------------------------------------------------------
+   Docs
+   -------------------------------------------------------------------------- */
+
+.doc-meta {
+  color: var(--muted);
+  font-size: 0.9rem;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 0.8rem 1.1rem;
+  margin-block: 1.5rem;
+}
+
+.doc-list {
+  list-style: none;
+  margin: 1.5rem 0;
+  padding: 0;
+}
+
+.doc-list li {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.3rem;
+  margin-bottom: 0.9rem;
+  background: var(--surface);
+}
+
+.doc-list h3 {
+  margin: 0 0 0.35em;
+  font-size: 1.05rem;
+}
+
+.doc-list p {
+  margin: 0 0 0.5em;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.doc-list .source {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  word-break: break-all;
+}
+
+/* --------------------------------------------------------------------------
+   Release panel
+   -------------------------------------------------------------------------- */
+
+.release-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.3rem 1.5rem;
+  margin-block: 1.5rem;
+}
+
+.release-panel .tag {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--accent);
+  font-family: var(--font-mono);
+}
+
+.release-panel .date {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.asset-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.asset-list a {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.asset-list a:hover {
+  border-color: var(--accent);
+}
+
+.never-mirror {
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin-top: 0.75em;
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  margin-top: 4rem;
+  font-size: 0.9rem;
+}
+
+.site-footer .inner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
+  gap: 2rem;
+  padding-block: 2.25rem;
+}
+
+.site-footer h2 {
+  font-size: 0.95rem;
+  margin: 0 0 0.6em;
+}
+
+.site-footer p {
+  color: var(--muted);
+  margin-bottom: 0.6em;
+}
+
+.site-footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-footer li {
+  margin-bottom: 0.4em;
+}
+
+.site-footer .fineprint {
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  padding-block: 1.1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  justify-content: space-between;
+}
+
+/* --------------------------------------------------------------------------
+   Prose — page copy and rendered engine documents
+   -------------------------------------------------------------------------- */
+
+.prose {
+  max-width: var(--prose);
+}
+
+.prose ul,
+.prose ol {
+  padding-inline-start: 1.5em;
+  margin-block: 0.75em;
+}
+
+.prose li {
+  margin-bottom: 0.4em;
+}
+
+.prose blockquote p {
+  margin-bottom: 0.5em;
+}
+
+/* --------------------------------------------------------------------------
+   RTL-specific adjustments
+   -------------------------------------------------------------------------- */
+
+html[dir="rtl"] .prose,
+html[dir="rtl"] .hero .lede {
+  /* Arabic reads denser; give it a touch more room */
+  max-width: 60ch;
+}
+
+html[dir="rtl"] .site-nav a,
+html[dir="rtl"] .locale-switch {
+  font-size: 1rem;
+}

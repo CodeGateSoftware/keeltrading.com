@@ -1,0 +1,46 @@
+---
+import { t } from "../i18n/ui";
+import type { Locale } from "../i18n/config";
+import { localePath } from "../i18n/config";
+
+/**
+ * FR-3 — every top-level page cross-links the operator track:
+ * runbooks rendered in Docs, plus the engine source. The plain-English track
+ * is the page body itself; this aside is the operator door.
+ */
+interface Props {
+  locale: Locale;
+  links?: { label: string; href: string }[];
+}
+
+const { locale, links } = Astro.props;
+const chrome = t(locale);
+
+const defaultLinks =
+  locale === "ar"
+    ? [
+        { label: "كتاب تشغيل المشغّل (الوثائق)", href: localePath("ar", "docs") },
+        { label: "كتاب الانتقال إلى الحيّ (الوثائق)", href: `${localePath("ar", "docs")}go-live-runbook/` },
+        { label: "سجلّ التجارب كاملًا", href: `${localePath("ar", "docs")}experiment-honest-result-restated/` },
+        { label: "شيفرة المحرّك", href: "https://github.com/CodeGateSoftware/keel" },
+      ]
+    : [
+        { label: "Operator runbook (Docs)", href: `${localePath("en", "docs")}operator-runbook/` },
+        { label: "Go-live runbook (Docs)", href: `${localePath("en", "docs")}go-live-runbook/` },
+        { label: "The full experiment record", href: `${localePath("en", "docs")}experiment-honest-result-restated/` },
+        { label: "Engine source", href: "https://github.com/CodeGateSoftware/keel" },
+      ];
+
+const items = links ?? defaultLinks;
+---
+
+<aside class="operators-aside">
+  <span class="track-label">{chrome.tracks.operatorsLabel}</span>
+  <h2>{chrome.tracks.operatorsLabel}</h2>
+  <p>{chrome.tracks.operatorsHint}</p>
+  <ul>
+    {items.map((link) => (
+      <li><a href={link.href}>{link.label}</a></li>
+    ))}
+  </ul>
+</aside>

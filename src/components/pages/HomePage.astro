@@ -1,0 +1,148 @@
+---
+import Base from "../../layouts/Base.astro";
+import HonestBox from "../HonestBox.astro";
+import ForOperators from "../ForOperators.astro";
+import { home } from "../../i18n/pages/home";
+import {
+  alternatesFor,
+  localePath,
+  type Locale,
+  SITE,
+  ENGINE_URL,
+} from "../../i18n/config";
+import { t } from "../../i18n/ui";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const c = home[locale];
+const chrome = t(locale);
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "CodeGate Software",
+    url: SITE,
+    logo: new URL("/og.png", SITE).href,
+    // Entity disambiguation (SEO strategy §3): "keel" collides with keel.sh
+    // and the KEEL ticker — bind this organization to its canonical profiles.
+    sameAs: [
+      "https://github.com/CodeGateSoftware",
+      "https://github.com/CodeGateSoftware/keel",
+      "https://github.com/CodeGateSoftware/keeltrading.com",
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "keeltrading.com",
+    url: SITE,
+    inLanguage: ["en", "ar"],
+    publisher: { "@type": "Organization", name: "CodeGate Software" },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "keel",
+    description: c.description,
+    url: ENGINE_URL,
+    applicationCategory: "FinanceApplication",
+    operatingSystem: "Linux, macOS, Windows (Python 3.11+)",
+    license: "https://www.apache.org/licenses/LICENSE-2.0",
+    isAccessibleForFree: true,
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  },
+];
+
+const nextTargets = [
+  localePath(locale, "install"),
+  localePath(locale, "compliance"),
+  localePath(locale, "community"),
+];
+const nextItems = c.next.items.map((item, index) => ({ ...item, href: nextTargets[index]! }));
+
+const honestLinks = [
+  {
+    label: c.honest.experimentLabel,
+    href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
+  },
+  { label: c.honest.announcementLabel, href: "https://github.com/CodeGateSoftware/keel/discussions/304" },
+];
+
+const fiqhHref =
+  locale === "en" ? `${localePath("en", "docs")}fiqh-basis/` : localePath("ar", "docs");
+---
+
+<Base
+  locale={locale}
+  pageKey="home"
+  title={c.title}
+  description={c.description}
+  path={localePath(locale, "home")}
+  alternates={alternatesFor("home")}
+  jsonLd={jsonLd}
+>
+  <div class="container">
+    <section class="hero">
+      <p class="eyebrow">{c.hero.eyebrow}</p>
+      <h1>{c.hero.heading}</h1>
+      <p class="lede">{c.hero.sub}</p>
+      <div class="cta-row">
+        <a class="button" href={localePath(locale, "install")}>{chrome.actions.install}</a>
+        <a class="button secondary" href={localePath(locale, "docs")}>{chrome.actions.readDocs}</a>
+        <a class="button secondary" href={ENGINE_URL}>{chrome.actions.viewOnGitHub}</a>
+      </div>
+    </section>
+
+    <HonestBox title={c.honest.title} paragraphs={c.honest.body} links={honestLinks} />
+
+    <section aria-label={c.cards[0]!.title}>
+      <ul class="card-grid">
+        {
+          c.cards.map((card) => (
+            <li class="card">
+              <h3>{card.title}</h3>
+              <p>{card.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <div class="narrow">
+      <section class="prose">
+        <h2>{locale === "ar" ? "حدود المحرّك، بلسانه" : "The engine's boundary, in its own words"}</h2>
+        <blockquote>{c.fatwa.quote}</blockquote>
+        {c.fatwa.body.map((paragraph) => <p>{paragraph}</p>)}
+        <p><a class="button secondary" href={localePath(locale, "compliance")}>{c.fatwa.more} →</a></p>
+      </section>
+
+      <section class="prose">
+        <h2>{c.review.title}</h2>
+        {c.review.body.map((paragraph) => <p>{paragraph}</p>)}
+        <p><a href={fiqhHref}>{c.review.more} →</a></p>
+      </section>
+
+      <ForOperators locale={locale} />
+
+      <section>
+        <h2>{c.next.title}</h2>
+        <ul class="card-grid">
+          {
+            nextItems.map((item) => (
+              <li class="card arrow">
+                <a href={item.href}>
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+  </div>
+</Base>

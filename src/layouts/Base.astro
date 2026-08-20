@@ -1,0 +1,62 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import StaleBanner from "../components/StaleBanner.astro";
+import { dirFor, isStaleTranslation, localePath, type Locale, type PageKey } from "../i18n/config";
+import { t } from "../i18n/ui";
+import { pageDicts } from "../i18n/pages/index";
+import "../styles/global.css";
+
+interface Props {
+  locale: Locale;
+  pageKey?: PageKey;
+  title: string;
+  description: string;
+  path: string;
+  alternates?: { locale: Locale; path: string }[];
+  jsonLd?: object[];
+}
+
+const { locale, pageKey, ...headProps } = Astro.props;
+const chrome = t(locale);
+
+// FR-8 — translation honesty: banner + revision marker on every translated page.
+const dict = pageKey ? pageDicts[pageKey] : undefined;
+const showTranslationChrome = locale !== "en" && dict !== undefined;
+const translationStale = dict !== undefined && isStaleTranslation(dict);
+const englishPath = pageKey ? localePath("en", pageKey) : "/en/";
+---
+
+<!doctype html>
+<html lang={locale} dir={dirFor(locale)}>
+  <head>
+    <BaseHead locale={locale} {...headProps} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      {chrome.skip}
+    </a>
+    <Header locale={locale} pageKey={pageKey} />
+    <main id="main">
+      {
+        showTranslationChrome && translationStale && dict && (
+          <div class="container">
+            <StaleBanner locale={locale} englishPath={englishPath} />
+          </div>
+        )
+      }
+      <slot />
+      {
+        showTranslationChrome && dict && (
+          <div class="container">
+            <p class="rev-marker">
+              {chrome.marker.translatedAgainst(dict.ar.translatedFromRev)}
+            </p>
+          </div>
+        )
+      }
+    </main>
+    <Footer locale={locale} />
+  </body>
+</html>

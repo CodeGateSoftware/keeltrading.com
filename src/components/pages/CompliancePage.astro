@@ -1,0 +1,90 @@
+---
+import Base from "../../layouts/Base.astro";
+import HonestBox from "../HonestBox.astro";
+import { compliance } from "../../i18n/pages/compliance";
+import { alternatesFor, localePath, type Locale } from "../../i18n/config";
+import { home } from "../../i18n/pages/home";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const c = compliance[locale];
+const h = home[locale];
+
+const honestLinks = [
+  {
+    label: locale === "ar" ? "سجلّ التجربة" : "The experiment record",
+    href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
+  },
+  {
+    label: locale === "ar" ? "الإعلان" : "The announcement",
+    href: "https://github.com/CodeGateSoftware/keel/discussions/304",
+  },
+];
+---
+
+<Base
+  locale={locale}
+  pageKey="compliance"
+  title={c.title}
+  description={c.description}
+  path={localePath(locale, "compliance")}
+  alternates={alternatesFor("compliance")}
+>
+  <div class="container">
+    <section class="hero">
+      <h1>{c.title}</h1>
+      <p class="lede">{c.intro}</p>
+    </section>
+
+    <div class="narrow prose">
+      {
+        c.sections.map((section) => (
+          <section>
+            <h2>{section.title}</h2>
+            {section.body.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </section>
+        ))
+      }
+
+      <section>
+        <div class="operators-aside">
+          <h2>{c.attest.title}</h2>
+          <pre><code>{c.attest.command}</code></pre>
+          <p>{c.attest.commandNote}</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>{c.doesNot.title}</h2>
+        <ul>
+          {c.doesNot.items.map((item) => <li>{item}</li>)}
+        </ul>
+      </section>
+
+      <HonestBox title={h.honest.title} paragraphs={h.honest.body} links={honestLinks} />
+
+      <section>
+        <h2>{c.links.title}</h2>
+        <ul class="doc-list">
+          {
+            c.links.items.map((link) => (
+              <li>
+                <h3>
+                  <a href={link.href} lang={link.href.includes("#scholarly") ? undefined : "en"}>
+                    {link.label}
+                  </a>
+                </h3>
+                <p>{link.note}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,57 @@
+---
+import Base from "../../layouts/Base.astro";
+import { community, categoryUrl } from "../../i18n/pages/community";
+import { alternatesFor, localePath, type Locale } from "../../i18n/config";
+import { t } from "../../i18n/ui";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const c = community[locale];
+const chrome = t(locale);
+---
+
+<Base
+  locale={locale}
+  pageKey="community"
+  title={c.title}
+  description={c.description}
+  path={localePath(locale, "community")}
+  alternates={alternatesFor("community")}
+>
+  <div class="container">
+    <section class="hero">
+      <h1>{c.title}</h1>
+      {c.intro.map((paragraph) => <p class="lede">{paragraph}</p>)}
+    </section>
+
+    <div class="narrow">
+      <section aria-label={c.title}>
+        <ul class="card-grid">
+          {
+            c.categories.map((category) => (
+              <li class="card arrow">
+                <a href={categoryUrl(category.slug)}>
+                  <h3>{category.name}</h3>
+                  <p>{category.description}</p>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="doc-meta">{c.note}</p>
+      </section>
+
+      <section class="prose">
+        <h2>{chrome.actions.discussOnGitHub}</h2>
+        <p>
+          <a class="button" href="https://github.com/CodeGateSoftware/keel/discussions">
+            {chrome.actions.discussOnGitHub} →
+          </a>
+        </p>
+      </section>
+    </div>
+  </div>
+</Base>

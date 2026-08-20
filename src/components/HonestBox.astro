@@ -1,0 +1,26 @@
+---
+/**
+ * FR-9 — the honest-results posture, stated by the site itself before any
+ * visitor has to find it. Numbers mirror the engine repo exactly.
+ */
+interface Props {
+  title: string;
+  paragraphs: string[];
+  links: { label: string; href: string }[];
+}
+
+const { title, paragraphs, links } = Astro.props;
+---
+
+<div class="honest-box">
+  <h2>{title}</h2>
+  {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+  <p>
+    {links.map((link, index) => (
+      <>
+        <a href={link.href}>{link.label}</a>
+        {index < links.length - 1 && <span aria-hidden="true"> · </span>}
+      </>
+    ))}
+  </p>
+</div>

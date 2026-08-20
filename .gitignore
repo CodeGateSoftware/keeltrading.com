@@ -7,6 +7,10 @@ dist/
 build/
 .astro/
 
+# Fetched-at-build artifacts (engine docs, release, discussions) — never hand-copied
+src/content/engine-docs/
+data/
+
 # Cloudflare tooling
 .wrangler/
 

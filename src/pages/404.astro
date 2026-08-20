@@ -1,0 +1,40 @@
+---
+import { t } from "../i18n/ui";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { localePath } from "../i18n/config";
+import "../styles/global.css";
+
+const chrome = t("en");
+const chromeAr = t("ar");
+---
+
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>404 — keeltrading.com</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#f8f7f3" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f171d" media="(prefers-color-scheme: dark)" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{chrome.skip}</a>
+    <Header locale="en" />
+    <main id="main">
+      <div class="container">
+        <section class="hero">
+          <h1>404 — {chrome.notFound.title}</h1>
+          <p class="lede">{chrome.notFound.body}</p>
+          <div class="cta-row">
+            <a class="button" href={localePath("en", "home")}>English</a>
+            <a class="button secondary" href={localePath("ar", "home")} lang="ar">العربية</a>
+          </div>
+        </section>
+      </div>
+    </main>
+    <Footer locale="en" />
+  </body>
+</html>

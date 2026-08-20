@@ -1,0 +1,81 @@
+---
+import { SITE, locales, type Locale } from "../i18n/config";
+
+interface Alternate {
+  locale: Locale;
+  path: string;
+}
+
+interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+  /** Canonical path for this page, e.g. /en/features/. */
+  path: string;
+  /** hreflang alternates; omit for pages that exist in one language only. */
+  alternates?: Alternate[];
+  /** Extra JSON-LD objects, rendered as structured data. */
+  jsonLd?: object[];
+}
+
+const { locale, title, description, path, alternates = [], jsonLd = [] } = Astro.props;
+
+const canonical = new URL(path, SITE).href;
+const ogLocaleMap: Record<Locale, string> = { en: "en_US", ar: "ar_AR" };
+
+const analyticsToken = import.meta.env.PUBLIC_CF_ANALYTICS_TOKEN;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<link rel="sitemap" href="/sitemap-index.xml" />
+<meta name="generator" content={Astro.generator} />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#f8f7f3" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0f171d" media="(prefers-color-scheme: dark)" />
+
+{alternates.map((alt) => (
+  <link rel="alternate" hreflang={alt.locale} href={new URL(alt.path, SITE).href} />
+))}
+{alternates.length > 0 && (
+  <link rel="alternate" hreflang="x-default" href={new URL(alternates[0].path, SITE).href} />
+)}
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="keeltrading.com" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={new URL("/og.png", SITE).href} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content={ogLocaleMap[locale]} />
+{locales
+  .filter((l) => l !== locale && alternates.some((a) => a.locale === l))
+  .map((l) => (
+    <meta property="og:locale:alternate" content={ogLocaleMap[l]} />
+  ))}
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={new URL("/og.png", SITE).href} />
+
+{jsonLd.map((entry) => (
+  <script type="application/ld+json" set:html={JSON.stringify(entry)} />
+))}
+
+{
+  analyticsToken && (
+    <script
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon={JSON.stringify({ token: analyticsToken })}
+    />
+  )
+}

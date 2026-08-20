@@ -1,0 +1,49 @@
+---
+import Base from "../../layouts/Base.astro";
+import { about } from "../../i18n/pages/about";
+import { alternatesFor, localePath, type Locale } from "../../i18n/config";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const c = about[locale];
+---
+
+<Base
+  locale={locale}
+  pageKey="about"
+  title={c.title}
+  description={c.description}
+  path={localePath(locale, "about")}
+  alternates={alternatesFor("about")}
+>
+  <div class="container">
+    <section class="hero">
+      <h1>{c.title}</h1>
+      {c.intro.map((paragraph) => <p class="lede">{paragraph}</p>)}
+    </section>
+
+    <div class="narrow prose">
+      <section>
+        <h2>{c.licenses.title}</h2>
+        {c.licenses.body.map((paragraph) => <p>{paragraph}</p>)}
+      </section>
+
+      <section>
+        <h2>{c.faqTitle}</h2>
+        {
+          c.faq.map((item) => (
+            <div class="feature-section">
+              <h3>{item.question}</h3>
+              {item.answer.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+            </div>
+          ))
+        }
+      </section>
+    </div>
+  </div>
+</Base>

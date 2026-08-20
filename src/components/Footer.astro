@@ -1,0 +1,89 @@
+---
+import { localePath, type Locale } from "../i18n/config";
+import { t } from "../i18n/ui";
+import {
+  ENGINE_URL,
+  ENGINE_RELEASES_URL,
+  ENGINE_DISCUSSIONS_URL,
+} from "../i18n/config";
+import { home } from "../i18n/pages/home";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const chrome = t(locale);
+const c = home[locale];
+
+const honestExperiment =
+  "https://github.com/CodeGateSoftware/keel/blob/main/docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md";
+
+const editionLinks = [
+  { label: "English", locale: "en" as Locale },
+  { label: "العربية", locale: "ar" as Locale },
+];
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="inner">
+      <section>
+        <h2>{chrome.footer.disclaimerTitle}</h2>
+        <p>{chrome.footer.disclaimer}</p>
+      </section>
+
+      <section>
+        <h2>{locale === "ar" ? "قانوني" : "Legal"}</h2>
+        <p>{chrome.footer.trademark}</p>
+        <p>{chrome.footer.keelsh}</p>
+        <p>{chrome.footer.license}</p>
+      </section>
+
+      <section>
+        <h2>{locale === "ar" ? "المشروع" : "The project"}</h2>
+        <ul>
+          <li><a href={ENGINE_URL}>{chrome.actions.viewOnGitHub}</a></li>
+          <li><a href={ENGINE_RELEASES_URL}>{chrome.actions.seeReleases}</a></li>
+          <li><a href={ENGINE_DISCUSSIONS_URL}>{chrome.actions.discussOnGitHub}</a></li>
+          <li>
+            <a href={honestExperiment}>{chrome.footer.honesty}</a>
+          </li>
+          <li>
+            <a href="https://github.com/CodeGateSoftware/keeltrading.com">
+              {locale === "ar" ? "شيفرة هذا الموقع" : "This site's source"}
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>{locale === "ar" ? "الطبعات" : "Editions"}</h2>
+        <ul>
+          {
+            editionLinks.map((edition) => (
+              <li>
+                <a
+                  href={localePath(edition.locale, "home")}
+                  lang={edition.locale}
+                  aria-current={edition.locale === locale ? "true" : undefined}
+                >
+                  {edition.label}
+                </a>
+              </li>
+            ))
+          }
+          <li>
+            <span aria-hidden="true">Français · Español</span>
+            {locale === "ar" ? " (لاحقًا)" : " (later)"}
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="fineprint">
+      <span>© 2026 CodeGate Software</span>
+      <span>{c.honest.title} — <a href={honestExperiment}>{locale === "ar" ? "سجلّ التجربة" : "the experiment record"}</a></span>
+    </div>
+  </div>
+</footer>

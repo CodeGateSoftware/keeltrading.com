@@ -1,0 +1,140 @@
+---
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
+import Base from "../../layouts/Base.astro";
+import ForOperators from "../ForOperators.astro";
+import { install } from "../../i18n/pages/install";
+import { alternatesFor, formatDate, localePath, type Locale } from "../../i18n/config";
+import { t } from "../../i18n/ui";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const c = install[locale];
+const chrome = t(locale);
+
+const root = dirname(dirname(dirname(fileURLToPath(import.meta.url))));
+interface ReleaseData {
+  tag: string | null;
+  name: string | null;
+  url: string;
+  publishedAt: string | null;
+  assets: { name: string; url: string; size: number }[];
+  fetchedAt: string | null;
+}
+let release: ReleaseData = {
+  tag: null,
+  name: null,
+  url: "https://github.com/CodeGateSoftware/keel/releases/latest",
+  publishedAt: null,
+  assets: [],
+  fetchedAt: null,
+};
+try {
+  release = JSON.parse(readFileSync(join(root, "data/release.json"), "utf8"));
+} catch {
+  // fetch script writes it before every build; empty is a fallback of a fallback
+}
+
+const version = release.tag?.replace(/^v/, "") ?? null;
+const traderAsset = release.assets.find((asset) => /^keel_trader-.*\.whl$/.test(asset.name));
+// FR-6: the snippet's version comes from the same fetch as the buttons.
+const pipCommand = version
+  ? `pip install --find-links . ./keel_trader-${version}-py3-none-any.whl`
+  : null;
+---
+
+<Base
+  locale={locale}
+  pageKey="install"
+  title={c.title}
+  description={c.description}
+  path={localePath(locale, "install")}
+  alternates={alternatesFor("install")}
+>
+  <div class="container">
+    <section class="hero">
+      <h1>{c.title}</h1>
+    </section>
+
+    <div class="narrow prose">
+      <section>
+        <h2>{c.fromSource.title}</h2>
+        <p>{c.fromSource.lead}</p>
+        <ul>
+          {c.fromSource.requirements.map((requirement) => <li>{requirement}</li>)}
+        </ul>
+        <pre><code>git clone https://github.com/CodeGateSoftware/keel.git && cd keel
+uv sync --all-extras --dev        # any Python 3.11+ (the repo develops on 3.14)
+cp .env.example .env              # put the read-only CDP key/secret in it — market data only
+uv run keel rules seed            # register the rule families as candidates
+uv run keel fetch                 # pull candle history for the default allowlist
+uv run keel simulate --years 1 --skip-within-cap</code></pre>
+        <h3>{c.fromSource.expectTitle}</h3>
+        <p>{c.fromSource.expect}</p>
+        <p>
+          <a href={`${localePath(locale, "docs")}go-live-runbook/`}>{c.fromSource.next} →</a>
+        </p>
+      </section>
+
+      <section>
+        <h2>{c.fromRelease.title}</h2>
+        <p>{c.fromRelease.lead}</p>
+
+        <div class="release-panel">
+          {
+            release.tag ? (
+              <>
+                <p>
+                  <span class="tag">{release.tag}</span>
+                  {release.publishedAt && (
+                    <span class="date"> · {formatDate(release.publishedAt)}</span>
+                  )}
+                </p>
+                {pipCommand && (
+                  <pre><code>{pipCommand}</code></pre>
+                )}
+                <ul class="asset-list">
+                  {release.assets.map((asset) => (
+                    <li>
+                      <a href={asset.url}>{asset.name}</a>
+                    </li>
+                  ))}
+                </ul>
+                <p class="never-mirror">
+                  {chrome.install.neverMirrored}
+                  {release.fetchedAt && ` ${chrome.install.copiedAtBuild(formatDate(release.fetchedAt))}`}
+                </p>
+              </>
+            ) : (
+              <p>
+                <a href={release.url}>{chrome.install.unknown}</a>
+              </p>
+            )
+          }
+        </div>
+
+        <ol>
+          {
+            c.fromRelease.steps.map((step, index) => (
+              <li>
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+                {index === 1 && pipCommand && <pre><code>{pipCommand}</code></pre>}
+              </li>
+            ))
+          }
+        </ol>
+
+        <div class="stale-banner" role="note">
+          <strong>{c.fromRelease.warning}</strong>
+        </div>
+      </section>
+
+      <ForOperators locale={locale} />
+    </div>
+  </div>
+</Base>

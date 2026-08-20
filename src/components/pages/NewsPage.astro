@@ -1,0 +1,115 @@
+---
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
+import Base from "../../layouts/Base.astro";
+import { news } from "../../i18n/pages/news";
+import { alternatesFor, formatDate, localePath, type Locale } from "../../i18n/config";
+import { t } from "../../i18n/ui";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const c = news[locale];
+const chrome = t(locale);
+
+interface DiscussionItem {
+  number: number;
+  title: string;
+  url: string;
+  createdAt: string;
+  author: string | null;
+  comments: number;
+  excerpt: string;
+}
+interface DiscussionsFile {
+  category: string;
+  categoryUrl: string;
+  fetchedAt: string | null;
+  items: DiscussionItem[];
+}
+
+const root = dirname(dirname(dirname(fileURLToPath(import.meta.url))));
+let feed: DiscussionsFile = {
+  category: "announcements",
+  categoryUrl: "https://github.com/CodeGateSoftware/keel/discussions/categories/announcements",
+  fetchedAt: null,
+  items: [],
+};
+try {
+  feed = JSON.parse(readFileSync(join(root, "data/discussions.json"), "utf8"));
+} catch {
+  // fetch script writes it before every build
+}
+---
+
+<Base
+  locale={locale}
+  pageKey="news"
+  title={c.title}
+  description={c.description}
+  path={localePath(locale, "news")}
+  alternates={alternatesFor("news")}
+>
+  <div class="container">
+    <section class="hero">
+      <h1>{c.title}</h1>
+      {c.intro.map((paragraph) => <p class="lede">{paragraph}</p>)}
+    </section>
+
+    <div class="narrow">
+      <section aria-label={chrome.news.from}>
+        {
+          feed.fetchedAt && (
+            <p class="doc-meta">{chrome.news.fetchedAt(formatDate(feed.fetchedAt))}</p>
+          )
+        }
+
+        {
+          feed.items.length === 0 ? (
+            <div class="stale-banner" role="note">
+              <p>{chrome.news.empty}</p>
+              <p><a href={feed.categoryUrl}>{chrome.actions.readOnGitHub} →</a></p>
+            </div>
+          ) : (
+            <ul class="news-list">
+              {feed.items.map((item) => (
+                <li class="news-item">
+                  <p class="meta">
+                    <time datetime={item.createdAt}>{formatDate(item.createdAt)}</time>
+                    {item.author && (
+                      <>
+                        <span class="dot" aria-hidden="true">·</span>
+                        <span>{item.author}</span>
+                      </>
+                    )}
+                    <span class="dot" aria-hidden="true">·</span>
+                    <span>{chrome.news.comments(item.comments)}</span>
+                  </p>
+                  <p class="title">
+                    <a href={item.url}>{item.title}</a>
+                  </p>
+                  {item.excerpt && <p class="excerpt">{item.excerpt}</p>}
+                </li>
+              ))}
+            </ul>
+          )
+        }
+
+        <p class="doc-meta">{chrome.news.interactOnGitHub}</p>
+      </section>
+
+      <section class="prose">
+        <h2>{c.secondaryTitle}</h2>
+        <p>{c.secondaryBody}</p>
+        <p>
+          <a href="https://github.com/CodeGateSoftware/keel/discussions/categories/show-and-tell">
+            {chrome.actions.readOnGitHub} →
+          </a>
+        </p>
+      </section>
+    </div>
+  </div>
+</Base>

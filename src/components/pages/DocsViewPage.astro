@@ -1,0 +1,139 @@
+---
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
+import { render, type CollectionEntry } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import { docs } from "../../i18n/pages/docs";
+import { formatDate, localePath, SITE } from "../../i18n/config";
+import { t } from "../../i18n/ui";
+
+/**
+ * FR-4 — a single engine document, rendered from the content collection that
+ * the fetch script filled. English only by design: engine documents are
+ * published in English; the Arabic edition summarizes and links (FR-7/8).
+ */
+interface Props {
+  entry: CollectionEntry<"engine-docs">;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const chrome = t("en");
+const c = docs.en;
+
+const root = dirname(dirname(dirname(fileURLToPath(import.meta.url))));
+interface DocMeta {
+  slug: string;
+  path: string;
+  title: string;
+  en: string;
+  ar: string;
+  sourceUrl: string;
+}
+interface MetaFile {
+  repo: string;
+  ref: string;
+  fetchedAt: string;
+  docs: DocMeta[];
+}
+let meta: MetaFile = { repo: "CodeGateSoftware/keel", ref: "main", fetchedAt: "", docs: [] };
+try {
+  meta = JSON.parse(readFileSync(join(root, "data/docs-meta.json"), "utf8"));
+} catch {
+  // fetch script writes it before every build
+}
+const docMeta = meta.docs.find((doc) => doc.slug === entry.id);
+const title = docMeta?.title ?? entry.id;
+const path = `/en/docs/${entry.id}/`;
+const canonicalUrl = new URL(path, SITE).href;
+
+/** Anchor slugs follow github-slugger (Astro's heading-id generator). */
+function slugifyHeading(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/['’]/g, "")
+    .replace(/\s+/g, "-");
+}
+
+// The glossary's terms are `## term` headings upstream, demoted to `###` by the
+// fetch script — extract them for DefinedTermSet (SEO roadmap item 1.6).
+const glossaryTerms =
+  entry.id === "glossary" && entry.body
+    ? Array.from(entry.body.matchAll(/^### (.+)$/gm))
+        .map((match) => match[1]!.trim())
+        .filter((term) => term.length > 0)
+    : [];
+
+const jsonLd: object[] = [
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: title,
+    url: canonicalUrl,
+    dateModified: meta.fetchedAt || undefined,
+    inLanguage: "en",
+    isPartOf: { "@type": "WebSite", name: "keeltrading.com", url: SITE },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: new URL("/en/", SITE).href },
+      { "@type": "ListItem", position: 2, name: "Docs", item: new URL("/en/docs/", SITE).href },
+      { "@type": "ListItem", position: 3, name: title, item: canonicalUrl },
+    ],
+  },
+];
+
+if (glossaryTerms.length > 0) {
+  jsonLd.push({
+    "@context": "https://schema.org",
+    "@type": "DefinedTermSet",
+    name: "The keel glossary",
+    url: canonicalUrl,
+    inLanguage: "en",
+    hasDefinedTerm: glossaryTerms.map((term) => ({
+      "@type": "DefinedTerm",
+      name: term,
+      url: `${canonicalUrl}#${slugifyHeading(term)}`,
+    })),
+  });
+}
+---
+
+<Base
+  locale="en"
+  title={`${title} — keel docs`}
+  description={docMeta?.en ?? c.description}
+  path={path}
+  jsonLd={jsonLd}
+>
+  <div class="container">
+    <div class="narrow">
+      <p><a href={localePath("en", "docs")}>← {chrome.docs.backToDocs}</a></p>
+      <h1>{title}</h1>
+      {
+        docMeta && (
+          <p class="doc-meta">
+            {chrome.docs.fetchedFrom(meta.repo, meta.ref)}
+            {meta.fetchedAt && ` ${chrome.docs.fetchedAt(formatDate(meta.fetchedAt))}`}{" "}
+            <a href={docMeta.sourceUrl}>{chrome.actions.viewSource}</a>.
+          </p>
+        )
+      }
+      <div class="prose">
+        <Content />
+      </div>
+      {
+        docMeta && (
+          <p class="doc-meta">
+            <a href={docMeta.sourceUrl}>{chrome.actions.viewSource} — {docMeta.path}</a>
+          </p>
+        )
+      }
+    </div>
+  </div>
+</Base>

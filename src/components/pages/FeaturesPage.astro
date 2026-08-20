@@ -1,0 +1,57 @@
+---
+import Base from "../../layouts/Base.astro";
+import ForOperators from "../ForOperators.astro";
+import { features } from "../../i18n/pages/features";
+import { alternatesFor, localePath, type Locale } from "../../i18n/config";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const c = features[locale];
+---
+
+<Base
+  locale={locale}
+  pageKey="features"
+  title={c.title}
+  description={c.description}
+  path={localePath(locale, "features")}
+  alternates={alternatesFor("features")}
+>
+  <div class="container">
+    <section class="hero">
+      <h1>{c.title}</h1>
+      <p class="lede">{c.intro}</p>
+    </section>
+
+    <div class="narrow prose">
+      {
+        c.features.map((feature) => (
+          <section class="feature-section">
+            <h2>{feature.title}</h2>
+            <p>{feature.body}</p>
+            {feature.points && (
+              <ul class="feature-points">
+                {feature.points.map((point) => (
+                  <li>{point}</li>
+                ))}
+              </ul>
+            )}
+            <p class="verify">
+              {c.verifyNote}: <a href={feature.verify.href} class="mono">{feature.verify.label}</a>
+            </p>
+          </section>
+        ))
+      }
+
+      <section class="feature-section">
+        <h2>{c.inert.title}</h2>
+        {c.inert.body.map((paragraph) => <p>{paragraph}</p>)}
+      </section>
+
+      <ForOperators locale={locale} />
+    </div>
+  </div>
+</Base>
