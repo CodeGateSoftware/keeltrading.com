@@ -91,7 +91,12 @@ const feed: DiscussionsFile =
           )
         }
 
-        <p class="doc-meta">{chrome.news.interactOnGitHub}</p>
+        <p class="doc-meta">
+          {chrome.news.interactOnGitHub}{" "}
+          <a href="/en/news/rss.xml">
+            {locale === "ar" ? "خلاصة RSS" : locale === "fr" ? "Flux RSS" : "RSS feed"} ↗
+          </a>
+        </p>
       </section>
 
       <section class="prose">
