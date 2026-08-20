@@ -36,7 +36,7 @@ export const compareColumns = [
 
 export const compare: LocalizedPage<CompareContent> = {
   en: {
-    rev: "2026-08-20.1",
+    rev: "2026-08-20.2",
     title: "How keel Compares to Other Trading Bots",
     description:
       "keel compared with Freqtrade, Jesse, and Hummingbot: license, focus, strategy gates, and the compliance machinery none of them carry — structural facts from public repositories.",
@@ -46,7 +46,7 @@ export const compare: LocalizedPage<CompareContent> = {
     ],
     tableTitle: "Structural comparison",
     footnote:
-      "Facts from each project's public repository, August 2026. Community scale (GitHub stars, same date): Freqtrade ~53k, Hummingbot ~19.5k, Jesse ~8.3k — keel just launched. Freqtrade, Jesse, and Hummingbot are projects of their maintainers; their names appear here solely to identify them.",
+      "Facts from each project's public repository, August 2026. Community scale (GitHub stars, same date): Freqtrade ~53k, Hummingbot ~19.5k, Jesse ~8.3k — keel just launched. The Cost row was verified from each project's own site on 2026-08-20; Jesse's plugin pricing changes often — re-check at jesse.trade/pricing. Freqtrade, Jesse, and Hummingbot are projects of their maintainers; their names appear here solely to identify them.",
     readingTitle: "How to read this",
     reading: [
       "Every project here backtests strategies and can trade crypto. The differences that matter are structural: what the engine refuses to do, what it requires before a rule may trade live money, and whether compliance is machinery or nothing at all.",
@@ -63,8 +63,8 @@ export const compare: LocalizedPage<CompareContent> = {
   },
 
   ar: {
-    rev: "2026-08-20.1",
-    translatedFromRev: "2026-08-20.1",
+    rev: "2026-08-20.2",
+    translatedFromRev: "2026-08-20.2",
     title: "مقارنة كيل ببوتات التداول الأخرى",
     description:
       "مقارنة كيل بـ Freqtrade وJesse وHummingbot: الترخيص والتوجه وبوابات الترقية وآليات الامتثال التي لا يحملها أيٌّ منها — وقائع بنيوية من المستودعات العمومية.",
@@ -74,7 +74,7 @@ export const compare: LocalizedPage<CompareContent> = {
     ],
     tableTitle: "مقارنة بنيوية",
     footnote:
-      "وقائع من المستودع العمومي لكل مشروع، أغسطس 2026. حجم المجتمع (نجوم GitHub، التاريخ نفسه): Freqtrade نحو 53 ألفًا، Hummingbot نحو 19.5 ألفًا، Jesse نحو 8.3 آلاف — وكيل بدأ للتو. Freqtrade وJesse وHummingbot مشاريع مشرفيها؛ ولا تظهر أسماؤها هنا إلا لتعريفها.",
+      "وقائع من المستودع العمومي لكل مشروع، أغسطس 2026. حجم المجتمع (نجوم GitHub، التاريخ نفسه): Freqtrade نحو 53 ألفًا، Hummingbot نحو 19.5 ألفًا، Jesse نحو 8.3 آلاف — وكيل بدأ للتو. خانة التكلفة جرى التحقق منها من موقع كل مشروع بتاريخ 2026-08-20؛ وتسعير إضافة Jesse يتغيّر كثيرًا — راجع jesse.trade/pricing. Freqtrade وJesse وHummingbot مشاريع مشرفيها؛ ولا تظهر أسماؤها هنا إلا لتعريفها.",
     readingTitle: "كيف تقرأ هذا",
     reading: [
       "كلُّ مشروعٍ هنا يختبر القواعد رجعيًّا ويستطيع تداول العملات المشفّرة. الفروق التي تهم بنيوية: ما يرفض المحرّك فعله، وما يشترطه قبل أن تتداول قاعدةٌ مالًا حقيقيًّا، وهل الامتثال آلياتٌ أم لا شيء.",
@@ -91,8 +91,8 @@ export const compare: LocalizedPage<CompareContent> = {
   },
 
   fr: {
-    rev: "2026-08-20.1",
-    translatedFromRev: "2026-08-20.1",
+    rev: "2026-08-20.2",
+    translatedFromRev: "2026-08-20.2",
     title: "Comparer keel aux autres bots de trading",
     description:
       "keel comparé à Freqtrade, Jesse et Hummingbot : licence, finalité, portes de promotion, et la machinerie de conformité qu'aucun d'eux n'emporte — des faits structurels tirés des dépôts publics.",
@@ -102,7 +102,7 @@ export const compare: LocalizedPage<CompareContent> = {
     ],
     tableTitle: "Comparaison structurelle",
     footnote:
-      "Faits tirés du dépôt public de chaque projet, août 2026. Taille de communauté (étoiles GitHub, même date) : Freqtrade ~53k, Hummingbot ~19,5k, Jesse ~8,3k — keel vient de lancer. Freqtrade, Jesse et Hummingbot appartiennent à leurs mainteneurs ; leurs noms n'apparaissent ici que pour les identifier.",
+      "Faits tirés du dépôt public de chaque projet, août 2026. Taille de communauté (étoiles GitHub, même date) : Freqtrade ~53k, Hummingbot ~19,5k, Jesse ~8,3k — keel vient de lancer. La ligne Coût a été vérifiée sur le site de chaque projet le 2026-08-20 ; le prix du plugin Jesse change souvent — revérifiez sur jesse.trade/pricing. Freqtrade, Jesse et Hummingbot appartiennent à leurs mainteneurs ; leurs noms n'apparaissent ici que pour les identifier.",
     readingTitle: "Comment lire ceci",
     reading: [
       "Chaque projet ici fait du backtest de stratégies et peut trader de la crypto. Les différences qui comptent sont structurelles : ce que le moteur refuse de faire, ce qu'il exige avant qu'une règle puisse trader de l'argent réel, et si la conformité est une machinerie ou rien du tout.",
@@ -123,6 +123,15 @@ export const compareRows = (locale: "en" | "ar" | "fr"): CompareRow[] => {
   if (locale === "fr") {
     return [
       { label: "Licence", values: ["Apache-2.0", "GPL-3.0", "MIT", "Apache-2.0"] },
+      {
+        label: "Coût",
+        values: [
+          "Gratuit — open-source, auto-hébergé ; vous ne payez que votre infrastructure et les frais de place",
+          "Gratuit — open-source, auto-hébergé ; aucune offre officielle payante",
+          "Le cœur est gratuit (MIT) ; le plugin de trading réel est payant — licences à vie dès 899 $ (remises fréquentes ; abonnement annoncé)",
+          "Gratuit — Apache-2.0, auto-hébergé ; aucun service payant sur leur site",
+        ],
+      },
       { label: "Langage", values: ["Python", "Python", "Python", "Python"] },
       {
         label: "Finalité",
@@ -175,6 +184,15 @@ export const compareRows = (locale: "en" | "ar" | "fr"): CompareRow[] => {
       {
         label: "الترخيص",
         values: ["Apache-2.0", "GPL-3.0", "MIT", "Apache-2.0"],
+      },
+      {
+        label: "التكلفة",
+        values: [
+          "مجاني — مفتوح المصدر وتستضيفه بنفسك؛ تدفع فقط بنيتك التحتية ورسوم المنصّة",
+          "مجاني — مفتوح المصدر وتستضيفه بنفسك؛ لا باقة رسمية مدفوعة",
+          "النواة مجانية (MIT)؛ إضافة التداول الحيّ منتج مدفوع — تراخيص دائمة من 899$ (خصومات متكررة، وأُعلن نموذج اشتراك)",
+          "مجاني — Apache-2.0 وتستضيفه بنفسك؛ لا خدمات مدفوعة على موقعهم",
+        ],
       },
       {
         label: "اللغة",
@@ -235,6 +253,15 @@ export const compareRows = (locale: "en" | "ar" | "fr"): CompareRow[] => {
     {
       label: "License",
       values: ["Apache-2.0", "GPL-3.0", "MIT", "Apache-2.0"],
+    },
+    {
+      label: "Cost",
+      values: [
+        "Free — open-source, self-hosted; you pay only your own infrastructure and venue fees",
+        "Free — open-source, self-hosted; no official paid tier",
+        "Core free (MIT); the live-trading plugin is a paid product — lifetime from $899 (discounts common; subscription model announced)",
+        "Free — Apache-2.0, self-hosted; no paid services on their site",
+      ],
     },
     {
       label: "Language",
