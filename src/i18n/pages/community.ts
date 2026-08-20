@@ -125,48 +125,48 @@ export const community: LocalizedPage<CommunityContent> = {
   fr: {
     rev: "2026-08-20.2",
     translatedFromRev: "2026-08-20.2",
-    title: "La communauté keel — sur GitHub, par design",
+    title: "La communauté keel — sur GitHub, par choix",
     description:
-      "Questions, idées, sondages et débats de classification se vivent dans les Discussions GitHub de keel. Ce site ne fait que lire et lier — l'interaction reste là où vit le projet.",
+      "Questions, idées, sondages et débats de classification ont lieu dans les Discussions GitHub de keel. Ce site se contente de lire et de renvoyer : l'échange reste là où vit le projet.",
     intro: [
-      "Tout ce qui a une dimension communautaire se passe sur GitHub Discussions — publier, voter, sonder, répondre. Ce site n'en a délibérément aucune : il lit et il lie, parce que le projet, son histoire et sa modération vivent déjà là-bas.",
+      "Tout ce qui relève de la communauté se passe dans les Discussions GitHub — publier, voter, sonder, répondre. Ce site n'offre délibérément aucune de ces fonctions : il lit et il renvoie, parce que le projet, son histoire et sa modération vivent déjà là-bas.",
     ],
-    note: "Une catégorie mérite une mention particulière : Conformité & classification. « X devrait-il être traité ainsi ? » est une question, pas un bug — et elle a sa place dédiée.",
+    note: "Une catégorie mérite une mention particulière : Conformité et classification. « X doit-il être traité ainsi ? » est une question, pas un bug — et elle a son espace dédié.",
     categories: [
       {
         name: "Announcements",
         slug: "announcements",
-        description: "Les mises à jour des mainteneurs — le même flux qui alimente la page Actualités de ce site.",
+        description: "Les mises à jour des mainteneurs — le flux même qui alimente la page Actualités de ce site.",
       },
       {
         name: "Compliance & classification",
         slug: "compliance-classification",
-        description: "Les conversations « X devrait-il être traité ainsi ? » — le débat de classification est une question, pas un bug, et ne doit pas être trié comme tel.",
+        description: "Les échanges du type « X doit-il être traité ainsi ? ». Le débat de classification est une question, pas un bug : il ne doit pas être trié comme tel.",
       },
       {
         name: "Ideas",
         slug: "ideas",
-        description: "Les propositions de ce que keel devrait faire ensuite. Les meilleures idées arrivent avec le problème qu'elles résolvent, écrit noir sur blanc.",
+        description: "Les propositions sur ce que keel devrait faire ensuite. Les meilleures idées arrivent avec le problème qu'elles résolvent, énoncé noir sur blanc.",
       },
       {
         name: "Polls",
         slug: "polls",
-        description: "Là où le projet demande à la communauté de trancher entre des options définies.",
+        description: "L'endroit où le projet demande à la communauté de trancher entre des options définies.",
       },
       {
         name: "Q&A",
         slug: "q-a",
-        description: "Les questions d'exécution, de configuration ou de compréhension de keel — répondues en public pour que le suivant trouve la réponse.",
+        description: "Les questions sur l'exécution, la configuration ou le fonctionnement de keel — traitées en public, pour que la personne suivante trouve la réponse.",
       },
       {
         name: "Show and tell",
         slug: "show-and-tell",
-        description: "Ce que les gens construisent avec et autour de keel. (Prévu comme flux secondaire sur la page Actualités.)",
+        description: "Ce que les gens construisent avec keel et autour de keel. (Prévu comme flux secondaire sur la page Actualités.)",
       },
       {
         name: "General",
         slug: "general",
-        description: "Tout ce qui ne rentre pas dans les catégories ci-dessus.",
+        description: "Tout ce qui n'entre dans aucune des catégories ci-dessus.",
       },
     ],
   },

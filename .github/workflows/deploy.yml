@@ -1,10 +1,11 @@
 name: Deploy
 
-# FR-1/FR-12 — one workflow owns every deploy:
-#   - push to main    → production deploy (*.pages.dev until the domain lands)
-#   - pull_request    → preview deploy on a branch URL
+# FR-1/FR-12 — one workflow owns every production deploy:
+#   - push to main    → production deploy (runs when a PR is merged to main)
 #   - hourly schedule → fresh build (news/release/docs refresh) + production deploy
 #   - workflow_dispatch → "right now" button
+# pull_request is deliberately NOT a trigger: PRs are validated by CI (ci.yml),
+# which builds and uploads a `site-preview` artifact — no per-PR preview deploys.
 #
 # One-time setup (repo Settings, no Cloudflare dashboard clicks needed):
 #   Secrets:   CLOUDFLARE_API_TOKEN (Cloudflare Pages: Edit), CLOUDFLARE_ACCOUNT_ID
@@ -14,7 +15,6 @@ name: Deploy
 on:
   push:
     branches: [main]
-  pull_request:
   schedule:
     # Hourly at :07, off the top of the hour.
     - cron: "7 * * * *"

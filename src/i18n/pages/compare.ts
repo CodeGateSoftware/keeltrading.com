@@ -119,36 +119,36 @@ export const compare: LocalizedPage<CompareContent> = {
     translatedFromRev: "2026-08-20.5",
     title: "Comparer keel aux autres bots de trading",
     description:
-      "keel comparé à Freqtrade, Jesse et Hummingbot : licence, finalité, portes de promotion, et la machinerie de conformité qu'aucun d'eux n'emporte — des faits structurels tirés des dépôts publics.",
+      "keel face à Freqtrade, Jesse et Hummingbot : licence, finalité, verrous de promotion et la machinerie de conformité qu'aucun d'eux n'embarque — des faits structurels tirés des dépôts publics.",
     intro: [
-      "Freqtrade, Jesse et Hummingbot sont des bots de trading open-source établis et capables — bien plus mûrs que keel, avec des communautés ordres de grandeur plus grandes. Si vous voulez du trading algorithmique généraliste avec la couverture d'exchanges la plus large, ils sont la meilleure réponse.",
-      "Cette page énonce, factuellement et depuis les dépôts publics, où keel diffère : keel n'est pas un meilleur bot de trading — c'est une autre chose, un moteur d'application d'une conformité Shariah que vous fournissez.",
+      "Freqtrade, Jesse et Hummingbot sont des bots de trading open-source solides et éprouvés — bien plus mûrs que keel, avec des communautés sans commune mesure avec la sienne. Si vous cherchez du trading algorithmique généraliste avec la plus large couverture de plateformes, ils constituent la meilleure réponse.",
+      "Cette page dit, faits à l'appui et dépôts publics en main, où keel diffère : keel n'est pas un meilleur bot de trading — c'est autre chose, un moteur qui applique une conformité Shariah que vous lui fournissez.",
     ],
     tableTitle: "Comparaison structurelle",
     footnote:
-      "Faits tirés du dépôt public de chaque projet, août 2026. Taille de communauté (étoiles GitHub, même date) : Freqtrade ~53k, Hummingbot ~19,5k, Jesse ~8,3k — keel vient de lancer. La ligne Coût a été vérifiée sur le site de chaque projet le 2026-08-20 ; le prix du plugin Jesse change souvent — revérifiez sur jesse.trade/pricing. Freqtrade, Jesse, Hummingbot et QuantCrawler appartiennent à leurs mainteneurs ; leurs noms n'apparaissent ici que pour les identifier. Alpaca est un courtier, pas un bot — keel livre un adaptateur courtier pour lui via le port venues.",
-    readingTitle: "Comment lire ceci",
+      "Faits tirés du dépôt public de chaque projet, août 2026. Taille des communautés (étoiles GitHub, à la même date) : Freqtrade ~53 k, Hummingbot ~19,5 k, Jesse ~8,3 k — keel vient tout juste d'être lancé. La ligne Coût a été vérifiée sur le site de chaque projet le 20 août 2026 ; le tarif du plugin de Jesse change souvent — à revérifier sur jesse.trade/pricing. Freqtrade, Jesse, Hummingbot et QuantCrawler appartiennent à leurs mainteneurs ; leurs noms n'apparaissent ici que pour les identifier. Alpaca est un courtier, pas un bot — keel livre pour lui un adaptateur courtier via le port plateformes.",
+    readingTitle: "Comment lire ce tableau",
     reading: [
-      "Chaque projet ici fait du backtest de stratégies et peut trader de la crypto. Les différences qui comptent sont structurelles : ce que le moteur refuse de faire, ce qu'il exige avant qu'une règle puisse trader de l'argent réel, et si la conformité est une machinerie ou rien du tout.",
-      "Aucune case de ce tableau n'est un jugement de valeur. L'ampleur de Freqtrade, le flux de recherche de Jesse et la profondeur de market-making de Hummingbot sont de vraies forces — keel n'en a aucune, par design.",
+      "Chacun de ces projets sait backtester des stratégies et négocier des cryptomonnaies. Les différences qui comptent sont structurelles : ce que le moteur refuse de faire, ce qu'il exige avant qu'une règle puisse engager de l'argent réel, et si la conformité y est une machinerie ou n'existe pas du tout.",
+      "Aucune case de ce tableau n'est un jugement de valeur. L'ampleur de Freqtrade, le confort de recherche de Jesse et la profondeur de Hummingbot en tenue de marché sont de vraies forces — keel n'en possède aucune, et c'est voulu.",
     ],
-    paidTitle: "Et les services payants ?",
+    paidTitle: "Et les services payants ?",
     paidBody: [
-      "QuantCrawler est le genre de service payant que beaucoup de particuliers rencontrent d'abord : 9,99 $/mois après un essai gratuit de 30 jours (vérifié le 2026-08-20). Il relaie les alertes webhook TradingView vers votre courtier et copie les trades entre comptes — dix intégrations de courtiers dont Coinbase, avec un accent sur les futures et les comptes prop. C'est un service cloud au code fermé : vous connectez vos identifiants de courtier à leur plateforme, et l'exécution se fait sur leurs serveurs.",
-      "keel est le compromis inverse : rien d'hébergé, rien de fermé. Le moteur tourne sur votre machine, vos clés ne la quittent jamais, et aucune règle ne peut toucher de l'argent réel avant de franchir la porte de promotion. Ce que keel n'a pas : l'étendue de courtiers de QuantCrawler ni son flux TradingView d'abord — si c'est ce qu'il vous faut, leur réponse est la bonne, au prix de confier vos identifiants à un service. Comme les bots ci-dessus, il n'emporte aucune machinerie de conformité — et cette différence est toute la raison d'être de keel.",
+      "QuantCrawler est le type de service payant que beaucoup de particuliers croisent en premier : 9,99 $ par mois après trente jours d'essai gratuit (vérifié le 20 août 2026). Il relaie les alertes webhook de TradingView vers votre courtier et recopie les transactions d'un compte à l'autre — dix intégrations de courtiers, dont Coinbase, avec un accent sur les contrats à terme et les comptes de prop trading. C'est un service en ligne au code fermé : vous connectez vos identifiants de courtier à leur plateforme, et l'exécution a lieu sur leurs serveurs.",
+      "keel fait le choix inverse : rien d'hébergé, rien de fermé. Le moteur tourne sur votre machine, vos clés ne la quittent jamais, et aucune règle ne peut toucher de l'argent réel avant d'avoir franchi le verrou de promotion. Ce que keel n'a pas : l'étendue de courtiers de QuantCrawler, ni sa logique centrée sur TradingView — si c'est ce qu'il vous faut, leur réponse est la bonne, au prix de confier vos identifiants à un service. Comme les bots ci-dessus, il n'embarque aucune machinerie de conformité — et c'est toute la raison d'être de keel.",
     ],
-    venuesTitle: "Quelles places, et pourquoi",
+    venuesTitle: "Quelles plateformes, et pourquoi",
     venuesBody: [
-      "L'adaptateur Coinbase de keel est la référence éprouvée en réel : screening spot attesté, ordres réels, tout le parcours exercé en production. Alpaca est câblé pour le déploiement côté actions — la même application, en papier d'abord, avec horloges de marché conscientes des sessions. L'adaptateur Robinhood est livré dans le dépôt comme place optionnelle de développement, délibérément hors des déploiements jusqu'à la fermeture de ses prérequis de mise en réel.",
-      "Ce que keel refuse catégoriquement : futures, marge, vente à découvert et tout produit dérivé — le spot long-only est toute la surface, par posture fiqh et par design. L'élargissement des places n'est pas poursuivi ; chaque nouvelle place est une décision d'adaptateur à capacités vérifiées, pas une métrique de croissance.",
+      "L'adaptateur Coinbase de keel est la référence, éprouvée en conditions réelles : filtrage attesté au comptant, ordres réels, tout le parcours exercé en production. Alpaca est intégré pour un déploiement côté actions — la même application, en papier d'abord, avec des horloges de marché qui tiennent compte des séances. L'adaptateur Robinhood est livré dans le dépôt comme plateforme de développement optionnelle, délibérément écartée des déploiements tant que ses prérequis de passage en réel ne sont pas remplis.",
+      "Ce que keel refuse catégoriquement : les contrats à terme, la marge, la vente à découvert et tout produit dérivé — le comptant à l'achat constitue toute la surface d'exposition, par posture fiqh autant que par conception. L'élargissement du nombre de plateformes n'est pas un objectif : chaque nouvelle plateforme est une décision d'adaptateur aux capacités vérifiées, pas un indicateur de croissance.",
     ],
-    catchLink: "Pourquoi keel est-il gratuit quand les autres facturent des abonnements ? La réponse honnête est sur la page À propos.",
+    catchLink: "Pourquoi keel est-il gratuit quand les autres facturent un abonnement ? La réponse honnête est sur la page À propos.",
     wontDoTitle: "Ce que keel ne fera pas",
     wontDo: [
-      "Courir après la couverture d'exchanges : Coinbase est l'adaptateur de référence éprouvé en réel et Alpaca est câblé pour les actions papier ; l'adaptateur Robinhood est optionnel/dev, délibérément hors des déploiements.",
-      "Trader autre chose que le spot long : pas de levier, pas de vente à découvert, pas de produits dérivés.",
-      "Promouvoir une règle sur la seule brillance d'un backtest : le contrôle de surapprentissage (PBO/CSCV) peut opposer son veto.",
-      "Promettre du profit : aucune famille de règles livrée n'est nette-positive aux frais preneur réellement payés, et le site le dit sur sa page d'accueil.",
+      "Courir après la couverture de plateformes : Coinbase est l'adaptateur de référence, éprouvé en réel, et Alpaca est intégré pour les actions en papier ; l'adaptateur Robinhood reste optionnel et réservé au développement, délibérément écarté des déploiements.",
+      "Négocier autre chose que du comptant à l'achat : pas de levier, pas de vente à découvert, pas de produits dérivés.",
+      "Promouvoir une règle sur le seul éclat d'un backtest : le contrôle de surapprentissage (PBO/CSCV) peut y opposer son veto.",
+      "Promettre du gain : aucune famille de règles livrée ne dégage un résultat net positif aux frais de preneur réellement payés, et le site le dit dès sa page d'accueil.",
     ],
   },
 };
@@ -160,39 +160,39 @@ export const compareRows = (locale: "en" | "ar" | "fr"): CompareRow[] => {
       {
         label: "Coût",
         values: [
-          "Gratuit — open-source, auto-hébergé ; vous ne payez que votre infrastructure et les frais de place",
-          "Gratuit — open-source, auto-hébergé ; aucune offre officielle payante",
-          "Le cœur est gratuit (MIT) ; le plugin de trading réel est payant — licences à vie dès 899 $ (remises fréquentes ; abonnement annoncé)",
-          "Gratuit — Apache-2.0, auto-hébergé ; aucun service payant sur leur site",
+          "Gratuit — open-source, auto-hébergé ; vous ne payez que votre infrastructure et les frais de la plateforme",
+          "Gratuit — open-source, auto-hébergé ; aucune offre payante officielle",
+          "Le cœur est gratuit (MIT) ; le plugin de trading réel est payant — licence à vie à partir de 899 $ (remises fréquentes ; passage à l'abonnement annoncé)",
+          "Gratuit — Apache-2.0, auto-hébergé ; aucun service payant sur leur site",
         ],
       },
       { label: "Langage", values: ["Python", "Python", "Python", "Python"] },
       {
         label: "Finalité",
         values: [
-          "Appliquer la conformité Shariah que vous fournissez, sur le spot",
+          "Appliquer, au comptant, une conformité Shariah que vous fournissez",
           "Développement généraliste de bots de trading",
           "Recherche de stratégies et trading",
-          "Market making / stratégies haute fréquence",
+          "Tenue de marché et stratégies à haute fréquence",
         ],
       },
       {
         label: "Adaptateurs de plateformes",
         values: [
-          "Coinbase (référence éprouvée en réel) + Alpaca (câblé, actions papier) ; adaptateur Robinhood optionnel/dev",
-          "Beaucoup de grandes plateformes",
+          "Coinbase (référence éprouvée en réel) + Alpaca (intégré, actions en papier) ; adaptateur Robinhood optionnel, réservé au développement",
+          "De nombreuses grandes plateformes",
           "Plusieurs plateformes",
-          "Beaucoup de CEX et de DEX",
+          "De nombreuses plateformes centralisées et décentralisées",
         ],
       },
       {
         label: "Backtesting",
-        values: ["Fidèle à la production, glissement à l'échelle de la liquidité", "Oui", "Oui", "Oui"],
+        values: ["Fidèle à la production, glissement calibré sur la liquidité", "Oui", "Oui", "Oui"],
       },
       {
-        label: "Porte obligatoire avant le réel",
+        label: "Verrou obligatoire avant le passage en réel",
         values: [
-          "Deux volets : planchers de performance + contrôle de surapprentissage (PBO/CSCV), plancher de 100 transactions",
+          "En deux volets : seuils de performance + contrôle de surapprentissage (PBO/CSCV), minimum de 100 transactions",
           "Non",
           "Non",
           "Non",
@@ -201,15 +201,15 @@ export const compareRows = (locale: "en" | "ar" | "fr"): CompareRow[] => {
       {
         label: "Machinerie de conformité Shariah",
         values: [
-          "Filtrage attesté à échec fermé + 18 rails incontournables (dont qabd)",
-          "Intégrée nulle part",
-          "Intégrée nulle part",
-          "Intégrée nulle part",
+          "Filtrage attesté qui bloque par défaut + 18 garde-fous incontournables (dont le qabd)",
+          "Non intégrée",
+          "Non intégrée",
+          "Non intégrée",
         ],
       },
       {
-        label: "Résultat honnête énoncé sur ses propres règles",
-        values: ["Oui — en page d'accueil", "Non publié", "Non publié", "Non publié"],
+        label: "Résultat honnête publié sur ses propres règles",
+        values: ["Oui — dès la page d'accueil", "Non publié", "Non publié", "Non publié"],
       },
     ];
   }
