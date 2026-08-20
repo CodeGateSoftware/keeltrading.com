@@ -10,11 +10,13 @@ import { compare, type CompareContent } from "./compare";
 import { about, type AboutContent } from "./about";
 
 /**
- * FR-8 — the layout reads this registry to stamp every Arabic page with its
- * "last translated against English revision" marker and to show the stale
- * banner when the English revision has moved past the translation.
+ * FR-8 — the layout reads this registry to stamp every translated page with
+ * its "last translated against English revision" marker and to show the
+ * stale banner when the English revision has moved past the translation.
+ * (Guides are EN-only editorial pages, like the engine documents, so they
+ * carry no translation entries.)
  */
-export const pageDicts: Record<PageKey, LocalizedPage<unknown>> = {
+export const pageDicts: Record<Exclude<PageKey, "guides">, LocalizedPage<unknown>> = {
   home,
   features,
   install,

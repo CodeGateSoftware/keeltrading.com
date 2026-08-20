@@ -1,19 +1,22 @@
 ---
 import { loadDocsMeta, sectionIconSvg, sectionLabel } from "./nav";
 import { localePath, type Locale } from "../../i18n/config";
+import { guides } from "../../i18n/guides/content";
 
 /**
  * Aiven-style docs sidebar: grouped sections with line icons, a Quickstart
- * entry, and the current page marked. Static markup — no JS, no collapsing
- * (eight documents stay expanded). Hidden below the lg breakpoint in CSS.
+ * entry, the Get Started guides, and the current page marked. Static markup
+ * — no JS, no collapsing. Hidden below the lg breakpoint in CSS.
  */
 interface Props {
   locale: Locale;
   /** Slug of the current doc page, if rendering a doc view. */
   current?: string;
+  /** Slug of the current Get Started guide, if rendering a guide page. */
+  guideSlug?: string;
 }
 
-const { locale, current } = Astro.props;
+const { locale, current, guideSlug } = Astro.props;
 const meta = loadDocsMeta();
 
 const quickstartLabel =
@@ -22,6 +25,7 @@ const quickstartLabel =
     : locale === "fr"
       ? "Essayez keel en cinq minutes"
       : "Try keel in five minutes";
+const guidesLabel = locale === "ar" ? "دليل البداية" : locale === "fr" ? "Premiers pas" : "Get started guides";
 ---
 
 <nav class="docs-sidebar" aria-label={locale === "ar" ? "تنقّل الوثائق" : "Docs navigation"}>
@@ -29,6 +33,28 @@ const quickstartLabel =
     <span class="docs-side-icon" set:html={sectionIconSvg("get-started")} />
     {quickstartLabel}
   </a>
+
+  <div class="docs-side-section">
+    <p class="docs-side-heading">
+      <span class="docs-side-icon" set:html={sectionIconSvg("get-started")} />
+      {guidesLabel}
+    </p>
+    <ul>
+      {
+        guides.map((guide) => (
+          <li>
+            <a
+              class:list={["docs-side-link", { current: guideSlug === guide.slug }]}
+              href={`/en/guides/${guide.slug}/`}
+              aria-current={guideSlug === guide.slug ? "page" : undefined}
+            >
+              {guide.title}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 
   {
     (["guides", "reference", "research"] as const).map((sectionId) => {

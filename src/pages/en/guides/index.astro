@@ -1,0 +1,63 @@
+---
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
+import Base from "../../../layouts/Base.astro";
+import DocsSidebar from "../../../components/docs/DocsSidebar.astro";
+import { guides } from "../../../i18n/guides/content";
+
+const path = "/en/guides/";
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "keel Get Started guides",
+    url: new URL(path, "https://keeltrading.com").href,
+    itemListElement: guides.map((guide, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: guide.title,
+      url: new URL(`/en/guides/${guide.slug}/`, "https://keeltrading.com").href,
+    })),
+  },
+];
+void readFileSync; void fileURLToPath; void dirname; void join;
+---
+<Base
+  locale="en"
+  title="Get Started with keel — step-by-step guides"
+  description="Four step-by-step guides with real console screenshots: install and first run, your first simulation, the paper profile, and the attestations anything live requires."
+  path={path}
+  jsonLd={jsonLd}
+>
+  <div class="container">
+    <div class="docs-layout">
+      <DocsSidebar locale="en" />
+      <div class="docs-content">
+        <section class="hero">
+          <h1>Get Started with keel</h1>
+          <p class="lede">
+            Four guides, in order, from a fresh download to the compliance work anything live requires. Every screen shown is a real capture of the keel console (v0.10.0) on a fresh install — no funds, no keys, nothing that can trade.
+          </p>
+        </section>
+        <ul class="doc-list">
+          {
+            guides.map((guide) => (
+              <li>
+                <h3>
+                  <a href={`/en/guides/${guide.slug}/`}>{guide.title}</a>
+                </h3>
+                <p>{guide.description}</p>
+              </li>
+            ))
+          }
+        </ul>
+        <div class="prose">
+          <p>
+            Prefer reading the engine's own documents? <a href="/en/docs/">The documentation</a> renders them straight from the repository.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</Base>

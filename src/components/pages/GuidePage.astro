@@ -1,0 +1,103 @@
+---
+import Base from "../../layouts/Base.astro";
+import DocsSidebar from "../docs/DocsSidebar.astro";
+import { guides } from "../../i18n/guides/content";
+import { SITE } from "../../i18n/config";
+
+/**
+ * A Get Started guide page: numbered step sections, optional command blocks,
+ * and real TUI screenshots (public/get-started/). Editorial English — like
+ * the engine documents — surfaced through the docs sidebar.
+ */
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+const index = guides.findIndex((guide) => guide.slug === slug);
+if (index === -1) throw new Error(`unknown guide: ${slug}`);
+const guide = guides[index]!;
+const prev = index > 0 ? guides[index - 1]! : null;
+const next = index < guides.length - 1 ? guides[index + 1]! : null;
+const path = `/en/guides/${guide.slug}/`;
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: guide.title,
+    description: guide.description,
+    url: new URL(path, SITE).href,
+    inLanguage: "en",
+    isPartOf: { "@type": "WebSite", name: "keeltrading.com", url: SITE },
+  },
+];
+---
+
+<Base locale="en" title={`${guide.title} — keel Get Started`} description={guide.description} path={path} jsonLd={jsonLd}>
+  <div class="container">
+    <div class="docs-layout">
+      <DocsSidebar locale="en" guideSlug={guide.slug} />
+
+      <article class="docs-content" id="top">
+        <nav class="docs-breadcrumb" aria-label="Breadcrumb">
+          <a href="/en/docs/">Docs</a>
+          <span aria-hidden="true">›</span>
+          <span>Get started</span>
+          <span aria-hidden="true">›</span>
+          <span aria-current="page">{guide.title}</span>
+        </nav>
+
+        <h1>{guide.title}</h1>
+        <p class="lede">{guide.intro}</p>
+
+        <div class="prose">
+          {
+            guide.steps.map((step) => (
+              <section>
+                <h2>{step.title}</h2>
+                {step.body.map((paragraph) => (
+                  <p>{paragraph}</p>
+                ))}
+                {step.code && (
+                  <pre>
+                    <code>{step.code}</code>
+                  </pre>
+                )}
+                {step.shot && (
+                  <figure class="shot-figure">
+                    <img class="shot" src={step.shot} alt={step.shotCaption ?? step.title} loading="lazy" />
+                    {step.shotCaption && <figcaption class="shot-caption">{step.shotCaption}</figcaption>}
+                  </figure>
+                )}
+              </section>
+            ))
+          }
+        </div>
+
+        <nav class="docs-pager" aria-label="Guide navigation">
+          {
+            prev ? (
+              <a class="docs-pager-link prev" href={`/en/guides/${prev.slug}/`}>
+                <span class="docs-pager-dir">← Previous</span>
+                <span class="docs-pager-title">{prev.title}</span>
+              </a>
+            ) : (
+              <span />
+            )
+          }
+          {
+            next ? (
+              <a class="docs-pager-link next" href={`/en/guides/${next.slug}/`}>
+                <span class="docs-pager-dir">Next →</span>
+                <span class="docs-pager-title">{next.title}</span>
+              </a>
+            ) : (
+              <span />
+            )
+          }
+        </nav>
+      </article>
+    </div>
+  </div>
+</Base>

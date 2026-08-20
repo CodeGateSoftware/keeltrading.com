@@ -29,12 +29,14 @@ export const pageKeys = [
   "compliance",
   "compare",
   "about",
+  "guides",
 ] as const;
 export type PageKey = (typeof pageKeys)[number];
 
 export function localePath(locale: Locale, key: PageKey): string {
   if (key === "home") return `/${locale}/`;
   if (key === "docs") return `/${locale}/docs/`;
+  if (key === "guides") return `/${locale}/guides/`;
   return `/${locale}/${key}/`;
 }
 
