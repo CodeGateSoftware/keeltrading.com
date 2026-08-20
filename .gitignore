@@ -21,3 +21,7 @@ data/
 # OS / editor noise
 .DS_Store
 *.swp
+
+# Agent worktrees and session scratch. keel ignores this too; without it a `git add -A`
+# in the shared checkout sweeps another session's worktree into your commit.
+.claude/
