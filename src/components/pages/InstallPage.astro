@@ -167,6 +167,14 @@ const venvCommands = (os: "mac" | "win"): string => {
             <h3>{c.unsigned.notMeaningTitle}</h3>
             <ul>{c.unsigned.notMeaning.map((item) => <li>{item}</li>)}</ul>
 
+            {/* The friction-free alternative, offered here rather than left further down the
+                page: someone reading a security warning is deciding whether to proceed, and
+                "there is a path with no warning at all" is the most useful thing to hand them
+                at that exact moment. */}
+            <h3>{c.unsigned.avoidTitle}</h3>
+            <p>{c.unsigned.avoidBody}</p>
+            <p><a class="button" href="#from-source">{c.unsigned.avoidLink} →</a></p>
+
             <p>
               <a href="https://github.com/CodeGateSoftware/keel/blob/main/docs/desktop-install.md">
                 {c.unsigned.more} →
@@ -205,7 +213,7 @@ const venvCommands = (os: "mac" | "win"): string => {
         <p><a class="button" href="/en/guides/first-run/">{c.getStarted.link} →</a></p>
       </section>
 
-      <section>
+      <section id="from-source">
         <h2>{c.fromSource.title}</h2>
         <p>{c.fromSource.lead}</p>
         <ul>

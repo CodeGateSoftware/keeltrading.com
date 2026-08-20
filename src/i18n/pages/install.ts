@@ -43,6 +43,9 @@ export interface UnsignedNoteCopy {
   verifyFail: string;
   notMeaningTitle: string;
   notMeaning: string[];
+  avoidTitle: string;
+  avoidBody: string;
+  avoidLink: string;
   more: string;
 }
 
@@ -140,7 +143,11 @@ export const install: LocalizedPage<InstallContent> = {
         "It does not mean your computer found something wrong. Nothing was scanned and nothing was detected.",
         "It does not mean the app behaves differently. A signed and an unsigned build of the same release are the same program.",
       ],
-      more: "Full explanation, including how to avoid this entirely",
+      avoidTitle: "Or skip the warning entirely",
+      avoidBody:
+        "The five-minute source path below installs the same engine with no installer and no warning, because nothing is downloaded as an application — pip and uv fetch the published wheels directly. It needs a terminal and Python 3.11+, which is exactly the friction the desktop app exists to remove; but if you already have both, it is the shorter road.",
+      avoidLink: "Try it in five minutes",
+      more: "Full explanation, including how to verify what you downloaded",
     },
   },
 
@@ -213,7 +220,11 @@ export const install: LocalizedPage<InstallContent> = {
         "لا يعني أن جهازك وجد خطبًا ما. لم يُفحص شيء ولم يُكتشف شيء.",
         "لا يعني أن التطبيق يسلك سلوكًا مختلفًا. البنية الموقّعة وغير الموقّعة من الإصدار نفسه هما البرنامج نفسه.",
       ],
-      more: "الشرح الكامل، وكيف تتجنّب هذا كلّه",
+      avoidTitle: "أو تجاوز التحذير من أصله",
+      avoidBody:
+        "مسار المصدر في خمس دقائق أدناه يثبّت المحرّك نفسه بلا مثبّت وبلا تحذير، لأنه لا يُنزَّل شيءٌ بوصفه تطبيقًا — بل يجلب pip وuv العجلات المنشورة مباشرةً. يحتاج طرفيّةً وPython 3.11 فأحدث، وهو بالضبط الاحتكاك الذي وُجد تطبيق سطح المكتب ليزيله؛ لكن إن كان كلاهما عندك أصلًا فهو الطريق الأقصر.",
+      avoidLink: "جرّبه في خمس دقائق",
+      more: "الشرح الكامل، وكيف تتحقّق ممّا نزّلته",
     },
   },
 
@@ -286,7 +297,11 @@ export const install: LocalizedPage<InstallContent> = {
         "Cela ne signifie pas que votre ordinateur a trouvé un problème. Rien n'a été analysé et rien n'a été détecté.",
         "Cela ne signifie pas que l'application se comporte différemment. Un build signé et un build non signé de la même version sont le même programme.",
       ],
-      more: "Explication complète, et comment éviter tout cela",
+      avoidTitle: "Ou évitez complètement l'avertissement",
+      avoidBody:
+        "Le parcours en cinq minutes depuis les sources, ci-dessous, installe le même moteur sans installeur et sans avertissement, parce que rien n'est téléchargé en tant qu'application — pip et uv récupèrent directement les wheels publiées. Il faut un terminal et Python 3.11+, ce qui est précisément la friction que l'application de bureau existe pour supprimer ; mais si vous avez déjà les deux, c'est le chemin le plus court.",
+      avoidLink: "Essayez-le en cinq minutes",
+      more: "Explication complète, et comment vérifier ce que vous avez téléchargé",
     },
   },
 };
