@@ -45,7 +45,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
 
       # FR-4: `npm run build` chains the fetch scripts before astro build — a
       # moved engine doc fails here and blocks the deploy by design. (Never
@@ -75,9 +75,9 @@ jobs:
           BRANCH: ${{ github.head_ref || github.ref_name }}
         run: |
           # Create the project on first run; "already exists" is fine.
-          npx wrangler pages project create "$PAGES_PROJECT" --production-branch main || \
+          npx wrangler@4.124.0 pages project create "$PAGES_PROJECT" --production-branch main || \
             echo "project exists (or deploy will surface the real error)"
-          npx wrangler pages deploy dist \
+          npx wrangler@4.124.0 pages deploy dist \
             --project-name="$PAGES_PROJECT" \
             --branch="$BRANCH" \
             --commit-hash="$GITHUB_SHA"

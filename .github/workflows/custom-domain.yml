@@ -55,6 +55,7 @@ jobs:
           PROJECT: ${{ vars.PAGES_PROJECT }}
         run: |
           sleep 20
-          curl -sS "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pages/projects/${PROJECT}/domains" \
-            -H "Authorization: Bearer ${CF_API_TOKEN}" \
-            | python3 -c "import json,sys; d=json.load(sys.stdin); [print(f\"{x['name']}: status={x['status']}, certs={[(c['cert_authority'], c['state']) for c in x.get('certs', [])]}\") for x in d.get('result', [])]"
+          curl -sS -o "$RUNNER_TEMP/domains.json" \
+            "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pages/projects/${PROJECT}/domains" \
+            -H "Authorization: Bearer ${CF_API_TOKEN}"
+          python3 -c "import json; d=json.load(open('$RUNNER_TEMP/domains.json')); [print(f\"{x['name']}: status={x['status']}, certs={[(c['cert_authority'], c['state']) for c in x.get('certs', [])]}\") for x in d.get('result', [])]"
