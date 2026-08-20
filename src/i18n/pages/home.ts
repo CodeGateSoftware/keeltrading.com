@@ -33,7 +33,7 @@ export interface HomeContent {
 
 export const home: LocalizedPage<HomeContent> = {
   en: {
-    rev: "2026-08-19.2",
+    rev: "2026-08-20.3",
     title: "Keel: Open-Source Shariah Compliance Engine for Crypto",
     description:
       "The open-source engine that enforces Shariah compliance on spot crypto: attested screening that fails closed and rails no order can skip. Not a fatwa engine.",
@@ -45,8 +45,8 @@ export const home: LocalizedPage<HomeContent> = {
     honest: {
       title: "The honest result, stated first",
       body: [
-        "No shipped rule family is net-positive at the taker fee actually paid on Coinbase (~1.2% per leg). The viable parameter/fee intersection is empty under production-faithful execution — 0 of 90 configurations in one measurement matrix, 0 of 82 in another. Cost is the binding constraint, not signal quality.",
-        "The point of this project is the enforcement machinery and the honest measurement of what runs through it — not a claim of profit. Every result is compared against a simple buy-every-period (DCA) benchmark, and the reference rules currently do not beat it after fees. We would rather you know that on the front page than discover it yourself.",
+        "No shipped rule family is net-positive at the taker fee actually paid on Coinbase (~1.2% per leg) — 0 of 90 configurations in one measurement matrix, 0 of 82 in another. We cross-verified a stochastic modelling note — re-derived its mathematics against keel's real numbers — and it sharpened the why: the taker fee is the entire result. Inside the venue's fee-free monthly allowance the reconstructed rules sit indistinguishably at break-even (a 14.9% win rate against a 14.88% break-even); one step outside it, break-even jumps to 29% and the same rules are decisively negative. The allowance rail is not a budget cap — it is the profitability boundary.",
+        "The point of this project is the enforcement machinery and the honest measurement of what runs through it — not a claim of profit. Every result is compared against a simple buy-every-period (DCA) benchmark, and the reference rules currently do not beat it after fees. We would rather you know that on the front page than discover it yourself. And we are working hard to improve the algorithms' and strategies' results — we will keep you updated with our progress.",
       ],
       experimentLabel: "Read the experiment record",
       announcementLabel: "Read the announcement",
@@ -100,8 +100,8 @@ export const home: LocalizedPage<HomeContent> = {
   },
 
   ar: {
-    rev: "2026-08-19.2",
-    translatedFromRev: "2026-08-19.2",
+    rev: "2026-08-20.3",
+    translatedFromRev: "2026-08-20.3",
     title: "كيل: محرّك امتثال شرعي مفتوح المصدر للعملات المشفّرة",
     description:
       "المحرّك مفتوح المصدر الذي يُنفِّذ الامتثال الشرعي في التداول الفوري للعملات المشفّرة: فرزٌ موثَّق يرفض عند الفشل، وسككُ أمانٍ لا يتجاوزها أيُّ أمر. وليس محرّك فتاوى.",
@@ -113,8 +113,8 @@ export const home: LocalizedPage<HomeContent> = {
     honest: {
       title: "النتيجة الصادقة، نقولها أولًا",
       body: [
-        "لا تحقّق أيُّ عائلةٍ من القواعد المُصدَّرة ربحًا صافيًا عند رسوم الآخذ (taker) المدفوعة فعليًّا على منصّة Coinbase‏ (نحو 1.2٪ لكلِّ طرفٍ من الصفقة). فتقاطُعُ الوسائط والرسوم القابلُ للتطبيق فارغٌ تحت تنفيذٍ مطابقٍ للإنتاج — صفرٌ من 90 تهيئةً في إحدى مصفوفات القياس، وصفرٌ من 82 في أخرى. والتكلفة هي القيد الحاكم، لا جودةُ الإشارة.",
-        "والغاية من هذا المشروع هي آلياتُ الإنفاذ والقياسُ الصادق لما يمرّ عبرها — لا ادّعاءُ الربح. فكلُّ نتيجةٍ تُقارَن بمؤشّرٍ مرجعيٍّ بسيط هو الشراء الدوري المنتظم (DCA)، والقواعد المرجعية لا تتفوّق عليه بعد خصم الرسوم. ونحن نفضّل أن تعرف ذلك من الصفحة الأولى على أن تكتشفه بنفسك.",
+        "لا تحقّق أيُّ عائلةٍ من القواعد المُصدَّرة ربحًا صافيًا عند رسوم الآخذ (taker) المدفوعة فعليًّا على منصّة Coinbase‏ (نحو 1.2٪ لكلِّ طرفٍ من الصفقة) — صفرٌ من 90 تهيئةً في إحدى مصفوفات القياس، وصفرٌ من 82 في أخرى. وقد تحقّقنا تحقّقًا مستقلًّا من مذكّرةِ نمذجةٍ عشوائية — إذ أعدنا اشتقاق رياضياتها على أرقام كيل الحقيقية — فجلَّت السبب: رسومُ الآخذ هي النتيجة كلُّها. فداخل الحصّة الشهرية المعفاة من الرسوم لدى المنصّة، تقف القواعد المُعاد بناؤها عند نقطة التعادل بلا فرقٍ يُذكر (نسبةُ ربحٍ 14.9٪ مقابل نقطة تعادلٍ عند 14.88٪)؛ وبخطوةٍ واحدةٍ خارجها تقفز نقطةُ التعادل إلى 29٪ فتصير القواعد نفسها سالبةً بوضوح. فسكةُ الحصّة ليست سقفًا للميزانية — بل هي حدُّ الربحية.",
+        "والغاية من هذا المشروع هي آلياتُ الإنفاذ والقياسُ الصادق لما يمرّ عبرها — لا ادّعاءُ الربح. فكلُّ نتيجةٍ تُقارَن بمؤشّرٍ مرجعيٍّ بسيط هو الشراء الدوري المنتظم (DCA)، والقواعد المرجعية لا تتفوّق عليه بعد خصم الرسوم. ونحن نفضّل أن تعرف ذلك من الصفحة الأولى على أن تكتشفه بنفسك. ونعمل جاهدين على تحسين نتائج الخوارزميات والاستراتيجيات — وسنوافيك بما نُحرزه أوّلًا بأوّل.",
       ],
       experimentLabel: "اقرأ سجلّ التجربة",
       announcementLabel: "اقرأ الإعلان",
@@ -159,8 +159,8 @@ export const home: LocalizedPage<HomeContent> = {
   },
 
   fr: {
-    rev: "2026-08-20.1",
-    translatedFromRev: "2026-08-19.2",
+    rev: "2026-08-20.3",
+    translatedFromRev: "2026-08-20.3",
     title: "Keel : le moteur open-source de conformité Shariah pour le crypto",
     description:
       "keel est un moteur open-source qui applique la conformité Shariah au trading de crypto en spot : filtrage par attestation à échec fermé, rails incontournables, mesure honnête. Pas un moteur de fatwas.",
@@ -172,8 +172,8 @@ export const home: LocalizedPage<HomeContent> = {
     honest: {
       title: "Le résultat honnête, dit d'abord",
       body: [
-        "Aucune famille de règles livrée n'est nette-positive aux frais preneur (taker) réellement payés sur Coinbase (~1,2 % par jambe). L'intersection viable paramètres/frais est vide en exécution fidèle à la production — 0 sur 90 configurations dans une matrice de mesure, 0 sur 82 dans une autre. Le facteur contraignant, c'est le coût, pas la qualité du signal.",
-        "Le but de ce projet est la machinerie d'application et la mesure honnête de ce qui la traverse — pas une promesse de profit. Chaque résultat est comparé à un repère d'achat périodique simple (DCA), et les règles de référence ne le battent pas après frais. Nous préférons que vous le sachiez dès la page d'accueil plutôt que de le découvrir vous-même.",
+        "Aucune famille de règles livrée n'est nette-positive aux frais preneur réellement payés sur Coinbase (~1,2 % par jambe) — 0 sur 90 configurations dans une matrice de mesure, 0 sur 82 dans une autre. Nous avons contre-vérifié une note de modélisation stochastique — redérivée sur les chiffres réels de keel — et elle a précisé le pourquoi : les frais preneur sont tout le résultat. À l'intérieur de l'allocation mensuelle sans frais de la place, les règles reconstruites se tiennent indissociablement au point mort (taux de réussite de 14,9 % contre un seuil de 14,88 %) ; un pas au-dehors, le seuil saute à 29 % et les mêmes règles deviennent nettement négatives. Le rail d'allocation n'est pas un plafond budgétaire — c'est la frontière de rentabilité.",
+        "Le but de ce projet est la machinerie d'application et la mesure honnête de ce qui la traverse — pas une promesse de profit. Chaque résultat est comparé à un repère d'achat périodique simple (DCA), et les règles de référence ne le battent pas après frais. Nous préférons que vous le sachiez dès la page d'accueil plutôt que de le découvrir vous-même. Et nous travaillons dur pour améliorer les résultats des algorithmes et des stratégies — nous vous tiendrons informés de nos progrès.",
       ],
       experimentLabel: "Lire le compte rendu de l'expérience",
       announcementLabel: "Lire l'annonce",

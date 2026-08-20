@@ -61,6 +61,8 @@ export interface InstallContent {
   thenTitle: string;
   allFilesTitle: string;
   getStarted: { title: string; body: string; link: string };
+  paperFirstTitle: string;
+  paperFirstBody: string;
   fromSource: {
     title: string;
     lead: string;
@@ -76,7 +78,7 @@ export interface InstallContent {
 
 export const install: LocalizedPage<InstallContent> = {
   en: {
-    rev: "2026-08-20.4",
+    rev: "2026-08-20.5",
     title: "Download keel — macOS & Windows",
     description:
       "Download keel for macOS or Windows. Version and links come from GitHub Releases at build time; the five-minute source path is here too.",
@@ -100,6 +102,8 @@ export const install: LocalizedPage<InstallContent> = {
     ],
     thenTitle: "Then install the wheels",
     allFilesTitle: "All release files",
+    paperFirstTitle: "Start on paper — free, and nothing at risk",
+    paperFirstBody: "For the cautious first step: the paper profile is free and educational — simulated fills, no real orders — built for learning the workflow before any live decision. It needs no funded venue account and no trading credentials; the only key it asks for is a free, read-only market-data key to fetch candle history. The live profile is deliberately harder to reach: attestations, the promotion gauntlet, and typed human confirmations stand in the way.",
     getStarted: {
       title: "New here? Start with the Get Started guide",
       body: "A step-by-step walkthrough — first simulation, the paper profile, the operator console — with screenshots of every screen.",
@@ -158,8 +162,8 @@ export const install: LocalizedPage<InstallContent> = {
   },
 
   ar: {
-    rev: "2026-08-20.4",
-    translatedFromRev: "2026-08-20.4",
+    rev: "2026-08-20.5",
+    translatedFromRev: "2026-08-20.5",
     title: "تنزيل كيل — macOS وWindows",
     description:
       "نزّل كيل لنظام macOS أو Windows. ويأتي رقمُ الإصدار وروابطه من GitHub Releases وقت البناء؛ ومسارُ التثبيت من المصدر في خمس دقائق هنا أيضًا.",
@@ -183,6 +187,8 @@ export const install: LocalizedPage<InstallContent> = {
     ],
     thenTitle: "ثم ثبّت حزم wheel",
     allFilesTitle: "كل ملفات الإصدار",
+    paperFirstTitle: "ابدأ بالتداول التجريبي — مجّانًا، ولا شيء في خطر",
+    paperFirstBody: "للخطوة الأولى الحذرة: نمطُ التداول التجريبي مجّانيٌّ وتعليمي — تنفيذٌ مُحاكًى ولا أوامرَ حقيقية — بُني لتتعلّم سير العمل قبل أيّ قرارٍ في التشغيل الحيّ. وهو لا يحتاج إلى حسابٍ مموَّلٍ لدى منصّة ولا إلى بيانات اعتمادٍ للتداول؛ والمفتاح الوحيد الذي يطلبه مفتاحُ بيانات سوقٍ مجّانيٌّ للقراءة فقط لجلب تاريخ الشموع. أمّا النمط الحيّ فالوصول إليه أصعبُ عن قصد: إذ تقف في الطريق التوثيقاتُ، ومسارُ بوابة الترقية، والتأكيداتُ البشرية المكتوبة.",
     getStarted: {
       title: "أأنت جديدٌ هنا؟ ابدأ بدليل البداية",
       body: "شرحٌ خطوةً بخطوة — أوّلُ محاكاة، ونمطُ التداول التجريبي، ولوحةُ تحكّم المشغّل — مع لقطة شاشةٍ لكل شاشة.",
@@ -241,8 +247,8 @@ export const install: LocalizedPage<InstallContent> = {
   },
 
   fr: {
-    rev: "2026-08-20.4",
-    translatedFromRev: "2026-08-20.4",
+    rev: "2026-08-20.5",
+    translatedFromRev: "2026-08-20.5",
     title: "Télécharger keel — macOS et Windows",
     description:
       "Téléchargez keel pour macOS ou Windows. Version et liens viennent de GitHub Releases au build ; le parcours en cinq minutes depuis les sources est là aussi.",
@@ -266,6 +272,8 @@ export const install: LocalizedPage<InstallContent> = {
     ],
     thenTitle: "Puis installez les wheels",
     allFilesTitle: "Tous les fichiers de la version",
+    paperFirstTitle: "Commencez en papier — gratuit, et rien en jeu",
+    paperFirstBody: "Pour le premier pas prudent : le profil papier est gratuit et pédagogique — exécutions simulées, aucun ordre réel — conçu pour apprendre le flux avant toute décision en réel. Il n'exige ni compte courtier financé ni identifiants de trading ; la seule clé demandée est une clé de données de marché gratuite, en lecture seule, pour récupérer l'historique des chandeliers. Le profil réel, lui, se mérite délibérément : attestations, porte de promotion et confirmations humaines tapées se dressent sur le chemin.",
     getStarted: {
       title: "Nouveau ici ? Commencez par le guide Premiers pas",
       body: "Un parcours pas à pas — première simulation, profil papier, console opérateur — avec des captures d'écran de chaque écran.",

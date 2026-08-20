@@ -25,7 +25,7 @@ export interface FeaturesContent {
 
 export const features: LocalizedPage<FeaturesContent> = {
   en: {
-    rev: "2026-08-19.2",
+    rev: "2026-08-20.2",
     title: "Shariah Compliance Engine Features — keel",
     description:
       "Attested fail-closed screening, 18 un-overridable rails, overfitting-checked strategy gates, and honest DCA-benchmarked measurement — all mapped to source.",
@@ -84,13 +84,14 @@ export const features: LocalizedPage<FeaturesContent> = {
       body: [
         "Nothing trades until you promote a rule, attest the venue subscription, fund the account, and — in confirm mode — type y. Long-only spot only: no leverage, no shorting, no derivatives, and sizing uses actual cash, so no riba.",
         "Account-level obligations no rail can see (disabling USDC rewards on idle balances, chiefly) are the operator's to verify — the operator runbook lists them.",
+        "And the paper profile is where every rule starts — free, simulated fills, nothing at risk, no funded venue account or trading credentials (a free read-only market-data key is all it asks). It is not a demo: the same parameter set's paper trades count toward the promotion gate's minimum, so paper evidence is the first stage of the gauntlet.",
       ],
     },
   },
 
   ar: {
-    rev: "2026-08-19.2",
-    translatedFromRev: "2026-08-19.2",
+    rev: "2026-08-20.2",
+    translatedFromRev: "2026-08-20.2",
     title: "خصائص محرّك الامتثال الشرعي — كيل",
     description:
       "فرزٌ موثَّق يرفض عند الفشل، و18 سكةَ أمانٍ لا تُتجاوَز، وبواباتُ ترقيةٍ تفحص الإفراط في المُلاءمة، وقياسٌ صادقٌ مقابل مؤشّر DCA — وكلُّ خاصيةٍ تشير إلى مصدرها في الشيفرة.",
@@ -149,13 +150,14 @@ export const features: LocalizedPage<FeaturesContent> = {
       body: [
         "لا يجري أيُّ تداولٍ حتى تُرقّي قاعدةً، وتوثّق الاشتراك في المنصّة، وتموّل الحساب، و— في وضع التأكيد — تكتب y. والعملُ مقصورٌ على الشراء الفوري (long-only spot): لا رافعةَ مالية، ولا بيعَ على المكشوف، ولا مشتقّات، والتحجيمُ بالنقد الفعلي، فلا ربا.",
         "أمّا الالتزامات على مستوى الحساب التي لا تراها أيُّ سكة — وأبرزُها تعطيلُ مكافآت USDC على الأرصدة الخاملة — فعلى المشغّل التحقّقُ منها، وكتابُ تشغيل المشغّل يسردها.",
+        "ونمطُ التداول التجريبي هو حيث تبدأ كلُّ قاعدة — مجّانيٌّ، بتنفيذٍ مُحاكًى، ولا شيء فيه في خطر، ولا يحتاج إلى حسابٍ مموَّلٍ لدى منصّة ولا إلى بيانات اعتمادٍ للتداول (فمفتاحُ بيانات سوقٍ مجّانيٌّ للقراءة فقط هو كلُّ ما يطلبه). وهو ليس عرضًا تجريبيًّا: فصفقاتُ الوسائط نفسها في التداول التجريبي تُحتسب ضمن الحدّ الأدنى لبوابة الترقية، ومن ثَمّ فدليلُ التداول التجريبي هو المرحلة الأولى من المسار.",
       ],
     },
   },
 
   fr: {
-    rev: "2026-08-20.1",
-    translatedFromRev: "2026-08-19.2",
+    rev: "2026-08-20.2",
+    translatedFromRev: "2026-08-20.2",
     title: "Fonctionnalités du moteur de conformité — keel",
     description:
       "Filtrage par attestation à échec fermé, dix-huit rails incontournables, portes de promotion avec contrôle de surapprentissage, mesure honnête contre DCA — chaque fonctionnalité renvoie à sa source dans le code.",
@@ -214,6 +216,7 @@ export const features: LocalizedPage<FeaturesContent> = {
       body: [
         "Rien ne trade tant que vous n'avez pas promu une règle, attesté l'abonnement à la plateforme, alimenté le compte et — en mode confirmation — tapé y. Spot long uniquement : pas de levier, pas de vente à découvert, pas de produits dérivés, et le dimensionnement utilise du cash réel, donc pas de riba.",
         "Les obligations au niveau du compte qu'aucun rail ne voit (désactiver les récompenses USDC sur les soldes oisifs, principalement) restent à vérifier par l'opérateur — le runbook opérateur les liste.",
+        "Et le profil papier est là où toute règle commence — gratuit, exécutions simulées, rien en jeu, sans compte courtier financé ni identifiants (une clé de données de marché gratuite en lecture seule suffit). Ce n'est pas une démo : les trades papier du même jeu de paramètres comptent dans le plancher de la porte de promotion — la preuve papier est la première étape du parcours.",
       ],
     },
   },
