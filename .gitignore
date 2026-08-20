@@ -1,0 +1,19 @@
+# Node / package management
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+build/
+.astro/
+
+# Cloudflare tooling
+.wrangler/
+
+# Environment — never commit secrets (Discussions read token, API keys)
+.env
+.env.*
+
+# OS / editor noise
+.DS_Store
+*.swp
