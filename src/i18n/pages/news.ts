@@ -49,12 +49,12 @@ export const news: LocalizedPage<NewsContent> = {
     translatedFromRev: "2026-08-19.2",
     title: "Actualités keel — annonces et notes de recherche",
     description:
-      "Les annonces de keel, lues des Discussions GitHub et actualisées chaque heure. Lecture et réponses sur GitHub ; les textes restent dans leur langue d'origine.",
+      "Les annonces de keel, lues depuis les Discussions GitHub et actualisées toutes les heures. Lecture et réponses sur GitHub ; les textes restent dans leur langue d'origine.",
     intro: [
-      "Le projet s'annonce sur GitHub Discussions — versions, billets de conformité, notes de recherche et résultats honnêtes. Cette page lit la catégorie Announcements et renvoie chaque élément vers GitHub, où la lecture et les réponses ont réellement lieu.",
-      "Le flux se rafraîchit à la reconstruction horaire. Les éléments apparaissent dans leur langue d'origine ; ce site ne les traduit pas.",
+      "Le projet publie ses annonces dans les Discussions GitHub : versions, billets sur la conformité, notes de recherche et résultats honnêtes. Cette page lit la catégorie Announcements et renvoie chaque élément vers GitHub, où la lecture et les réponses ont réellement lieu.",
+      "Le flux est actualisé à chaque reconstruction horaire. Les éléments apparaissent dans leur langue d'origine : ce site ne les traduit pas.",
     ],
     secondaryTitle: "Show and tell",
-    secondaryBody: "Ce que la communauté construit avec keel a sa propre catégorie — prévue comme flux secondaire ici plus tard. D'ici là, tout vit sur GitHub.",
+    secondaryBody: "Ce que la communauté construit avec keel a sa propre catégorie — prévue ici plus tard comme flux secondaire. D'ici là, tout se passe sur GitHub.",
   },
 };
