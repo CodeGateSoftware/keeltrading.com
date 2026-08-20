@@ -345,6 +345,12 @@ section {
   font-weight: 600;
 }
 
+/* Language links inside the mobile nav panel (touch path for the language
+   menu, which is hover/focus-driven on desktop). */
+.nav-panel-langs {
+  display: none;
+}
+
 /* --------------------------------------------------------------------------
    Mobile hamburger — pure CSS checkbox toggle (zero client JS). The checkbox
    is visually hidden but focusable (keyboard: Tab + Space); the label is the
@@ -450,6 +456,23 @@ section {
   .nav-toggle:checked ~ .site-nav a:last-child {
     border-bottom: 0;
   }
+
+  .nav-toggle:checked ~ .site-nav .nav-panel-langs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .nav-panel-langs a {
+    padding: 0.5rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.92rem;
+    border-bottom: 0;
+  }
 }
 
 .header-actions {
@@ -458,9 +481,9 @@ section {
   gap: 0.75rem;
 }
 
-/* Language menu: pill shows the current locale; hover / focus / tap slides
-   the other languages down. Pure CSS — hover for mouse, focus-within for
-   keyboard, hidden checkbox pins it open for touch. */
+/* Language menu: pill shows the current locale; moving the mouse anywhere
+   inside the menu (pill or list) keeps it open — the wrapper owns the hover.
+   Focus-within covers keyboard; touch uses the links in the mobile panel. */
 .locale-menu {
   position: relative;
 }
@@ -469,6 +492,7 @@ section {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
+  margin: 0;
   color: var(--muted);
   font-size: 0.88rem;
   font-weight: 600;
@@ -478,19 +502,11 @@ section {
   border-radius: 999px;
   background: var(--surface);
   white-space: nowrap;
-  cursor: pointer;
 }
 
-.locale-menu:hover .locale-switch,
-.lang-toggle:focus-visible ~ .locale-switch,
-.lang-toggle:checked ~ .locale-switch {
+.locale-menu:hover .locale-switch {
   color: var(--ink);
   border-color: var(--accent);
-}
-
-.lang-toggle:focus-visible ~ .locale-switch {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
 }
 
 .locale-caret {
@@ -499,14 +515,15 @@ section {
   transition: transform 0.16s ease;
 }
 
-.lang-toggle:checked ~ .locale-switch .locale-caret,
 .locale-menu:hover .locale-caret {
   transform: rotate(180deg);
 }
 
+/* No gap between pill and list: the pointer must never leave the hover box
+   while moving from the trigger into the menu. */
 .locale-list {
   position: absolute;
-  top: calc(100% + 0.45rem);
+  top: 100%;
   inset-inline-end: 0;
   min-width: 9rem;
   margin: 0;
@@ -526,8 +543,7 @@ section {
 }
 
 .locale-menu:hover .locale-list,
-.locale-menu:focus-within .locale-list,
-.lang-toggle:checked ~ .locale-list {
+.locale-menu:focus-within .locale-list {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;

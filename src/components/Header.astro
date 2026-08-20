@@ -62,18 +62,22 @@ const localeCodes: Record<Locale, string> = { en: "EN", ar: "AR", fr: "FR" };
           </a>
         ))
       }
+      <div class="nav-panel-langs">
+        {
+          locales
+            .filter((candidate) => candidate !== locale)
+            .map((other) => (
+              <a href={pageKey ? localePath(other, pageKey) : `/${other}/`} lang={other}>
+                {localeNames[other]}
+              </a>
+            ))
+        }
+      </div>
     </nav>
 
     <div class="header-actions">
       <div class="locale-menu">
-        <input
-          type="checkbox"
-          id="lang-toggle"
-          class="lang-toggle visually-hidden-checkbox"
-          aria-label={chrome.localeSwitcher.label}
-          aria-haspopup="true"
-        />
-        <label class="locale-switch" for="lang-toggle">
+        <p class="locale-switch" title={chrome.localeSwitcher.label}>
           <svg
             width="14"
             height="14"
@@ -92,8 +96,8 @@ const localeCodes: Record<Locale, string> = { en: "EN", ar: "AR", fr: "FR" };
           </svg>
           {localeCodes[locale]}
           <span class="locale-caret" aria-hidden="true">▾</span>
-        </label>
-        <ul class="locale-list">
+        </p>
+        <ul class="locale-list" aria-label={chrome.localeSwitcher.label}>
           {
             locales
               .filter((candidate) => candidate !== locale)
@@ -102,7 +106,6 @@ const localeCodes: Record<Locale, string> = { en: "EN", ar: "AR", fr: "FR" };
                   <a
                     href={pageKey ? localePath(other, pageKey) : `/${other}/`}
                     lang={other}
-                    aria-label={`${localeNames[other]} — ${chrome.localeSwitcher.label}`}
                   >
                     {localeNames[other]}
                   </a>
