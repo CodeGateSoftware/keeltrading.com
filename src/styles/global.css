@@ -1457,9 +1457,16 @@ section {
   overflow-x: auto;
 }
 
+/* Fixed layout: the six columns share the container width (long Cost
+   cells wrap) instead of stretching past it into a panning wrapper. */
 .compare-table {
-  min-width: 42rem;
+  table-layout: fixed;
+  width: 100%;
   font-size: 0.93rem;
+}
+
+.compare-table th[scope="row"] {
+  width: 8.5rem;
 }
 
 .compare-table th[scope="col"] {
@@ -1480,11 +1487,11 @@ section {
   font-weight: 600;
 }
 
-/* Phones: the 42rem matrix becomes one card per property — the property
-   name titles the card, each value labelled by its column (Keel,
-   Freqtrade, …). No horizontal panning, nothing hidden. Tablets keep the
-   real table. */
-@media (max-width: 47.99rem) {
+/* Below the desktop breakpoint the six-column matrix becomes one card per
+   property — the property name titles the card, each value labelled by its
+   column (keel, Freqtrade, …). No horizontal panning on phones or tablets;
+   desktop (≥64rem) keeps the real table. */
+@media (max-width: 63.99rem) {
   .table-wrap:has(.compare-table) {
     overflow-x: visible;
   }
@@ -1520,6 +1527,7 @@ section {
 
   .compare-table th[scope="row"] {
     display: block;
+    width: auto;
     background: none;
     border: 0;
     border-bottom: 1px solid var(--border);
