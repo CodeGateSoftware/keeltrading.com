@@ -333,5 +333,6 @@ const table: { label: LocalizedCell; cells: [Cell, Cell, Cell, Cell, Cell] }[] =
 export const compareRows = (locale: CompareLocale): CompareRow[] =>
   table.map(({ label, cells }) => ({
     label: label[locale],
-    values: cells.map((cell) => (typeof cell === "string" ? cell : cell[locale])),
+    // cells is a 5-tuple, so the mapped array is exactly the values tuple
+    values: cells.map((cell) => (typeof cell === "string" ? cell : cell[locale])) as CompareRow["values"],
   }));
