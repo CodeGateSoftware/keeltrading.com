@@ -48,17 +48,13 @@ type CompareLocale = "en" | "ar" | "fr";
  * copy-paste to Sonar, and a missing translation sits next to its source
  * (FR-8).
  */
-const content: { [K in keyof CompareContent]: Record<CompareLocale, CompareContent[K]> } = {
+type CopyKey = Exclude<keyof CompareContent, "rev" | "translatedFromRev">;
+
+const content: { [K in CopyKey]: Record<CompareLocale, CompareContent[K]> } = {
   title: {
     en: "How keel Compares to Other Trading Bots",
-    description:
-      "keel compared with Freqtrade, Jesse, Hummingbot and OctoBot: license, focus, strategy gates, and the compliance machinery none of them carry.",
     ar: "مقارنة كيل ببوتات التداول الأخرى",
-    description:
-      "مقارنة كيل بـ Freqtrade وJesse وHummingbot وOctoBot: الترخيص والغرض وبوابات الترقية وآلياتُ الامتثال التي لا يحملها أيٌّ منها — وقائعُ بنيويةٌ من المستودعات العمومية.",
     fr: "Comparer keel aux autres bots de trading",
-    description:
-      "keel face à Freqtrade, Jesse, Hummingbot et OctoBot : licence, finalité, verrous de promotion et la machinerie de conformité qu'aucun d'eux n'embarque — des faits structurels tirés des dépôts publics.",
   },
   description: {
     en: "keel compared with Freqtrade, Jesse, Hummingbot and OctoBot: license, focus, strategy gates, and the compliance machinery none of them carry.",
@@ -81,14 +77,8 @@ const content: { [K in keyof CompareContent]: Record<CompareLocale, CompareConte
   },
   tableTitle: {
     en: "Structural comparison",
-    footnote:
-      "Facts from each project's public repository, August 2026. Community scale, measured in GitHub stars on the same date: Freqtrade about 53,000, Hummingbot about 19,500, Jesse about 8,300, OctoBot about 6,400. keel has just launched. The Cost row was verified from each project's own site on 2026-08-20 (OctoBot on 2026-08-21, at octobot.cloud/en/pricing); Jesse's plugin pricing changes often, so re-check it at jesse.trade/pricing. Freqtrade, Jesse, Hummingbot, OctoBot and QuantCrawler are projects of their maintainers, and their names appear here solely to identify them. Alpaca is a brokerage, not a bot: keel ships a broker adapter for it under the venue port.",
     ar: "مقارنة بنيوية",
-    footnote:
-      "وقائعُ من المستودع العمومي لكلّ مشروع، أغسطس 2026. حجم المجتمع (نجوم GitHub، في التاريخ نفسه): Freqtrade نحو 53 ألفًا، وHummingbot نحو 19.5 ألفًا، وJesse نحو 8.3 آلاف، وOctoBot نحو 6.4 آلاف — وكيل بدأ للتوّ. وقد جرى التحقّق من صفّ التكلفة من موقع كلّ مشروعٍ بتاريخ 2026-08-20 (وOctoBot بتاريخ 2026-08-21 على octobot.cloud/en/pricing)؛ وتسعيرُ إضافة Jesse يتغيّر كثيرًا — فراجعه على jesse.trade/pricing. و‏Freqtrade وJesse وHummingbot وOctoBot وQuantCrawler مشاريعُ القائمين عليها؛ ولا تظهر أسماؤها هنا إلا للتعريف بها. أمّا Alpaca فشركةُ وساطةٍ لا بوتَ تداول — ويُسلّم كيل محوّلًا لها ضمن منفذ المنصّات.",
     fr: "Comparaison structurelle",
-    footnote:
-      "Faits tirés du dépôt public de chaque projet, août 2026. Taille des communautés (étoiles GitHub, à la même date) : Freqtrade ~53 k, Hummingbot ~19,5 k, Jesse ~8,3 k, OctoBot ~6,4 k — keel vient tout juste d'être lancé. La ligne Coût a été vérifiée sur le site de chaque projet le 20 août 2026 (OctoBot le 21 août, sur octobot.cloud/en/pricing) ; le tarif du plugin de Jesse change souvent — à revérifier sur jesse.trade/pricing. Freqtrade, Jesse, Hummingbot, OctoBot et QuantCrawler appartiennent à leurs mainteneurs ; leurs noms n'apparaissent ici que pour les identifier. Alpaca est un courtier, pas un bot — keel livre pour lui un adaptateur courtier via le port plateformes.",
   },
   footnote: {
     en: "Facts from each project's public repository, August 2026. Community scale, measured in GitHub stars on the same date: Freqtrade about 53,000, Hummingbot about 19,500, Jesse about 8,300, OctoBot about 6,400. keel has just launched. The Cost row was verified from each project's own site on 2026-08-20 (OctoBot on 2026-08-21, at octobot.cloud/en/pricing); Jesse's plugin pricing changes often, so re-check it at jesse.trade/pricing. Freqtrade, Jesse, Hummingbot, OctoBot and QuantCrawler are projects of their maintainers, and their names appear here solely to identify them. Alpaca is a brokerage, not a bot: keel ships a broker adapter for it under the venue port.",
@@ -184,10 +174,12 @@ const content: { [K in keyof CompareContent]: Record<CompareLocale, CompareConte
   },
 };
 
-const contentFor = (locale: CompareLocale): CompareContent =>
+const contentFor = (
+  locale: CompareLocale,
+): Omit<CompareContent, "rev" | "translatedFromRev"> =>
   Object.fromEntries(
     Object.entries(content).map(([key, texts]) => [key, texts[locale]]),
-  ) as CompareContent;
+  ) as unknown as Omit<CompareContent, "rev" | "translatedFromRev">;
 
 const REV = "2026-08-21.1";
 
