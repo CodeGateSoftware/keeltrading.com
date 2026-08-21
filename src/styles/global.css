@@ -1480,6 +1480,84 @@ section {
   font-weight: 600;
 }
 
+/* Phones: the 42rem matrix becomes one card per property — the property
+   name titles the card, each value labelled by its column (Keel,
+   Freqtrade, …). No horizontal panning, nothing hidden. Tablets keep the
+   real table. */
+@media (max-width: 47.99rem) {
+  .table-wrap:has(.compare-table) {
+    overflow-x: visible;
+  }
+
+  .compare-table {
+    display: block;
+    overflow-x: visible;
+    min-width: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 1rem 0;
+  }
+
+  .compare-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .compare-table tr {
+    display: block;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 0.85rem 1rem 0.95rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .compare-table th[scope="row"] {
+    display: block;
+    background: none;
+    border: 0;
+    border-bottom: 1px solid var(--border);
+    border-radius: 0;
+    padding: 0 0 0.55rem;
+    margin-bottom: 0.55rem;
+    text-align: start;
+    font-size: 1rem;
+  }
+
+  .compare-table td {
+    display: block;
+    border: 0;
+    padding: 0.4rem 0.55rem;
+    text-align: start;
+  }
+
+  .compare-table td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 0.12rem;
+    color: var(--muted);
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .compare-table td.keel-col {
+    background: color-mix(in srgb, var(--accent) 7%, transparent);
+    border-radius: 8px;
+    margin-inline: -0.55rem;
+  }
+
+  .compare-table td.keel-col::before {
+    color: var(--accent);
+  }
+}
+
 .docs-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
