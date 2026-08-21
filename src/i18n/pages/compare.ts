@@ -155,9 +155,27 @@ export const compare: LocalizedPage<CompareContent> = {
 };
 
 export const compareRows = (locale: "en" | "ar" | "fr"): CompareRow[] => {
+  /** Locale-invariant cells — license and language names never translate,
+      so they live here once instead of three parallel copies. */
+  const licenseRow = (label: string): CompareRow => ({
+    label,
+    values: ["Apache-2.0", "GPL-3.0", "MIT", "Apache-2.0", "GPL-3.0"],
+  });
+  const languageRow = (label: string): CompareRow => ({
+    label,
+    values: ["Python", "Python", "Python", "Python", "Python"],
+  });
+  /** keel's own cell followed by one answer repeated for every other bot. */
+  const keelAnd = (keel: string, others: string): CompareRow["values"] => [
+    keel,
+    others,
+    others,
+    others,
+    others,
+  ];
   if (locale === "fr") {
     return [
-      { label: "Licence", values: ["Apache-2.0", "GPL-3.0", "MIT", "Apache-2.0", "GPL-3.0"] },
+      licenseRow("Licence"),
       {
         label: "Coût",
         values: [
@@ -168,7 +186,7 @@ export const compareRows = (locale: "en" | "ar" | "fr"): CompareRow[] => {
           "Bot gratuit — GPL-3.0, auto-hébergé ; OctoBot Cloud ajoute des offres payantes dès 9,99 $/mois (automatisation TradingView et contrats à terme sur Pro, 29,99 $)",
         ],
       },
-      { label: "Langage", values: ["Python", "Python", "Python", "Python", "Python"] },
+      languageRow("Langage"),
       {
         label: "Finalité",
         values: [
@@ -201,36 +219,27 @@ export const compareRows = (locale: "en" | "ar" | "fr"): CompareRow[] => {
       },
       {
         label: "Verrou obligatoire avant le passage en réel",
-        values: [
+        values: keelAnd(
           "En deux volets : seuils de performance + contrôle de surapprentissage (PBO/CSCV), minimum de 100 transactions",
           "Non",
-          "Non",
-          "Non",
-          "Non",
-        ],
+        ),
       },
       {
         label: "Machinerie de conformité Shariah",
-        values: [
+        values: keelAnd(
           "Filtrage attesté qui bloque par défaut + 18 garde-fous incontournables (dont le qabd)",
           "Non intégrée",
-          "Non intégrée",
-          "Non intégrée",
-          "Non intégrée",
-        ],
+        ),
       },
       {
         label: "Résultat honnête publié sur ses propres règles",
-        values: ["Oui — dès la page d'accueil", "Non publié", "Non publié", "Non publié", "Non publié"],
+        values: keelAnd("Oui — dès la page d'accueil", "Non publié"),
       },
     ];
   }
   if (locale === "ar") {
     return [
-      {
-        label: "الترخيص",
-        values: ["Apache-2.0", "GPL-3.0", "MIT", "Apache-2.0", "GPL-3.0"],
-      },
+      licenseRow("الترخيص"),
       {
         label: "التكلفة",
         values: [
@@ -241,10 +250,7 @@ export const compareRows = (locale: "en" | "ar" | "fr"): CompareRow[] => {
           "البوت مجّاني — GPL-3.0 وتستضيفه بنفسك؛ ويضيف OctoBot Cloud باقاتٍ مدفوعةً تبدأ من 9.99 دولارًا شهريًّا (أتمتةُ TradingView والعقود المستقبلية في باقة Pro بـ 29.99 دولارًا)",
         ],
       },
-      {
-        label: "اللغة",
-        values: ["Python", "Python", "Python", "Python", "Python"],
-      },
+      languageRow("اللغة"),
       {
         label: "الغرض",
         values: [
@@ -277,35 +283,26 @@ export const compareRows = (locale: "en" | "ar" | "fr"): CompareRow[] => {
       },
       {
         label: "بوابةٌ إلزامية قبل التداول الحيّ",
-        values: [
+        values: keelAnd(
           "شقّان: حدودٌ دنيا للأداء + فحصُ الإفراط في المُلاءمة (PBO/CSCV)، وحدٌّ أدنى قدره 100 صفقة",
           "لا",
-          "لا",
-          "لا",
-          "لا",
-        ],
+        ),
       },
       {
         label: "آليات امتثال شرعي",
-        values: [
+        values: keelAnd(
           "فرزٌ موثَّق يرفض عند الفشل + 18 سكةَ أمانٍ لا تُتجاوَز (منها القبض الحُكمي)",
           "غير مدمجة",
-          "غير مدمجة",
-          "غير مدمجة",
-          "غير مدمجة",
-        ],
+        ),
       },
       {
         label: "إعلانُ نتيجةٍ صادقةٍ عن قواعده",
-        values: ["نعم — في الصفحة الأولى", "غير منشورة", "غير منشورة", "غير منشورة", "غير منشورة"],
+        values: keelAnd("نعم — في الصفحة الأولى", "غير منشورة"),
       },
     ];
   }
   return [
-    {
-      label: "License",
-      values: ["Apache-2.0", "GPL-3.0", "MIT", "Apache-2.0", "GPL-3.0"],
-    },
+    licenseRow("License"),
     {
       label: "Cost",
       values: [
@@ -316,10 +313,7 @@ export const compareRows = (locale: "en" | "ar" | "fr"): CompareRow[] => {
         "Bot free — GPL-3.0, self-hosted; OctoBot Cloud adds paid plans from $9.99/month (TradingView automation and futures on Pro, $29.99)",
       ],
     },
-    {
-      label: "Language",
-      values: ["Python", "Python", "Python", "Python", "Python"],
-    },
+    languageRow("Language"),
     {
       label: "Purpose",
       values: [
@@ -352,27 +346,21 @@ export const compareRows = (locale: "en" | "ar" | "fr"): CompareRow[] => {
     },
     {
       label: "Mandatory gate before live trading",
-      values: [
+      values: keelAnd(
         "Two-part: performance floors + overfitting check (PBO/CSCV), 100-trade floor",
         "No",
-        "No",
-        "No",
-        "No",
-      ],
+      ),
     },
     {
       label: "Shariah compliance machinery",
-      values: [
+      values: keelAnd(
         "Attested screening that fails closed + 18 rails no order can skip (including qabd)",
         "Not built in",
-        "Not built in",
-        "Not built in",
-        "Not built in",
-      ],
+      ),
     },
     {
       label: "Honest result stated about own rules",
-      values: ["Yes — on the front page", "Not published", "Not published", "Not published", "Not published"],
+      values: keelAnd("Yes — on the front page", "Not published"),
     },
   ];
 };
