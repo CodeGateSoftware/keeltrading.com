@@ -5,15 +5,24 @@
  */
 interface Props {
   title: string;
+  summaryBadge?: string;
   paragraphs: string[];
   links: { label: string; href: string }[];
 }
 
-const { title, paragraphs, links } = Astro.props;
+const { title, summaryBadge, paragraphs, links } = Astro.props;
 ---
 
 <div class="honest-box">
   <h2>{title}</h2>
+  {
+    summaryBadge && (
+      <div class="honest-badge">
+        <span class="badge-icon">💡</span>
+        <span>{summaryBadge}</span>
+      </div>
+    )
+  }
   {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
   <p>
     {links.map((link, index) => (

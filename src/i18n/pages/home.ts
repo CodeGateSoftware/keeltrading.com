@@ -16,6 +16,9 @@ export interface HomeContent {
   };
   honest: {
     title: string;
+    summaryBadge?: string;
+    summaryBadgeAr?: string;
+    summaryBadgeFr?: string;
     body: string[];
     experimentLabel: string;
     announcementLabel: string;
@@ -44,6 +47,7 @@ export const home: LocalizedPage<HomeContent> = {
     },
     honest: {
       title: "The honest result, stated first",
+      summaryBadge: "In plain terms: Platform trading fees mean the reference rules currently do not beat simple dollar-cost averaging (DCA). We state this upfront so you evaluate the compliance machinery without false profit expectations.",
       body: [
         "No shipped rule family is net positive at the taker fee actually paid on Coinbase — about 1.2% on each side of a trade. In one measurement matrix, 0 of 90 configurations cleared; in another, 0 of 82. We then cross-verified a stochastic modelling note, re-deriving its mathematics against keel's real numbers, and it sharpened the why: the taker fee is the entire result. Inside the venue's fee-free monthly allowance, the reconstructed rules sit indistinguishably at break-even — a 14.9% win rate against a 14.88% break-even. One step outside it, break-even jumps to 29% and the same rules are decisively negative. The allowance rail is not a budget cap. It is the profitability boundary.",
         "The point of this project is the enforcement machinery and the honest measurement of what runs through it, not a claim of profit. Every result is compared against a simple buy-every-period (DCA) benchmark, and the reference rules currently do not beat it after fees. We would rather you know that on the front page than discover it yourself. And we are working hard to improve the results of the algorithms and the strategies. We will report our progress here.",
@@ -112,6 +116,7 @@ export const home: LocalizedPage<HomeContent> = {
     },
     honest: {
       title: "النتيجة الصادقة، نقولها أولًا",
+      summaryBadgeAr: "باختصار: رسوم التداول لدى المنصات تجعل القواعد المرجعية حاليًا لا تتفوق على الشراء الدوري المنتظم (DCA). ونحن ننشر هذا أولًا لتفحص آليات الامتثال بلا توقعات أرباح زائفة.",
       body: [
         "لا تحقّق أيُّ عائلةٍ من القواعد المُصدَّرة ربحًا صافيًا عند رسوم الآخذ (taker) المدفوعة فعليًّا على منصّة Coinbase‏ (نحو 1.2٪ لكلِّ طرفٍ من الصفقة) — صفرٌ من 90 تهيئةً في إحدى مصفوفات القياس، وصفرٌ من 82 في أخرى. وقد تحقّقنا تحقّقًا مستقلًّا من مذكّرةِ نمذجةٍ عشوائية — إذ أعدنا اشتقاق رياضياتها على أرقام كيل الحقيقية — فجلَّت السبب: رسومُ الآخذ هي النتيجة كلُّها. فداخل الحصّة الشهرية المعفاة من الرسوم لدى المنصّة، تقف القواعد المُعاد بناؤها عند نقطة التعادل بلا فرقٍ يُذكر (نسبةُ ربحٍ 14.9٪ مقابل نقطة تعادلٍ عند 14.88٪)؛ وبخطوةٍ واحدةٍ خارجها تقفز نقطةُ التعادل إلى 29٪ فتصير القواعد نفسها سالبةً بوضوح. فسكةُ الحصّة ليست سقفًا للميزانية — بل هي حدُّ الربحية.",
         "والغاية من هذا المشروع هي آلياتُ الإنفاذ والقياسُ الصادق لما يمرّ عبرها — لا ادّعاءُ الربح. فكلُّ نتيجةٍ تُقارَن بمؤشّرٍ مرجعيٍّ بسيط هو الشراء الدوري المنتظم (DCA)، والقواعد المرجعية لا تتفوّق عليه بعد خصم الرسوم. ونحن نفضّل أن تعرف ذلك من الصفحة الأولى على أن تكتشفه بنفسك. ونعمل جاهدين على تحسين نتائج الخوارزميات والاستراتيجيات — وسنوافيك بما نُحرزه أوّلًا بأوّل.",
@@ -171,6 +176,7 @@ export const home: LocalizedPage<HomeContent> = {
     },
     honest: {
       title: "Le résultat honnête, annoncé d'emblée",
+      summaryBadgeFr: "En résumé : Les frais de plateforme font que les règles de référence ne battent pas le simple achat périodique (DCA). Nous le publions d'emblée pour que vous évaluiez la machinerie de conformité sans fausses promesses de gain.",
       body: [
         "Aucune famille de règles livrée ne dégage un résultat net positif aux frais de preneur (taker) réellement payés sur Coinbase (~1,2 % par sens) — 0 configuration sur 90 dans une matrice de mesure, 0 sur 82 dans une autre. Nous avons recoupé une note de modélisation stochastique — en refaisant ses calculs sur les chiffres réels de keel — et elle a précisé le pourquoi : les frais de preneur font tout le résultat. Dans le quota mensuel sans frais offert par la plateforme, les règles reconstruites se situent au point mort, à l'indiscernable près (14,9 % de trades gagnants pour un seuil d'équilibre de 14,88 %) ; un pas au-delà, ce seuil bondit à 29 % et les mêmes règles deviennent nettement perdantes. Le garde-fou de quota n'est pas un plafond budgétaire : c'est la frontière de la rentabilité.",
         "Ce projet a pour objet la machinerie d'application, et la mesure honnête de ce qui la traverse — pas une promesse de gain. Chaque résultat est comparé à une référence simple, l'achat périodique (DCA), et les règles de référence ne la battent pas une fois les frais déduits. Nous préférons que vous l'appreniez dès la page d'accueil plutôt que de le découvrir par vous-même. Nous nous employons à améliorer les résultats des algorithmes et des stratégies, et nous rendrons compte de nos progrès.",
