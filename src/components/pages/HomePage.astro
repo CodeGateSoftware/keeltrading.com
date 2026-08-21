@@ -99,7 +99,12 @@ const fiqhHref =
       </div>
     </section>
 
-    <HonestBox title={c.honest.title} paragraphs={c.honest.body} links={honestLinks} />
+    <HonestBox
+      title={c.honest.title}
+      summaryBadge={c.honest.summaryBadge}
+      paragraphs={c.honest.body}
+      links={honestLinks}
+    />
 
     <section aria-label={c.cards[0]!.title}>
       <ul class="card-grid">

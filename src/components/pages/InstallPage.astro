@@ -217,7 +217,7 @@ const venvCommands = (os: "mac" | "win"): string => {
 
         <h2>{c.getStarted.title}</h2>
         <p>{c.getStarted.body}</p>
-        <p><a class="button" href="/en/guides/first-run/">{c.getStarted.link} →</a></p>
+        <p><a class="button" href={`${localePath("en", "guides")}first-run/`}>{c.getStarted.link} →</a></p>
 
         <h2>{c.browserTitle}</h2>
         <p>{c.browserBody}</p>

@@ -68,7 +68,7 @@ const analyticsToken = import.meta.env.PUBLIC_CF_ANALYTICS_TOKEN;
 <meta name="twitter:image" content={new URL("/og.png", SITE).href} />
 
 {jsonLd.map((entry) => (
-  <script type="application/ld+json" set:html={JSON.stringify(entry)} />
+  <script type="application/ld+json" set:html={JSON.stringify(entry)} is:inline />
 ))}
 
 {/* Theme: restore the visitor's choice before first paint (no flash). */}
@@ -104,6 +104,7 @@ const analyticsToken = import.meta.env.PUBLIC_CF_ANALYTICS_TOKEN;
 {
   analyticsToken && (
     <script
+      is:inline
       defer
       src="https://static.cloudflareinsights.com/beacon.min.js"
       data-cf-beacon={JSON.stringify({ token: analyticsToken })}
