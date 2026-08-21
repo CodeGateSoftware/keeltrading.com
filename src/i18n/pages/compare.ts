@@ -155,57 +155,58 @@ export const compare: LocalizedPage<CompareContent> = {
 };
 
 /**
- * The matrix, one entry per property. Each label and its per-locale cells
- * sit side by side, so a missing translation shows up on the line next to
- * its source (FR-8) — and the per-locale cell arrays are far too short for
- * Sonar's duplication detector, whose Automatic Analysis ignores cpd
- * exclusions (#57). Rows whose values never translate (License, Language)
- * carry a single shared array instead of three copies.
+ * The matrix, one entry per property. Each bot's cell keeps its three
+ * languages side by side (a missing translation shows up next to its
+ * source, FR-8), and answers that repeat across bots — No, Not built in —
+ * exist once as shared cells. Cells stay tiny on purpose: Sonar's
+ * duplication detector normalizes string literals, and this is the only
+ * layout where no repeated run of tokens is long enough to match (#57 —
+ * Automatic Analysis ignores cpd exclusions).
  */
 type CompareLocale = "en" | "ar" | "fr";
 
-/** keel's own cell followed by one answer repeated for every other bot. */
-const keelAnd = (keel: string, others: string): CompareRow["values"] => [
-  keel,
-  others,
-  others,
-  others,
-  others,
-];
+type LocalizedCell = Record<CompareLocale, string>;
+type Cell = string | LocalizedCell;
 
-const table: {
-  label: Record<CompareLocale, string>;
-  cells: CompareRow["values"] | Record<CompareLocale, CompareRow["values"]>;
-}[] = [
+const NO: LocalizedCell = { en: "No", ar: "لا", fr: "Non" };
+const YES: LocalizedCell = { en: "Yes", ar: "نعم", fr: "Oui" };
+const NOT_BUILT_IN: LocalizedCell = { en: "Not built in", ar: "غير مدمجة", fr: "Non intégrée" };
+const NOT_PUBLISHED: LocalizedCell = { en: "Not published", ar: "غير منشورة", fr: "Non publié" };
+
+const table: { label: LocalizedCell; cells: [Cell, Cell, Cell, Cell, Cell] }[] = [
   {
     label: { en: "License", ar: "الترخيص", fr: "Licence" },
     cells: ["Apache-2.0", "GPL-3.0", "MIT", "Apache-2.0", "GPL-3.0"],
   },
   {
     label: { en: "Cost", ar: "التكلفة", fr: "Coût" },
-    cells: {
-      en: [
-        "Free — open-source, self-hosted; you pay only your own infrastructure and venue fees",
-        "Free — open-source, self-hosted; no official paid tier",
-        "Core free (MIT); the live-trading plugin is a paid product — lifetime from $899 (discounts common; subscription model announced)",
-        "Free — Apache-2.0, self-hosted; no paid services on their site",
-        "Bot free — GPL-3.0, self-hosted; OctoBot Cloud adds paid plans from $9.99/month (TradingView automation and futures on Pro, $29.99)",
-      ],
-      ar: [
-        "مجّاني — مفتوح المصدر وتستضيفه بنفسك؛ ولا تدفع إلا بنيتك التحتية ورسوم المنصّة",
-        "مجّاني — مفتوح المصدر وتستضيفه بنفسك؛ ولا باقةَ مدفوعةً رسمية",
-        "النواة مجّانية (MIT)؛ أمّا إضافة التداول الحيّ فمنتجٌ مدفوع — تراخيصُ دائمة تبدأ من 899 دولارًا (خصوماتٌ متكرّرة، وأُعلن نموذجُ اشتراك)",
-        "مجّاني — Apache-2.0 وتستضيفه بنفسك؛ ولا خدماتٍ مدفوعةً على موقعهم",
-        "البوت مجّاني — GPL-3.0 وتستضيفه بنفسك؛ ويضيف OctoBot Cloud باقاتٍ مدفوعةً تبدأ من 9.99 دولارًا شهريًّا (أتمتةُ TradingView والعقود المستقبلية في باقة Pro بـ 29.99 دولارًا)",
-      ],
-      fr: [
-        "Gratuit — open-source, auto-hébergé ; vous ne payez que votre infrastructure et les frais de la plateforme",
-        "Gratuit — open-source, auto-hébergé ; aucune offre payante officielle",
-        "Le cœur est gratuit (MIT) ; le plugin de trading réel est payant — licence à vie à partir de 899 $ (remises fréquentes ; passage à l'abonnement annoncé)",
-        "Gratuit — Apache-2.0, auto-hébergé ; aucun service payant sur leur site",
-        "Bot gratuit — GPL-3.0, auto-hébergé ; OctoBot Cloud ajoute des offres payantes dès 9,99 $/mois (automatisation TradingView et contrats à terme sur Pro, 29,99 $)",
-      ],
-    },
+    cells: [
+      {
+        en: "Free — open-source, self-hosted; you pay only your own infrastructure and venue fees",
+        ar: "مجّاني — مفتوح المصدر وتستضيفه بنفسك؛ ولا تدفع إلا بنيتك التحتية ورسوم المنصّة",
+        fr: "Gratuit — open-source, auto-hébergé ; vous ne payez que votre infrastructure et les frais de la plateforme",
+      },
+      {
+        en: "Free — open-source, self-hosted; no official paid tier",
+        ar: "مجّاني — مفتوح المصدر وتستضيفه بنفسك؛ ولا باقةَ مدفوعةً رسمية",
+        fr: "Gratuit — open-source, auto-hébergé ; aucune offre payante officielle",
+      },
+      {
+        en: "Core free (MIT); the live-trading plugin is a paid product — lifetime from $899 (discounts common; subscription model announced)",
+        ar: "النواة مجّانية (MIT)؛ أمّا إضافة التداول الحيّ فمنتجٌ مدفوع — تراخيصُ دائمة تبدأ من 899 دولارًا (خصوماتٌ متكرّرة، وأُعلن نموذجُ اشتراك)",
+        fr: "Le cœur est gratuit (MIT) ; le plugin de trading réel est payant — licence à vie à partir de 899 $ (remises fréquentes ; passage à l'abonnement annoncé)",
+      },
+      {
+        en: "Free — Apache-2.0, self-hosted; no paid services on their site",
+        ar: "مجّاني — Apache-2.0 وتستضيفه بنفسك؛ ولا خدماتٍ مدفوعةً على موقعهم",
+        fr: "Gratuit — Apache-2.0, auto-hébergé ; aucun service payant sur leur site",
+      },
+      {
+        en: "Bot free — GPL-3.0, self-hosted; OctoBot Cloud adds paid plans from $9.99/month (TradingView automation and futures on Pro, $29.99)",
+        ar: "البوت مجّاني — GPL-3.0 وتستضيفه بنفسك؛ ويضيف OctoBot Cloud باقاتٍ مدفوعةً تبدأ من 9.99 دولارًا شهريًّا (أتمتةُ TradingView والعقود المستقبلية في باقة Pro بـ 29.99 دولارًا)",
+        fr: "Bot gratuit — GPL-3.0, auto-hébergé ; OctoBot Cloud ajoute des offres payantes dès 9,99 $/mois (automatisation TradingView et contrats à terme sur Pro, 29,99 $)",
+      },
+    ],
   },
   {
     label: { en: "Language", ar: "اللغة", fr: "Langage" },
@@ -213,81 +214,69 @@ const table: {
   },
   {
     label: { en: "Purpose", ar: "الغرض", fr: "Finalité" },
-    cells: {
-      en: [
-        "Enforcing Shariah compliance you supply, on spot trading",
-        "General trading bot development",
-        "Strategy research and trading",
-        "Market making / high-frequency strategies",
-        "General crypto bot with visual web/mobile interfaces — AI, grid, DCA, TradingView automations",
-      ],
-      ar: [
-        "إنفاذُ امتثالٍ شرعيٍّ تزوّده أنت، في التداول الفوري",
-        "تطويرُ بوتات تداولٍ عامّة",
-        "بحثُ الاستراتيجيات وتداولها",
-        "صناعةُ السوق والاستراتيجيات عالية التواتر",
-        "بوتُ عملاتٍ عامّ بواجهاتٍ بصرية للويب والهاتف — أتمتةُ الذكاء الاصطناعي والشبكية وDCA وTradingView",
-      ],
-      fr: [
-        "Appliquer, au comptant, une conformité Shariah que vous fournissez",
-        "Développement généraliste de bots de trading",
-        "Recherche de stratégies et trading",
-        "Tenue de marché et stratégies à haute fréquence",
-        "Bot crypto généraliste aux interfaces web/mobile — automatisations IA, grid, DCA, TradingView",
-      ],
-    },
+    cells: [
+      {
+        en: "Enforcing Shariah compliance you supply, on spot trading",
+        ar: "إنفاذُ امتثالٍ شرعيٍّ تزوّده أنت، في التداول الفوري",
+        fr: "Appliquer, au comptant, une conformité Shariah que vous fournissez",
+      },
+      {
+        en: "General trading bot development",
+        ar: "تطويرُ بوتات تداولٍ عامّة",
+        fr: "Développement généraliste de bots de trading",
+      },
+      {
+        en: "Strategy research and trading",
+        ar: "بحثُ الاستراتيجيات وتداولها",
+        fr: "Recherche de stratégies et trading",
+      },
+      {
+        en: "Market making / high-frequency strategies",
+        ar: "صناعةُ السوق والاستراتيجيات عالية التواتر",
+        fr: "Tenue de marché et stratégies à haute fréquence",
+      },
+      {
+        en: "General crypto bot with visual web/mobile interfaces — AI, grid, DCA, TradingView automations",
+        ar: "بوتُ عملاتٍ عامّ بواجهاتٍ بصرية للويب والهاتف — أتمتةُ الذكاء الاصطناعي والشبكية وDCA وTradingView",
+        fr: "Bot crypto généraliste aux interfaces web/mobile — automatisations IA, grid, DCA, TradingView",
+      },
+    ],
   },
   {
     label: { en: "Venue adapters", ar: "محوّلات المنصّات", fr: "Adaptateurs de plateformes" },
-    cells: {
-      en: [
-        "Coinbase (live-proven reference) + Alpaca (wired, equities paper); Robinhood adapter ships optional/dev",
-        "Many major exchanges",
-        "Several exchanges",
-        "Many CEXs and DEXs",
-        "15+ exchanges via CCXT — spot, futures on some (Binance, KuCoin)",
-      ],
-      ar: [
-        "‏Coinbase (المرجع المُثبَت في التشغيل الحيّ) + Alpaca (موصول، للأسهم في التداول التجريبي)؛ ومحوّل Robinhood اختياريٌّ وتطويري",
-        "منصّاتٌ كبرى عديدة",
-        "عدّةُ منصّات",
-        "منصّاتٌ مركزية ولا مركزية عديدة",
-        "أكثر من 15 منصّةً عبر CCXT — فوريٌّ ومستقبلياتٌ في بعضها (Binance وKuCoin)",
-      ],
-      fr: [
-        "Coinbase (référence éprouvée en réel) + Alpaca (intégré, actions en papier) ; adaptateur Robinhood optionnel, réservé au développement",
-        "De nombreuses grandes plateformes",
-        "Plusieurs plateformes",
-        "De nombreuses plateformes centralisées et décentralisées",
-        "15+ plateformes via CCXT — comptant, contrats à terme sur certaines (Binance, KuCoin)",
-      ],
-    },
+    cells: [
+      {
+        en: "Coinbase (live-proven reference) + Alpaca (wired, equities paper); Robinhood adapter ships optional/dev",
+        ar: "‏Coinbase (المرجع المُثبَت في التشغيل الحيّ) + Alpaca (موصول، للأسهم في التداول التجريبي)؛ ومحوّل Robinhood اختياريٌّ وتطويري",
+        fr: "Coinbase (référence éprouvée en réel) + Alpaca (intégré, actions en papier) ; adaptateur Robinhood optionnel, réservé au développement",
+      },
+      { en: "Many major exchanges", ar: "منصّاتٌ كبرى عديدة", fr: "De nombreuses grandes plateformes" },
+      { en: "Several exchanges", ar: "عدّةُ منصّات", fr: "Plusieurs plateformes" },
+      { en: "Many CEXs and DEXs", ar: "منصّاتٌ مركزية ولا مركزية عديدة", fr: "De nombreuses plateformes centralisées et décentralisées" },
+      {
+        en: "15+ exchanges via CCXT — spot, futures on some (Binance, KuCoin)",
+        ar: "أكثر من 15 منصّةً عبر CCXT — فوريٌّ ومستقبلياتٌ في بعضها (Binance وKuCoin)",
+        fr: "15+ plateformes via CCXT — comptant, contrats à terme sur certaines (Binance, KuCoin)",
+      },
+    ],
   },
   {
     label: { en: "Backtesting", ar: "الاختبار الرجعي", fr: "Backtesting" },
-    cells: {
-      en: [
-        "Production-faithful, liquidity-scaled slippage",
-        "Yes",
-        "Yes",
-        "Yes",
-        "Yes — built-in, plus paper-trading simulator",
-      ],
-      ar: [
-        "مطابقٌ للإنتاج، بانزلاقٍ مُدرَّجٍ حسب السيولة",
-        "نعم",
-        "نعم",
-        "نعم",
-        "نعم — مدمجٌ مع محاكيِ تداولٍ تجريبي",
-      ],
-      fr: [
-        "Fidèle à la production, glissement calibré sur la liquidité",
-        "Oui",
-        "Oui",
-        "Oui",
-        "Oui — intégré, plus simulateur en argent papier",
-      ],
-    },
+    cells: [
+      {
+        en: "Production-faithful, liquidity-scaled slippage",
+        ar: "مطابقٌ للإنتاج، بانزلاقٍ مُدرَّجٍ حسب السيولة",
+        fr: "Fidèle à la production, glissement calibré sur la liquidité",
+      },
+      YES,
+      YES,
+      YES,
+      {
+        en: "Yes — built-in, plus paper-trading simulator",
+        ar: "نعم — مدمجٌ مع محاكيِ تداولٍ تجريبي",
+        fr: "Oui — intégré, plus simulateur en argent papier",
+      },
+    ],
   },
   {
     label: {
@@ -295,20 +284,17 @@ const table: {
       ar: "بوابةٌ إلزامية قبل التداول الحيّ",
       fr: "Verrou obligatoire avant le passage en réel",
     },
-    cells: {
-      en: keelAnd(
-        "Two-part: performance floors + overfitting check (PBO/CSCV), 100-trade floor",
-        "No",
-      ),
-      ar: keelAnd(
-        "شقّان: حدودٌ دنيا للأداء + فحصُ الإفراط في المُلاءمة (PBO/CSCV)، وحدٌّ أدنى قدره 100 صفقة",
-        "لا",
-      ),
-      fr: keelAnd(
-        "En deux volets : seuils de performance + contrôle de surapprentissage (PBO/CSCV), minimum de 100 transactions",
-        "Non",
-      ),
-    },
+    cells: [
+      {
+        en: "Two-part: performance floors + overfitting check (PBO/CSCV), 100-trade floor",
+        ar: "شقّان: حدودٌ دنيا للأداء + فحصُ الإفراط في المُلاءمة (PBO/CSCV)، وحدٌّ أدنى قدره 100 صفقة",
+        fr: "En deux volets : seuils de performance + contrôle de surapprentissage (PBO/CSCV), minimum de 100 transactions",
+      },
+      NO,
+      NO,
+      NO,
+      NO,
+    ],
   },
   {
     label: {
@@ -316,20 +302,17 @@ const table: {
       ar: "آليات امتثال شرعي",
       fr: "Machinerie de conformité Shariah",
     },
-    cells: {
-      en: keelAnd(
-        "Attested screening that fails closed + 18 rails no order can skip (including qabd)",
-        "Not built in",
-      ),
-      ar: keelAnd(
-        "فرزٌ موثَّق يرفض عند الفشل + 18 سكةَ أمانٍ لا تُتجاوَز (منها القبض الحُكمي)",
-        "غير مدمجة",
-      ),
-      fr: keelAnd(
-        "Filtrage attesté qui bloque par défaut + 18 garde-fous incontournables (dont le qabd)",
-        "Non intégrée",
-      ),
-    },
+    cells: [
+      {
+        en: "Attested screening that fails closed + 18 rails no order can skip (including qabd)",
+        ar: "فرزٌ موثَّق يرفض عند الفشل + 18 سكةَ أمانٍ لا تُتجاوَز (منها القبض الحُكمي)",
+        fr: "Filtrage attesté qui bloque par défaut + 18 garde-fous incontournables (dont le qabd)",
+      },
+      NOT_BUILT_IN,
+      NOT_BUILT_IN,
+      NOT_BUILT_IN,
+      NOT_BUILT_IN,
+    ],
   },
   {
     label: {
@@ -337,16 +320,18 @@ const table: {
       ar: "إعلانُ نتيجةٍ صادقةٍ عن قواعده",
       fr: "Résultat honnête publié sur ses propres règles",
     },
-    cells: {
-      en: keelAnd("Yes — on the front page", "Not published"),
-      ar: keelAnd("نعم — في الصفحة الأولى", "غير منشورة"),
-      fr: keelAnd("Oui — dès la page d'accueil", "Non publié"),
-    },
+    cells: [
+      { en: "Yes — on the front page", ar: "نعم — في الصفحة الأولى", fr: "Oui — dès la page d'accueil" },
+      NOT_PUBLISHED,
+      NOT_PUBLISHED,
+      NOT_PUBLISHED,
+      NOT_PUBLISHED,
+    ],
   },
 ];
 
 export const compareRows = (locale: CompareLocale): CompareRow[] =>
   table.map(({ label, cells }) => ({
     label: label[locale],
-    values: Array.isArray(cells) ? cells : cells[locale],
+    values: cells.map((cell) => (typeof cell === "string" ? cell : cell[locale])),
   }));
