@@ -81,7 +81,7 @@ export interface InstallContent {
 
 export const install: LocalizedPage<InstallContent> = {
   en: {
-    rev: "2026-08-20.8",
+    rev: "2026-08-21.1",
     title: "Download keel — macOS & Windows",
     description:
       "Download keel for macOS or Windows. Version and links come from GitHub Releases at build time; the five-minute source path is here too.",
@@ -113,8 +113,8 @@ export const install: LocalizedPage<InstallContent> = {
       body: "A step-by-step walkthrough — first simulation, the paper profile, the operator console — with screenshots of every screen.",
       link: "Open Get Started",
     },
-    browserTitle: "Work from the browser — on main, in the next release",
-    browserBody: "The engine's next release ships a double-clickable macOS app that opens keel in your browser: a first-run checklist, credentials kept in your OS keychain, market data fetched as a background job, and attestations and promotions done from a page instead of a terminal. That setup surface cannot arm a rule, release funds or spend anything — it is built not to. The database beneath it now runs in WAL mode, so watching a live fetch never again blocks the engine writing it. Until that release, the download above stays the terminal-first path; the changelog lists each version the day it ships.",
+    browserTitle: "Work from the browser — shipped in v0.11.0",
+    browserBody: "v0.11.0 ships a double-clickable macOS app that opens keel in your browser: a first-run checklist, credentials kept in your OS keychain, market data fetched as a background job, and attestations and promotions done from a page instead of a terminal. That setup surface cannot arm a rule, release funds or spend anything — it is built not to. The database beneath it runs in WAL mode, so watching a live fetch never again blocks the engine writing it. The desktop builds are unsigned — the note below says exactly what your computer will show — and the changelog lists each version the day it ships.",
     fromSource: {
       title: "From source — try it in five minutes",
       lead: "Everything in this path is read-only and paper-side: no funds, and nothing here can place an order. You need uv and a free, read-only Coinbase Developer Platform (CDP) API key — candle history is fetched through the authenticated client, so keel fetch without a key fails with an AuthenticationError. We say so here rather than let it surprise you at step four.",
@@ -168,8 +168,8 @@ export const install: LocalizedPage<InstallContent> = {
   },
 
   ar: {
-    rev: "2026-08-20.8",
-    translatedFromRev: "2026-08-20.8",
+    rev: "2026-08-21.1",
+    translatedFromRev: "2026-08-21.1",
     title: "تنزيل كيل — macOS وWindows",
     description:
       "نزّل كيل لنظام macOS أو Windows. ويأتي رقمُ الإصدار وروابطه من GitHub Releases وقت البناء؛ ومسارُ التثبيت من المصدر في خمس دقائق هنا أيضًا.",
@@ -201,8 +201,8 @@ export const install: LocalizedPage<InstallContent> = {
       body: "شرحٌ خطوةً بخطوة — أوّلُ محاكاة، ونمطُ التداول التجريبي، ولوحةُ تحكّم المشغّل — مع لقطة شاشةٍ لكل شاشة.",
       link: "افتح دليل البداية",
     },
-    browserTitle: "العمل من المتصفّح — في الفرع الرئيسي الآن، وفي الإصدار القادم",
-    browserBody: "يضمّ الإصدارُ القادم من المحرّك تطبيق macOS يُفتح بنقرةٍ مزدوجة ويفتح كيل في متصفّحك: قائمةُ تحقّقٍ للتشغيل الأول، وبياناتُ الدخول تُحفظ في سلسلة مفاتيح نظام التشغيل، وبياناتُ السوق تُجلب مهمّةً في الخلفية، وتتمُّ الشهاداتُ والترقيات من صفحةٍ لا من طرفية. سطحُ الإعداد ذاك لا يستطيع تسليحَ قاعدةٍ ولا تحريرَ أموالٍ ولا إنفاقَ شيء — بُني ليعجز عن ذلك عمدًا. وتحته تعمل قاعدةُ البيانات الآن بوضع WAL، فمراقبةُ جلبٍ مباشرٍ لن تُعطّل المحرّك أثناء كتابته بعد الآن. وحتى ذلك الإصدار، يبقى التنزيلُ أعلاه مسارَ الطرفية أولًا؛ وسجلُّ التغييرات يُدرج كلَّ إصدارٍ يومَ صدوره.",
+    browserTitle: "العمل من المتصفّح — صدر في الإصدار v0.11.0",
+    browserBody: "يضمّ الإصدارُ v0.11.0 تطبيق macOS يُفتح بنقرةٍ مزدوجة ويفتح كيل في متصفّحك: قائمةُ تحقّقٍ للتشغيل الأول، وبياناتُ الدخول تُحفظ في سلسلة مفاتيح نظام التشغيل، وبياناتُ السوق تُجلب مهمّةً في الخلفية، وتتمُّ الشهاداتُ والترقيات من صفحةٍ لا من طرفية. سطحُ الإعداد ذاك لا يستطيع تسليحَ قاعدةٍ ولا تحريرَ أموالٍ ولا إنفاقَ شيء — بُني ليعجز عن ذلك عمدًا. وتحته تعمل قاعدةُ البيانات بوضع WAL، فمراقبةُ جلبٍ مباشرٍ لن تُعطّل المحرّك أثناء كتابته بعد الآن. وتُسلَّم حزمتا سطح المكتب دون توقيعٍ رقمي — والملاحظةُ أدناه تقول بالضبط ما سيعرضه حاسوبك — وسجلُّ التغييرات يُدرج كلَّ إصدارٍ يومَ صدوره.",
     fromSource: {
       title: "من المصدر — جرّبه في خمس دقائق",
       lead: "كلُّ ما في هذا المسار بصلاحية القراءة فقط وعلى جانب التداول التجريبي: لا أموال، ولا شيء هنا يستطيع تقديم أمر تداول. وتحتاج إلى uv وإلى مفتاح API مجّانيٍّ للقراءة فقط من منصّة Coinbase Developer Platform‏ (CDP) — إذ تُجلب بيانات الشموع عبر العميل المُصادَق عليه، ولذلك يفشل الأمر keel fetch من دون مفتاحٍ بخطأ AuthenticationError؛ نقولها مقدَّمًا كي لا تكون مفاجأةً في الخطوة الرابعة.",
@@ -256,8 +256,8 @@ export const install: LocalizedPage<InstallContent> = {
   },
 
   fr: {
-    rev: "2026-08-20.8",
-    translatedFromRev: "2026-08-20.8",
+    rev: "2026-08-21.1",
+    translatedFromRev: "2026-08-21.1",
     title: "Télécharger keel — macOS et Windows",
     description:
       "Téléchargez keel pour macOS ou Windows. Le numéro de version et les liens proviennent de GitHub Releases, récupérés au moment du build ; le parcours en cinq minutes depuis les sources figure également ici.",
@@ -289,8 +289,8 @@ export const install: LocalizedPage<InstallContent> = {
       body: "Un parcours pas à pas — première simulation, profil papier, console de l'opérateur — avec une capture de chaque écran.",
       link: "Ouvrir Premiers pas",
     },
-    browserTitle: "Travailler depuis le navigateur — sur la branche principale, pour la prochaine version",
-    browserBody: "La prochaine version du moteur livre une application macOS à double-clic qui ouvre keel dans votre navigateur : liste de contrôle au premier lancement, identifiants gardés dans le trousseau du système, données de marché rapatriées en tâche de fond, attestations et promotions faites depuis une page plutôt qu'un terminal. Cette surface de configuration ne peut armer une règle, libérer des fonds ni rien dépenser — elle est construite pour ne pas le pouvoir. En dessous, la base de données passe en mode WAL : regarder une récupération en direct ne bloquera plus jamais le moteur qui l'écrit. D'ici là, le téléchargement ci-dessus reste la voie du terminal ; le journal des versions inscrit chaque sortie le jour de sa publication.",
+    browserTitle: "Travailler depuis le navigateur — livré dans la v0.11.0",
+    browserBody: "La v0.11.0 livre une application macOS à double-clic qui ouvre keel dans votre navigateur : liste de contrôle au premier lancement, identifiants gardés dans le trousseau du système, données de marché rapatriées en tâche de fond, attestations et promotions faites depuis une page plutôt qu'un terminal. Cette surface de configuration ne peut armer une règle, libérer des fonds ni rien dépenser — elle est construite pour ne pas le pouvoir. En dessous, la base de données tourne en mode WAL : regarder une récupération en direct ne bloquera plus jamais le moteur qui l'écrit. Les builds bureau ne sont pas signés — la note ci-dessous dit exactement ce que votre ordinateur affichera — et le journal des versions inscrit chaque sortie le jour de sa publication.",
     fromSource: {
       title: "Depuis les sources — essayez keel en cinq minutes",
       lead: "Tout ce parcours est en lecture seule et côté papier : aucun fonds, et rien ici ne peut passer d'ordre. Il vous faut uv et une clé d'API Coinbase Developer Platform (CDP) gratuite, en lecture seule — l'historique des bougies passe par le client authentifié, si bien que keel fetch sans clé échoue sur une AuthenticationError. Autant le dire tout de suite, pour que l'étape 4 ne surprenne personne.",
