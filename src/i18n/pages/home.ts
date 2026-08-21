@@ -16,7 +16,9 @@ export interface HomeContent {
   };
   honest: {
     title: string;
-    summaryBadge: string;
+    summaryBadge?: string;
+    summaryBadgeAr?: string;
+    summaryBadgeFr?: string;
     body: string[];
     experimentLabel: string;
     announcementLabel: string;
@@ -114,7 +116,7 @@ export const home: LocalizedPage<HomeContent> = {
     },
     honest: {
       title: "النتيجة الصادقة، نقولها أولًا",
-      summaryBadge: "باختصار: رسوم التداول لدى المنصات تجعل القواعد المرجعية حاليًا لا تتفوق على الشراء الدوري المنتظم (DCA). ونحن ننشر هذا أولًا لتفحص آليات الامتثال بلا توقعات أرباح زائفة.",
+      summaryBadgeAr: "باختصار: رسوم التداول لدى المنصات تجعل القواعد المرجعية حاليًا لا تتفوق على الشراء الدوري المنتظم (DCA). ونحن ننشر هذا أولًا لتفحص آليات الامتثال بلا توقعات أرباح زائفة.",
       body: [
         "لا تحقّق أيُّ عائلةٍ من القواعد المُصدَّرة ربحًا صافيًا عند رسوم الآخذ (taker) المدفوعة فعليًّا على منصّة Coinbase‏ (نحو 1.2٪ لكلِّ طرفٍ من الصفقة) — صفرٌ من 90 تهيئةً في إحدى مصفوفات القياس، وصفرٌ من 82 في أخرى. وقد تحقّقنا تحقّقًا مستقلًّا من مذكّرةِ نمذجةٍ عشوائية — إذ أعدنا اشتقاق رياضياتها على أرقام كيل الحقيقية — فجلَّت السبب: رسومُ الآخذ هي النتيجة كلُّها. فداخل الحصّة الشهرية المعفاة من الرسوم لدى المنصّة، تقف القواعد المُعاد بناؤها عند نقطة التعادل بلا فرقٍ يُذكر (نسبةُ ربحٍ 14.9٪ مقابل نقطة تعادلٍ عند 14.88٪)؛ وبخطوةٍ واحدةٍ خارجها تقفز نقطةُ التعادل إلى 29٪ فتصير القواعد نفسها سالبةً بوضوح. فسكةُ الحصّة ليست سقفًا للميزانية — بل هي حدُّ الربحية.",
         "والغاية من هذا المشروع هي آلياتُ الإنفاذ والقياسُ الصادق لما يمرّ عبرها — لا ادّعاءُ الربح. فكلُّ نتيجةٍ تُقارَن بمؤشّرٍ مرجعيٍّ بسيط هو الشراء الدوري المنتظم (DCA)، والقواعد المرجعية لا تتفوّق عليه بعد خصم الرسوم. ونحن نفضّل أن تعرف ذلك من الصفحة الأولى على أن تكتشفه بنفسك. ونعمل جاهدين على تحسين نتائج الخوارزميات والاستراتيجيات — وسنوافيك بما نُحرزه أوّلًا بأوّل.",
@@ -174,7 +176,7 @@ export const home: LocalizedPage<HomeContent> = {
     },
     honest: {
       title: "Le résultat honnête, annoncé d'emblée",
-      summaryBadge: "En résumé : Les frais de plateforme font que les règles de référence ne battent pas le simple achat périodique (DCA). Nous le publions d'emblée pour que vous évaluiez la machinerie de conformité sans fausses promesses de gain.",
+      summaryBadgeFr: "En résumé : Les frais de plateforme font que les règles de référence ne battent pas le simple achat périodique (DCA). Nous le publions d'emblée pour que vous évaluiez la machinerie de conformité sans fausses promesses de gain.",
       body: [
         "Aucune famille de règles livrée ne dégage un résultat net positif aux frais de preneur (taker) réellement payés sur Coinbase (~1,2 % par sens) — 0 configuration sur 90 dans une matrice de mesure, 0 sur 82 dans une autre. Nous avons recoupé une note de modélisation stochastique — en refaisant ses calculs sur les chiffres réels de keel — et elle a précisé le pourquoi : les frais de preneur font tout le résultat. Dans le quota mensuel sans frais offert par la plateforme, les règles reconstruites se situent au point mort, à l'indiscernable près (14,9 % de trades gagnants pour un seuil d'équilibre de 14,88 %) ; un pas au-delà, ce seuil bondit à 29 % et les mêmes règles deviennent nettement perdantes. Le garde-fou de quota n'est pas un plafond budgétaire : c'est la frontière de la rentabilité.",
         "Ce projet a pour objet la machinerie d'application, et la mesure honnête de ce qui la traverse — pas une promesse de gain. Chaque résultat est comparé à une référence simple, l'achat périodique (DCA), et les règles de référence ne la battent pas une fois les frais déduits. Nous préférons que vous l'appreniez dès la page d'accueil plutôt que de le découvrir par vous-même. Nous nous employons à améliorer les résultats des algorithmes et des stratégies, et nous rendrons compte de nos progrès.",
