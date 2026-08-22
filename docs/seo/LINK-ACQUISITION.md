@@ -10,7 +10,8 @@ external action is recorded here with its status.
 |---|---|---|---|
 | 2026-08-22 | awesome-islamic-finance (goww7) | PR goww7/awesome-islamic-finance#2 — Developer Tools & APIs | Open, awaiting owner |
 | 2026-08-22 | awesome-crypto-trading-bots (botcrypto-io, 2.5k★) | PR botcrypto-io/awesome-crypto-trading-bots#136 — Open source bots | Open, awaiting owner |
-| 2026-08-22 | awesome-selfhosted (314k★) | PR awesome-selfhosted/awesome-selfhosted-data#2957 — `software/keel.yml`, Money, Budgeting & Management | Open, awaiting review |
+| 2026-08-22 | awesome-selfhosted (314k★) | PR awesome-selfhosted/awesome-selfhosted-data#2957 — `software/keel.yml`, Money, Budgeting & Management | **Closed by maintainer same day; submitter's account blocked org-wide** — see Lessons |
+
 | 2026-08-22 | awesome-islamic-open-source-apps (tarekeldeeb) | PR tarekeldeeb/awesome-islamic-open-source-apps#7 — Other/Python, TOC count bumped | Open, awaiting owner |
 | 2026-08-22 | engine repo topics | Added `cryptocurrency` to existing islamic-finance/shariah-compliant/halal set | Done |
 
@@ -18,6 +19,30 @@ external action is recorded here with its status.
 PRs by design ("Please do not submit pull requests in this repository") —
 submissions go through `awesome-selfhosted/awesome-selfhosted-data` as a
 `software/<name>.yml` file. OctoBot's entry was used as the schema template.
+
+## Lessons from the awesome-selfhosted rejection (2026-08-22)
+
+The data-repo PR was closed by the maintainer (nodiscc) without comment
+within the day, and the submitter's account was blocked org-wide — their
+standing response to perceived spam. Contributing factors, honestly assessed:
+
+1. **Retry burst before submission.** The initial (correct) discovery that
+   the readme repo refuses PRs took several rapid failed PR attempts against
+   it — failed-attempt bursts from a fresh fork are a classic spam signature.
+   Rule adopted: on a permission error, stop and investigate; never machine-gun
+   retries. One submission attempt per organization, ever.
+2. **Project maturity.** Their bar is established software; keel is days old
+   with 3 stars. Even a perfectly-formed submission from a spotless account
+   would likely have been queued for months or rejected as too new.
+3. **No evasion.** The block stands. No alternate accounts, no resubmission
+   through another identity — that would be exactly the astroturfing this
+   ledger forbids. If the project earns its place later (stars, releases,
+   community), the maintainer's public email (nodiscc@gmail.com) is the
+   honest channel for a polite note from the project author asking whether
+   a future submission would be welcome. Accept silence or no as the answer.
+
+The other three submissions are to independent owners (goww7, botcrypto-io,
+tarekeldeeb) and are unaffected by this block.
 
 ## Community participation (maintainer's hands, not the site's)
 
