@@ -88,12 +88,17 @@ jobs:
 
       # Email announcements (#65): after a production deploy, ask the Pages
       # Function to email any announcements newer than the last-sent marker.
-      # Non-fatal by design — the site itself is already live.
+      # Non-fatal by design — the site itself is already live. (The secret
+      # check lives in the shell: `secrets` is not valid in a step `if`.)
       - name: Dispatch announcement emails
-        if: github.ref == 'refs/heads/main' && env.PAGES_PROJECT != '' && env.HAS_DEPLOY_SECRETS == 'true' && secrets.DISPATCH_ADMIN_TOKEN != ''
+        if: github.ref == 'refs/heads/main' && env.PAGES_PROJECT != '' && env.HAS_DEPLOY_SECRETS == 'true'
         env:
           DISPATCH_ADMIN_TOKEN: ${{ secrets.DISPATCH_ADMIN_TOKEN }}
         run: |
+          if [ -z "$DISPATCH_ADMIN_TOKEN" ]; then
+            echo "DISPATCH_ADMIN_TOKEN not set — skipping (activation checklist on #65)."
+            exit 0
+          fi
           sleep 20  # let the new deployment settle at the edge
           curl -sS -X POST -H "X-Admin-Token: $DISPATCH_ADMIN_TOKEN" \
             -w "\nHTTP %{http_code}\n" \
