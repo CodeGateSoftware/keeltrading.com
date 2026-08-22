@@ -405,6 +405,7 @@ section {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex: none; /* keep the 2.5rem circle — flex shrink squashed it to ~31px on crowded desktop bars (#46) */
   width: 2.5rem;
   height: 2.5rem;
   padding: 0;
@@ -1799,14 +1800,42 @@ html[dir="rtl"] .locale-switch {
   font-size: 1rem;
 }
 
-/* French labels run long — keep the one-bar nav from wrapping */
+/* French labels run long — keep the one-bar nav from wrapping. The stock FR
+   sizing (0.87rem / 0.35rem padding) still needed ~60px more than the bar
+   offers at the 64rem breakpoint, so the nav wrapped into two crowded lines
+   from 1024px up to ~1280px. The tighter metrics below keep all nine links
+   on a single line from 64rem up (below that the hamburger owns the nav). */
 html[lang="fr"] .site-nav {
-  gap: 0.1rem 0.35rem;
+  gap: 0.1rem 0.3rem;
 }
 
 html[lang="fr"] .site-nav a {
-  font-size: 0.87rem;
-  padding-inline: 0.35rem;
+  font-size: 0.82rem;
+  padding-inline: 0.22rem;
+}
+
+/* Intermediate viewports (64rem up to the container's comfortable width):
+   the nine French labels still crowd here even with the metrics above, so
+   reclaim a little bar room — tighter gutters around the nav and inside the
+   actions cluster — and ease the labels one notch below the base FR sizing.
+   72rem and wider fits with the base FR metrics untouched. */
+@media (min-width: 64rem) and (max-width: 71.99rem) {
+  html[lang="fr"] .site-header .inner {
+    gap: 0.5rem;
+  }
+
+  html[lang="fr"] .header-actions {
+    gap: 0.5rem;
+  }
+
+  html[lang="fr"] .site-nav {
+    gap: 0.1rem 0.15rem;
+  }
+
+  html[lang="fr"] .site-nav a {
+    font-size: 0.78rem;
+    padding-inline: 0.12rem;
+  }
 }
 
 /* Changelog (#41) — version TOC and per-release articles */
