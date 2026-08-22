@@ -15,11 +15,17 @@ const h = home[locale];
 
 const honestLinks = [
   {
-    label: locale === "ar" ? "سجلّ التجربة" : "The experiment record",
+    label:
+      locale === "ar"
+        ? "سجلّ التجربة"
+        : locale === "fr"
+          ? "Le compte rendu de l'expérience"
+          : "The experiment record",
     href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
   },
   {
-    label: locale === "ar" ? "الإعلان" : "The announcement",
+    label:
+      locale === "ar" ? "الإعلان" : locale === "fr" ? "L'annonce" : "The announcement",
     href: "https://github.com/CodeGateSoftware/keel/discussions/304",
   },
 ];
