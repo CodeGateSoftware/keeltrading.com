@@ -64,6 +64,8 @@ export const ui = {
         "Bodies render in their original language; reading and replying happen on GitHub, not here.",
       comments: (n: number) => (n === 1 ? "1 comment" : `${n} comments`),
       secondary: "Show and tell — what the community builds with keel",
+      secondaryEmpty:
+        "No show-and-tell posts fetched yet. Browse the category on GitHub — items fill in on the next rebuild.",
     },
     install: {
       latest: (tag: string) => `Latest release: ${tag}`,
@@ -158,6 +160,8 @@ export const ui = {
                 ? `${n} تعليقات`
                 : `${n} تعليقًا`,
       secondary: "‏Show and tell — ما يبنيه المجتمع بكيل",
+      secondaryEmpty:
+        "لم تُجلب أي مشاركات في «Show and tell» بعد. تصفَّح الفئة على GitHub — وستمتلئ الخلاصة عند إعادة البناء القادمة.",
     },
     install: {
       latest: (tag: string) => `أحدث إصدار: ${tag}`,
@@ -245,6 +249,8 @@ export const ui = {
       comments: (n: number) =>
         n === 0 ? "Aucun commentaire" : n === 1 ? "1 commentaire" : `${n} commentaires`,
       secondary: "Show and tell — ce que la communauté construit avec keel",
+      secondaryEmpty:
+        "Aucune présentation « show and tell » récupérée pour l'instant. Parcourez la catégorie sur GitHub : le flux se remplira à la prochaine reconstruction.",
     },
     install: {
       latest: (tag: string) => `Dernière version : ${tag}`,
