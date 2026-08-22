@@ -92,8 +92,9 @@ stale page.
   (perf/a11y; BP 100, SEO 100), EN compliance **100/100**, AR home **100/100**,
   EN install **100/100**, FR compare **100/100**.
 
-Both runs sit comfortably above the ≥95/≥95 budget. The site ships zero client
-JavaScript by design (one inline script: the light/dark choice).
+Both runs sit comfortably above the ≥95/≥95 budget. The site ships no client-side
+JavaScript framework or bundle by design — two small inline scripts only: the
+light/dark choice and the code-block copy button.
 
 ## 7. Honesty review green in EN and AR before launch — GREEN (reviewed EN + AR + FR)
 
