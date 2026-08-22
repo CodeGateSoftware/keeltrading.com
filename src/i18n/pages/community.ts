@@ -71,7 +71,7 @@ export const maintainerOnlySlugs = new Set(["announcements"]);
 
 export const community: LocalizedPage<CommunityContent> = {
   en: {
-    rev: "2026-08-21.1",
+    rev: "2026-08-22.1",
     title: "keel Community on GitHub Discussions",
     description:
       "Questions, ideas, polls, and classification debate happen on GitHub Discussions. The site only reads and links — interaction stays where the project lives.",
@@ -87,35 +87,36 @@ export const community: LocalizedPage<CommunityContent> = {
           rest: "— reading is open to everyone.",
         },
         {
-          lead: "You do not need to use your real name.",
-          rest: "Pick any username you like. Your email address stays private and is never shown.",
+          lead: "You don't need to use your real name.",
+          rest: "GitHub lets you pick any username you like — curious-reader, gardenshed99, anything. There's no real-name policy, and your email address stays private and is never shown on the page. If you'd rather nobody connect the question to you, that's completely fine and nothing about it looks odd.",
         },
         {
-          lead: "It is just a web page with a comment box.",
-          rest: "Nothing installs on your computer, and you can edit or delete anything you post.",
+          lead: "It's just a website with a comment box.",
+          rest: "Nothing installs on your computer, nothing runs, you can't break anything. If you post and hate it, there's a delete button.",
         },
       ],
       steps: [
         {
-          before: "Sign up at ",
+          before: "Go to ",
           link: { label: "github.com/signup", href: "https://github.com/signup" },
-          after: " — an email, a password, a username of your choosing.",
+          after: ". Enter an email, a password, and a username (whatever you want it to be).",
         },
         {
-          before: "Enter the code they email you, and complete the “are you human” check. Around two minutes.",
+          before: "They'll email you a code — type it in. There's usually a little puzzle to prove you're human. That's the account done, about two minutes.",
           after: "",
         },
         {
-          before: "Use a “Start a discussion” button below — it opens the form with the category already chosen.",
+          before: "Then click this link, which drops you straight onto the form with the right category already selected: ",
+          link: { label: "https://github.com/CodeGateSoftware/keel/discussions/new?category=compliance-classification", href: "https://github.com/CodeGateSoftware/keel/discussions/new?category=compliance-classification" },
           after: "",
         },
         {
-          before: "Title, then your question, then “Start discussion”.",
+          before: "Put your question in the title box, the longer version in the big box, and click “Start discussion”.",
           after: "",
         },
       ],
       categoryGuide:
-        "Not sure which category? Compliance & classification for “should X be treated this way”, Q&A for running or configuring keel, General for anything else. Picking the wrong one is not a problem — it can be moved.",
+        "That's it — no navigating, no hunting for the right place. Not sure which category? Compliance & classification for “should X be treated this way”, Q&A for running or configuring keel, General for anything else. Picking the wrong one is not a problem — it can be moved.",
       startLabel: "Start a discussion",
     },
     categories: [
@@ -158,8 +159,8 @@ export const community: LocalizedPage<CommunityContent> = {
   },
 
   ar: {
-    rev: "2026-08-21.1",
-    translatedFromRev: "2026-08-21.1",
+    rev: "2026-08-22.1",
+    translatedFromRev: "2026-08-22.1",
     title: "مجتمع كيل على نقاشات GitHub",
     description:
       "الأسئلة والأفكار واستطلاعات الرأي ونقاش التصنيف تجري في نقاشات GitHub. وهذا الموقع يقرأ ويربط فقط — ويبقى التفاعل حيث يعيش المشروع.",
@@ -175,35 +176,36 @@ export const community: LocalizedPage<CommunityContent> = {
           rest: "— أمّا القراءة فمفتوحةٌ للجميع.",
         },
         {
-          lead: "لستَ مضطرًّا لاستخدام اسمك الحقيقي.",
-          rest: "اختر أيَّ اسمِ مستخدمٍ شئت. بريدك الإلكتروني يبقى خاصًّا ولا يُعرَض أبدًا.",
+          lead: "لست مضطرًّا لاستخدام اسمك الحقيقي.",
+          rest: "يترك لك GitHub اختيارَ أيِّ اسمِ مستخدمٍ تشاء — curious-reader أو gardenshed99 أو أيّ شيء. لا سياسةَ للاسم الحقيقي، وبريدُك الإلكتروني يبقى خاصًّا ولا يُعرض في الصفحة أبدًا. وإن كنت تفضّل ألّا يربط أحدٌ السؤالَ بك فذلك مقبولٌ تمامًا ولا شيءَ غريبٍ فيه.",
         },
         {
-          lead: "إنها مجردُ صفحةِ ويبٍ فيها صندوقُ تعليق.",
-          rest: "لا شيء يُثبَّت على حاسوبك، ويمكنك تعديل كلِّ ما تنشره أو حذفه.",
+          lead: "إنها صفحةُ ويبٍ فيها صندوقُ تعليقات، فحسب.",
+          rest: "لا شيءَ يُثبَّت على حاسوبك، ولا شيءَ يعمل، ولا يمكنك تعطيل أيّ شيء. فإن نشرتَ وندمت فثمّة زرُّ حذف.",
         },
       ],
       steps: [
         {
-          before: "أنشئ حسابًا على ",
+          before: "اذهب إلى ",
           link: { label: "github.com/signup", href: "https://github.com/signup" },
-          after: " — بريدٌ إلكتروني، وكلمةُ سرٍّ، واسمُ مستخدمٍ من اختيارك.",
+          after: ". أدخِل بريدًا إلكترونيًّا وكلمةَ سرٍّ واسمَ مستخدمٍ (أيًّا كان ما تريده).",
         },
         {
-          before: "أدخِل الرمزَ الذي يصلك بالبريد، ثم أكمِل فحص «هل أنت إنسان». نحو دقيقتين.",
+          before: "سيُرسلون إليك رمزًا بالبريد — اكتبه. وعادةً ثمّة لغزٌ صغيرٌ لإثبات أنك إنسان. بهذا يكتمل الحساب، في نحو دقيقتين.",
           after: "",
         },
         {
-          before: "استخدم زرَّ «ابدأ نقاشًا» في الأسفل — يفتح الاستمارة والفئةُ محدَّدةٌ سلفًا.",
+          before: "ثم انقر هذا الرابط الذي يضعك مباشرةً على النموذج والفئةُ الصحيحةُ محدَّدةٌ سلفًا: ",
+          link: { label: "https://github.com/CodeGateSoftware/keel/discussions/new?category=compliance-classification", href: "https://github.com/CodeGateSoftware/keel/discussions/new?category=compliance-classification" },
           after: "",
         },
         {
-          before: "العنوان أولًا، ثم سؤالك، ثم «ابدأ نقاشًا».",
+          before: "ضع سؤالك في خانة العنوان، والصياغةَ الأطول في الصندوق الكبير، ثم انقر «Start discussion».",
           after: "",
         },
       ],
       categoryGuide:
-        "مترددٌ في اختيار الفئة؟ «الامتثال والتصنيف» لأسئلة «هل يُعامَل X بهذه الطريقة؟»، و«الأسئلة والأجوبة» لتشغيل كيل وإعداده، و«عام» لأيِّ شيءٍ آخر. اختيارُ الفئة الخطأ ليس مشكلة — يمكن نقل النقاش.",
+        "هذا كلّ شيء — لا تنقّلَ ولا بحثَ عن المكان الصحيح. ولست متأكّدًا من الفئة؟ «الامتثال والتصنيف» لأسئلة «هل يُعامل هذا كذا»، و«الأسئلة والأجوبة» لتشغيل كيل وضبطه، و«عام» لما سوى ذلك. والخطأ في الاختيار ليس مشكلة — يمكن نقل المنشور.",
       startLabel: "ابدأ نقاشًا",
     },
     categories: [
@@ -246,8 +248,8 @@ export const community: LocalizedPage<CommunityContent> = {
   },
 
   fr: {
-    rev: "2026-08-21.1",
-    translatedFromRev: "2026-08-21.1",
+    rev: "2026-08-22.1",
+    translatedFromRev: "2026-08-22.1",
     title: "La communauté keel — sur GitHub, par choix",
     description:
       "Questions, idées, sondages et débats de classification ont lieu dans les Discussions GitHub de keel. Ce site se contente de lire et de renvoyer : l'échange reste là où vit le projet.",
@@ -256,42 +258,43 @@ export const community: LocalizedPage<CommunityContent> = {
     ],
     note: "Une catégorie mérite une mention particulière : Conformité et classification. « X doit-il être traité ainsi ? » est une question, pas un bug — et elle a son espace dédié.",
     howToPost: {
-      title: "Nouveau ici ? Comment publier",
+      title: "Nouveau ici ? Comment publier",
       facts: [
         {
           lead: "Il faut un compte GitHub gratuit pour publier",
           rest: "— la lecture, elle, reste ouverte à tous.",
         },
         {
-          lead: "Votre vrai nom n'est pas nécessaire.",
-          rest: "Choisissez l'identifiant qu'il vous plaît. Votre adresse e-mail reste privée et n'est jamais affichée.",
+          lead: "Vous n'avez pas besoin d'utiliser votre vrai nom.",
+          rest: "GitHub vous laisse choisir n'importe quel identifiant — curious-reader, gardenshed99, n'importe quoi. Il n'y a aucune politique du nom réel, et votre adresse courriel reste privée, jamais affichée sur la page. Si vous préférez que personne ne rattache la question à vous, c'est parfaitement normal et il n'y a rien d'étrange à cela.",
         },
         {
           lead: "C'est juste une page web avec une zone de commentaire.",
-          rest: "Rien ne s'installe sur votre ordinateur, et vous pouvez modifier ou supprimer tout ce que vous publiez.",
+          rest: "Rien ne s'installe sur votre ordinateur, rien ne s'exécute, vous ne pouvez rien casser. Si vous publiez et le regrettez, il y a un bouton supprimer.",
         },
       ],
       steps: [
         {
-          before: "Inscrivez-vous sur ",
+          before: "Allez sur ",
           link: { label: "github.com/signup", href: "https://github.com/signup" },
-          after: " — une adresse e-mail, un mot de passe, un identifiant de votre choix.",
+          after: ". Entrez un courriel, un mot de passe et un identifiant (ce que vous voulez).",
         },
         {
-          before: "Saisissez le code reçu par e-mail, puis passez la vérification « êtes-vous humain ». Deux minutes, à peu près.",
+          before: "Ils vous enverront un code par courriel — saisissez-le. Il y a généralement un petit casse-tête pour prouver que vous êtes humain. Le compte est fait : environ deux minutes.",
           after: "",
         },
         {
-          before: "Servez-vous d'un bouton « Lancer une discussion » ci-dessous — il ouvre le formulaire avec la catégorie déjà choisie.",
+          before: "Puis cliquez sur ce lien, qui vous dépose directement sur le formulaire avec la bonne catégorie déjà sélectionnée : ",
+          link: { label: "https://github.com/CodeGateSoftware/keel/discussions/new?category=compliance-classification", href: "https://github.com/CodeGateSoftware/keel/discussions/new?category=compliance-classification" },
           after: "",
         },
         {
-          before: "Un titre, puis votre question, puis « Lancer la discussion ».",
+          before: "Mettez votre question dans la case du titre, la version longue dans la grande case, puis cliquez « Start discussion ».",
           after: "",
         },
       ],
       categoryGuide:
-        "Pas sûr de la catégorie ? « Conformité et classification » pour « X doit-il être traité ainsi ? », « Questions et réponses » pour utiliser ou configurer keel, « Général » pour tout le reste. Se tromper de catégorie n'est pas un problème — une discussion peut être déplacée.",
+        "C'est tout : pas de navigation, pas de chasse au bon endroit. Pas sûr de la catégorie ? « Compliance & classification » pour « X devrait-il être traité ainsi », « Q&A » pour l'utilisation et la configuration de keel, « General » pour le reste. Se tromper n'est pas un problème — un fil peut être déplacé.",
       startLabel: "Lancer une discussion",
     },
     categories: [
