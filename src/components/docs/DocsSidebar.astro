@@ -33,7 +33,7 @@ const explainersLabel =
   locale === "ar" ? "شروحات معمّقة" : locale === "fr" ? "Approfondissements" : "Deep explainers";
 ---
 
-<nav class="docs-sidebar" aria-label={locale === "ar" ? "تنقّل الوثائق" : "Docs navigation"}>
+<nav class="docs-sidebar" aria-label={locale === "ar" ? "تنقّل الوثائق" : locale === "fr" ? "Navigation des documents" : "Docs navigation"}>
   <a class="docs-side-link quickstart" href={localePath(locale, "install")}>
     <span class="docs-side-icon" set:html={sectionIconSvg("get-started")} />
     {quickstartLabel}

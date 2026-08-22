@@ -40,7 +40,7 @@ const c = features[locale];
               </ul>
             )}
             <p class="verify">
-              {c.verifyNote}: <a href={feature.verify.href} class="mono">{feature.verify.label}</a>
+              {c.verifyNote}{locale === "fr" ? "\u00A0:" : ":"} <a href={feature.verify.href} class="mono">{feature.verify.label}</a>
             </p>
           </section>
         ))

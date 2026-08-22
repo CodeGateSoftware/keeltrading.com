@@ -94,7 +94,7 @@ const localeCodes: Record<Locale, string> = { en: "EN", ar: "AR", fr: "FR" };
       <span>keel</span>
     </a>
 
-    <nav class="site-nav" aria-label={locale === "ar" ? "التنقّل الرئيسي" : "Main navigation"}>
+    <nav class="site-nav" aria-label={locale === "ar" ? "التنقّل الرئيسي" : locale === "fr" ? "Navigation principale" : "Main navigation"}>
       {
         navItems.map((item) => (
           <a
