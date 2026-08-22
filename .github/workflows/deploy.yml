@@ -37,6 +37,8 @@ jobs:
       PUBLIC_CF_ANALYTICS_TOKEN: ${{ vars.PUBLIC_CF_ANALYTICS_TOKEN }}
       # Google Search Console verification meta tag (#61) — public by design.
       PUBLIC_GSC_VERIFICATION_TOKEN: ${{ vars.PUBLIC_GSC_VERIFICATION_TOKEN }}
+      # Email announcements (#65) — form renders only when the backend is wired.
+      PUBLIC_SUBSCRIPTIONS_ENABLED: ${{ vars.PUBLIC_SUBSCRIPTIONS_ENABLED }}
       HAS_DEPLOY_SECRETS: ${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ACCOUNT_ID != '' && 'true' || 'false' }}
     steps:
       - uses: actions/checkout@v4
@@ -83,3 +85,16 @@ jobs:
             --project-name="$PAGES_PROJECT" \
             --branch="$BRANCH" \
             --commit-hash="$GITHUB_SHA"
+
+      # Email announcements (#65): after a production deploy, ask the Pages
+      # Function to email any announcements newer than the last-sent marker.
+      # Non-fatal by design — the site itself is already live.
+      - name: Dispatch announcement emails
+        if: github.ref == 'refs/heads/main' && env.PAGES_PROJECT != '' && env.HAS_DEPLOY_SECRETS == 'true' && secrets.DISPATCH_ADMIN_TOKEN != ''
+        env:
+          DISPATCH_ADMIN_TOKEN: ${{ secrets.DISPATCH_ADMIN_TOKEN }}
+        run: |
+          sleep 20  # let the new deployment settle at the edge
+          curl -sS -X POST -H "X-Admin-Token: $DISPATCH_ADMIN_TOKEN" \
+            -w "\nHTTP %{http_code}\n" \
+            https://keeltrading.com/api/dispatch-send || echo "(dispatch failed — site unaffected)"
