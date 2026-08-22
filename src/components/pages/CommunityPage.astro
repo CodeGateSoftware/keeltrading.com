@@ -1,6 +1,11 @@
 ---
 import Base from "../../layouts/Base.astro";
-import { community, categoryUrl } from "../../i18n/pages/community";
+import {
+  community,
+  categoryUrl,
+  composerUrl,
+  maintainerOnlySlugs,
+} from "../../i18n/pages/community";
 import { alternatesFor, localePath, type Locale } from "../../i18n/config";
 import { t } from "../../i18n/ui";
 
@@ -28,6 +33,32 @@ const chrome = t(locale);
     </section>
 
     <div class="narrow">
+      {/* #48 — how to reach the conversation, for readers without a GitHub account. */}
+      <section class="card howto" aria-labelledby="howto-title">
+        <h2 id="howto-title">{c.howToPost.title}</h2>
+        <ul class="howto-facts">
+          {
+            c.howToPost.facts.map((fact) => (
+              <li>
+                <strong>{fact.lead}</strong> {fact.rest}
+              </li>
+            ))
+          }
+        </ul>
+        <ol class="howto-steps">
+          {
+            c.howToPost.steps.map((step) => (
+              <li>
+                {step.before}
+                {step.link ? <a href={step.link.href}>{step.link.label}</a> : null}
+                {step.after}
+              </li>
+            ))
+          }
+        </ol>
+        <p class="howto-guide">{c.howToPost.categoryGuide}</p>
+      </section>
+
       <section aria-label={c.title}>
         <ul class="card-grid">
           {
@@ -37,6 +68,11 @@ const chrome = t(locale);
                   <h2>{category.name}</h2>
                   <p>{category.description}</p>
                 </a>
+                {!maintainerOnlySlugs.has(category.slug) && (
+                  <a class="card-action" href={composerUrl(category.slug)}>
+                    {c.howToPost.startLabel} <span aria-hidden="true">→</span>
+                  </a>
+                )}
               </li>
             ))
           }
@@ -55,3 +91,38 @@ const chrome = t(locale);
     </div>
   </div>
 </Base>
+
+<style>
+  /* #48 — the how-to-post card. Reuses .card; these only shape the lists
+     inside it. Inline-start padding keeps the numbered list correct in RTL. */
+  .howto-facts {
+    list-style: none;
+    margin: 0.75rem 0 1rem;
+    padding: 0;
+  }
+
+  .howto-facts li {
+    margin-bottom: 0.45rem;
+  }
+
+  .howto-steps {
+    margin: 0.75rem 0 0;
+    padding-inline-start: 1.5em;
+  }
+
+  .howto-steps li {
+    margin-bottom: 0.45rem;
+  }
+
+  .howto-guide {
+    margin-top: 1rem;
+  }
+
+  /* Second link on category cards: straight to the composer, category
+     preselected. Sits outside the browse link (no nested anchors). */
+  .card-action {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+  }
+</style>
