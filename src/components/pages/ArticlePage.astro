@@ -1,0 +1,146 @@
+---
+import Base from "../../layouts/Base.astro";
+import DocsSidebar from "../docs/DocsSidebar.astro";
+import HonestBox from "../HonestBox.astro";
+import { explainers } from "../../i18n/guides/explainers";
+import { laneHref, laneNeighbors, laneTitle } from "../../i18n/guides/lane";
+import { localePath, SITE, type Locale } from "../../i18n/config";
+
+/**
+ * A deep explainer (#12): a long-form prose article in the guides lane —
+ * definition-first lede, honest-context box, prev/next across the whole
+ * lane. EN is the source; AR ships beside it with an FR-8 rev marker.
+ * Static markup only — no client JS.
+ */
+interface Props {
+  locale: Locale;
+  slug: string;
+}
+
+const { locale, slug } = Astro.props;
+const explainer = explainers.find((e) => e.slug === slug);
+if (!explainer) throw new Error(`unknown explainer: ${slug}`);
+const article = locale === "ar" ? explainer.ar : explainer.en;
+const otherLocale: Locale = locale === "ar" ? "en" : "ar";
+const { prev, next } = laneNeighbors(slug);
+const path = `/${locale}/guides/${slug}/`;
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description: article.description,
+    url: new URL(path, SITE).href,
+    inLanguage: locale,
+    isPartOf: { "@type": "WebSite", name: "keeltrading.com", url: SITE },
+  },
+];
+
+const ui =
+  locale === "ar"
+    ? {
+        breadcrumbRoot: "الوثائق",
+        breadcrumbLane: "الشروحات",
+        prev: "السابق →",
+        next: "← التالي",
+        pagerLabel: "تنقّل الشروحات",
+        otherLocaleLabel: "Read this article in English",
+      }
+    : {
+        breadcrumbRoot: "Docs",
+        breadcrumbLane: "Guides",
+        prev: "← Previous",
+        next: "Next →",
+        pagerLabel: "Guide navigation",
+        otherLocaleLabel: "اقرأ هذه المقالة بالعربية",
+      };
+---
+
+<Base
+  locale={locale}
+  title={`${article.title} — keel guides`}
+  description={article.description}
+  path={path}
+  alternates={[
+    { locale: "en", path: `/en/guides/${slug}/` },
+    { locale: "ar", path: `/ar/guides/${slug}/` },
+  ]}
+  jsonLd={jsonLd}
+>
+  <div class="container">
+    <div class="docs-layout">
+      <DocsSidebar locale={locale} articleSlug={slug} />
+
+      <article class="docs-content" id="top">
+        <nav class="docs-breadcrumb" aria-label={locale === "ar" ? "مسار التنقّل" : "Breadcrumb"}>
+          <a href={localePath(locale, "docs")}>{ui.breadcrumbRoot}</a>
+          <span aria-hidden="true">›</span>
+          {locale === "en" ? <a href="/en/guides/">{ui.breadcrumbLane}</a> : <span>{ui.breadcrumbLane}</span>}
+          <span aria-hidden="true">›</span>
+          <span aria-current="page">{article.title}</span>
+        </nav>
+
+        <h1>{article.title}</h1>
+        <p class="lede">{article.lede}</p>
+
+        <div class="prose">
+          {
+            article.sections.map((section) => (
+              <section>
+                <h2>{section.heading}</h2>
+                {section.paragraphs.map((paragraph) => (
+                  <p>{paragraph}</p>
+                ))}
+                {section.bullets && (
+                  <ul>
+                    {section.bullets.map((bullet) => (
+                      <li>{bullet}</li>
+                    ))}
+                  </ul>
+                )}
+              </section>
+            ))
+          }
+        </div>
+
+        <HonestBox title={article.honestBox.title} paragraphs={article.honestBox.paragraphs} links={article.honestBox.links} />
+
+        <p class="doc-meta">
+          {article.footnote}
+          <br />
+          <a href={`/${otherLocale}/guides/${slug}/`} lang={otherLocale}>{ui.otherLocaleLabel} →</a>
+        </p>
+
+        {
+          locale === "ar" && (
+            <p class="rev-marker">{`تُرجمت هذه المقالة عن المراجعة الإنجليزية ${explainer.ar.translatedFromRev}.`}</p>
+          )
+        }
+
+        <nav class="docs-pager" aria-label={ui.pagerLabel}>
+          {
+            prev ? (
+              <a class="docs-pager-link prev" href={laneHref(prev, locale)}>
+                <span class="docs-pager-dir">{ui.prev}</span>
+                <span class="docs-pager-title">{laneTitle(prev, locale)}</span>
+              </a>
+            ) : (
+              <span />
+            )
+          }
+          {
+            next ? (
+              <a class="docs-pager-link next" href={laneHref(next, locale)}>
+                <span class="docs-pager-dir">{ui.next}</span>
+                <span class="docs-pager-title">{laneTitle(next, locale)}</span>
+              </a>
+            ) : (
+              <span />
+            )
+          }
+        </nav>
+      </article>
+    </div>
+  </div>
+</Base>
