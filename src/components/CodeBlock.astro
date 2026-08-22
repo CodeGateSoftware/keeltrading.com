@@ -1,0 +1,34 @@
+---
+import type { Locale } from "../i18n/config";
+import { t } from "../i18n/ui";
+
+/**
+ * A terminal command block with a one-tap Copy button (#45). Static markup
+ * only — the handler is a single delegated listener in BaseHead, the same
+ * pattern as the theme toggle. The button carries its labels as data
+ * attributes so the shared script stays locale-agnostic.
+ */
+interface Props {
+  code: string;
+  locale: Locale;
+  /** Extra classes for the <pre> — pages hook specific blocks (verify-command…). */
+  preClass?: string;
+}
+
+const { code, locale, preClass = "" } = Astro.props;
+const chrome = t(locale);
+---
+
+<div class="code-block">
+  <button
+    class="copy-code-btn"
+    type="button"
+    data-copy
+    data-copy-label={chrome.code.copy}
+    data-copied-label={chrome.code.copied}
+    aria-label={chrome.code.copyAria}
+  >
+    {chrome.code.copy}
+  </button>
+  <pre class={preClass}><code>{code}</code></pre>
+</div>
