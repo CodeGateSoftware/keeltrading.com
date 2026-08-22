@@ -36,6 +36,15 @@ const feed: DiscussionsFile =
     fetchedAt: null,
     items: [],
   };
+
+/** Secondary feed (#13) — Show and tell; original language only (D4/D5). */
+const showAndTell: DiscussionsFile =
+  readDataFile<DiscussionsFile>("show-and-tell.json") ?? {
+    category: "show-and-tell",
+    categoryUrl: "https://github.com/CodeGateSoftware/keel/discussions/categories/show-and-tell",
+    fetchedAt: null,
+    items: [],
+  };
 ---
 
 <Base
@@ -99,15 +108,67 @@ const feed: DiscussionsFile =
         </p>
       </section>
 
-      <section class="prose">
+      <section class="prose" aria-label={chrome.news.secondary}>
         <h2>{c.secondaryTitle}</h2>
         <p>{c.secondaryBody}</p>
-        <p>
-          <a href="https://github.com/CodeGateSoftware/keel/discussions/categories/show-and-tell">
-            {chrome.actions.readOnGitHub} →
-          </a>
+
+        {
+          showAndTell.items.length === 0 ? (
+            <div class="stale-banner" role="note">
+              <p>{chrome.news.secondaryEmpty}</p>
+              <p>
+                <a href={showAndTell.categoryUrl}>{chrome.actions.readOnGitHub} →</a>
+              </p>
+            </div>
+          ) : (
+            <ul class="news-list secondary">
+              {showAndTell.items.map((item) => (
+                <li class="news-item">
+                  <p class="meta">
+                    <time datetime={item.createdAt}>{formatDate(item.createdAt)}</time>
+                    {item.author && (
+                      <>
+                        <span class="dot" aria-hidden="true">·</span>
+                        <span>{item.author}</span>
+                      </>
+                    )}
+                    <span class="dot" aria-hidden="true">·</span>
+                    <span>{chrome.news.comments(item.comments)}</span>
+                  </p>
+                  <p class="title">
+                    <a href={item.url}>{item.title}</a>
+                  </p>
+                  {item.excerpt && <p class="excerpt">{item.excerpt}</p>}
+                </li>
+              ))}
+            </ul>
+          )
+        }
+
+        <p class="doc-meta">
+          <a href={showAndTell.categoryUrl}>{chrome.actions.readOnGitHub} →</a>
         </p>
       </section>
     </div>
   </div>
 </Base>
+
+<style>
+  /* Secondary feed (#13) — same chrome as the announcements list, smaller and quieter. */
+  .news-list.secondary {
+    margin-block: 1rem;
+  }
+  .news-list.secondary li {
+    padding-block: 0.75rem;
+  }
+  .news-list.secondary .news-item .meta {
+    font-size: 0.8rem;
+  }
+  .news-list.secondary .news-item .title {
+    font-size: 0.98rem;
+    font-weight: 500;
+  }
+  .news-list.secondary .news-item .excerpt {
+    font-size: 0.9rem;
+  }
+</style>
