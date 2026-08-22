@@ -891,6 +891,18 @@ section {
   border-color: var(--accent);
 }
 
+/* Transient "Copied ✓" state after a successful copy (#45) */
+.copy-code-btn.copied {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Wrapper around a command block and its Copy button (#45); min-width so
+   the pre can scroll inside grid/flex parents without widening the page. */
+.code-block {
+  min-width: 0;
+}
+
 /* --------------------------------------------------------------------------
    Cards & grids
    -------------------------------------------------------------------------- */

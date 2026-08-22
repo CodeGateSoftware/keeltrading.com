@@ -101,7 +101,9 @@ const fiqhHref =
 
     <HonestBox
       title={c.honest.title}
-      summaryBadge={c.honest.summaryBadge || c.honest.summaryBadgeAr || c.honest.summaryBadgeFr}
+      summaryBadge={
+        locale === "ar" ? c.honest.summaryBadgeAr : locale === "fr" ? c.honest.summaryBadgeFr : c.honest.summaryBadge
+      }
       paragraphs={c.honest.body}
       links={honestLinks}
     />

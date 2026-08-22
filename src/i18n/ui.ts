@@ -29,6 +29,11 @@ export const ui = {
       seeReleases: "See releases on GitHub",
       discussOnGitHub: "Discuss on GitHub",
     },
+    code: {
+      copy: "Copy",
+      copied: "Copied ✓",
+      copyAria: "Copy the command to the clipboard",
+    },
     tracks: {
       plainLabel: "Plain English",
       operatorsLabel: "For operators",
@@ -117,6 +122,11 @@ export const ui = {
       viewSource: "اعرض الشيفرة المصدرية على GitHub",
       seeReleases: "اطّلع على الإصدارات في GitHub",
       discussOnGitHub: "ناقِش على GitHub",
+    },
+    code: {
+      copy: "نسخ",
+      copied: "تم النسخ ✓",
+      copyAria: "انسخ الأمر إلى الحافظة",
     },
     tracks: {
       plainLabel: "بلغةٍ مبسّطة",
@@ -212,6 +222,11 @@ export const ui = {
       viewSource: "Voir le code source sur GitHub",
       seeReleases: "Voir les versions sur GitHub",
       discussOnGitHub: "En discuter sur GitHub",
+    },
+    code: {
+      copy: "Copier",
+      copied: "Copié ✓",
+      copyAria: "Copier la commande dans le presse-papiers",
     },
     tracks: {
       plainLabel: "En clair",

@@ -1,6 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
 import DocsSidebar from "../docs/DocsSidebar.astro";
+import CodeBlock from "../CodeBlock.astro";
 import { guides } from "../../i18n/guides/content";
 import { laneHref, laneNeighbors, laneTitle } from "../../i18n/guides/lane";
 import { SITE } from "../../i18n/config";
@@ -62,11 +63,7 @@ const jsonLd = [
                 {step.body.map((paragraph) => (
                   <p>{paragraph}</p>
                 ))}
-                {step.code && (
-                  <pre>
-                    <code>{step.code}</code>
-                  </pre>
-                )}
+                {step.code && <CodeBlock code={step.code} locale="en" />}
                 {step.shot && (
                   <figure class="shot-figure">
                     <img class="shot" src={step.shot} alt={step.shotCaption ?? step.title} loading="lazy" />

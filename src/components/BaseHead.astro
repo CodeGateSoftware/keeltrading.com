@@ -106,6 +106,51 @@ const gscVerification = import.meta.env.PUBLIC_GSC_VERIFICATION_TOKEN;
   });
 </script>
 
+{/* Copy-to-clipboard for command blocks (#45): one delegated listener per
+    page, same pattern as the theme toggle. Each button carries its locale's
+    labels as data attributes, so this script stays locale-agnostic. Falls
+    back to a hidden textarea + execCommand for older Safari. */}
+<script is:inline>
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-copy]");
+    if (!b) return;
+    var pre = b.parentElement ? b.parentElement.querySelector("pre") : null;
+    if (!pre) return;
+    var text = pre.textContent || "";
+    var idle = b.getAttribute("data-copy-label") || "Copy";
+    var done = b.getAttribute("data-copied-label") || "Copied";
+    var timer = null;
+    function flash() {
+      b.textContent = done;
+      b.classList.add("copied");
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        b.textContent = idle;
+        b.classList.remove("copied");
+      }, 1500);
+    }
+    function legacy() {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand("copy");
+        flash();
+      } catch (err) {}
+      document.body.removeChild(ta);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(flash, legacy);
+    } else {
+      legacy();
+    }
+  });
+</script>
+
 {
   analyticsToken && (
     <script
