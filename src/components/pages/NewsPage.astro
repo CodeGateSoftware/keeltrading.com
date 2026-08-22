@@ -7,9 +7,11 @@ import { t } from "../../i18n/ui";
 
 interface Props {
   locale: Locale;
+  /** 1-based page number; page 1 renders at /news/, archives at /news/2/… (#73). */
+  page?: number;
 }
 
-const { locale } = Astro.props;
+const { locale, page = 1 } = Astro.props;
 const c = news[locale];
 const chrome = t(locale);
 
@@ -48,15 +50,35 @@ const showAndTell: DiscussionsFile =
     fetchedAt: null,
     items: [],
   };
+
+/** Community window (#73) — newest threads from every other category. */
+const community: DiscussionsFile =
+  readDataFile<DiscussionsFile>("community.json") ?? {
+    category: "discussions",
+    categoryUrl: "https://github.com/CodeGateSoftware/keel/discussions",
+    fetchedAt: null,
+    items: [],
+  };
+
+/** Pagination (#73) — five announcements per static page. */
+const PAGE_SIZE = 5;
+const totalPages = Math.max(1, Math.ceil(feed.items.length / PAGE_SIZE));
+const current = Math.min(Math.max(1, page), totalPages);
+const pageItems = feed.items.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE);
+const pageHref = (n: number) => (n <= 1 ? localePath(locale, "news") : `/${locale}/news/${n}/`);
 ---
 
 <Base
   locale={locale}
   pageKey="news"
-  title={c.title}
+  title={current > 1 ? `${c.title} — ${current}` : c.title}
   description={c.description}
-  path={localePath(locale, "news")}
-  alternates={alternatesFor("news")}
+  path={current > 1 ? `/${locale}/news/${current}/` : localePath(locale, "news")}
+  alternates={
+    current > 1
+      ? alternatesFor("news").map((alt) => ({ ...alt, path: `/${alt.locale}/news/${current}/` }))
+      : alternatesFor("news")
+  }
 >
   <div class="container">
     <section class="hero">
@@ -80,7 +102,7 @@ const showAndTell: DiscussionsFile =
             </div>
           ) : (
             <ul class="news-list">
-              {feed.items.map((item) => (
+              {pageItems.map((item) => (
                 <li class="news-item">
                   <p class="meta">
                     <time datetime={item.createdAt}>{formatDate(item.createdAt)}</time>
@@ -109,10 +131,28 @@ const showAndTell: DiscussionsFile =
             {locale === "ar" ? "خلاصة RSS" : locale === "fr" ? "Flux RSS" : "RSS feed"} ↗
           </a>
         </p>
+
+        {
+          totalPages > 1 && (
+            <nav class="news-pager" aria-label={locale === "ar" ? "تصفّح الأخبار" : locale === "fr" ? "Pagination des actualités" : "News pages"}>
+              {current > 1 && <a class="pager-arrow" href={pageHref(current - 1)} rel="prev">← {c.prevPage}</a>}
+              <span class="pager-numbers">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) =>
+                  n === current ? (
+                    <span class="pager-current" aria-current="page">{n}</span>
+                  ) : (
+                    <a href={pageHref(n)}>{n}</a>
+                  ),
+                )}
+              </span>
+              {current < totalPages && <a class="pager-arrow" href={pageHref(current + 1)} rel="next">{c.nextPage} →</a>}
+            </nav>
+          )
+        }
       </section>
 
       {
-        subscriptionsEnabled && (
+        current === 1 && subscriptionsEnabled && (
           <section class="subscribe" aria-label={c.subscribeTitle}>
             <h2>{c.subscribeTitle}</h2>
             <p>{c.subscribeBody}</p>
@@ -177,11 +217,92 @@ const showAndTell: DiscussionsFile =
           <a href={showAndTell.categoryUrl}>{chrome.actions.readOnGitHub} →</a>
         </p>
       </section>
+
+      {
+        current === 1 && (
+          <section class="prose" aria-label={c.communityTitle}>
+            <h2>{c.communityTitle}</h2>
+            <p>{c.communityBody}</p>
+            {community.items.length === 0 ? (
+              <div class="stale-banner" role="note">
+                <p>{chrome.news.secondaryEmpty}</p>
+                <p>
+                  <a href={community.categoryUrl}>{chrome.actions.readOnGitHub} →</a>
+                </p>
+              </div>
+            ) : (
+              <ul class="news-list secondary">
+                {community.items.map((item) => (
+                  <li class="news-item">
+                    <p class="meta">
+                      <time datetime={item.createdAt}>{formatDate(item.createdAt)}</time>
+                      {item.author && (
+                        <>
+                          <span class="dot" aria-hidden="true">·</span>
+                          <span>{item.author}</span>
+                        </>
+                      )}
+                      <span class="dot" aria-hidden="true">·</span>
+                      <span>{chrome.news.comments(item.comments)}</span>
+                    </p>
+                    <p class="title">
+                      <a href={item.url}>{item.title}</a>
+                    </p>
+                    {item.excerpt && <p class="excerpt">{item.excerpt}</p>}
+                  </li>
+                ))}
+              </ul>
+            )}
+            <p class="doc-meta">
+              <a href={community.categoryUrl}>{chrome.actions.readOnGitHub} →</a>
+            </p>
+          </section>
+        )
+      }
     </div>
   </div>
 </Base>
 
 <style>
+  /* Pagination (#73) — plain numbered pages, arrows on the outer edges. */
+  .news-pager {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.9rem;
+    margin-block: 1.8rem 0.5rem;
+  }
+
+  .news-pager a {
+    color: var(--link);
+    text-decoration: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+  }
+
+  .news-pager a:hover {
+    background: var(--surface-2);
+  }
+
+  .pager-arrow {
+    font-weight: 600;
+  }
+
+  .pager-numbers {
+    display: inline-flex;
+    gap: 0.25rem;
+  }
+
+  .pager-current {
+    font-weight: 700;
+    color: var(--accent);
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+  }
+
   /* Secondary feed (#13) — same chrome as the announcements list, smaller and quieter. */
   .news-list.secondary {
     margin-block: 1rem;

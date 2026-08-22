@@ -10,6 +10,12 @@ import type { LocalizedPage } from "../config";
 export interface NewsContent {
   rev: string;
   /** Email announcements (#65) — the same feed, mirrored to inboxes. */
+  /** Community discussions window (#73) — newest threads from any category. */
+  communityTitle: string;
+  communityBody: string;
+  /** Pagination (#73). */
+  prevPage: string;
+  nextPage: string;
   subscribeTitle: string;
   subscribeBody: string;
   subscribePlaceholder: string;
@@ -25,7 +31,13 @@ export interface NewsContent {
 
 export const news: LocalizedPage<NewsContent> = {
   en: {
-    rev: "2026-08-21.2",
+    rev: "2026-08-22.1",
+    communityTitle: "From the community discussions",
+    communityBody:
+      "Questions, classification requests, and ideas from keel's Discussions — the newest threads from every category, in their original language. Reading is open; join in on GitHub.",
+    prevPage: "Newer",
+    nextPage: "Older",
+
     subscribeTitle: "Announcements by email",
     subscribeBody:
       "The same announcements, delivered to your inbox when they're published — before you think to check. Double opt-in, no tracking, no pixels, unsubscribe in one click.",
@@ -46,8 +58,14 @@ export const news: LocalizedPage<NewsContent> = {
   },
 
   ar: {
-    rev: "2026-08-21.2",
-    translatedFromRev: "2026-08-21.2",
+    rev: "2026-08-22.1",
+    communityTitle: "من نقاشات المجتمع",
+    communityBody:
+      "أسئلةُ وطلباتُ تصنيفٍ وأفكارٌ من نقاشات كيل — أحدثُ الخيوط من كلّ الفئات، بلغتها الأصلية. القراءةُ مفتوحة؛ والمشاركة على GitHub.",
+    prevPage: "الأحدث",
+    nextPage: "الأقدم",
+
+    translatedFromRev: "2026-08-22.1",
     subscribeTitle: "الإعلانات بالبريد",
     subscribeBody:
       "الإعلانات نفسها تصلك إلى بريدك فور نشرها — قبل أن تتذكّر التحقّق. تأكيدٌ مزدوج، ولا تتبّع ولا بكسلات، وإلغاء الاشتراك بنقرةٍ واحدة.",
@@ -68,8 +86,14 @@ export const news: LocalizedPage<NewsContent> = {
   },
 
   fr: {
-    rev: "2026-08-21.2",
-    translatedFromRev: "2026-08-21.2",
+    rev: "2026-08-22.1",
+    communityTitle: "Des discussions de la communauté",
+    communityBody:
+      "Questions, demandes de classification et idées tirées des Discussions de keel — les fils les plus récents de toutes les catégories, dans leur langue d'origine. La lecture est ouverte ; rejoignez-la sur GitHub.",
+    prevPage: "Plus récents",
+    nextPage: "Plus anciens",
+
+    translatedFromRev: "2026-08-22.1",
     subscribeTitle: "Les annonces par courriel",
     subscribeBody:
       "Les mêmes annonces, dans votre boîte dès leur publication — avant d'y penser. Double opt-in, aucun suivi, aucun pixel, désinscription en un clic.",
