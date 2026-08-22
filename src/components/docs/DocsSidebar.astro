@@ -2,6 +2,7 @@
 import { loadDocsMeta, sectionIconSvg, sectionLabel } from "./nav";
 import { localePath, type Locale } from "../../i18n/config";
 import { guides } from "../../i18n/guides/content";
+import { explainers } from "../../i18n/guides/explainers";
 
 /**
  * Aiven-style docs sidebar: grouped sections with line icons, a Quickstart
@@ -14,9 +15,11 @@ interface Props {
   current?: string;
   /** Slug of the current Get Started guide, if rendering a guide page. */
   guideSlug?: string;
+  /** Slug of the current explainer article, if rendering an article page. */
+  articleSlug?: string;
 }
 
-const { locale, current, guideSlug } = Astro.props;
+const { locale, current, guideSlug, articleSlug } = Astro.props;
 const meta = loadDocsMeta();
 
 const quickstartLabel =
@@ -26,6 +29,8 @@ const quickstartLabel =
       ? "Essayez keel en cinq minutes"
       : "Try keel in five minutes";
 const guidesLabel = locale === "ar" ? "دليل البداية" : locale === "fr" ? "Premiers pas" : "Get started guides";
+const explainersLabel =
+  locale === "ar" ? "شروحات معمّقة" : locale === "fr" ? "Approfondissements" : "Deep explainers";
 ---
 
 <nav class="docs-sidebar" aria-label={locale === "ar" ? "تنقّل الوثائق" : "Docs navigation"}>
@@ -52,6 +57,32 @@ const guidesLabel = locale === "ar" ? "دليل البداية" : locale === "fr
             </a>
           </li>
         ))
+      }
+    </ul>
+  </div>
+
+  <div class="docs-side-section">
+    <p class="docs-side-heading">
+      <span class="docs-side-icon" set:html={sectionIconSvg("guides")} />
+      {explainersLabel}
+    </p>
+    <ul>
+      {
+        explainers.map((explainer) => {
+          const inLocale = locale === "ar" ? explainer.ar : explainer.en;
+          const href = locale === "ar" ? `/ar/guides/${explainer.slug}/` : `/en/guides/${explainer.slug}/`;
+          return (
+            <li>
+              <a
+                class:list={["docs-side-link", { current: articleSlug === explainer.slug }]}
+                href={href}
+                aria-current={articleSlug === explainer.slug ? "page" : undefined}
+              >
+                {inLocale.title}
+              </a>
+            </li>
+          );
+        })
       }
     </ul>
   </div>

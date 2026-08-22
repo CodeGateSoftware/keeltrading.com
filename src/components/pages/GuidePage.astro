@@ -2,23 +2,26 @@
 import Base from "../../layouts/Base.astro";
 import DocsSidebar from "../docs/DocsSidebar.astro";
 import { guides } from "../../i18n/guides/content";
+import { laneHref, laneNeighbors, laneTitle } from "../../i18n/guides/lane";
 import { SITE } from "../../i18n/config";
 
 /**
  * A Get Started guide page: numbered step sections, optional command blocks,
  * and real TUI screenshots (public/get-started/). Editorial English — like
- * the engine documents — surfaced through the docs sidebar.
+ * the engine documents — surfaced through the docs sidebar. Prev/next walks
+ * the whole guides lane, so the last Get Started guide continues into the
+ * deep explainers.
  */
 interface Props {
   slug: string;
 }
 
 const { slug } = Astro.props;
-const index = guides.findIndex((guide) => guide.slug === slug);
-if (index === -1) throw new Error(`unknown guide: ${slug}`);
-const guide = guides[index]!;
-const prev = index > 0 ? guides[index - 1]! : null;
-const next = index < guides.length - 1 ? guides[index + 1]! : null;
+const guide = guides.find((g) => g.slug === slug);
+if (!guide) throw new Error(`unknown guide: ${slug}`);
+const lane = laneNeighbors(slug);
+const prev = lane.prev;
+const next = lane.next;
 const path = `/en/guides/${guide.slug}/`;
 
 const jsonLd = [
@@ -78,9 +81,9 @@ const jsonLd = [
         <nav class="docs-pager" aria-label="Guide navigation">
           {
             prev ? (
-              <a class="docs-pager-link prev" href={`/en/guides/${prev.slug}/`}>
+              <a class="docs-pager-link prev" href={laneHref(prev, "en")}>
                 <span class="docs-pager-dir">← Previous</span>
-                <span class="docs-pager-title">{prev.title}</span>
+                <span class="docs-pager-title">{laneTitle(prev, "en")}</span>
               </a>
             ) : (
               <span />
@@ -88,9 +91,9 @@ const jsonLd = [
           }
           {
             next ? (
-              <a class="docs-pager-link next" href={`/en/guides/${next.slug}/`}>
+              <a class="docs-pager-link next" href={laneHref(next, "en")}>
                 <span class="docs-pager-dir">Next →</span>
-                <span class="docs-pager-title">{next.title}</span>
+                <span class="docs-pager-title">{laneTitle(next, "en")}</span>
               </a>
             ) : (
               <span />

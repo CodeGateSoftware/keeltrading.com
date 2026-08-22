@@ -5,19 +5,24 @@ import { dirname, join } from "node:path";
 import Base from "../../../layouts/Base.astro";
 import DocsSidebar from "../../../components/docs/DocsSidebar.astro";
 import { guides } from "../../../i18n/guides/content";
+import { explainers } from "../../../i18n/guides/explainers";
 
 const path = "/en/guides/";
+const laneEntries = [
+  ...guides.map((guide) => ({ slug: guide.slug, title: guide.title })),
+  ...explainers.map((explainer) => ({ slug: explainer.slug, title: explainer.en.title })),
+];
 const jsonLd = [
   {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "keel Get Started guides",
     url: new URL(path, "https://keeltrading.com").href,
-    itemListElement: guides.map((guide, i) => ({
+    itemListElement: laneEntries.map((entry, i) => ({
       "@type": "ListItem",
       position: i + 1,
-      name: guide.title,
-      url: new URL(`/en/guides/${guide.slug}/`, "https://keeltrading.com").href,
+      name: entry.title,
+      url: new URL(`/en/guides/${entry.slug}/`, "https://keeltrading.com").href,
     })),
   },
 ];
@@ -25,8 +30,8 @@ void readFileSync; void fileURLToPath; void dirname; void join;
 ---
 <Base
   locale="en"
-  title="Get Started with keel — step-by-step guides"
-  description="Four step-by-step guides with real console screenshots: install and first run, your first simulation, the paper profile, and the attestations anything live requires."
+  title="Get Started with keel — step-by-step guides and deep explainers"
+  description="Four step-by-step guides with real console screenshots, plus deep explainers on Shariah crypto screening, qabd in spot crypto, and the attestation/fatwa boundary."
   path={path}
   jsonLd={jsonLd}
 >
@@ -52,6 +57,24 @@ void readFileSync; void fileURLToPath; void dirname; void join;
             ))
           }
         </ul>
+        <section class="docs-section" aria-labelledby="sec-explainers">
+          <h2 id="sec-explainers" class="docs-section-title">Deep explainers</h2>
+          <ul class="doc-list">
+            {
+              explainers.map((explainer) => (
+                <li>
+                  <h3>
+                    <a href={`/en/guides/${explainer.slug}/`}>{explainer.en.title}</a>
+                  </h3>
+                  <p>{explainer.en.description}</p>
+                  <p class="doc-meta">
+                    <a href={`/ar/guides/${explainer.slug}/`} lang="ar">متوفر بالعربية أيضًا</a>
+                  </p>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
         <div class="prose">
           <p>
             Prefer reading the engine's own documents? <a href="/en/docs/">The documentation</a> renders them straight from the repository.
