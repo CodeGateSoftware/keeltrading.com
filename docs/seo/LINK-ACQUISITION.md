@@ -39,7 +39,10 @@ standing response to perceived spam. Contributing factors, honestly assessed:
    ledger forbids. If the project earns its place later (stars, releases,
    community), the maintainer's public email (nodiscc@gmail.com) is the
    honest channel for a polite note from the project author asking whether
-   a future submission would be welcome. Accept silence or no as the answer.
+   a future submission would be welcome. Accept silence or no as the answer. (A short apology
+note — no unblock demand, submission explicitly withdrawn — was sent to
+that address by the maintainer on 2026-08-22; outcome, if any, will be
+recorded here.)
 
 The other three submissions are to independent owners (goww7, botcrypto-io,
 tarekeldeeb) and are unaffected by this block.
