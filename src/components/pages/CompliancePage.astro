@@ -66,6 +66,11 @@ const honestLinks = [
         </ul>
       </section>
 
+      <section>
+        <h2>{c.framing.title}</h2>
+        {c.framing.body.map((paragraph) => <p>{paragraph}</p>)}
+      </section>
+
       <HonestBox title={h.honest.title} paragraphs={h.honest.body} links={honestLinks} />
 
       <section>
