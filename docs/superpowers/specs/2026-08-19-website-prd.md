@@ -198,3 +198,28 @@ time (except FR-5's Worker if used).
   a website link to its README once the site is live.
 - Announcements of the site itself follow the standing rule: post in Discussions,
   naming venues explicitly where relevant.
+
+## 12. Addendum (2026-08-21): email announcements subscription
+
+The v1 non-goals said "no user accounts or auth — anything interactive
+deep-links to GitHub." Issue #65 adds one deliberate, narrow exception: an
+**outbound-only announcements list** (hello@keeltrading.com), mirroring the
+FR-5 feed the News page already renders.
+
+Why it stays inside the spirit of the non-goals:
+
+- **No accounts, no auth, no UGC.** A double-opt-in email address is not an
+  account; nothing is posted, voted, or moderated. Reading moves from
+  "visit GitHub" to "open inbox" — consumption, not community features.
+- **One source of truth.** The email sends the same Announcements REST feed
+  the site builds from (#13 added Show and tell the same way). No new
+  writing obligation, no second editorial pipeline.
+- **Minimal data, honestly held.** D1 stores email + locale + verified flag,
+  nothing else. No open tracking, no pixels (FR-9 brand). Unsubscribe
+  hard-deletes the row immediately.
+- **Static-first preserved.** The form is a plain HTML POST to a Pages
+  Function on the same origin — zero client JavaScript (D7).
+
+Deliverability caveat, logged honestly: a new sending domain needs
+SPF/DKIM/DMARC and reputation warm-up; early Gmail delivery may land in
+spam until the list proves itself.

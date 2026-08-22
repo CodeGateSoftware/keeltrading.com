@@ -13,6 +13,9 @@ const { locale } = Astro.props;
 const c = news[locale];
 const chrome = t(locale);
 
+/** Email announcements (#65) — form renders only when the backend is wired. */
+const subscriptionsEnabled = import.meta.env.PUBLIC_SUBSCRIPTIONS_ENABLED === "true";
+
 interface DiscussionItem {
   number: number;
   title: string;
@@ -108,6 +111,31 @@ const showAndTell: DiscussionsFile =
         </p>
       </section>
 
+      {
+        subscriptionsEnabled && (
+          <section class="subscribe" aria-label={c.subscribeTitle}>
+            <h2>{c.subscribeTitle}</h2>
+            <p>{c.subscribeBody}</p>
+            <form class="subscribe-form" action="/api/subscribe" method="post">
+              <input type="hidden" name="locale" value={locale} />
+              <label class="visually-hidden" for="subscribe-email">
+                {c.subscribeTitle}
+              </label>
+              <input
+                id="subscribe-email"
+                type="email"
+                name="email"
+                required
+                autocomplete="email"
+                placeholder={c.subscribePlaceholder}
+              />
+              <button class="button" type="submit">{c.subscribeButton}</button>
+            </form>
+            <p class="subscribe-privacy">{c.subscribePrivacy}</p>
+          </section>
+        )
+      }
+
       <section class="prose" aria-label={chrome.news.secondary}>
         <h2>{c.secondaryTitle}</h2>
         <p>{c.secondaryBody}</p>
@@ -170,5 +198,53 @@ const showAndTell: DiscussionsFile =
   }
   .news-list.secondary .news-item .excerpt {
     font-size: 0.9rem;
+  }
+</style>
+
+<style>
+  /* Email announcements (#65) — quiet card under the feed it mirrors. */
+  .subscribe {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    padding: 1.4rem 1.5rem;
+    margin-block: 2.5rem;
+  }
+
+  .subscribe h2 {
+    margin: 0 0 0.5rem;
+  }
+
+  .subscribe > p {
+    margin: 0 0 1rem;
+    color: var(--muted);
+  }
+
+  .subscribe-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .subscribe-form input[type="email"] {
+    flex: 1 1 14rem;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--ink);
+    font: inherit;
+    min-width: 0;
+  }
+
+  .subscribe-form input[type="email"]:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+
+  .subscribe-privacy {
+    margin-top: 1rem !important;
+    font-size: 0.82rem !important;
   }
 </style>

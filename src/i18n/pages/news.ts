@@ -9,6 +9,12 @@ import type { LocalizedPage } from "../config";
  */
 export interface NewsContent {
   rev: string;
+  /** Email announcements (#65) — the same feed, mirrored to inboxes. */
+  subscribeTitle: string;
+  subscribeBody: string;
+  subscribePlaceholder: string;
+  subscribeButton: string;
+  subscribePrivacy: string;
   title: string;
   description: string;
   intro: string[];
@@ -19,7 +25,14 @@ export interface NewsContent {
 
 export const news: LocalizedPage<NewsContent> = {
   en: {
-    rev: "2026-08-21.1",
+    rev: "2026-08-21.2",
+    subscribeTitle: "Announcements by email",
+    subscribeBody:
+      "The same announcements, delivered to your inbox when they're published — before you think to check. Double opt-in, no tracking, no pixels, unsubscribe in one click.",
+    subscribePlaceholder: "you@example.com",
+    subscribeButton: "Subscribe",
+    subscribePrivacy:
+      "We store your email address and your language — nothing else. No open tracking, no pixels, no sharing. Unsubscribing removes you immediately.",
     title: "keel News — Announcements & Research Notes",
     description:
       "keel's announcements, read from GitHub Discussions and refreshed hourly. Reading and replying happen on GitHub; bodies stay in their original language.",
@@ -33,8 +46,15 @@ export const news: LocalizedPage<NewsContent> = {
   },
 
   ar: {
-    rev: "2026-08-21.1",
-    translatedFromRev: "2026-08-21.1",
+    rev: "2026-08-21.2",
+    translatedFromRev: "2026-08-21.2",
+    subscribeTitle: "الإعلانات بالبريد",
+    subscribeBody:
+      "الإعلانات نفسها تصلك إلى بريدك فور نشرها — قبل أن تتذكّر التحقّق. تأكيدٌ مزدوج، ولا تتبّع ولا بكسلات، وإلغاء الاشتراك بنقرةٍ واحدة.",
+    subscribePlaceholder: "you@example.com",
+    subscribeButton: "اشترك",
+    subscribePrivacy:
+      "نخزّن بريدك الإلكتروني ولغتك فقط — لا شيء غير ذلك. لا تتبّع للفتح، ولا بكسلات، ولا مشاركة. وإلغاء الاشتراك يحذفك فورًا.",
     title: "أخبار كيل — إعلانات ومذكّرات بحث",
     description:
       "إعلانات كيل تُقرأ من نقاشات GitHub وتتجدّد كل ساعة. والقراءة والردّ يجريان على GitHub؛ وتبقى النصوص بلغتها الأصلية.",
@@ -48,8 +68,15 @@ export const news: LocalizedPage<NewsContent> = {
   },
 
   fr: {
-    rev: "2026-08-21.1",
-    translatedFromRev: "2026-08-21.1",
+    rev: "2026-08-21.2",
+    translatedFromRev: "2026-08-21.2",
+    subscribeTitle: "Les annonces par courriel",
+    subscribeBody:
+      "Les mêmes annonces, dans votre boîte dès leur publication — avant d'y penser. Double opt-in, aucun suivi, aucun pixel, désinscription en un clic.",
+    subscribePlaceholder: "vous@exemple.com",
+    subscribeButton: "S'abonner",
+    subscribePrivacy:
+      "Nous conservons votre adresse et votre langue — rien d'autre. Pas de suivi d'ouverture, pas de pixels, aucun partage. Se désabonner vous supprime immédiatement.",
     title: "Actualités keel — annonces et notes de recherche",
     description:
       "Les annonces de keel, lues depuis les Discussions GitHub et actualisées toutes les heures. Lecture et réponses sur GitHub ; les textes restent dans leur langue d'origine.",
