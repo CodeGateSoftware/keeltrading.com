@@ -1,0 +1,38 @@
+name: AI crawler access
+
+# Roadmap 1.5 guard (issue #82). Checks the LIVE robots.txt, because the block
+# this catches is injected by Cloudflare at the edge and is invisible to the
+# build — public/robots.txt can be perfectly correct while the served file
+# disallows every answer engine.
+#
+# Deliberately NOT part of ci.yml: it tests production, not the pull request,
+# and the remedy is a Cloudflare dashboard toggle rather than a code change.
+# Blocking merges on it would punish the wrong people. It runs daily so the
+# regression stays visible until the zone setting is corrected.
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+    inputs:
+      origin:
+        description: "Origin to check"
+        required: false
+        default: "https://keeltrading.com"
+
+permissions:
+  contents: read
+
+jobs:
+  robots:
+    name: AI crawlers are not disallowed
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check served robots.txt
+        run: node scripts/check-ai-crawlers.mjs "${{ inputs.origin || 'https://keeltrading.com' }}"
