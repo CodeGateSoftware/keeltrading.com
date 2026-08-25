@@ -72,6 +72,37 @@ const venvCommands = (os: "mac" | "win"): string => {
   ].join("\n");
 };
 
+/**
+ * keel's terminal installer (#86). The script is served from the DEFAULT BRANCH — it has
+ * never been part of a tagged release — so the URL is pinned to main deliberately, and
+ * c.terminal.branchNote says so on the page rather than letting the URL imply a version.
+ *
+ * Two blocks, always together: the pipe, and the download-read-run variant. A reader here
+ * is being asked to hand keel exchange API keys, so `curl … | bash` is never offered alone.
+ * The audit comment is localized and sits on its own line rather than trailing the command,
+ * so the Arabic build does not have to interleave RTL prose inside an LTR command line.
+ */
+const INSTALLER_URL = "https://raw.githubusercontent.com/CodeGateSoftware/keel/main/scripts/install.sh";
+
+const terminalPipeCommand = `curl -fsSL ${INSTALLER_URL} | bash`;
+
+const terminalAuditCommands = [
+  `curl -fsSL ${INSTALLER_URL} -o install.sh`,
+  c.terminal.auditComment,
+  "less install.sh",
+  "bash install.sh",
+].join("\n");
+
+/**
+ * Run by path, not by bare `keel`: the installer's own closing lines do the same, because
+ * nothing is added to PATH unless the reader activates the venv themselves.
+ */
+const terminalUpdateCommands = [
+  "cd ~/.keel",
+  "./.venv/bin/keel update --check",
+  "./.venv/bin/keel update",
+].join("\n");
+
 const fromSourceCommands = [
   "git clone https://github.com/CodeGateSoftware/keel.git && cd keel",
   "uv sync --all-extras --dev        # any Python 3.11+ (the repo develops on 3.14)",
@@ -149,6 +180,33 @@ const fromSourceCommands = [
     </section>
 
     <div class="narrow prose">
+      {/* Placed FIRST, ahead of the release-file list and the from-source path: a reader who
+          already has a terminal should meet the one-command road before the wheels-by-hand
+          ceremony, not after it. The from-source section stays last — it is for people who
+          want the repository, not the release. */}
+      <section id="terminal-install">
+        <h2>{c.terminal.title}</h2>
+        <p>{c.terminal.lead}</p>
+        <p>{c.terminal.terms}</p>
+        <p>{c.terminal.requires}</p>
+
+        <h3>{c.terminal.pipeTitle}</h3>
+        <CodeBlock code={terminalPipeCommand} locale={locale} />
+
+        <h3>{c.terminal.auditTitle}</h3>
+        <p>{c.terminal.auditLead}</p>
+        <CodeBlock code={terminalAuditCommands} locale={locale} />
+
+        <p>{c.terminal.branchNote}</p>
+
+        <h3>{c.terminal.doesTitle}</h3>
+        <ul>{c.terminal.does.map((item) => <li>{item}</li>)}</ul>
+
+        <h3>{c.terminal.updateTitle}</h3>
+        <p>{c.terminal.updateBody}</p>
+        <CodeBlock code={terminalUpdateCommands} locale={locale} />
+      </section>
+
       {
         /*
          * Shown ONLY when the release actually carries a platform bundle. Until one exists there

@@ -49,6 +49,42 @@ export interface UnsignedNoteCopy {
   more: string;
 }
 
+/**
+ * The terminal-installer block (#86). keel's scripts/install.sh builds the whole
+ * deployment from the latest release's wheels into ~/.keel/.venv, so it belongs
+ * ABOVE the wheels-by-hand ceremony: it is the shorter road for anyone who
+ * already has a terminal.
+ *
+ * Two honesty constraints shape this copy and must survive any edit:
+ *
+ *  1. The script lives on `main` and has never been part of a tagged release.
+ *     `branchNote` says so. It must never be described as having shipped in a
+ *     version.
+ *  2. The script prints each wheel's sha256 as computed LOCALLY. No wheel
+ *     checksums are published anywhere, so there is nothing to compare against
+ *     and the word “verified” would be false. The script says as much itself.
+ *
+ * `auditLead` / the audit-first commands are not optional politeness: this site's
+ * readers are being asked to hand a program exchange API keys, so `curl … | bash`
+ * must never be the only route offered.
+ */
+export interface TerminalInstallCopy {
+  title: string;
+  lead: string;
+  terms: string;
+  requires: string;
+  pipeTitle: string;
+  auditTitle: string;
+  auditLead: string;
+  /** Goes inside a code block — straight quotes, and it must stay true of the script. */
+  auditComment: string;
+  branchNote: string;
+  doesTitle: string;
+  does: string[];
+  updateTitle: string;
+  updateBody: string;
+}
+
 export interface InstallContent {
   rev: string;
   title: string;
@@ -61,6 +97,7 @@ export interface InstallContent {
   cards: PlatformCardCopy[];
   thenTitle: string;
   allFilesTitle: string;
+  terminal: TerminalInstallCopy;
   getStarted: { title: string; body: string; link: string };
   browserTitle: string;
   browserBody: string;
@@ -81,7 +118,7 @@ export interface InstallContent {
 
 export const install: LocalizedPage<InstallContent> = {
   en: {
-    rev: "2026-08-21.1",
+    rev: "2026-08-25.1",
     title: "Download keel — macOS & Windows",
     description:
       "Download keel for macOS or Windows. Version and links come from GitHub Releases at build time; the five-minute source path is here too.",
@@ -106,6 +143,30 @@ export const install: LocalizedPage<InstallContent> = {
     ],
     thenTitle: "Then install the wheels",
     allFilesTitle: "All release files",
+    terminal: {
+      title: "Install from the terminal — one command",
+      lead: "Collecting wheels by hand is not the only way in. A script on keel's default branch does the whole job. It reads the latest GitHub release, downloads the five production wheels and the default config.yaml, then installs them into a private Python environment under your home folder.",
+      terms: "A wheel is a prebuilt Python package. A venv is a folder holding one project's Python and its libraries, kept apart from the rest of your system; this one is created at ~/.keel/.venv.",
+      requires: "You need macOS or Linux, a terminal, curl, and Python 3.11 or later. The script refuses every other platform, so Windows readers stay on the wheels path above.",
+      pipeTitle: "The one-line install",
+      auditTitle: "Or read it first, then run what you read",
+      auditLead: "keel is a program you may hand exchange API keys to, so piping a script from the internet straight into bash should not be the only option on offer. Download it, read it, then run your own copy.",
+      auditComment: "# every step prints what it is about to do, and why, before it runs",
+      branchNote: "The script is served from main, keel's default branch. It has never been part of a tagged release, so there is no version of it to name — it is whatever is on main, and it works today.",
+      doesTitle: "What the script does",
+      does: [
+        "It downloads exactly five wheels, each by its exact name, from the latest release. It never expands a *.whl glob: a release also carries wheels a deployment must not have.",
+        "It installs by exact file path, never by package name. The name keel on PyPI belongs to an unrelated project, and installing by path makes that mistake impossible.",
+        "It uses uv if uv is already on your machine, and python3 -m venv with pip if it is not.",
+        "It prints each wheel's sha256 as computed on your own machine. That is an audit trail, not a verification — no wheel checksums are published anywhere, so there is nothing to compare against.",
+        "It runs no privileged commands. Downloads land in a temporary folder that is deleted when the script exits, and the installed deployment lives only under your home folder.",
+        "It never overwrites an existing ~/.keel/config.yaml or database. Re-running the script upgrades the code in place.",
+        "The config.yaml it lands is the paper profile. Nothing in it can place a live order.",
+        "It finishes by running keel versions, and fails loudly if that does not come back clean.",
+      ],
+      updateTitle: "Keeping it current",
+      updateBody: "Re-running the installer moves the deployment to the latest release, in place. keel can also update itself from the folder it lives in: keel update --check reports what an update would do and changes nothing, and keel update applies it behind a typed confirmation. Both serve this venv deployment; keel update refuses to touch a source checkout.",
+    },
     paperFirstTitle: "Start on paper — free, and nothing at risk",
     paperFirstBody: "For the cautious first step: the paper profile is free and educational, with simulated fills and no real orders. It is built for learning the workflow before any live decision. It needs no funded venue account and no trading credentials; the only key it asks for is a free, read-only market-data key, used to fetch candle history. The live profile is deliberately harder to reach — attestations, the promotion gauntlet and typed human confirmations all stand in the way.",
     getStarted: {
@@ -168,8 +229,8 @@ export const install: LocalizedPage<InstallContent> = {
   },
 
   ar: {
-    rev: "2026-08-21.1",
-    translatedFromRev: "2026-08-21.1",
+    rev: "2026-08-25.1",
+    translatedFromRev: "2026-08-25.1",
     title: "تنزيل كيل — macOS وWindows",
     description:
       "نزّل كيل لنظام macOS أو Windows. ويأتي رقمُ الإصدار وروابطه من GitHub Releases وقت البناء؛ ومسارُ التثبيت من المصدر في خمس دقائق هنا أيضًا.",
@@ -194,6 +255,30 @@ export const install: LocalizedPage<InstallContent> = {
     ],
     thenTitle: "ثم ثبّت حزم wheel",
     allFilesTitle: "كل ملفات الإصدار",
+    terminal: {
+      title: "التثبيت من الطرفيّة — أمرٌ واحد",
+      lead: "جمعُ حزم wheel يدويًّا ليس المدخل الوحيد. فثمّة سكربتٌ على الفرع الافتراضي لمستودع كيل يتولّى المهمّة كاملة: يقرأ أحدث إصدارٍ على GitHub، وينزّل حزم wheel الإنتاجية الخمس وملفَّ config.yaml الافتراضي، ثم يثبّتها في بيئة Python خاصّةٍ داخل مجلّدك الشخصي.",
+      terms: "وحزمةُ wheel حزمةُ Python مبنيّةٌ مسبقًا. أمّا الـvenv فمجلّدٌ يضمّ نسخة Python الخاصّة بمشروعٍ واحدٍ ومكتباتِه، معزولًا عن بقيّة النظام؛ وهذا الـvenv يُنشأ في ‎~/.keel/.venv.",
+      requires: "تحتاج إلى macOS أو Linux، وإلى طرفيّة، وإلى curl، وإلى Python 3.11 أو أحدث. والسكربت يرفض كلَّ نظامٍ آخر، فيبقى قرّاء Windows على مسار حزم wheel أعلاه.",
+      pipeTitle: "التثبيت بسطرٍ واحد",
+      auditTitle: "أو اقرأه أولًا ثم شغّل ما قرأت",
+      auditLead: "كيل برنامجٌ قد تعطيه مفاتيح API لمنصّة تداول، ولذلك لا ينبغي أن يكون تمريرُ سكربتٍ من الإنترنت إلى bash مباشرةً هو الخيار الوحيد المعروض. نزّله، واقرأه، ثم شغّل نسختك أنت.",
+      auditComment: "# كلُّ خطوةٍ تطبع ما هي مقبلةٌ على فعله ولماذا، قبل أن تفعله",
+      branchNote: "ويُقدَّم السكربتُ من الفرع main، وهو الفرع الافتراضي لمستودع كيل. ولم يكن يومًا جزءًا من إصدارٍ موسوم، فليس له رقمُ إصدارٍ نشير إليه — هو ما يوجد على main الآن، وهو يعمل اليوم.",
+      doesTitle: "ما الذي يفعله السكربت",
+      does: [
+        "ينزّل خمس حزم wheel بالضبط، كلَّ واحدةٍ باسمها الكامل، من أحدث إصدار. ولا يوسّع النمط ‎*.whl أبدًا: فالإصدار يحمل أيضًا حزمًا لا يجوز أن يضمّها تثبيتٌ تشغيلي.",
+        "ويثبّت بمسار الملفّ الكامل، لا باسم الحزمة أبدًا. فاسم keel على PyPI يخصّ مشروعًا لا علاقة له بنا، والتثبيتُ بالمسار يجعل ذلك الخطأ مستحيلًا.",
+        "ويستعمل uv إن كان uv موجودًا على جهازك أصلًا، وإلا فـ‎python3 -m venv مع pip.",
+        "ويطبع بصمة sha256 لكلّ حزمة wheel محسوبةً على جهازك أنت. وهذا سجلُّ تدقيقٍ لا تحقُّق — إذ لا تُنشر بصماتٌ لحزم wheel في أيّ مكان، فلا شيء يُقارَن به.",
+        "ولا يشغّل أيَّ أمرٍ بصلاحياتٍ مرتفعة. وتنزل الملفّاتُ في مجلّدٍ مؤقّتٍ يُحذف عند انتهاء السكربت، ولا يقيم التثبيتُ نفسه إلا داخل مجلّدك الشخصي.",
+        "ولا يستبدل أبدًا ملفَّ ‎~/.keel/config.yaml ولا قاعدةَ بياناتٍ موجودة. وإعادةُ تشغيل السكربت تُحدِّث الشيفرة في مكانها.",
+        "وملفُّ config.yaml الذي يضعه هو نمطُ التداول التجريبي؛ ولا شيء فيه يستطيع تقديم أمرٍ حيّ.",
+        "وينتهي بتشغيل الأمر keel versions، ويفشل فشلًا صريحًا إن لم تأتِ نتيجتُه نظيفة.",
+      ],
+      updateTitle: "إبقاؤه محدَّثًا",
+      updateBody: "إعادةُ تشغيل المثبِّت تنقل التثبيت إلى أحدث إصدارٍ في مكانه. ويستطيع كيل أيضًا أن يحدّث نفسه من المجلّد الذي يسكنه: فالأمر keel update --check يعرض ما سيفعله التحديث ولا يغيّر شيئًا، والأمر keel update ينفّذه بعد تأكيدٍ تكتبه بيدك. وكلاهما يخدم تثبيتَ الـvenv هذا؛ أمّا نسخةُ المصدر (checkout) فيرفض keel update المساسَ بها.",
+    },
     paperFirstTitle: "ابدأ بالتداول التجريبي — مجّانًا، ولا شيء في خطر",
     paperFirstBody: "للخطوة الأولى الحذرة: نمطُ التداول التجريبي مجّانيٌّ وتعليمي — تنفيذٌ مُحاكًى ولا أوامرَ حقيقية — بُني لتتعلّم سير العمل قبل أيّ قرارٍ في التشغيل الحيّ. وهو لا يحتاج إلى حسابٍ مموَّلٍ لدى منصّة ولا إلى بيانات اعتمادٍ للتداول؛ والمفتاح الوحيد الذي يطلبه مفتاحُ بيانات سوقٍ مجّانيٌّ للقراءة فقط لجلب تاريخ الشموع. أمّا النمط الحيّ فالوصول إليه أصعبُ عن قصد: إذ تقف في الطريق التوثيقاتُ، ومسارُ بوابة الترقية، والتأكيداتُ البشرية المكتوبة.",
     getStarted: {
@@ -256,8 +341,8 @@ export const install: LocalizedPage<InstallContent> = {
   },
 
   fr: {
-    rev: "2026-08-21.1",
-    translatedFromRev: "2026-08-21.1",
+    rev: "2026-08-25.1",
+    translatedFromRev: "2026-08-25.1",
     title: "Télécharger keel — macOS et Windows",
     description:
       "Téléchargez keel pour macOS ou Windows. Le numéro de version et les liens proviennent de GitHub Releases, récupérés au moment du build ; le parcours en cinq minutes depuis les sources figure également ici.",
@@ -282,6 +367,30 @@ export const install: LocalizedPage<InstallContent> = {
     ],
     thenTitle: "Installez ensuite les wheels",
     allFilesTitle: "Tous les fichiers de la version",
+    terminal: {
+      title: "Installer depuis le terminal — une seule commande",
+      lead: "Rassembler les wheels à la main n'est pas la seule porte d'entrée. Un script publié sur la branche par défaut de keel fait tout le travail. Il lit la dernière version parue sur GitHub, télécharge les cinq wheels de production et le config.yaml par défaut, puis les installe dans un environnement Python privé, sous votre dossier personnel.",
+      terms: "Une wheel est un paquet Python déjà construit. Un venv est un dossier qui contient le Python d'un seul projet et ses bibliothèques, tenu à l'écart du reste du système ; celui-ci est créé dans ~/.keel/.venv.",
+      requires: "Il vous faut macOS ou Linux, un terminal, curl et Python 3.11 ou plus. Le script refuse toute autre plateforme : les lecteurs sous Windows restent sur le parcours des wheels ci-dessus.",
+      pipeTitle: "L'installation en une ligne",
+      auditTitle: "Ou bien lisez-le d'abord, puis exécutez ce que vous avez lu",
+      auditLead: "keel est un programme auquel vous confierez peut-être les clés d'API d'une plateforme d'échange : diriger un script venu d'internet droit dans bash ne doit donc pas être la seule option proposée. Téléchargez-le, lisez-le, puis exécutez votre propre copie.",
+      auditComment: "# chaque étape annonce ce qu'elle va faire, et pourquoi, avant de le faire",
+      branchNote: "Le script est servi depuis main, la branche par défaut de keel. Il n'a jamais fait partie d'une version publiée, il n'y a donc aucun numéro à citer — c'est ce qui se trouve sur main, et cela fonctionne aujourd'hui.",
+      doesTitle: "Ce que fait le script",
+      does: [
+        "Il télécharge exactement cinq wheels, chacune par son nom exact, dans la dernière version parue. Il n'utilise jamais de motif *.whl : une version publiée embarque aussi des wheels qu'un déploiement ne doit pas recevoir.",
+        "Il installe par chemin de fichier exact, jamais par nom de paquet. Sur PyPI, le nom keel appartient à un projet sans rapport, et installer par chemin rend cette erreur impossible.",
+        "Il utilise uv si uv est déjà présent sur votre machine, et sinon python3 -m venv avec pip.",
+        "Il affiche le sha256 de chaque wheel, calculé sur votre propre machine. C'est une trace d'audit, pas une vérification — aucune empreinte de wheel n'est publiée nulle part, il n'y a donc rien à quoi comparer.",
+        "Il n'exécute aucune commande privilégiée. Les téléchargements atterrissent dans un dossier temporaire supprimé à la sortie du script, et l'installation elle-même ne vit que sous votre dossier personnel.",
+        "Il n'écrase jamais un ~/.keel/config.yaml ni une base de données existante. Relancer le script met le code à jour sur place.",
+        "Le config.yaml qu'il dépose est le profil papier. Rien dans ce fichier ne peut passer un ordre réel.",
+        "Il termine en lançant keel versions, et échoue bruyamment si le résultat n'est pas net.",
+      ],
+      updateTitle: "Le maintenir à jour",
+      updateBody: "Relancer l'installeur amène le déploiement à la dernière version parue, sur place. keel sait aussi se mettre à jour depuis le dossier où il habite : keel update --check annonce ce que ferait la mise à jour sans rien modifier, et keel update l'applique après une confirmation tapée à la main. Les deux servent ce déploiement en venv ; keel update refuse de toucher à une copie des sources.",
+    },
     paperFirstTitle: "Commencez en papier — gratuit, et sans rien risquer",
     paperFirstBody: "Pour un premier pas prudent : le profil papier est gratuit et pédagogique — exécutions simulées, aucun ordre réel — conçu pour apprendre le fonctionnement avant toute décision en réel. Il ne réclame ni compte approvisionné sur une plateforme, ni identifiants de trading ; la seule clé demandée est une clé de données de marché gratuite, en lecture seule, pour récupérer l'historique des bougies. Le profil réel, lui, se mérite délibérément : attestations, parcours de promotion et confirmations tapées à la main se dressent sur la route.",
     getStarted: {
