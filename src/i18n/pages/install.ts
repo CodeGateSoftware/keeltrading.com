@@ -49,6 +49,42 @@ export interface UnsignedNoteCopy {
   more: string;
 }
 
+/**
+ * The terminal-installer block (#86). keel's scripts/install.sh builds the whole
+ * deployment from the latest release's wheels into ~/.keel/.venv, so it belongs
+ * ABOVE the wheels-by-hand ceremony: it is the shorter road for anyone who
+ * already has a terminal.
+ *
+ * Two honesty constraints shape this copy and must survive any edit:
+ *
+ *  1. The script lives on `main` and has never been part of a tagged release.
+ *     `branchNote` says so. It must never be described as having shipped in a
+ *     version.
+ *  2. The script prints each wheel's sha256 as computed LOCALLY. No wheel
+ *     checksums are published anywhere, so there is nothing to compare against
+ *     and the word “verified” would be false. The script says as much itself.
+ *
+ * `auditLead` / the audit-first commands are not optional politeness: this site's
+ * readers are being asked to hand a program exchange API keys, so `curl … | bash`
+ * must never be the only route offered.
+ */
+export interface TerminalInstallCopy {
+  title: string;
+  lead: string;
+  terms: string;
+  requires: string;
+  pipeTitle: string;
+  auditTitle: string;
+  auditLead: string;
+  /** Goes inside a code block — straight quotes, and it must stay true of the script. */
+  auditComment: string;
+  branchNote: string;
+  doesTitle: string;
+  does: string[];
+  updateTitle: string;
+  updateBody: string;
+}
+
 export interface InstallContent {
   rev: string;
   title: string;
@@ -61,6 +97,7 @@ export interface InstallContent {
   cards: PlatformCardCopy[];
   thenTitle: string;
   allFilesTitle: string;
+  terminal: TerminalInstallCopy;
   getStarted: { title: string; body: string; link: string };
   browserTitle: string;
   browserBody: string;
@@ -81,7 +118,7 @@ export interface InstallContent {
 
 export const install: LocalizedPage<InstallContent> = {
   en: {
-    rev: "2026-08-21.1",
+    rev: "2026-08-25.1",
     title: "Download keel — macOS & Windows",
     description:
       "Download keel for macOS or Windows. Version and links come from GitHub Releases at build time; the five-minute source path is here too.",
@@ -106,6 +143,31 @@ export const install: LocalizedPage<InstallContent> = {
     ],
     thenTitle: "Then install the wheels",
     allFilesTitle: "All release files",
+    terminal: {
+      title: "Install from the terminal — one command",
+      lead: "Collecting wheels by hand is not the only way in. A script on keel's default branch does the whole job. It reads the latest GitHub release, downloads the five production wheels and the default config.yaml, then installs them into a private Python environment under your home folder.",
+      terms: "A wheel is a prebuilt Python package. A venv is a folder holding one project's Python and its libraries, kept apart from the rest of your system; this one is created at ~/.keel/.venv.",
+      requires: "You need macOS or Linux, a terminal, curl, and Python 3.14 or later. The script refuses every other platform, so Windows readers stay on the wheels path above. On Linux that floor bites today: most distributions still default to an older Python, and keel's own Linux smoke run fails at exactly this check, while macOS passes it with a Homebrew Python. Expect to install 3.14 yourself first. The floor is also stricter than the wheels it installs — those still run on Python 3.11, so the manual path above accepts a Python this script will turn away.",
+      pipeTitle: "The one-line install",
+      auditTitle: "Or read it first, then run what you read",
+      auditLead: "keel is a program you may hand exchange API keys to, so piping a script from the internet straight into bash should not be the only option on offer. Download it, read it, then run your own copy.",
+      auditComment: "# every step prints what it is about to do, and why, before it runs",
+      branchNote: "The script is served from main, keel's default branch. It has never been part of a tagged release, so there is no version of it to name, and it changes when main changes: the Python floor above moved from 3.11 to 3.14 that way. Read the copy you download rather than trusting this description to have kept up.",
+      doesTitle: "What the script does",
+      does: [
+        "It downloads exactly five wheels, each by its exact name, from the latest release. It never expands a *.whl glob: a release also carries wheels a deployment must not have.",
+        "It installs by exact file path, never by package name. The name keel on PyPI belongs to an unrelated project, and installing by path makes that mistake impossible.",
+        "It builds the venv with uv when a working uv answers uv --version — a shim that cannot run is treated as absent. Otherwise it uses the Python it found, with pip.",
+        "It prints each wheel's sha256 as computed on your own machine. That is an audit trail, not a verification — no wheel checksums are published anywhere, so there is nothing to compare against.",
+        "It runs no privileged commands. Downloads land in a temporary folder that is deleted when the script exits, and the installed deployment lives only under your home folder.",
+        "It never overwrites an existing ~/.keel/config.yaml or database. Re-running the script upgrades the code in place.",
+        "The config.yaml it lands is the release's production config, in auto_trade.mode: confirm — the live profile behind a gate, not the paper one. keel previews each rule-driven entry and asks before placing it, at a y/N prompt that defaults to no. The protective stop and the profit-take that follow a position you already approved are placed without a second prompt. Note that the script's own success message calls this the paper profile: that line is wrong, so check auto_trade.mode in the file rather than trusting it.",
+        "A fresh deployment still trades nothing. The kill switch fails closed, so every cycle skips until you run keel resume, and seeded rules start as candidates that trade nothing until you promote them. For a config that cannot place a live order at all, run ./.venv/bin/keel init-config --force from ~/.keel: without --live it writes the mode: paper template.",
+        "It finishes by running keel versions, and fails loudly if that does not come back clean.",
+      ],
+      updateTitle: "Keeping it current",
+      updateBody: "Re-running the installer moves the deployment to the latest release, in place. keel can also update itself from the folder it lives in: keel update --check reports what an update would do and changes nothing, and keel update applies it behind a typed confirmation. One caveat worth knowing before you rely on it: keel update installs through uv, and stops with a plain error when uv is absent. A deployment the script built without uv needs uv added before an update will apply. keel update refuses to touch a source checkout.",
+    },
     paperFirstTitle: "Start on paper — free, and nothing at risk",
     paperFirstBody: "For the cautious first step: the paper profile is free and educational, with simulated fills and no real orders. It is built for learning the workflow before any live decision. It needs no funded venue account and no trading credentials; the only key it asks for is a free, read-only market-data key, used to fetch candle history. The live profile is deliberately harder to reach — attestations, the promotion gauntlet and typed human confirmations all stand in the way.",
     getStarted: {
@@ -118,7 +180,7 @@ export const install: LocalizedPage<InstallContent> = {
     fromSource: {
       title: "From source — try it in five minutes",
       lead: "Everything in this path is read-only and paper-side: no funds, and nothing here can place an order. You need uv and a free, read-only Coinbase Developer Platform (CDP) API key — candle history is fetched through the authenticated client, so keel fetch without a key fails with an AuthenticationError. We say so here rather than let it surprise you at step four.",
-      requirements: ["uv (the Python package manager)", "Any Python 3.11+ (the repo develops on 3.14)", "A free, read-only CDP API key — market data only"],
+      requirements: ["uv (the Python package manager)", "Python 3.14 or later — the repository's floor, higher than the published wheels ask for", "A free, read-only CDP API key — market data only"],
       expectTitle: "What you should expect",
       expect: "keel simulate replays the real rules deterministically over the fetched history, compares against a DCA benchmark, and writes a GO-LIVE / TRAIN-MORE report. On the default rules it will very likely tell you TRAIN-MORE and name the gates that failed. That is the engine working, not broken. The honesty is the feature.",
       next: "The next steps — promoting a rule through the gate, running the paper agent, a supervised first live order — are in the go-live runbook.",
@@ -161,15 +223,15 @@ export const install: LocalizedPage<InstallContent> = {
       ],
       avoidTitle: "First — you may not need to deal with this at all",
       avoidBody:
-        "The five-minute path below installs the same engine with no installer and no warning on any platform. Nothing is downloaded as an application: pip and uv fetch the published wheels directly, and no operating system objects to that. It does need a terminal and Python 3.11 or later — exactly the friction the desktop app exists to remove. But if you already have both, it is the shorter road, and the rest of this note does not apply to you.",
+        "The five-minute path below installs the same engine with no installer and no warning on any platform. Nothing is downloaded as an application: pip and uv fetch the published wheels directly, and no operating system objects to that. It does need a terminal and Python 3.14 or later — exactly the friction the desktop app exists to remove. But if you already have both, it is the shorter road, and the rest of this note does not apply to you.",
       avoidLink: "Try it in five minutes",
       more: "Full explanation, including how to verify what you downloaded",
     },
   },
 
   ar: {
-    rev: "2026-08-21.1",
-    translatedFromRev: "2026-08-21.1",
+    rev: "2026-08-25.1",
+    translatedFromRev: "2026-08-25.1",
     title: "تنزيل كيل — macOS وWindows",
     description:
       "نزّل كيل لنظام macOS أو Windows. ويأتي رقمُ الإصدار وروابطه من GitHub Releases وقت البناء؛ ومسارُ التثبيت من المصدر في خمس دقائق هنا أيضًا.",
@@ -194,6 +256,31 @@ export const install: LocalizedPage<InstallContent> = {
     ],
     thenTitle: "ثم ثبّت حزم wheel",
     allFilesTitle: "كل ملفات الإصدار",
+    terminal: {
+      title: "التثبيت من الطرفيّة — أمرٌ واحد",
+      lead: "جمعُ حزم ‏wheel يدويًّا ليس المدخل الوحيد. فثمّة سكربتٌ على الفرع الافتراضي لمستودع كيل يتولّى المهمّة كاملة: يقرأ أحدث إصدارٍ على ‏GitHub، وينزّل حزم ‏wheel الإنتاجية الخمس وملفَّ ‏config.yaml الافتراضي، ثم يثبّتها في بيئة ‏Python خاصّةٍ داخل مجلّدك الشخصي.",
+      terms: "وحزمةُ ‏wheel حزمةُ ‏Python مبنيّةٌ مسبقًا. أمّا الـvenv فمجلّدٌ يضمّ نسخة ‏Python الخاصّة بمشروعٍ واحدٍ ومكتباتِه، معزولًا عن بقيّة النظام؛ وهذا الـvenv يُنشأ في ‎~/.keel/.venv.",
+      requires: "تحتاج إلى ‏macOS أو ‏Linux، وإلى طرفيّة، وإلى ‏curl، وإلى ‏Python 3.14 أو أحدث. والسكربت يرفض كلَّ نظامٍ آخر، فيبقى قرّاء ‏Windows على مسار حزم ‏wheel أعلاه. وهذا الحدُّ يؤذي على ‏Linux اليوم: إذ ما تزال معظمُ التوزيعات تعتمد افتراضيًّا نسخةَ ‏Python أقدم، ولذلك يفشل اختبارُ كيل الدخانيُّ على ‏Linux عند هذا الفحص بعينه، بينما يجتازه ‏macOS بنسخةٍ من ‏Homebrew. فتوقّع أن تثبّت 3.14 بنفسك أوّلًا. والحدُّ كذلك أشدُّ من حدِّ حزم ‏wheel التي يثبّتها — فتلك ما تزال تعمل على ‏Python 3.11، ولذلك يقبل المسارُ اليدوي أعلاه نسخةَ ‏Python يردُّها هذا السكربت.",
+      pipeTitle: "التثبيت بسطرٍ واحد",
+      auditTitle: "أو اقرأه أولًا ثم شغّل ما قرأت",
+      auditLead: "كيل برنامجٌ قد تعطيه مفاتيح ‏API لمنصّة تداول، ولذلك لا ينبغي أن يكون تمريرُ سكربتٍ من الإنترنت إلى ‏bash مباشرةً هو الخيار الوحيد المعروض. نزّله، واقرأه، ثم شغّل نسختك أنت.",
+      auditComment: "# كلُّ خطوةٍ تطبع ما هي مقبلةٌ على فعله ولماذا، قبل أن تفعله",
+      branchNote: "ويُقدَّم السكربتُ من الفرع ‏main، وهو الفرع الافتراضي لمستودع كيل. ولم يكن يومًا جزءًا من إصدارٍ موسوم، فليس له رقمُ إصدارٍ نشير إليه، وهو يتغيّر كلّما تغيّر ‏main: فبهذا الطريق انتقل حدُّ ‏Python أعلاه من 3.11 إلى 3.14. فاقرأ النسخة التي تنزّلها، ولا تفترض أنّ هذا الوصف قد واكب التغيير.",
+      doesTitle: "ما الذي يفعله السكربت",
+      does: [
+        "ينزّل خمس حزم ‏wheel بالضبط، كلَّ واحدةٍ باسمها الكامل، من أحدث إصدار. ولا يوسّع النمط ‎*.whl أبدًا: فالإصدار يحمل أيضًا حزمًا لا يجوز أن يضمّها تثبيتٌ تشغيلي.",
+        "ويثبّت بمسار الملفّ الكامل، لا باسم الحزمة أبدًا. فاسم ‏keel على ‏PyPI يخصّ مشروعًا لا علاقة له بنا، والتثبيتُ بالمسار يجعل ذلك الخطأ مستحيلًا.",
+        "ويبني الـvenv بأداة ‏uv وحدَها متى استجابت نسخةٌ عاملةٌ من ‏uv للأمر ‏uv --version؛ أمّا الغلافُ الصوريُّ الذي يعجز عن العمل فيُعدُّ غيرَ موجود. وفي غير هذه الحال يستعمل نسخةَ ‏Python التي وجدها، مع ‏pip.",
+        "ويطبع بصمة ‏sha256 لكلّ حزمة ‏wheel محسوبةً على جهازك أنت. وهذا سجلُّ تدقيقٍ لا تحقُّق — إذ لا تُنشر بصماتٌ لحزم ‏wheel في أيّ مكان، فلا شيء يُقارَن به.",
+        "ولا يشغّل أيَّ أمرٍ بصلاحياتٍ مرتفعة. وتنزل الملفّاتُ في مجلّدٍ مؤقّتٍ يُحذف عند انتهاء السكربت، ولا يقيم التثبيتُ نفسه إلا داخل مجلّدك الشخصي.",
+        "ولا يستبدل أبدًا ملفَّ ‎~/.keel/config.yaml ولا قاعدةَ بياناتٍ موجودة. وإعادةُ تشغيل السكربت تُحدِّث الشيفرة في مكانها.",
+        "وملفُّ ‏config.yaml الذي يضعه هو إعدادُ الإنتاج الخاصُّ بهذا الإصدار، على الوضع ‏auto_trade.mode: confirm — أي النمطُ الحيُّ خلف بوّابة، لا نمطُ التداول التجريبي. فكيل يعاين كلَّ دخولٍ تمليه قاعدةٌ ويسأل قبل إرساله، عند مِحَثٍّ من طراز ‏y/N جوابُه الافتراضي «لا». أمّا وقفُ الحماية وجنيُ الأرباح اللذان يتبعان مركزًا وافقتَ عليه سلفًا فيُرسَلان دون سؤالٍ ثانٍ. وانتبه إلى أنّ رسالة نجاح السكربت نفسها تسمّي هذا نمطَ التداول التجريبي: تلك العبارةُ خاطئة، فتحقّق من ‏auto_trade.mode في الملفّ ولا تثق بها.",
+        "ومع ذلك لا يتداول التثبيتُ الجديد شيئًا. فمفتاحُ الإيقاف يفشل مغلقًا، ولذلك تتخطّى كلُّ دورةٍ عملَها حتى تشغّل ‏keel resume، والقواعدُ المزروعة تبدأ مرشَّحةً لا تتداول شيئًا حتى ترقّيها أنت. ولإعدادٍ يعجز عن تقديم أمرٍ حيٍّ البتّة، شغّل ‎./.venv/bin/keel init-config --force من ‎~/.keel: إذ من دون ‎--live يكتب قالبَ ‏mode: paper.",
+        "وينتهي بتشغيل الأمر ‏keel versions، ويفشل فشلًا صريحًا إن لم تأتِ نتيجتُه نظيفة.",
+      ],
+      updateTitle: "إبقاؤه محدَّثًا",
+      updateBody: "إعادةُ تشغيل المثبِّت تنقل التثبيت إلى أحدث إصدارٍ في مكانه. ويستطيع كيل أيضًا أن يحدّث نفسه من المجلّد الذي يسكنه: فالأمر ‏keel update --check يعرض ما سيفعله التحديث ولا يغيّر شيئًا، والأمر ‏keel update ينفّذه بعد تأكيدٍ تكتبه بيدك. وثمّة تحفّظٌ يحسن أن تعرفه قبل الاعتماد عليه: فالأمر ‏keel update يثبّت عبر ‏uv، ويتوقّف بخطأٍ صريحٍ حين يغيب ‏uv. ويحتاج التثبيتُ الذي بناه السكربت دون ‏uv إلى إضافة ‏uv قبل أن يسري أيُّ تحديث. أمّا نسخةُ المصدر فيرفض ‏keel update المساسَ بها.",
+    },
     paperFirstTitle: "ابدأ بالتداول التجريبي — مجّانًا، ولا شيء في خطر",
     paperFirstBody: "للخطوة الأولى الحذرة: نمطُ التداول التجريبي مجّانيٌّ وتعليمي — تنفيذٌ مُحاكًى ولا أوامرَ حقيقية — بُني لتتعلّم سير العمل قبل أيّ قرارٍ في التشغيل الحيّ. وهو لا يحتاج إلى حسابٍ مموَّلٍ لدى منصّة ولا إلى بيانات اعتمادٍ للتداول؛ والمفتاح الوحيد الذي يطلبه مفتاحُ بيانات سوقٍ مجّانيٌّ للقراءة فقط لجلب تاريخ الشموع. أمّا النمط الحيّ فالوصول إليه أصعبُ عن قصد: إذ تقف في الطريق التوثيقاتُ، ومسارُ بوابة الترقية، والتأكيداتُ البشرية المكتوبة.",
     getStarted: {
@@ -206,7 +293,7 @@ export const install: LocalizedPage<InstallContent> = {
     fromSource: {
       title: "من المصدر — جرّبه في خمس دقائق",
       lead: "كلُّ ما في هذا المسار بصلاحية القراءة فقط وعلى جانب التداول التجريبي: لا أموال، ولا شيء هنا يستطيع تقديم أمر تداول. وتحتاج إلى uv وإلى مفتاح API مجّانيٍّ للقراءة فقط من منصّة Coinbase Developer Platform‏ (CDP) — إذ تُجلب بيانات الشموع عبر العميل المُصادَق عليه، ولذلك يفشل الأمر keel fetch من دون مفتاحٍ بخطأ AuthenticationError؛ نقولها مقدَّمًا كي لا تكون مفاجأةً في الخطوة الرابعة.",
-      requirements: ["‏uv (مدير حزم Python)", "أيُّ إصدارٍ من Python 3.11 فما فوق (يُطوَّر المستودع على 3.14)", "مفتاح CDP مجّاني للقراءة فقط — لبيانات السوق حصرًا"],
+      requirements: ["‏uv (مدير حزم Python)", "‏Python 3.14 أو أحدث — وهو حدُّ المستودع، أعلى ممّا تطلبه حزم wheel المنشورة", "مفتاح CDP مجّاني للقراءة فقط — لبيانات السوق حصرًا"],
       expectTitle: "ما ينبغي أن تتوقّعه",
       expect: "يعيد الأمر keel simulate تشغيلَ القواعد الحقيقية تشغيلًا حتميًّا على التاريخ المجلوب، ويقارنها بمؤشّر الشراء الدوري المنتظم (DCA) المرجعي، ويكتب تقرير GO-LIVE أو TRAIN-MORE. وعلى القواعد الافتراضية سيقول لك على الأرجح TRAIN-MORE ويسمّي البوابات التي أخفقت — وهذا دليلُ عمل المحرّك لا دليلُ عطبه؛ فالصدق نفسه هو الميزة.",
       next: "أمّا الخطوات التالية — ترقيةُ قاعدةٍ عبر البوابة، وتشغيلُ الوكيل في التداول التجريبي، وأوّلُ أمرٍ حيٍّ خاضعٍ لإشرافٍ بشري — فتجدها في كتاب الانتقال إلى التشغيل الحيّ (go-live runbook).",
@@ -249,15 +336,15 @@ export const install: LocalizedPage<InstallContent> = {
       ],
       avoidTitle: "أولًا — قد لا تحتاج إلى التعامل مع هذا أصلًا",
       avoidBody:
-        "مسارُ الخمس دقائق أدناه يثبّت المحرّك نفسه بلا مثبِّت وبلا تحذيرٍ على أيّ نظام، لأنه لا يُنزَّل شيءٌ بوصفه تطبيقًا — بل يجلب pip وuv حزم wheel المنشورة مباشرةً، ولا يعترض أيُّ نظام تشغيل على ذلك. وهو يحتاج إلى طرفيّةٍ وإلى Python 3.11 فأحدث، وهذا بالضبط هو الاحتكاك الذي وُجد تطبيقُ سطح المكتب ليزيله؛ لكن إن كانا عندك أصلًا فهو الطريق الأقصر، وبقيّةُ هذه الملاحظة لا تعنيك.",
+        "مسارُ الخمس دقائق أدناه يثبّت المحرّك نفسه بلا مثبِّت وبلا تحذيرٍ على أيّ نظام، لأنه لا يُنزَّل شيءٌ بوصفه تطبيقًا — بل يجلب pip وuv حزم wheel المنشورة مباشرةً، ولا يعترض أيُّ نظام تشغيل على ذلك. وهو يحتاج إلى طرفيّةٍ وإلى Python 3.14 فأحدث، وهذا بالضبط هو الاحتكاك الذي وُجد تطبيقُ سطح المكتب ليزيله؛ لكن إن كانا عندك أصلًا فهو الطريق الأقصر، وبقيّةُ هذه الملاحظة لا تعنيك.",
       avoidLink: "جرّبه في خمس دقائق",
       more: "الشرح الكامل، وكيف تتحقّق ممّا نزّلته",
     },
   },
 
   fr: {
-    rev: "2026-08-21.1",
-    translatedFromRev: "2026-08-21.1",
+    rev: "2026-08-25.1",
+    translatedFromRev: "2026-08-25.1",
     title: "Télécharger keel — macOS et Windows",
     description:
       "Téléchargez keel pour macOS ou Windows. Le numéro de version et les liens proviennent de GitHub Releases, récupérés au moment du build ; le parcours en cinq minutes depuis les sources figure également ici.",
@@ -282,6 +369,31 @@ export const install: LocalizedPage<InstallContent> = {
     ],
     thenTitle: "Installez ensuite les wheels",
     allFilesTitle: "Tous les fichiers de la version",
+    terminal: {
+      title: "Installer depuis le terminal — une seule commande",
+      lead: "Rassembler les wheels à la main n'est pas la seule porte d'entrée. Un script publié sur la branche par défaut de keel fait tout le travail. Il lit la dernière version parue sur GitHub, télécharge les cinq wheels de production et le config.yaml par défaut, puis les installe dans un environnement Python privé, sous votre dossier personnel.",
+      terms: "Une wheel est un paquet Python déjà construit. Un venv est un dossier qui contient le Python d'un seul projet et ses bibliothèques, tenu à l'écart du reste du système ; celui-ci est créé dans ~/.keel/.venv.",
+      requires: "Il vous faut macOS ou Linux, un terminal, curl et Python 3.14 ou plus. Le script refuse toute autre plateforme : les lecteurs sous Windows restent sur le parcours des wheels ci-dessus. Sous Linux, ce seuil mord dès aujourd'hui : la plupart des distributions s'en tiennent encore par défaut à un Python plus ancien, et le test de fumée de keel sur Linux échoue précisément à cette vérification, quand macOS la franchit avec un Python de Homebrew. Attendez-vous à installer 3.14 vous-même d'abord. Ce seuil est par ailleurs plus strict que celui des wheels installées — celles-ci tournent toujours sur Python 3.11, si bien que le parcours manuel ci-dessus accepte un Python que ce script, lui, refusera.",
+      pipeTitle: "L'installation en une ligne",
+      auditTitle: "Ou bien lisez-le d'abord, puis exécutez ce que vous avez lu",
+      auditLead: "keel est un programme auquel vous confierez peut-être les clés d'API d'une plateforme d'échange : diriger un script venu d'internet droit dans bash ne doit donc pas être la seule option proposée. Téléchargez-le, lisez-le, puis exécutez votre propre copie.",
+      auditComment: "# chaque étape annonce ce qu'elle va faire, et pourquoi, avant de le faire",
+      branchNote: "Le script est servi depuis main, la branche par défaut de keel. Il n'a jamais fait partie d'une version publiée, il n'y a donc aucun numéro à citer, et il change quand main change : c'est ainsi que le seuil Python ci-dessus est passé de 3.11 à 3.14. Lisez la copie que vous téléchargez, plutôt que de supposer que cette description a suivi.",
+      doesTitle: "Ce que fait le script",
+      does: [
+        "Il télécharge exactement cinq wheels, chacune par son nom exact, dans la dernière version parue. Il n'utilise jamais de motif *.whl : une version publiée embarque aussi des wheels qu'un déploiement ne doit pas recevoir.",
+        "Il installe par chemin de fichier exact, jamais par nom de paquet. Sur PyPI, le nom keel appartient à un projet sans rapport, et installer par chemin rend cette erreur impossible.",
+        "Il construit le venv avec uv seulement quand un uv fonctionnel répond à uv --version ; un substitut incapable de s'exécuter est considéré comme absent. Sinon, il utilise le Python qu'il a trouvé, avec pip.",
+        "Il affiche le sha256 de chaque wheel, calculé sur votre propre machine. C'est une trace d'audit, pas une vérification — aucune empreinte de wheel n'est publiée nulle part, il n'y a donc rien à quoi comparer.",
+        "Il n'exécute aucune commande privilégiée. Les téléchargements atterrissent dans un dossier temporaire supprimé à la sortie du script, et l'installation elle-même ne vit que sous votre dossier personnel.",
+        "Il n'écrase jamais un ~/.keel/config.yaml ni une base de données existante. Relancer le script met le code à jour sur place.",
+        "Le config.yaml qu'il dépose est la configuration de production de la version publiée, en auto_trade.mode: confirm — le profil réel derrière un verrou, pas le profil papier. keel prévisualise chaque entrée dictée par une règle et demande avant de la passer, à une invite y/N dont la réponse par défaut est non. Le stop de protection et la prise de bénéfice qui suivent une position déjà approuvée, eux, partent sans seconde question. Notez que le message de succès du script appelle cela le profil papier : cette ligne est fausse, vérifiez auto_trade.mode dans le fichier plutôt que de vous y fier.",
+        "Un déploiement neuf ne négocie rien pour autant. Le coupe-circuit échoue en position fermée : chaque cycle passe son tour tant que vous n'avez pas lancé keel resume, et les règles semées démarrent comme candidates, sans rien négocier avant que vous ne les promouviez. Pour une configuration incapable de passer le moindre ordre réel, lancez ./.venv/bin/keel init-config --force depuis ~/.keel : sans --live, c'est le modèle mode: paper qui est écrit.",
+        "Il termine en lançant keel versions, et échoue bruyamment si le résultat n'est pas net.",
+      ],
+      updateTitle: "Le maintenir à jour",
+      updateBody: "Relancer l'installeur amène le déploiement à la dernière version parue, sur place. keel sait aussi se mettre à jour depuis le dossier où il habite : keel update --check annonce ce que ferait la mise à jour sans rien modifier, et keel update l'applique après une confirmation tapée à la main. Une réserve mérite d'être connue avant de s'y fier : keel update installe via uv, et s'arrête sur une erreur explicite quand uv est absent. Un déploiement que le script a construit sans uv réclame l'ajout de uv avant qu'une mise à jour puisse s'appliquer. keel update refuse de toucher à une copie des sources.",
+    },
     paperFirstTitle: "Commencez en papier — gratuit, et sans rien risquer",
     paperFirstBody: "Pour un premier pas prudent : le profil papier est gratuit et pédagogique — exécutions simulées, aucun ordre réel — conçu pour apprendre le fonctionnement avant toute décision en réel. Il ne réclame ni compte approvisionné sur une plateforme, ni identifiants de trading ; la seule clé demandée est une clé de données de marché gratuite, en lecture seule, pour récupérer l'historique des bougies. Le profil réel, lui, se mérite délibérément : attestations, parcours de promotion et confirmations tapées à la main se dressent sur la route.",
     getStarted: {
@@ -294,7 +406,7 @@ export const install: LocalizedPage<InstallContent> = {
     fromSource: {
       title: "Depuis les sources — essayez keel en cinq minutes",
       lead: "Tout ce parcours est en lecture seule et côté papier : aucun fonds, et rien ici ne peut passer d'ordre. Il vous faut uv et une clé d'API Coinbase Developer Platform (CDP) gratuite, en lecture seule — l'historique des bougies passe par le client authentifié, si bien que keel fetch sans clé échoue sur une AuthenticationError. Autant le dire tout de suite, pour que l'étape 4 ne surprenne personne.",
-      requirements: ["uv (le gestionnaire de paquets Python)", "Python 3.11 ou plus (le dépôt se développe sur 3.14)", "Une clé CDP gratuite en lecture seule — données de marché uniquement"],
+      requirements: ["uv (le gestionnaire de paquets Python)", "Python 3.14 ou plus — le seuil du dépôt, plus haut que ce qu'exigent les wheels publiées", "Une clé CDP gratuite en lecture seule — données de marché uniquement"],
       expectTitle: "À quoi vous attendre",
       expect: "keel simulate rejoue les vraies règles, de façon déterministe, sur l'historique récupéré, les compare à la référence DCA et rédige un rapport GO-LIVE / TRAIN-MORE. Sur les règles par défaut, il vous répondra très probablement TRAIN-MORE en nommant les verrous qui bloquent : c'est le moteur qui fonctionne, pas une panne — l'honnêteté est la fonctionnalité.",
       next: "Les étapes suivantes — faire franchir le verrou à une règle, lancer l'agent papier, passer un premier ordre réel sous supervision — figurent dans le runbook de mise en production.",
@@ -337,7 +449,7 @@ export const install: LocalizedPage<InstallContent> = {
       ],
       avoidTitle: "D'abord — vous n'aurez peut-être pas à vous en soucier",
       avoidBody:
-        "Le parcours en cinq minutes ci-dessous installe le même moteur sans installeur et sans le moindre avertissement, quelle que soit la plateforme, parce que rien n'est téléchargé sous forme d'application : pip et uv récupèrent directement les wheels publiées, et aucun système d'exploitation n'y trouve à redire. Il faut un terminal et Python 3.11 ou plus — c'est précisément la friction que l'application de bureau doit supprimer ; mais si vous avez déjà les deux, c'est le chemin le plus court, et le reste de cette note ne vous concerne pas.",
+        "Le parcours en cinq minutes ci-dessous installe le même moteur sans installeur et sans le moindre avertissement, quelle que soit la plateforme, parce que rien n'est téléchargé sous forme d'application : pip et uv récupèrent directement les wheels publiées, et aucun système d'exploitation n'y trouve à redire. Il faut un terminal et Python 3.14 ou plus — c'est précisément la friction que l'application de bureau doit supprimer ; mais si vous avez déjà les deux, c'est le chemin le plus court, et le reste de cette note ne vous concerne pas.",
       avoidLink: "Essayez keel en cinq minutes",
       more: "L'explication complète, et comment vérifier ce que vous avez téléchargé",
     },
