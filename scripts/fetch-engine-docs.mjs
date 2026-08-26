@@ -32,19 +32,29 @@ const manifest = JSON.parse(
  * release tag cannot be resolved the build stops: falling back to `main` would
  * silently restore the skew this pin exists to remove.
  */
+/**
+ * Everything below reaches the build log by way of the releases API — the tag
+ * itself, and the `source` note, which quotes a network error verbatim. The tag
+ * is already validated in release-tag.mjs; this strips control characters and
+ * caps the length so no remote string can forge a line in the build log, which
+ * is read to decide whether a deploy is trustworthy.
+ */
+const forLog = (value) =>
+  String(value).replace(/[\u0000-\u001F\u007F]/g, " ").slice(0, 200);
+
 const docsRef = await (async () => {
   if (manifest.ref !== LATEST_RELEASE) return manifest.ref;
   const resolved = await resolveLatestReleaseTag(root, manifest.repo);
   if (!resolved.tag) {
     console.error(
-      `\nFAIL: could not resolve the latest release tag for ${manifest.repo} — ${resolved.source}.`,
+      `\nFAIL: could not resolve the latest release tag for ${manifest.repo} — ${forLog(resolved.source)}.`,
     );
     console.error(
       "The docs pipeline pins to a published release and never falls back to main (#85).",
     );
     process.exit(1);
   }
-  console.log(`  docs ref: ${resolved.tag} (from ${resolved.source})`);
+  console.log(`  docs ref: ${forLog(resolved.tag)} (from ${forLog(resolved.source)})`);
   return resolved.tag;
 })();
 

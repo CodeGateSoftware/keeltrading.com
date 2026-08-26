@@ -32,6 +32,22 @@ export const LATEST_RELEASE = "latest-release";
 /** How recent data/release.json must be to be reused without an API call. */
 const FRESH_MS = 60 * 60 * 1000;
 
+/**
+ * A git tag this pipeline is willing to trust. The resolved tag is interpolated
+ * into raw.githubusercontent URLs, GitHub blob URLs and build logs, so it is
+ * validated at the boundary rather than anywhere downstream: whatever the
+ * releases API hands back, only a plain version tag gets past this line.
+ *
+ * Deliberately narrow. keel tags releases `v0.11.2`; anything that does not
+ * look like that is treated as unresolved, and the caller fails the build.
+ */
+const TAG_PATTERN = /^v?[0-9]+(\.[0-9]+){0,3}(-[0-9A-Za-z.-]{1,32})?$/;
+
+/** @param {unknown} tag @returns {string|null} the tag, or null if untrusted. */
+function trustedTag(tag) {
+  return typeof tag === "string" && TAG_PATTERN.test(tag) ? tag : null;
+}
+
 function readReleaseFile(root) {
   const file = join(root, "data/release.json");
   if (!existsSync(file)) return null;
@@ -50,9 +66,10 @@ function readReleaseFile(root) {
  */
 export async function resolveLatestReleaseTag(root, repo) {
   const cached = readReleaseFile(root);
-  const cachedAge = cached?.fetchedAt ? Date.now() - Date.parse(cached.fetchedAt) : NaN;
-  if (cached?.tag && cachedAge >= 0 && cachedAge < FRESH_MS) {
-    return { tag: cached.tag, source: "data/release.json, written this build" };
+  const cachedAge = cached?.fetchedAt ? Date.now() - Date.parse(cached.fetchedAt) : Number.NaN;
+  const cachedTag = trustedTag(cached?.tag);
+  if (cachedTag && cachedAge >= 0 && cachedAge < FRESH_MS) {
+    return { tag: cachedTag, source: "data/release.json, written this build" };
   }
 
   const headers = {
@@ -67,12 +84,13 @@ export async function resolveLatestReleaseTag(root, repo) {
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const release = await response.json();
-    if (!release?.tag_name) throw new Error("the releases API returned no tag_name");
-    return { tag: release.tag_name, source: "the GitHub releases API" };
+    const apiTag = trustedTag(release?.tag_name);
+    if (!apiTag) throw new Error("the releases API returned no usable tag_name");
+    return { tag: apiTag, source: "the GitHub releases API" };
   } catch (error) {
-    if (cached?.tag) {
+    if (cachedTag) {
       return {
-        tag: cached.tag,
+        tag: cachedTag,
         source: `data/release.json, last known — the releases API is unreachable (${error.message})`,
       };
     }
