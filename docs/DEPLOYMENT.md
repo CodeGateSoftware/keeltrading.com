@@ -68,6 +68,34 @@ canonical-URL side needs no changes — the build has always emitted
 After the 60-day ICANN window (from 2026-08-19), optionally transfer the
 registrar to Cloudflare.
 
+## AI crawler access (zone setting, not code — issue #82)
+
+`public/robots.txt` is four lines and allows everything. The **served**
+`robots.txt` is not: Cloudflare prepends a `# BEGIN Cloudflare Managed content`
+block at the edge that disallows nine AI crawlers (`ClaudeBot`, `GPTBot`,
+`CCBot`, `Google-Extended`, `meta-externalagent`, `Applebot-Extended`,
+`Amazonbot`, `Bytespider`, `CloudflareBrowserRenderingCrawler`) and sets
+`Content-Signal: ai-train=no,use=reference`.
+
+The origin cannot override an edge-injected block — editing `public/robots.txt`
+does nothing. It is turned off in the dashboard: the `keeltrading.com` zone →
+the AI crawler control that mentions managed `robots.txt` or content signals.
+Cloudflare has shipped this as **AI Crawl Control**, previously **AI Audit** /
+"Block AI bots"; the label has moved across releases, so search the zone for the
+setting rather than a fixed menu path.
+
+This contradicts roadmap 1.5, which requires GPTBot/ClaudeBot/PerplexityBot to
+be crawlable — blocking them opts the site out of being cited by answer engines,
+while normal Google Search indexing is unaffected (`search=yes` and
+`User-agent: * Allow: /` still stand). `ai-train=no` is a defensible stance to
+keep; the blanket `Disallow: /` per crawler is the part that costs GEO reach.
+
+Verify with `npm run check:ai-crawlers` (any origin: `node
+scripts/check-ai-crawlers.mjs https://staging.example`). The **AI crawler
+access** workflow runs it daily against production and fails loudly while the
+block is in place. It is intentionally not in `ci.yml` — it tests production,
+not the pull request.
+
 ## Operating notes
 
 - **A build that cannot fetch a pinned engine doc fails on purpose** (FR-4).

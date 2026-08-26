@@ -11,10 +11,21 @@ item carries its dependency and its "how we know it failed" check.
 | 1.2 | GSC property + sitemap submission (both locale sitemaps via sitemap-index) | 1.1 | Coverage report shows 24/24 discovered within 14d |
 | 1.3 | ~~Title/meta rewrite on the 16 existing locale pages~~ **shipped 2026-08-19** (table below) | none — do now | Titles 30–60 chars, unique, keyword-leading |
 | 1.4 | ~~JSON-LD additions: `WebSite` (+`sameAs` on Organization: GitHub org, engine repo); extend About FAQ with the KEEL-ticker line~~ **shipped 2026-08-19** | none | Rich Results Test passes; entity panel check at 3mo |
-| 1.5 | `llms.txt` at root summarizing the site for AI crawlers; ensure GPTBot/ClaudeBot/PerplexityBot not blocked in robots.txt | none | File fetchable; AI crawlers appear in CF analytics |
+| 1.5 | ~~`llms.txt` at root summarizing the site for AI crawlers~~ **shipped 2026-08-19**; ensure GPTBot/ClaudeBot/PerplexityBot not blocked in robots.txt — **BLOCKED, see #82** | none | `npm run check:ai-crawlers` exits 0; AI crawlers appear in CF analytics |
 | 1.6 | ~~BreadcrumbList schema on docs pages; DefinedTermSet on glossary~~ **shipped 2026-08-19** | none | Rich Results Test per template |
 | 1.7 | Cloudflare Web Analytics token live (language dimension = FR/ES decision input, PRD D4) | 1.1 | Beacon firing; language report populating |
 | 1.8 | Engine README gains the keeltrading.com link (PRD §10 allows) — entity `sameAs` reinforcement | 1.1 | Reciprocal links crawlable |
+
+> **1.5 blocker (found 2026-08-23, issue #82).** `public/robots.txt` is correct,
+> but Cloudflare injects a `# BEGIN Cloudflare Managed content` block at the edge
+> that disallows nine AI crawlers — `ClaudeBot`, `GPTBot`, `CCBot`,
+> `Google-Extended`, `meta-externalagent`, `Applebot-Extended`, `Amazonbot`,
+> `Bytespider`, `CloudflareBrowserRenderingCrawler` — and sets
+> `Content-Signal: ai-train=no`. The origin cannot override it; the remedy is a
+> zone-level dashboard setting (docs/DEPLOYMENT.md § AI crawler access).
+> `llms.txt` therefore ships and serves 200 while the crawlers it exists for are
+> told not to read the pages it points at. `scripts/check-ai-crawlers.mjs` now
+> fails loudly on this, daily, so it cannot go quiet again.
 
 ### Title/meta rewrite table (current → proposed, EN shown; AR mirrors)
 

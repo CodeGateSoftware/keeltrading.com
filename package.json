@@ -10,6 +10,7 @@
     "build": "npm run fetch && astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "check:ai-crawlers": "node scripts/check-ai-crawlers.mjs",
     "og": "node scripts/generate-og.mjs"
   },
   "dependencies": {
