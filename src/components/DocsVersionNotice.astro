@@ -1,0 +1,90 @@
+---
+import { localePath } from "../i18n/config";
+import { t } from "../i18n/ui";
+
+/**
+ * #85 — the version-skew notice on an engine document page.
+ *
+ * keel's browser UI deep-links here carrying the version it is running:
+ * /en/docs/glossary/?v=0.11.2#qabd. The docs pipeline pins to the latest
+ * published release tag, so most readers match and see nothing. When they do
+ * not match, this says so plainly instead of letting the reader assume the page
+ * describes their build.
+ *
+ * The site is `output: "static"`, so no query parameter exists at build time:
+ * the comparison happens in the browser. The markup ships hidden and complete,
+ * and the inline script below only fills one text node and unhides it — the
+ * same "labels as data attributes, behaviour in one small inline script"
+ * pattern as the code-block copy button. Because the element is in the document
+ * from the first parse and is unhidden during parsing, a `#anchor` in the URL
+ * still lands where it should; the script never reads or writes location.hash.
+ *
+ * Anything unexpected in `?v=` renders nothing at all: an unrecognized value is
+ * not evidence of skew.
+ *
+ * English only, by design and by routing: engine documents are published in
+ * English and `[slug].astro` exists only under /en/ (the ar and fr editions
+ * ship a docs index, not per-document pages). The Arabic and French strings
+ * exist in ui.ts so the chrome stays complete if that ever changes.
+ */
+interface Props {
+  /** The ref the page was built from — data/docs-meta.json's `ref`. */
+  builtRef: string;
+}
+
+const { builtRef } = Astro.props;
+const chrome = t("en");
+
+/** Only a version tag is comparable. A branch or SHA has nothing to compare. */
+const comparable = /^v?\d+(\.\d+)*/.test(builtRef);
+
+// Rendered once with placeholders; the script substitutes both versions, so the
+// script itself stays free of any locale's wording.
+const template = chrome.docs.versionSkew("{running}", "{built}");
+---
+
+{
+  comparable && (
+    <div
+      class="stale-banner"
+      id="docs-version-notice"
+      role="note"
+      hidden
+      data-built-ref={builtRef}
+      data-skew-template={template}
+    >
+      <strong>{chrome.docs.versionSkewTitle}</strong>
+      <span data-skew-body />{" "}
+      <a href={localePath("en", "changelog")}>{chrome.docs.versionSkewLink} →</a>
+    </div>
+  )
+}
+
+{
+  comparable && (
+    <script is:inline>
+      (function () {
+        try {
+          var el = document.getElementById("docs-version-notice");
+          if (!el) return;
+          var raw = new URLSearchParams(window.location.search).get("v");
+          if (!raw || raw.length > 40) return;
+          // A plain version string only. Anything else is ignored outright.
+          if (!/^v?[0-9]+(\.[0-9]+)*([-+.][0-9A-Za-z.+-]*)?$/.test(raw)) return;
+          var strip = function (value) {
+            return value.trim().replace(/^v/i, "");
+          };
+          var running = strip(raw);
+          var built = strip(el.getAttribute("data-built-ref") || "");
+          if (!built || running === built) return;
+          var body = el.querySelector("[data-skew-body]");
+          var template = el.getAttribute("data-skew-template") || "";
+          if (!body || !template) return;
+          // textContent, never innerHTML: `running` comes from the URL.
+          body.textContent = template.replace("{running}", running).replace("{built}", built);
+          el.hidden = false;
+        } catch (e) {}
+      })();
+    </script>
+  )
+}

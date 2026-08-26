@@ -1,6 +1,7 @@
 {
   "repo": "CodeGateSoftware/keel",
-  "ref": "main",
+  "ref": "latest-release",
+  "refNote": "Sentinel, read by scripts/fetch-engine-docs.mjs (#85): resolve to the latest published release tag at build time, so the site describes what an operator actually runs. A literal branch, tag or SHA here is used verbatim instead. There is no fallback to main: if no tag resolves, the build fails.",
   "docs": [
     {
       "path": "docs/glossary.md",

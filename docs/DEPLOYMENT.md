@@ -101,6 +101,11 @@ not the pull request.
 - **A build that cannot fetch a pinned engine doc fails on purpose** (FR-4).
   Fix by updating `engine-docs.manifest.json` to the document's new path —
   never by hand-copying content into `src/content/engine-docs/` (gitignored).
+- **The docs ref is a release tag, not a branch** (#85). `npm run fetch` runs
+  `fetch-release.mjs` first, so `fetch-engine-docs.mjs` reads the tag from
+  `data/release.json` without a second call to the releases API. If no tag can
+  be resolved at all, the docs fetch exits non-zero: there is deliberately no
+  fallback to `main`, which is the skew the pin removes.
 - **Release / Discussions fetch failures degrade, not fail**: the build keeps
   the last-known `data/*.json`; the Install and News pages show their GitHub
   fallbacks. `data/` contents are build artifacts and never committed.

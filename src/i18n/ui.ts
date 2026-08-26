@@ -59,6 +59,11 @@ export const ui = {
       originalLanguageNote:
         "Engine documents are published in English. The Arabic edition summarizes them; the originals remain the authoritative text.",
       notTranslated: "This document is not translated. It is shown in English in its original form.",
+      /** #85 — shown only when keel's ?v= differs from the tag the docs were built from. */
+      versionSkewTitle: "These pages describe a different keel version",
+      versionSkew: (running: string, built: string) =>
+        `You're running keel ${running}. These pages describe ${built}.`,
+      versionSkewLink: "See what changed",
     },
     news: {
       from: "Announcements from GitHub Discussions",
@@ -152,6 +157,10 @@ export const ui = {
       originalLanguageNote:
         "تُنشر وثائق المحرّك بالإنجليزية. وتُلخّصها النسخة العربية، وتبقى النصوص الأصلية هي المرجع المعتمد.",
       notTranslated: "هذا المستند غير مترجم؛ يُعرض بالإنجليزية بصيغته الأصلية.",
+      versionSkewTitle: "تصف هذه الصفحات إصدارًا آخر من كيل",
+      versionSkew: (running: string, built: string) =>
+        `أنت تشغّل كيل ${running}. وتصف هذه الصفحات ${built}.`,
+      versionSkewLink: "اطّلع على ما تغيّر",
     },
     news: {
       from: "إعلاناتٌ من نقاشات GitHub",
@@ -253,6 +262,10 @@ export const ui = {
       originalLanguageNote:
         "Les documents du moteur paraissent en anglais. L'édition française les résume ; les originaux font foi.",
       notTranslated: "Ce document n'est pas traduit : il est affiché en anglais, dans sa forme d'origine.",
+      versionSkewTitle: "Ces pages décrivent une autre version de keel",
+      versionSkew: (running: string, built: string) =>
+        `Vous utilisez keel ${running}. Ces pages décrivent ${built}.`,
+      versionSkewLink: "Voir ce qui a changé",
     },
     news: {
       from: "Annonces publiées dans les Discussions GitHub",

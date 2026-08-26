@@ -24,8 +24,10 @@ registrar completes (PRD §11). SEO strategy and roadmap:
 - **Static-first Astro** (zero client JavaScript), deployed to Cloudflare
   Pages from `main`; every PR gets a preview.
 - **Docs pipeline (FR-4)** — [engine-docs.manifest.json](engine-docs.manifest.json)
-  pins the engine documents; `npm run build` fetches them at build time and
-  **fails loudly** if one moves. Documents are never hand-copied.
+  pins the engine documents at keel's latest published release tag, resolved at
+  build time (#85), so the site describes what an operator runs; `npm run build`
+  fetches them and **fails loudly** if one moves. Documents are never
+  hand-copied.
 - **News (FR-5)** — the Announcements category of GitHub Discussions, read via
   the public REST endpoint (no token, no Worker needed — see the note in
   docs/DEPLOYMENT.md), refreshed by an hourly rebuild workflow.
