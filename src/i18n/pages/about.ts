@@ -8,7 +8,7 @@ export interface FaqItem {
   question: string;
   answer: string[];
   /** Optional deep link after the answer; AboutPage builds the path with localePath. */
-  link?: { label: string; page: PageKey; hash?: string };
+  link?: { label: string; page: PageKey; hash?: `#${string}` };
 }
 
 export interface AboutContent {
