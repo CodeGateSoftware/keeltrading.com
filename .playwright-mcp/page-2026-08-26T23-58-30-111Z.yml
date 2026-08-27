@@ -1,0 +1,342 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - generic [ref=e4]:
+    - paragraph [ref=e9]: ﴿وَقُلْ رَبِّ زِدْنِي عِلْمًا ١١٤﴾
+    - paragraph [ref=e13]: "[Tā-Hā 114]"
+  - banner [ref=e14]:
+    - generic [ref=e15]:
+      - checkbox "Menu" [ref=e16]
+      - link "keel" [ref=e17] [cursor=pointer]:
+        - /url: /en/
+      - navigation "Main navigation" [ref=e21]:
+        - link "Features" [ref=e22] [cursor=pointer]:
+          - /url: /en/features/
+        - link "Install" [ref=e23] [cursor=pointer]:
+          - /url: /en/install/
+        - link "Docs" [ref=e24] [cursor=pointer]:
+          - /url: /en/docs/
+        - link "News" [ref=e25] [cursor=pointer]:
+          - /url: /en/news/
+        - link "Changelog" [ref=e26] [cursor=pointer]:
+          - /url: /en/changelog/
+        - link "Community" [ref=e27] [cursor=pointer]:
+          - /url: /en/community/
+        - link "Compliance" [ref=e28] [cursor=pointer]:
+          - /url: /en/compliance/
+        - link "Compare" [ref=e29] [cursor=pointer]:
+          - /url: /en/compare/
+        - link "About" [ref=e30] [cursor=pointer]:
+          - /url: /en/about/
+      - generic [ref=e31]:
+        - generic [ref=e32]:
+          - paragraph [ref=e33]:
+            - text: EN
+            - generic [ref=e37]: ▾
+          - list "Language":
+            - listitem:
+              - link "العربية":
+                - /url: /ar/
+            - listitem:
+              - link "Français":
+                - /url: /fr/
+        - button "Toggle light and dark theme" [ref=e38] [cursor=pointer]
+        - link "View on GitHub" [ref=e41] [cursor=pointer]:
+          - /url: https://github.com/CodeGateSoftware/keel
+  - main [ref=e44]:
+    - generic [ref=e46]:
+      - navigation "Docs navigation" [ref=e47]:
+        - link [ref=e48] [cursor=pointer]:
+          - /url: /en/install/
+        - generic [ref=e52]:
+          - paragraph [ref=e53]: Get started guides
+          - list [ref=e57]:
+            - listitem [ref=e58]:
+              - link "1 · Install and first run" [ref=e59] [cursor=pointer]:
+                - /url: /en/guides/first-run/
+            - listitem [ref=e60]:
+              - link "2 · Your first simulation" [ref=e61] [cursor=pointer]:
+                - /url: /en/guides/first-simulation/
+            - listitem [ref=e62]:
+              - link "3 · The paper profile" [ref=e63] [cursor=pointer]:
+                - /url: /en/guides/paper-profile/
+            - listitem [ref=e64]:
+              - link "4 · Attestations before anything is live" [ref=e65] [cursor=pointer]:
+                - /url: /en/guides/compliance-attest/
+        - generic [ref=e66]:
+          - paragraph [ref=e67]: Deep explainers
+          - list [ref=e72]:
+            - listitem [ref=e73]:
+              - link "How Shariah crypto screening actually works" [ref=e74] [cursor=pointer]:
+                - /url: /en/guides/how-shariah-crypto-screening-works/
+            - listitem [ref=e75]:
+              - link "Qabd (constructive possession) in spot crypto, explained" [ref=e76] [cursor=pointer]:
+                - /url: /en/guides/qabd-constructive-possession-spot-crypto/
+            - listitem [ref=e77]:
+              - link "Attestation is not a fatwa" [ref=e78] [cursor=pointer]:
+                - /url: /en/guides/attestation-is-not-a-fatwa/
+        - generic [ref=e79]:
+          - paragraph [ref=e80]: Guides
+          - list [ref=e85]:
+            - listitem [ref=e86]:
+              - link "Operator runbook" [ref=e87] [cursor=pointer]:
+                - /url: /en/docs/operator-runbook/
+            - listitem [ref=e88]:
+              - link "Go-live runbook" [ref=e89] [cursor=pointer]:
+                - /url: /en/docs/go-live-runbook/
+        - generic [ref=e90]:
+          - paragraph [ref=e91]: Reference
+          - list [ref=e95]:
+            - listitem [ref=e96]:
+              - link "Glossary" [ref=e97] [cursor=pointer]:
+                - /url: /en/docs/glossary/
+            - listitem [ref=e98]:
+              - link "The fiqh basis" [ref=e99] [cursor=pointer]:
+                - /url: /en/docs/fiqh-basis/
+        - generic [ref=e100]:
+          - paragraph [ref=e101]: Research & experiments
+          - list [ref=e105]:
+            - listitem [ref=e106]:
+              - 'link "Experiment: the honest result, restated" [ref=e107] [cursor=pointer]':
+                - /url: /en/docs/experiment-honest-result-restated/
+            - listitem [ref=e108]:
+              - 'link "Experiment: the hourly backtest" [ref=e109] [cursor=pointer]':
+                - /url: /en/docs/experiment-hourly-backtest/
+            - listitem [ref=e110]:
+              - 'link "Research: speculation risk sources (Lahlou)" [ref=e111] [cursor=pointer]':
+                - /url: /en/docs/research-lahlou-speculation-risk/
+            - listitem [ref=e112]:
+              - 'link "Research: money management & fiqh sources" [ref=e113] [cursor=pointer]':
+                - /url: /en/docs/research-money-management/
+      - article [ref=e114]:
+        - navigation "Breadcrumb" [ref=e115]:
+          - link "Docs" [ref=e116] [cursor=pointer]:
+            - /url: /en/docs/
+          - generic [ref=e117]: ›
+          - generic [ref=e118]: Reference
+          - generic [ref=e119]: ›
+          - generic [ref=e120]: Glossary
+        - heading "Glossary" [level=1] [ref=e121]
+        - paragraph [ref=e122]:
+          - text: Fetched at build time from CodeGateSoftware/keel@v0.11.2. If a document moves, the build fails — this site never renders stale docs. Last fetched 2026-08-26.
+          - link "View source on GitHub" [ref=e123] [cursor=pointer]:
+            - /url: https://github.com/CodeGateSoftware/keel/blob/v0.11.2/docs/glossary.md
+          - text: .
+        - generic [ref=e124]:
+          - paragraph [ref=e125]: "The single source for the console’s vocabulary. Every term a keel screen can show is defined HERE and nowhere else: the TUI’s Help menu renders this file directly (bounded read, cached by mtime — the same reader discipline the Research corpus keeps), and the docs link to it rather than restating a definition that could drift."
+          - paragraph [ref=e126]:
+            - text: Two honesty rules this file inherits from
+            - code [ref=e127]: docs/fiqh-basis.md
+            - text: ":"
+          - list [ref=e128]:
+            - listitem [ref=e129]:
+              - strong [ref=e130]: Fiqh terms are anchored, never authored.
+              - text: A fiqh term’s definition is a verbatim passage of
+              - code [ref=e131]: docs/fiqh-basis.md
+              - text: ", and its"
+              - code [ref=e132]: "Source:"
+              - text: line names the document and the exact section it was quoted from. Where fiqh-basis does not state a term (gharar), the definition says so, rather than papering the gap with a paraphrase that sounds like a ruling — the knowledge-base sources fiqh-basis indexes are the place to read it.
+            - listitem [ref=e133]:
+              - strong [ref=e134]: Rule parameters are not defined here.
+              - text: What
+              - code [ref=e135]: turtle_breakout
+              - text: ’s
+              - code [ref=e136]: entry_lookback
+              - text: means lives in the rule class that defines it, rendered by introspection through
+              - code [ref=e137]: keel.commands.rules.describe_params
+              - text: — the help system LINKS to that source; a second table in this file would drift the day a class changed. The entries below define only the vocabulary shared across screens.
+          - paragraph [ref=e138]:
+            - text: Each entry is a
+            - code [ref=e139]: "## term"
+            - text: heading, a definition, and a
+            - code [ref=e140]: "Source:"
+            - text: line.
+          - heading "rail" [level=2] [ref=e141]
+          - paragraph [ref=e142]: One of keel’s numbered hard guards that every order passes through — spend caps, drawdown breakers, the allowlist, settlement-currency and spot-shape checks. Eighteen exist (1-14, 16, 17, 18, 19 — there is no rail 15); each is un-overridable and audit-logged.
+          - paragraph [ref=e143]: "Source: keel’s own vocabulary — docs/fiqh-basis.md’s rails table (the prudential rails 2-14, 16) plus its prose sections for rails 1, 17, 18 and 19"
+          - heading "attestation" [level=2] [ref=e144]
+          - paragraph [ref=e145]:
+            - text: market facts are computed, Shariah classifications are
+            - strong [ref=e146]: ATTESTED, never inferred
+            - text: . Whether a token’s core purpose is a haram sector (§28.4), whether it is asset-backed
+            - code [ref=e147]: "'ayn"
+            - text: or a claim
+            - code [ref=e148]: dayn
+            - text: (§65.5/§67.2), and whether it pays a riba-like yield are questions of fact-plus-scholarship about the world. No module in this repository derives them from candles, and none pretends to. A human records them, with a source and a name, via
+            - code [ref=e149]: keel assets attest
+            - text: .
+          - paragraph [ref=e150]: "Source: docs/fiqh-basis.md — ”## What is attested versus what is computed”"
+          - heading "instrument attestation" [level=2] [ref=e151]
+          - paragraph [ref=e152]:
+            - text: Only
+            - code [ref=e153]: spot
+            - text: is admitted; CFD, future, perpetual, option, and leveraged-token listings are refused, recorded via
+            - code [ref=e154]: keel assets attest-instrument
+            - text: . Unattested fails closed.
+          - paragraph [ref=e155]:
+            - text: "Source: docs/fiqh-basis.md — ”### The curation screen ("
+            - code [ref=e156]: keel/compliance/screen.py
+            - text: )”
+          - heading "exemption" [level=2] [ref=e157]
+          - paragraph [ref=e158]:
+            - text: a documented exception (
+            - code [ref=e159]: keel assets exempt
+            - text: ") may waive only ONE criterion today:"
+            - code [ref=e160]: history
+          - paragraph [ref=e161]:
+            - text: "Source: docs/fiqh-basis.md — ”### The curation screen ("
+            - code [ref=e162]: keel/compliance/screen.py
+            - text: )”
+          - heading "screening" [level=2] [ref=e163]
+          - paragraph [ref=e164]: An unattested asset is not “probably fine” — it is unknown, and the screen fails closed on unknown.
+          - paragraph [ref=e165]: "Source: docs/fiqh-basis.md — ”## What is attested versus what is computed”"
+          - heading "promotion gate" [level=2] [ref=e166]
+          - paragraph [ref=e167]:
+            - text: The thresholds a candidate rule must clear on out-of-sample evidence before
+            - code [ref=e168]: rules promote
+            - text: "moves it toward live: the lookahead gate first (truncation-diff analysis must find the rule clean of future-reading before anything else is even measured), then the four performance floors — min_trades (a minimum number of trades), min_expectancy, min_rr (a minimum realised reward:risk ratio) and min_win_rate — AND the overfitting gate (G4): a probability of backtest overfitting (PBO) above its bound TOGETHER WITH a steeply negative degradation slope, a conjunction, not a bare PBO bound. Pooling is per parameter SET and covers only the sample-size axis — the same parameter set’s paper evidence may count toward min_trades across products — and the G4/overfitting gate is NOT pooled. A pooled count is not a count of independent observations: the signals herd (about 8 products fire the same UTC day) and the outcomes correlate (ICC 0.212), so n pooled trades carry n / DEFF ~ n / 2.58 EFFECTIVE observations — n = 100 pooled is n_eff ~ 39, an edge of 20 points or more (#427; keel/research/throughput.py, pinned by tests/research/test_throughput.py). The DCA benchmark is not a floor of this gate; a simulate report is where a rule is measured against it."
+            - code [ref=e169]: keel insights
+            - text: renders how far a rule sits from the gate.
+          - paragraph [ref=e170]: "Source: keel’s own vocabulary — keel/strategy/promotion.py and keel/research/cscv.py"
+          - heading "paper mode" [level=2] [ref=e171]
+          - paragraph [ref=e172]: "Simulated execution against real prices: paper buys spend a paper cash balance, no order ever reaches a venue, and every fill is synthetic. keel’s paper deployments are separate config+db pairs from live — no figure on one describes the other."
+          - paragraph [ref=e173]: "Source: keel’s own vocabulary — the wrappers and docs/operator-runbook.md"
+          - heading "live mode" [level=2] [ref=e174]
+          - paragraph [ref=e175]: "Real orders at a real venue. Live selection is guarded: choosing the live deployment in the console asks an explicit y/N, and the engine’s confirm mode gates every order behind an interactive confirmation."
+          - paragraph [ref=e176]: "Source: keel’s own vocabulary — the wrappers and docs/operator-runbook.md"
+          - heading "kill switch" [level=2] [ref=e177]
+          - paragraph [ref=e178]:
+            - text: A stored halt that stops all trading immediately (
+            - code [ref=e179]: keel kill
+            - text: — one command, always allowed, logged). Releasing it (
+            - code [ref=e180]: keel resume
+            - text: ) is deliberately harder than engaging it.
+          - paragraph [ref=e181]: "Source: keel’s own vocabulary — keel/commands/trading.py"
+          - heading "autonomy" [level=2] [ref=e182]
+          - paragraph [ref=e183]: The armed state in which the agent places orders unattended. Arming demands a typed yes at the terminal; disarming only ever reduces capability and stays ungated.
+          - paragraph [ref=e184]: "Source: keel’s own vocabulary — keel/commands/autonomy.py"
+          - heading "qabd" [level=2] [ref=e185]
+          - paragraph [ref=e186]: possession is the ability to dispose, not physical custody
+          - paragraph [ref=e187]:
+            - text: "Source: docs/fiqh-basis.md — ”### Rail 17 — withdrawal capability,"
+            - code [ref=e188]: qabd
+            - text: §65.4”
+          - heading "riba" [level=2] [ref=e189]
+          - paragraph [ref=e190]: Coinbase pays USDC rewards on idle balances, that interest is riba, and it accrues with no order placed
+          - paragraph [ref=e191]: "Source: docs/fiqh-basis.md — ”### Purification (§65.9) and idle-balance rewards (§56.3)”"
+          - heading "gharar" [level=2] [ref=e192]
+          - paragraph [ref=e193]: not stated in docs/fiqh-basis.md — the knowledge-base sources it indexes (docs/superpowers/references/trading-knowledge-base/) are the place to read it
+          - paragraph [ref=e194]: "Source: docs/fiqh-basis.md — not stated there; see ”## How to read the citations”"
+          - heading "maysir" [level=2] [ref=e195]
+          - paragraph [ref=e196]:
+            - text: The commoner English transliteration of
+            - emphasis [ref=e197]: maisir
+            - text: — see the maisir entry.
+          - paragraph [ref=e198]: "Source: keel’s own vocabulary — a spelling pointer, not a definition"
+          - heading "maisir" [level=2] [ref=e199]
+          - paragraph [ref=e200]:
+            - text: what makes speculation
+            - emphasis [ref=e201]: maisir
+            - text: is non-ownership, non-delivery, difference-settlement
+          - paragraph [ref=e202]: "Source: docs/fiqh-basis.md — ”### Rails 18/19 — settlement currency and spot-instrument shape”"
+          - heading "purification" [level=2] [ref=e203]
+          - paragraph [ref=e204]: interest/reward credits are segregated from realised P&L and the equity base, reported as owed to charity, never recognised as profit
+          - paragraph [ref=e205]: "Source: docs/fiqh-basis.md — ”### Purification (§65.9) and idle-balance rewards (§56.3)”"
+          - heading "session-bound venue" [level=2] [ref=e206]
+          - paragraph [ref=e207]:
+            - text: "A market with opening hours (equities): it closes for nights, weekends and holidays, and its adapter declares"
+            - code [ref=e208]: session_bound
+            - text: so the engine consults the venue’s own clock before trading. Crypto venues are the 24/7 contrast — always open, no clock to consult.
+          - paragraph [ref=e209]:
+            - text: "Source: keel’s own vocabulary — the adapters’"
+            - code [ref=e210]: session_bound
+            - text: capability declaration
+          - heading "market clock" [level=2] [ref=e211]
+          - paragraph [ref=e212]:
+            - text: The venue’s OWN clock read (
+            - code [ref=e213]: /v2/clock
+            - text: on Alpaca; a constant OPEN on 24/7 venues) — never a locally maintained calendar, which would drift from the venue on holidays and half-days.
+          - paragraph [ref=e214]:
+            - text: "Source: keel’s own vocabulary — the broker port’s"
+            - code [ref=e215]: market_clock()
+          - heading "trust window" [level=2] [ref=e216]
+          - paragraph [ref=e217]:
+            - text: The interval a recorded market-clock state vouches for. Outside it the record is stale and every surface renders CLOCK UNAVAILABLE, fail-loud — exactly how
+            - code [ref=e218]: fetch --check
+            - text: treats a record that no longer vouches for anything.
+          - paragraph [ref=e219]: "Source: keel’s own vocabulary — keel.agent’s recorded session state"
+          - heading "DCA benchmark" [level=2] [ref=e220]
+          - paragraph [ref=e221]: "The honest alternative every simulated strategy is measured against: dollar-cost-average buying of the same products over the same window. A strategy that cannot beat it has no reason to exist."
+          - paragraph [ref=e222]: "Source: keel’s own vocabulary — keel/commands/simulate.py"
+          - heading "granularity" [level=2] [ref=e223]
+          - paragraph [ref=e224]:
+            - text: "The candle bar size a rule runs on (one hour, one day, …). It is a rule PARAMETER: each kind’s choices, default and meaning render from the rule class itself through"
+            - code [ref=e225]: keel commands.rules.describe_params
+            - text: — this glossary does not restate them.
+          - paragraph [ref=e226]: "Source: keel’s own vocabulary — the rule classes via describe_params"
+          - heading "trials ledger" [level=2] [ref=e227]
+          - paragraph [ref=e228]:
+            - text: The hash-chained record of every backtest trial, with its M/N decision accountings;
+            - code [ref=e229]: keel trials verify
+            - text: walks the chain and reports any break.
+          - paragraph [ref=e230]: "Source: keel’s own vocabulary — keel/research/ledger.py"
+        - paragraph [ref=e231]:
+          - link "View source on GitHub — docs/glossary.md" [ref=e232] [cursor=pointer]:
+            - /url: https://github.com/CodeGateSoftware/keel/blob/v0.11.2/docs/glossary.md
+        - navigation "Document navigation" [ref=e233]:
+          - link "← Previous Go-live runbook" [ref=e234] [cursor=pointer]:
+            - /url: /en/docs/go-live-runbook/
+            - generic [ref=e235]: ← Previous
+            - generic [ref=e236]: Go-live runbook
+          - link "Next → The fiqh basis" [ref=e237] [cursor=pointer]:
+            - /url: /en/docs/fiqh-basis/
+            - generic [ref=e238]: Next →
+            - generic [ref=e239]: The fiqh basis
+  - contentinfo [ref=e240]:
+    - generic [ref=e241]:
+      - generic [ref=e242]:
+        - generic [ref=e243]:
+          - heading "Standing disclaimers" [level=2] [ref=e244]
+          - paragraph [ref=e245]: keel is a personal tool — not financial advice, and not a fatwa or religious advice. Consult a qualified financial advisor and a knowledgeable scholar before trading. You are solely responsible for your trading decisions and for your own attestations.
+        - generic [ref=e246]:
+          - heading "Legal" [level=2] [ref=e247]
+          - paragraph [ref=e248]: Alpaca, Coinbase and Robinhood are trademarks of their respective owners. keel is not affiliated with, endorsed by, or sponsored by any of them. Venue names appear solely to identify what the code talks to.
+          - paragraph [ref=e249]: Not affiliated with the Kubernetes project also named Keel (keel.sh).
+          - paragraph [ref=e250]: "Engine: Apache-2.0 (CodeGateSoftware/keel). This site's code: MIT. Site content: © CodeGate Software — quoting with attribution is welcome."
+        - generic [ref=e251]:
+          - heading "The project" [level=2] [ref=e252]
+          - list [ref=e253]:
+            - listitem [ref=e254]:
+              - link "View on GitHub" [ref=e255] [cursor=pointer]:
+                - /url: https://github.com/CodeGateSoftware/keel
+            - listitem [ref=e256]:
+              - link "See releases on GitHub" [ref=e257] [cursor=pointer]:
+                - /url: https://github.com/CodeGateSoftware/keel/releases
+            - listitem [ref=e258]:
+              - link "Discuss on GitHub" [ref=e259] [cursor=pointer]:
+                - /url: https://github.com/CodeGateSoftware/keel/discussions
+            - listitem [ref=e260]:
+              - link "The honest result, stated first" [ref=e261] [cursor=pointer]:
+                - /url: https://github.com/CodeGateSoftware/keel/blob/main/docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md
+            - listitem [ref=e262]:
+              - link "This site's source" [ref=e263] [cursor=pointer]:
+                - /url: https://github.com/CodeGateSoftware/keeltrading.com
+        - generic [ref=e264]:
+          - heading "Editions" [level=2] [ref=e265]
+          - list [ref=e266]:
+            - listitem [ref=e267]:
+              - link "English" [ref=e268] [cursor=pointer]:
+                - /url: /en/
+            - listitem [ref=e269]:
+              - link "العربية" [ref=e270] [cursor=pointer]:
+                - /url: /ar/
+            - listitem [ref=e271]:
+              - link "Français" [ref=e272] [cursor=pointer]:
+                - /url: /fr/
+            - listitem [ref=e273]: Español (later)
+      - generic [ref=e274]:
+        - generic [ref=e275]: © 2026 CodeGate Software
+        - generic [ref=e276]:
+          - text: The honest result, stated first —
+          - link "the experiment record" [ref=e277] [cursor=pointer]:
+            - /url: https://github.com/CodeGateSoftware/keel/blob/main/docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md

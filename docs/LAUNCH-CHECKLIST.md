@@ -74,9 +74,10 @@ Verified 2026-08-22:
 ## 5. Docs pages fail the build when an engine doc moves — GREEN
 
 `scripts/fetch-engine-docs.mjs` fetches every document pinned in
-`engine-docs.manifest.json`; on a 404 or network error it records the failure and
-ends with `process.exit(1)` ("The build stops here by design (FR-4): never render
-stale or missing docs."). CI surfaces this legibly: `.github/workflows/ci.yml` step
+`engine-docs.manifest.json`, at keel's latest published release tag — resolved at
+build time since #85, never at `main`. On a 404 or network error it records the
+failure and ends with `process.exit(1)` ("The build stops here by design (FR-4):
+never render stale or missing docs."). CI surfaces this legibly: `.github/workflows/ci.yml` step
 **"Fetch engine docs, release, discussions"** (`npm run fetch`) runs before type
 check and build; `deploy.yml` chains the same fetch inside `npm run build`, so a
 moved engine doc red-Xes Checks and blocks the deploy instead of publishing a
@@ -93,8 +94,12 @@ stale page.
   EN install **100/100**, FR compare **100/100**.
 
 Both runs sit comfortably above the ≥95/≥95 budget. The site ships no client-side
-JavaScript framework or bundle by design — two small inline scripts only: the
-light/dark choice and the code-block copy button.
+JavaScript framework or bundle by design — three behaviors only: the light/dark
+choice, the code-block copy button, and the docs version notice (#85). Counted as
+tags that is four blocks on an English engine document page (the light/dark
+choice is a bootstrap plus a toggle) and three everywhere else.
+The third one ships on English engine document pages only, and does nothing at
+all unless keel sends a `?v=` that differs from the tag the docs were built from.
 
 ## 7. Honesty review green in EN and AR before launch — GREEN (reviewed EN + AR + FR)
 

@@ -11,15 +11,52 @@
  *
  * Relative markdown links inside fetched documents are rewritten to absolute
  * GitHub blob URLs so they resolve from this origin; document text is untouched.
+ *
+ * #85 — the ref is the latest published release tag, not `main`. An operator
+ * runs a release, so the documents this site renders must be the documents that
+ * release shipped. The manifest keeps the policy in its `ref` field as the
+ * sentinel "latest-release"; a literal branch, tag or SHA is still honored.
  */
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { LATEST_RELEASE, resolveLatestReleaseTag } from "./lib/release-tag.mjs";
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const manifest = JSON.parse(
   readFileSync(join(root, "engine-docs.manifest.json"), "utf8"),
 );
+
+/**
+ * The ref every fetch, rewritten link and source URL below points at. When the
+ * release tag cannot be resolved the build stops: falling back to `main` would
+ * silently restore the skew this pin exists to remove.
+ */
+/**
+ * Everything below reaches the build log by way of the releases API — the tag
+ * itself, and the `source` note, which quotes a network error verbatim. The tag
+ * is already validated in release-tag.mjs; this strips control characters and
+ * caps the length so no remote string can forge a line in the build log, which
+ * is read to decide whether a deploy is trustworthy.
+ */
+const forLog = (value) =>
+  String(value).replace(/[\u0000-\u001F\u007F]/g, " ").slice(0, 200);
+
+const docsRef = await (async () => {
+  if (manifest.ref !== LATEST_RELEASE) return manifest.ref;
+  const resolved = await resolveLatestReleaseTag(root, manifest.repo);
+  if (!resolved.tag) {
+    console.error(
+      `\nFAIL: could not resolve the latest release tag for ${manifest.repo} — ${forLog(resolved.source)}.`,
+    );
+    console.error(
+      "The docs pipeline pins to a published release and never falls back to main (#85).",
+    );
+    process.exit(1);
+  }
+  console.log(`  docs ref: ${forLog(resolved.tag)} (from ${forLog(resolved.source)})`);
+  return resolved.tag;
+})();
 
 const DOCS_DIR = join(root, "src/content/engine-docs");
 const META_FILE = join(root, "data/docs-meta.json");
@@ -88,14 +125,14 @@ const failures = [];
 const fetchedAt = new Date().toISOString();
 const meta = {
   repo: manifest.repo,
-  ref: manifest.ref,
+  ref: docsRef,
   fetchedAt,
   sections: manifest.sections ?? [],
   docs: [],
 };
 
 for (const doc of manifest.docs) {
-  const url = `https://raw.githubusercontent.com/${manifest.repo}/${manifest.ref}/${doc.path}`;
+  const url = `https://raw.githubusercontent.com/${manifest.repo}/${docsRef}/${doc.path}`;
   let response;
   try {
     response = await fetch(url, { headers: { "user-agent": "keeltrading.com-docs-fetch" } });
@@ -106,7 +143,7 @@ for (const doc of manifest.docs) {
   if (!response.ok) {
     failures.push(
       `${doc.path}: HTTP ${response.status} at ${url}\n` +
-        `  The document may have moved in ${manifest.repo}@${manifest.ref}. ` +
+        `  The document may have moved in ${manifest.repo}@${docsRef}. ` +
         `Update engine-docs.manifest.json to the new path — do not hand-copy the doc.`,
     );
     continue;
@@ -116,7 +153,7 @@ for (const doc of manifest.docs) {
   // the page's single H1 (one-h1-per-page). Heading IDs are unaffected.
   markdown = markdown.replace(/^#\s+.+\n/, "");
   markdown = demoteTopLevelHeadings(markdown);
-  markdown = rewriteRelativeLinks(markdown, doc.path, manifest.repo, manifest.ref);
+  markdown = rewriteRelativeLinks(markdown, doc.path, manifest.repo, docsRef);
   writeFileSync(join(DOCS_DIR, `${doc.slug}.md`), markdown);
   meta.docs.push({
     slug: doc.slug,
@@ -126,7 +163,7 @@ for (const doc of manifest.docs) {
     ar: doc.ar,
     fr: doc.fr ?? doc.en,
     section: doc.section ?? "reference",
-    sourceUrl: `https://github.com/${manifest.repo}/blob/${manifest.ref}/${doc.path}`,
+    sourceUrl: `https://github.com/${manifest.repo}/blob/${docsRef}/${doc.path}`,
   });
   console.log(`  fetched ${doc.path} -> engine-docs/${doc.slug}.md`);
 }

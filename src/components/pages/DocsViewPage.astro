@@ -1,6 +1,7 @@
 ---
 import { render, type CollectionEntry } from "astro:content";
 import Base from "../../layouts/Base.astro";
+import DocsVersionNotice from "../DocsVersionNotice.astro";
 import DocsSidebar from "../docs/DocsSidebar.astro";
 import DocsToc from "../docs/DocsToc.astro";
 import { loadDocsMeta, neighbors } from "../docs/nav";
@@ -114,6 +115,8 @@ if (glossaryTerms.length > 0) {
         </nav>
 
         <h1>{title}</h1>
+
+        <DocsVersionNotice builtRef={meta.ref} />
 
         {
           docMeta && (

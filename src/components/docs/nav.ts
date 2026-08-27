@@ -48,9 +48,13 @@ interface MetaFile {
   docs: DocMeta[];
 }
 
+/** Only reachable if data/docs-meta.json is missing — a real build cannot get
+ *  here, because the fetch script writes that file or exits non-zero. The ref
+ *  is left empty rather than naming a branch: since #85 the site describes a
+ *  release tag, and a hard-coded "main" here would be a claim, not a default. */
 const FALLBACK_META: MetaFile = {
   repo: "CodeGateSoftware/keel",
-  ref: "main",
+  ref: "",
   fetchedAt: "",
   sections: [],
   docs: [],
