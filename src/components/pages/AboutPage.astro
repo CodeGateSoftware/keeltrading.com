@@ -40,6 +40,13 @@ const c = about[locale];
               {item.answer.map((paragraph) => (
                 <p>{paragraph}</p>
               ))}
+              {item.link ? (
+                <p>
+                  <a href={`${localePath(locale, item.link.page)}${item.link.hash ?? ""}`}>
+                    {item.link.label}
+                  </a>
+                </p>
+              ) : null}
             </div>
           ))
         }
@@ -54,6 +61,13 @@ const c = about[locale];
               {item.answer.map((paragraph) => (
                 <p>{paragraph}</p>
               ))}
+              {item.link ? (
+                <p>
+                  <a href={`${localePath(locale, item.link.page)}${item.link.hash ?? ""}`}>
+                    {item.link.label}
+                  </a>
+                </p>
+              ) : null}
             </div>
           ))
         }

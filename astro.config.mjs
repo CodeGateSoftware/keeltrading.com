@@ -4,7 +4,8 @@ import sitemap from "@astrojs/sitemap";
 import { rehypeTableHeaders } from "./src/plugins/rehype-table-headers.mjs";
 
 // D4: i18n in the architecture from day one, phased in content.
-// `fr` and `es` are reserved in routing but ship no pages until their phase.
+// `en`, `ar`, and `fr` are all routed and all ship the full page set; `es` is
+// not a locale yet — adding one stays content + config only.
 // D7 / FR-1: static-first — no adapter, zero client JS by default.
 export default defineConfig({
   site: "https://keeltrading.com",

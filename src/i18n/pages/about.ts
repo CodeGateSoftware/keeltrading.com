@@ -1,4 +1,4 @@
-import type { LocalizedPage } from "../config";
+import type { LocalizedPage, PageKey } from "../config";
 
 /**
  * About (FR-2): license, trademarks, brand FAQ including the keel.sh
@@ -7,6 +7,8 @@ import type { LocalizedPage } from "../config";
 export interface FaqItem {
   question: string;
   answer: string[];
+  /** Optional deep link after the answer; AboutPage builds the path with localePath. */
+  link?: { label: string; page: PageKey; hash?: `#${string}` };
 }
 
 export interface AboutContent {
@@ -24,7 +26,7 @@ export interface AboutContent {
 
 export const about: LocalizedPage<AboutContent> = {
   en: {
-    rev: "2026-08-20.2",
+    rev: "2026-08-26.1",
     title: "About keel — Name, License, keel.sh & KEEL FAQ",
     description:
       "Who runs keeltrading.com, licensing, and the brand FAQ — why this keel is not Kubernetes Keel (keel.sh) nor Keel Infrastructure (KEEL).",
@@ -52,6 +54,17 @@ export const about: LocalizedPage<AboutContent> = {
         answer: [
           "No. A Nasdaq-listed bitcoin-mining company (formerly Bitfarms) trades under the ticker KEEL, so a search for “keel trading” or “keel crypto” may show its stock chart near these results. It has no connection to this project. This keel is an open-source compliance engine by CodeGate Software — if you landed on keeltrading.com, you are in the right place.",
         ],
+      },
+      {
+        question: "Is this “Shariah law”?",
+        answer: [
+          "No. keel constrains its operator's own trading and governs nobody else's conduct. No ruling is embedded in the software: the ruling is an input the operator records, not an output the engine produces. The honest description is a compliance engine that happens to have been built for one ethical framework.",
+        ],
+        link: {
+          label: "The full argument, on the compliance page",
+          page: "compliance",
+          hash: "#is-this-shariah-law",
+        },
       },
       {
         question: "Why is it called keel?",
@@ -107,8 +120,8 @@ export const about: LocalizedPage<AboutContent> = {
   },
 
   ar: {
-    rev: "2026-08-20.2",
-    translatedFromRev: "2026-08-20.2",
+    rev: "2026-08-26.1",
+    translatedFromRev: "2026-08-26.1",
     title: "حول كيل — الاسم والترخيص وأسئلة keel.sh وKEEL",
     description:
       "مَن يُشغّل keeltrading.com، والتراخيص، والأسئلة الشائعة عن الاسم — ولماذا ليس هذا كيلَ Kubernetes‏ (keel.sh) ولا شركةَ Keel Infrastructure‏ (KEEL).",
@@ -136,6 +149,17 @@ export const about: LocalizedPage<AboutContent> = {
         answer: [
           "لا. فثمّة شركةُ تعدين بيتكوين مدرجةٌ في ناسداك (كانت تُعرف سابقًا بـ Bitfarms) تتداول تحت الرمز KEEL، وقد يُظهر البحث عن «keel trading» أو «keel crypto» مخطّطَ سهمها قرب هذه النتائج. ولا صلة لها بهذا المشروع. فكيل هذا محرّكُ امتثالٍ مفتوح المصدر من CodeGate Software — وإن كنت قد وصلت إلى keeltrading.com فأنت في المكان الصحيح.",
         ],
+      },
+      {
+        question: "أهذا «القانون الشريعي»؟",
+        answer: [
+          "لا. فكيل يقيّد تداول مشغّله وحده، ولا يحكم سلوكَ أحدٍ غيره. ولا حُكمَ مضمّنًا في البرمجية: فالحُكم مُدخَلٌ يسجّله المشغّل، لا مخرجٌ ينتجه المحرّك. والوصفُ الصادق: محرّكُ امتثالٍ صُدِف أن بُني لإطارٍ أخلاقيٍّ واحد.",
+        ],
+        link: {
+          label: "الحجّة كاملةً في صفحة الامتثال",
+          page: "compliance",
+          hash: "#is-this-shariah-law",
+        },
       },
       {
         question: "لماذا سُمّي المشروع «كيل»؟",
@@ -191,8 +215,8 @@ export const about: LocalizedPage<AboutContent> = {
   },
 
   fr: {
-    rev: "2026-08-20.2",
-    translatedFromRev: "2026-08-20.2",
+    rev: "2026-08-26.1",
+    translatedFromRev: "2026-08-26.1",
     title: "À propos de keel — nom, licence et FAQ keel.sh & KEEL",
     description:
       "Qui édite keeltrading.com, les licences, et la FAQ de la marque — pourquoi ce keel n'est ni le Keel de Kubernetes (keel.sh) ni Keel Infrastructure (KEEL).",
@@ -220,6 +244,17 @@ export const about: LocalizedPage<AboutContent> = {
         answer: [
           "Non. Une société de minage de bitcoin cotée au Nasdaq (ex-Bitfarms) est cotée sous le symbole KEEL : une recherche sur « keel trading » ou « keel crypto » peut donc faire remonter son cours de Bourse. Elle n'a aucun lien avec ce projet. Ce keel-ci est un moteur de conformité open-source signé CodeGate Software — si vous êtes arrivé sur keeltrading.com, vous êtes au bon endroit.",
         ],
+      },
+      {
+        question: "Est-ce « la loi shariah » ?",
+        answer: [
+          "Non. keel contraint le trading de son opérateur, et ne gouverne la conduite de personne d'autre. Aucun jugement n'est encodé dans le logiciel : le jugement est une entrée que l'opérateur enregistre, pas une sortie que le moteur produit. La description honnête : un moteur de conformité qu'il est advenu qu'on bâtisse pour un cadre éthique précis.",
+        ],
+        link: {
+          label: "L'argument complet, sur la page Conformité",
+          page: "compliance",
+          hash: "#is-this-shariah-law",
+        },
       },
       {
         question: "Pourquoi ce nom, keel ?",
