@@ -1,9 +1,9 @@
 /**
  * FR-7 — i18n & RTL in the architecture from day one.
  *
- * `en` is the source of truth; `ar` is the launch translation. `fr`/`es` are
- * reserved in routing (astro.config.mjs) but ship no pages until their phase
- * (D4) — adding a locale must be content + config only.
+ * `en` is the source of truth; `ar` was the launch translation and `fr` has
+ * since shipped the full page set. `es` is not a locale yet (D4) — adding one
+ * must stay content + config only.
  */
 export const locales = ["en", "ar", "fr"] as const;
 export type Locale = (typeof locales)[number];
