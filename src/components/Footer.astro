@@ -7,6 +7,7 @@ import {
   ENGINE_DISCUSSIONS_URL,
 } from "../i18n/config";
 import { home } from "../i18n/pages/home";
+import { engineBlobUrl } from "../lib/engine-url";
 
 interface Props {
   locale: Locale;
@@ -16,8 +17,9 @@ const { locale } = Astro.props;
 const chrome = t(locale);
 const c = home[locale];
 
-const honestExperiment =
-  "https://github.com/CodeGateSoftware/keel/blob/main/docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md";
+const honestExperiment = engineBlobUrl(
+  "docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
+);
 
 const editionLinks = [
   { label: "English", locale: "en" as Locale },

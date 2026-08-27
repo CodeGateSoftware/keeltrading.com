@@ -1,4 +1,5 @@
 import type { LocalizedPage } from "../config";
+import type { EngineSource } from "../../lib/engine-url";
 
 /**
  * Compliance (FR-2): the Shariah methodology in plain terms — what keel
@@ -15,7 +16,9 @@ export interface ComplianceContent {
   doesNot: { title: string; items: string[] };
   framing: { title: string; body: string[] };
   attest: { title: string; body: string[]; command: string; commandNote: string };
-  links: { title: string; items: { label: string; note: string; href: string }[] };
+  /** Primary sources in the engine repo. Copy carries the repo-relative path;
+   *  CompliancePage builds the URL at the ref this build resolved (#91). */
+  links: { title: string; items: (EngineSource & { label: string; note: string })[] };
   translatedFromRev?: string;
 }
 
@@ -96,22 +99,23 @@ export const compliance: LocalizedPage<ComplianceContent> = {
         {
           label: "The fiqh basis (docs/fiqh-basis.md)",
           note: "The Shariah reasoning keel encodes, ruling by ruling, each with its in-repo source.",
-          href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/fiqh-basis.md",
+          path: "docs/fiqh-basis.md",
         },
         {
           label: "Scholarly review status",
           note: "What a scholarly review would cover, what it would and would not signify — and the standing status: not reviewed.",
-          href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/fiqh-basis.md#scholarly-review-status",
+          path: "docs/fiqh-basis.md",
+          hash: "#scholarly-review-status",
         },
         {
           label: "The honest result — experiment record",
           note: "No shipped rule family is net-positive at the taker fee actually paid; every number stated.",
-          href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
+          path: "docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
         },
         {
           label: "The glossary (docs/glossary.md)",
           note: "The single source for the vocabulary — fiqh terms are anchored, never authored.",
-          href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/glossary.md",
+          path: "docs/glossary.md",
         },
       ],
     },
@@ -194,22 +198,23 @@ export const compliance: LocalizedPage<ComplianceContent> = {
         {
           label: "الأساس الفقهي (docs/fiqh-basis.md)",
           note: "الاستدلال الشرعي الذي يُشفّره كيل، حكمًا حكمًا، مع مصدر كلِّ حكمٍ داخل المستودع.",
-          href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/fiqh-basis.md",
+          path: "docs/fiqh-basis.md",
         },
         {
           label: "حالة المراجعة العلمية",
           note: "ما ستغطّيه المراجعة العلمية، وما تعنيه وما لا تعنيه — والحالة القائمة: غير مُراجَع.",
-          href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/fiqh-basis.md#scholarly-review-status",
+          path: "docs/fiqh-basis.md",
+          hash: "#scholarly-review-status",
         },
         {
           label: "النتيجة الصادقة — سجلّ التجربة",
           note: "لا تحقّق أيُّ عائلةٍ من القواعد المُصدَّرة ربحًا صافيًا عند رسوم الآخذ الفعلية؛ وكلُّ الأرقام مذكورة.",
-          href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
+          path: "docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
         },
         {
           label: "المسرد (docs/glossary.md)",
           note: "المصدر الوحيد للمصطلحات — والمصطلحات الفقهية مُسنَدةٌ إلى مصادرها، لا مؤلَّفة.",
-          href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/glossary.md",
+          path: "docs/glossary.md",
         },
       ],
     },
@@ -292,22 +297,23 @@ export const compliance: LocalizedPage<ComplianceContent> = {
         {
           label: "La base fiqh (docs/fiqh-basis.md)",
           note: "Le raisonnement Shariah que keel encode, règle par règle, avec sa source dans le dépôt.",
-          href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/fiqh-basis.md",
+          path: "docs/fiqh-basis.md",
         },
         {
           label: "Le statut de l'examen par des savants",
           note: "Ce que couvrirait un examen par des savants, ce qu'il signifierait ou non — et le statut actuel : non examinée.",
-          href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/fiqh-basis.md#scholarly-review-status",
+          path: "docs/fiqh-basis.md",
+          hash: "#scholarly-review-status",
         },
         {
           label: "Le résultat honnête — le compte rendu de l'expérience",
           note: "Aucune famille de règles livrée ne dégage un résultat net positif aux frais de preneur réellement payés ; tous les chiffres sont donnés.",
-          href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
+          path: "docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
         },
         {
           label: "Le glossaire (docs/glossary.md)",
           note: "L'unique source du vocabulaire — les termes du fiqh y sont ancrés, jamais inventés.",
-          href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/glossary.md",
+          path: "docs/glossary.md",
         },
       ],
     },

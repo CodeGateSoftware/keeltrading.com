@@ -1,4 +1,5 @@
 import type { LocalizedPage } from "../config";
+import type { EngineSource } from "../../lib/engine-url";
 
 /**
  * Features (FR-2): mapped 1:1 to real engine capabilities. Every section ends
@@ -9,7 +10,10 @@ export interface Feature {
   title: string;
   body: string;
   points?: string[];
-  verify: { label: string; href: string };
+  /** The "verify in the repo" pointer. Copy carries the repo-relative path,
+   *  never a URL: FeaturesPage builds the href at the ref this build resolved,
+   *  so the reader lands on the code the release they run actually contains (#91). */
+  verify: EngineSource & { label: string };
 }
 
 export interface FeaturesContent {
@@ -36,7 +40,7 @@ export const features: LocalizedPage<FeaturesContent> = {
       {
         title: "Attested asset screening — fails closed",
         body: "Admission to the allowlist is split by what is knowable. Market facts are computed. The Shariah questions are not: whether a token's core purpose is a haram sector, whether it is asset-backed ('ayn) or a claim on a debtor (dayn), and whether it pays a riba-like yield. Those are attested through keel assets attest, never inferred. An absent attestation is a rejection, not a default pass.",
-        verify: { label: "compliance/screen.py", href: "https://github.com/CodeGateSoftware/keel/blob/main/keel/compliance/screen.py" },
+        verify: { label: "compliance/screen.py", path: "keel/compliance/screen.py" },
       },
       {
         title: "The rails — eighteen checks no order can skip",
@@ -51,32 +55,32 @@ export const features: LocalizedPage<FeaturesContent> = {
           "A maximum-spread entry gate that refuses live BUYs at a spread of 50 basis points or wider, and refuses outright if the order book cannot be read",
           "A rail veto names the rail that fired and the command that clears it",
         ],
-        verify: { label: "execution/guards.py", href: "https://github.com/CodeGateSoftware/keel/blob/main/keel/execution/guards.py" },
+        verify: { label: "execution/guards.py", path: "keel/execution/guards.py" },
       },
       {
         title: "Strategy gates — candidate → paper → live",
         body: "A rule must walk three stages before it can touch live money. Promotion clears a two-part gate: performance floors, and an overfitting check (PBO/CSCV). The 100-trade sample floor can be met by the rule's own backtest, or pooled across products in paper. Pooling requires at least five products contributing ten trades each, because a pool of correlated samples overstates its own power.",
-        verify: { label: "agent.py — RULE_REGISTRY", href: "https://github.com/CodeGateSoftware/keel/blob/main/keel/agent.py" },
+        verify: { label: "agent.py — RULE_REGISTRY", path: "keel/agent.py" },
       },
       {
         title: "Honest measurement, against DCA",
         body: "keel simulate replays the real rules over fetched history, compares against a simple DCA benchmark, and writes a GO-LIVE / TRAIN-MORE report naming every gate and its numbers. The backtester prices per-product slippage scaled from each asset's real liquidity, from 5 to 50 basis points, so results cannot be flattered by thin order books. On the default rules it will very likely tell you TRAIN-MORE. That is the engine working, not broken.",
-        verify: { label: "the experiment record", href: "https://github.com/CodeGateSoftware/keel/tree/main/docs/experiments" },
+        verify: { label: "the experiment record", path: "docs/experiments", kind: "tree" },
       },
       {
         title: "Three deployment profiles that share nothing",
         body: "Daily paper, live, and an hourly evidence profile (paper-hourly) — each with its own database and config. The hourly profile exists because the daily clock measures only 2.15 signals per asset-year, which puts a 100-trade review 31 to 84 years away. The same rules on ONE_HOUR bars fire 49.4 signals per asset-year, about 940 entry signals a year once pooled. That moves a forward-evidence review to weeks instead of decades. The hourly profile is measured net negative too: it exists to collect admissible forward evidence, not profit.",
-        verify: { label: "operator runbook", href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/operator-runbook.md" },
+        verify: { label: "operator runbook", path: "docs/operator-runbook.md" },
       },
       {
         title: "A broker port, not a broker lock-in",
         body: "Adapters implement one contract — the keel-broker-api port — and register under the keel.brokers entry point. Coinbase Advanced Trade is the reference adapter; Robinhood ships as an optional, deliberately unwired venue; an Alpaca adapter joined in v0.10.0. A deliberately divergent fake venue keeps the port honest: the conformance suite, about 3,000 tests, runs against both.",
-        verify: { label: "packages/", href: "https://github.com/CodeGateSoftware/keel/tree/main/packages" },
+        verify: { label: "packages/", path: "packages", kind: "tree" },
       },
       {
         title: "Confirm by default; autonomy changes who is asked",
         body: "keel previews each order and asks you at the terminal. Running headless, with no one to ask, it declines. keel autonomy on changes who is asked, never what is allowed. To stop trading, keel kill — the kill-switch fails closed.",
-        verify: { label: "the README, 'How keel works'", href: "https://github.com/CodeGateSoftware/keel#how-keel-works" },
+        verify: { label: "the README, 'How keel works'", path: "README.md", hash: "#how-keel-works" },
       },
     ],
     inert: {
@@ -102,7 +106,7 @@ export const features: LocalizedPage<FeaturesContent> = {
       {
         title: "فرزُ أصولٍ موثَّق — يرفض عند الفشل",
         body: "القبولُ في قائمة الأصول المسموح بها مقسومٌ بحسب ما يمكن معرفتُه. فوقائعُ السوق تُحسَب؛ أمّا التصنيفات الشرعية — هل الغرض الأساسي للرمز قطاعٌ محرَّم (§28.4)، وهل هو عينٌ ('ayn) مدعومةٌ بأصلٍ أم دَينٌ (dayn)‏ (§65.5/§67.2)، وهل يوزّع عائدًا شبيهًا بالربا — فتُوثَّق ولا تُستنبَط، عبر الأمر keel assets attest. وغيابُ التوثيق رفضٌ، لا قبولٌ افتراضي.",
-        verify: { label: "compliance/screen.py", href: "https://github.com/CodeGateSoftware/keel/blob/main/keel/compliance/screen.py" },
+        verify: { label: "compliance/screen.py", path: "keel/compliance/screen.py" },
       },
       {
         title: "سكك الأمان — ثمانية عشر فحصًا لا يتجاوزها أيُّ أمر",
@@ -117,32 +121,32 @@ export const features: LocalizedPage<FeaturesContent> = {
           "بوابةُ دخولٍ بحدٍّ أقصى لفارق السعر: ترفض الشراء الحيّ عند 50 نقطة أساسٍ أو أكثر، وترفض كذلك عند تعذُّر قراءة دفتر الأوامر",
           "رفضُ السكة يسمّي نفسه ويسمّي الأمرَ الذي يرفعه",
         ],
-        verify: { label: "execution/guards.py", href: "https://github.com/CodeGateSoftware/keel/blob/main/keel/execution/guards.py" },
+        verify: { label: "execution/guards.py", path: "keel/execution/guards.py" },
       },
       {
         title: "بوابات الاستراتيجية — مرشَّحة ← تجريبية ← حيّة",
         body: "على القاعدة أن تجتاز ثلاث مراحل قبل أن تلمس مالًا حقيقيًّا. ولا تُرقَّى إلا باجتياز بوابةٍ من شقّين: حدودٌ دنيا للأداء، وفحصٌ للإفراط في المُلاءمة (PBO/CSCV). ويجوز بلوغُ الحدّ الأدنى البالغ مائة صفقة بالاختبار الرجعي للقاعدة نفسها، أو بتجميع صفقات الوسائط نفسها عبر منتجاتٍ متعدّدةٍ في التداول التجريبي — بشرط أن يُسهم خمسةُ منتجاتٍ على الأقل بعشر صفقاتٍ لكلٍّ منها، لأن تجميع عيّناتٍ مترابطةٍ يُبالغ في تقدير قوّتها الإحصائية.",
-        verify: { label: "agent.py — RULE_REGISTRY", href: "https://github.com/CodeGateSoftware/keel/blob/main/keel/agent.py" },
+        verify: { label: "agent.py — RULE_REGISTRY", path: "keel/agent.py" },
       },
       {
         title: "قياسٌ صادق، مقابل الشراء الدوري المنتظم",
         body: "يعيد الأمر keel simulate تشغيلَ القواعد الحقيقية على التاريخ المجلوب، ويقارنها بمؤشّرٍ مرجعيٍّ بسيطٍ هو الشراء الدوري المنتظم (DCA)، ويكتب تقرير GO-LIVE أو TRAIN-MORE مسمّيًا كلَّ بوابةٍ وأرقامَها. ويُسعّر المحرّك الرجعي الانزلاقَ لكلِّ منتجٍ على قدر سيولته الفعلية (5–50 نقطة أساس)، فلا يمكن تجميلُ النتائج بدفاترِ أوامرَ ضعيفةِ السيولة. وعلى القواعد الافتراضية سيقول لك على الأرجح TRAIN-MORE — وهذا دليلُ عمل المحرّك لا دليلُ عطبه.",
-        verify: { label: "سجلّ التجارب", href: "https://github.com/CodeGateSoftware/keel/tree/main/docs/experiments" },
+        verify: { label: "سجلّ التجارب", path: "docs/experiments", kind: "tree" },
       },
       {
         title: "ثلاثة أنماط نشرٍ لا يتقاسم أيٌّ منها شيئًا",
         body: "نمطٌ يوميٌّ تجريبي، ونمطٌ حيّ، ونمطٌ ساعيٌّ لجمع الأدلة (paper-hourly) — لكلٍّ منها قاعدةُ بياناته وإعداداته. ووُجد النمطُ الساعي لأن المؤقّت اليومي يقيس 2.15 إشارةً لكل أصلٍ في السنة (أي إنّ مراجعة المائة صفقة تبعد ما بين 31 و84 سنة)، بينما تُطلق القواعد نفسها على شموع الساعة 49.4 إشارة — أي نحو 940 إشارة دخولٍ سنويًّا بعد التجميع، فتصير مراجعةُ الأدلة الأمامية على بُعد أسابيع بدل عقود. وهو مقيسٌ بخسارةٍ صافيةٍ أيضًا: فقد وُجد لجمع أدلةٍ أماميةٍ مقبولة، لا للربح.",
-        verify: { label: "كتاب تشغيل المشغّل", href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/operator-runbook.md" },
+        verify: { label: "كتاب تشغيل المشغّل", path: "docs/operator-runbook.md" },
       },
       {
         title: "منفذُ وسطاءٍ، لا ارتهانٌ لوسيط",
         body: "تُنفّذ المحوّلات عقدًا واحدًا — منفذ keel-broker-api — وتُسجَّل تحت نقطة الدخول keel.brokers. ومحوّل Coinbase Advanced Trade هو المحوّل المرجعي؛ ويُسلَّم Robinhood منصّةً اختياريةً غيرَ موصولةٍ عمدًا؛ وانضمّ محوّل Alpaca في الإصدار v0.10.0. وثمّة منصّةٌ وهميةٌ متعمَّدةُ الاختلاف تُبقي المنفذ أمينًا: إذ تعمل حزمةُ اختبارات المطابقة (نحو 3,000 اختبار) على الاثنتين معًا.",
-        verify: { label: "packages/", href: "https://github.com/CodeGateSoftware/keel/tree/main/packages" },
+        verify: { label: "packages/", path: "packages", kind: "tree" },
       },
       {
         title: "التأكيدُ هو الأصل؛ والاستقلاليةُ تغيّر مَن يُسأل",
         body: "يعاين كيل كلَّ أمرٍ ويسأل عند الطرفية؛ وإن كان يعمل بلا واجهةٍ تفاعلية رفض الأمر. والأمر keel autonomy on يغيّر مَن يُسأل، لا ما يُسمح به. ولإيقاف التداول: keel kill — ومفتاحُ الإيقاف يرفض عند الفشل.",
-        verify: { label: "الـREADME، «كيف يعمل كيل»", href: "https://github.com/CodeGateSoftware/keel#how-keel-works" },
+        verify: { label: "الـREADME، «كيف يعمل كيل»", path: "README.md", hash: "#how-keel-works" },
       },
     ],
     inert: {
@@ -168,7 +172,7 @@ export const features: LocalizedPage<FeaturesContent> = {
       {
         title: "Filtrage des actifs par attestation — blocage par défaut",
         body: "L'admission dans la liste blanche est découpée selon ce qu'il est possible de savoir. Les faits de marché se calculent. Les classifications Shariah — l'activité principale du token relève-t-elle d'un secteur interdit (§28.4), s'agit-il d'un 'ayn adossé à un actif ou d'une créance dayn (§65.5/§67.2), le token verse-t-il un rendement assimilable au riba — sont attestées, jamais déduites, au moyen de keel assets attest. Une attestation manquante vaut refus, pas acceptation par défaut.",
-        verify: { label: "compliance/screen.py", href: "https://github.com/CodeGateSoftware/keel/blob/main/keel/compliance/screen.py" },
+        verify: { label: "compliance/screen.py", path: "keel/compliance/screen.py" },
       },
       {
         title: "Les garde-fous (rails) — dix-huit contrôles qu'aucun ordre ne contourne",
@@ -183,32 +187,32 @@ export const features: LocalizedPage<FeaturesContent> = {
           "Un plafond d'écart (spread) à l'entrée, qui refuse tout achat réel à partir de 50 points de base et bloque d'office si le carnet est illisible",
           "Tout veto d'un garde-fou se nomme et indique la commande qui le lève",
         ],
-        verify: { label: "execution/guards.py", href: "https://github.com/CodeGateSoftware/keel/blob/main/keel/execution/guards.py" },
+        verify: { label: "execution/guards.py", path: "keel/execution/guards.py" },
       },
       {
         title: "Verrous de stratégie — candidate → papier → réel",
         body: "Une règle doit franchir trois étapes avant de toucher de l'argent réel. La promotion passe par un verrou en deux volets : des seuils de performance et un contrôle de surapprentissage (PBO/CSCV). Le seuil de 100 transactions peut être atteint par le backtest de la règle, ou en mutualisant le même jeu de paramètres sur d'autres produits en papier — à condition qu'au moins cinq produits y contribuent pour dix transactions chacun, car un ensemble d'échantillons corrélés surestime sa propre puissance.",
-        verify: { label: "agent.py — RULE_REGISTRY", href: "https://github.com/CodeGateSoftware/keel/blob/main/keel/agent.py" },
+        verify: { label: "agent.py — RULE_REGISTRY", path: "keel/agent.py" },
       },
       {
         title: "Mesure honnête, face au DCA",
         body: "keel simulate rejoue les vraies règles sur l'historique récupéré, les compare à la référence DCA et rédige un rapport GO-LIVE / TRAIN-MORE qui nomme chaque verrou et ses chiffres. Le backtesteur applique à chaque produit un glissement calibré sur sa liquidité réelle (5 à 50 points de base), afin qu'aucun résultat ne puisse être flatté par un carnet d'ordres peu liquide. Sur les règles par défaut, il vous répondra très probablement TRAIN-MORE : c'est le moteur qui fonctionne, pas une panne.",
-        verify: { label: "le registre des expériences", href: "https://github.com/CodeGateSoftware/keel/tree/main/docs/experiments" },
+        verify: { label: "le registre des expériences", path: "docs/experiments", kind: "tree" },
       },
       {
         title: "Trois profils de déploiement qui ne partagent rien",
         body: "Papier quotidien, réel, et un profil horaire de collecte de preuves (paper-hourly) — chacun avec sa propre base de données et sa propre configuration. Le profil horaire existe parce que l'horloge quotidienne ne mesure que 2,15 signaux par actif et par an : à ce rythme, il faudrait de 31 à 84 ans pour réunir les 100 transactions d'une revue. Les mêmes règles sur des bougies ONE_HOUR en déclenchent 49,4 — environ 940 signaux d'entrée par an une fois mutualisés — ce qui ramène cette revue à quelques semaines au lieu de quelques décennies. Lui aussi est mesuré perdant : il existe pour collecter des preuves recevables, pas du profit.",
-        verify: { label: "le runbook opérateur", href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/operator-runbook.md" },
+        verify: { label: "le runbook opérateur", path: "docs/operator-runbook.md" },
       },
       {
         title: "Un port courtier, pas un enfermement propriétaire",
         body: "Les adaptateurs mettent en œuvre un seul contrat — le port keel-broker-api — et se déclarent sous le point d'entrée keel.brokers. Coinbase Advanced Trade est l'adaptateur de référence ; Robinhood est livré comme plateforme optionnelle, délibérément non raccordée ; un adaptateur Alpaca s'y est ajouté en v0.10.0. Une plateforme factice, volontairement divergente, maintient le port honnête : la suite de conformité (~3 000 tests) s'exécute sur les deux.",
-        verify: { label: "packages/", href: "https://github.com/CodeGateSoftware/keel/tree/main/packages" },
+        verify: { label: "packages/", path: "packages", kind: "tree" },
       },
       {
         title: "Confirmation par défaut ; l'autonomie change l'interlocuteur, pas la règle",
         body: "keel prévisualise chaque ordre et demande confirmation dans le terminal ; sans opérateur, il refuse. keel autonomy on change qui l'on interroge, jamais ce qui est permis. Pour tout arrêter : keel kill — le coupe-circuit se ferme en cas de défaillance.",
-        verify: { label: "le README, « How keel works »", href: "https://github.com/CodeGateSoftware/keel#how-keel-works" },
+        verify: { label: "le README, « How keel works »", path: "README.md", hash: "#how-keel-works" },
       },
     ],
     inert: {
