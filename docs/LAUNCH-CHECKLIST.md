@@ -94,8 +94,10 @@ stale page.
   EN install **100/100**, FR compare **100/100**.
 
 Both runs sit comfortably above the ≥95/≥95 budget. The site ships no client-side
-JavaScript framework or bundle by design — three small inline scripts only: the
-light/dark choice, the code-block copy button, and the docs version notice (#85).
+JavaScript framework or bundle by design — three behaviors only: the light/dark
+choice, the code-block copy button, and the docs version notice (#85). Counted as
+tags that is four blocks on an English engine document page (the light/dark
+choice is a bootstrap plus a toggle) and three everywhere else.
 The third one ships on English engine document pages only, and does nothing at
 all unless keel sends a `?v=` that differs from the tag the docs were built from.
 

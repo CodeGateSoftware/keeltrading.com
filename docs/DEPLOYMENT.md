@@ -105,10 +105,17 @@ not the pull request.
   `fetch-release.mjs` first, so `fetch-engine-docs.mjs` reads the tag from
   `data/release.json` without a second call to the releases API. If no tag can
   be resolved at all, the docs fetch exits non-zero: there is deliberately no
-  fallback to `main`, which is the skew the pin removes.
-- **Release / Discussions fetch failures degrade, not fail**: the build keeps
-  the last-known `data/*.json`; the Install and News pages show their GitHub
-  fallbacks. `data/` contents are build artifacts and never committed.
+  fallback to `main`, which is the skew the pin removes. The last-known-tag
+  fallback in `release-tag.mjs` is a local convenience only — `data/` is
+  gitignored and no workflow caches it, so in CI the releases API is the sole
+  source and a failure stops the build.
+- **Release / Discussions fetch failures degrade, not fail** *for page content*:
+  the build keeps the last-known `data/*.json`; the Install and News pages show
+  their GitHub fallbacks. `data/` contents are build artifacts and never
+  committed. One exception since #85 — the **tag** the release fetch resolves is
+  load-bearing for the docs pin above, so a build that cannot resolve one stops
+  rather than degrading. The live site is unaffected: Cloudflare Pages keeps
+  serving the last successful deployment.
 - **Adding French (FR dry-run, Success criterion 8)**: copy the thin wrappers
   into `src/pages/fr/`, add `fr` dictionaries under `src/i18n/pages/`, and
   extend `locales` in `src/i18n/config.ts` plus the sitemap i18n map in

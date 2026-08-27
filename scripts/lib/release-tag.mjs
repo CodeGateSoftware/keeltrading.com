@@ -19,6 +19,11 @@
  *      in data/docs-meta.json and printed on every doc page, so a reader can
  *      see exactly which version the page describes.
  *
+ *      This tier is a local convenience, not CI resilience: `data/` is
+ *      gitignored and no workflow caches it, so on the machine that actually
+ *      ships the site the file never pre-exists. In CI the behaviour is binary
+ *      — the releases API answers, or the build stops.
+ *
  * There is deliberately no fallback to `main`. A silent fallback would
  * reintroduce the skew this whole change exists to remove. When no tag can be
  * resolved at all, the caller fails the build.

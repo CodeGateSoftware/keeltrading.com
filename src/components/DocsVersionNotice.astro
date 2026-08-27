@@ -35,8 +35,15 @@ interface Props {
 const { builtRef } = Astro.props;
 const chrome = t("en");
 
-/** Only a version tag is comparable. A branch or SHA has nothing to compare. */
-const comparable = /^v?\d+(\.\d+)*/.test(builtRef);
+/**
+ * Only a version tag is comparable. A branch or SHA has nothing to compare.
+ *
+ * Anchored at both ends deliberately. Unanchored, a literal SHA in the
+ * manifest's `ref` — the documented escape hatch — would render a notice
+ * reading "these pages describe 1d1799e" when the SHA happens to start with a
+ * digit, and nothing when it starts with a letter.
+ */
+const comparable = /^v?\d+(\.\d+)*$/.test(builtRef);
 
 // Rendered once with placeholders; the script substitutes both versions, so the
 // script itself stays free of any locale's wording.
