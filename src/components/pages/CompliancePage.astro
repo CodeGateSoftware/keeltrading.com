@@ -3,6 +3,7 @@ import Base from "../../layouts/Base.astro";
 import HonestBox from "../HonestBox.astro";
 import { compliance } from "../../i18n/pages/compliance";
 import { alternatesFor, localePath, type Locale } from "../../i18n/config";
+import { engineBlobUrl, engineSourceUrl } from "../../lib/engine-url";
 import { home } from "../../i18n/pages/home";
 
 interface Props {
@@ -21,7 +22,9 @@ const honestLinks = [
         : locale === "fr"
           ? "Le compte rendu de l'expérience"
           : "The experiment record",
-    href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
+    href: engineBlobUrl(
+      "docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
+    ),
   },
   {
     label:
@@ -86,7 +89,7 @@ const honestLinks = [
             c.links.items.map((link) => (
               <li>
                 <h3>
-                  <a href={link.href} lang={link.href.includes("#scholarly") ? undefined : "en"}>
+                  <a href={engineSourceUrl(link)} lang={link.hash === "#scholarly-review-status" ? undefined : "en"}>
                     {link.label}
                   </a>
                 </h3>

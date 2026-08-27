@@ -4,6 +4,7 @@ import HonestBox from "../HonestBox.astro";
 import { compare, compareColumns, compareRows } from "../../i18n/pages/compare";
 import { home } from "../../i18n/pages/home";
 import { alternatesFor, localePath, type Locale } from "../../i18n/config";
+import { engineBlobUrl } from "../../lib/engine-url";
 
 interface Props {
   locale: Locale;
@@ -23,7 +24,9 @@ const honestLinks = [
         : locale === "fr"
           ? "Le compte rendu de l'expérience"
           : "The experiment record",
-    href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
+    href: engineBlobUrl(
+      "docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
+    ),
   },
 ];
 ---

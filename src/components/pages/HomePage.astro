@@ -11,6 +11,7 @@ import {
   ENGINE_URL,
 } from "../../i18n/config";
 import { t } from "../../i18n/ui";
+import { engineBlobUrl } from "../../lib/engine-url";
 
 interface Props {
   locale: Locale;
@@ -67,7 +68,9 @@ const nextItems = c.next.items.map((item, index) => ({ ...item, href: nextTarget
 const honestLinks = [
   {
     label: c.honest.experimentLabel,
-    href: "https://github.com/CodeGateSoftware/keel/blob/main/docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
+    href: engineBlobUrl(
+      "docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
+    ),
   },
   { label: c.honest.announcementLabel, href: "https://github.com/CodeGateSoftware/keel/discussions/304" },
 ];
