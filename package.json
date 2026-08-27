@@ -9,9 +9,10 @@
     "dev": "npm run fetch && astro dev",
     "build": "npm run fetch && astro build",
     "preview": "astro preview",
-    "check": "astro check",
+    "check": "node scripts/check-engine-refs.mjs && astro check",
     "check:ai-crawlers": "node scripts/check-ai-crawlers.mjs",
-    "og": "node scripts/generate-og.mjs"
+    "og": "node scripts/generate-og.mjs",
+    "check:engine-refs": "node scripts/check-engine-refs.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",

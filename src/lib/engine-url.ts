@@ -7,10 +7,12 @@
  * link into the engine repo is constructed from it here, so a hand-written
  * href cannot drift from the release the reader is running.
  *
- * `grep -rn "blob/main" src/ | grep -v "src/content/"` returning nothing is the
- * lint that keeps it that way. (src/content/changelog is fetched release-note
- * prose: those links are quotes, and the site must not rewrite what a release
- * said.)
+ * `scripts/check-engine-refs.mjs` keeps it that way — run by `npm run check` and
+ * as its own CI step. It fails on any engine URL naming a branch, in every shape
+ * GitHub serves (`blob/`, `tree/`, `raw/`, and raw.githubusercontent.com), with
+ * two documented exceptions: `scripts/install.sh`, which exists only on the
+ * default branch, and `src/content/`, which is fetched release-note prose whose
+ * links are quotes the site must not rewrite.
  */
 import { loadDocsMeta } from "../components/docs/nav";
 
@@ -41,7 +43,13 @@ export interface EngineSource {
  * matches FR-4 — the build stops rather than publishing a false pointer.
  */
 export function engineSourceUrl(source: EngineSource): string {
-  const { repo, ref } = loadDocsMeta();
+  const meta = loadDocsMeta();
+  // Trimmed, not just checked for truthiness: `fetch-engine-docs.mjs` returns a
+  // hand-set `engine-docs.manifest.json` ref VERBATIM (it short-circuits before
+  // release-tag.mjs's TAG_PATTERN), so a stray space would otherwise pass the
+  // guard below and ship `blob/  /keel/...` on a green build.
+  const repo = (meta.repo ?? "").trim();
+  const ref = (meta.ref ?? "").trim();
   const path = source.path.replace(/^\/+/, "");
 
   if (!path) {

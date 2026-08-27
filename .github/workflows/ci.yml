@@ -35,6 +35,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # #91 — fails when a link into the engine repo names a branch instead of the
+      # ref the build resolved. Its own step so the failure is legible in Checks
+      # rather than buried in astro's output, same reasoning as the fetch step.
+      - name: Engine links are pinned, not on a branch
+        run: npm run check:engine-refs
+
       - name: Type check
         run: npm run check
 
