@@ -52,8 +52,15 @@ export const ui = {
       untranslatedOriginal: "Original document — shown in English",
     },
     docs: {
+      /**
+       * `repo at ref`, never `repo@ref` (#93). Cloudflare's Email Address
+       * Obfuscation matched `keel@v0.11.2` as an address and replaced the
+       * version with an obfuscated mailto link in production — deleting the
+       * exact fact #85 added this line to show. `main` survived only because
+       * it has no dot after the `@`.
+       */
       fetchedFrom: (repo: string, ref: string) =>
-        `Fetched at build time from ${repo}@${ref}. If a document moves, the build fails — this site never renders stale docs.`,
+        `Fetched at build time from ${repo} at ${ref}. If a document moves, the build fails — this site never renders stale docs.`,
       backToDocs: "All documents",
       fetchedAt: (date: string) => `Last fetched ${date}.`,
       originalLanguageNote:
@@ -151,7 +158,7 @@ export const ui = {
     },
     docs: {
       fetchedFrom: (repo: string, ref: string) =>
-        `جُلب وقت البناء من ${repo}@${ref}. وإن نُقل مستندٌ من موضعه فشل البناء — فهذا الموقع لا يعرض وثائق متقادمة أبدًا.`,
+        `جُلب وقت البناء من ${repo} عند ${ref}. وإن نُقل مستندٌ من موضعه فشل البناء — فهذا الموقع لا يعرض وثائق متقادمة أبدًا.`,
       backToDocs: "كل المستندات",
       fetchedAt: (date: string) => `آخر جلبٍ في ${date}.`,
       originalLanguageNote:
@@ -256,7 +263,7 @@ export const ui = {
     },
     docs: {
       fetchedFrom: (repo: string, ref: string) =>
-        `Récupéré au moment du build depuis ${repo}@${ref}. Si un document change de place, le build échoue : ce site n'affiche jamais de documentation périmée.`,
+        `Récupéré au moment du build depuis ${repo} à ${ref}. Si un document change de place, le build échoue : ce site n'affiche jamais de documentation périmée.`,
       backToDocs: "Tous les documents",
       fetchedAt: (date: string) => `Dernière récupération : ${date}.`,
       originalLanguageNote:
