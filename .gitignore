@@ -26,3 +26,6 @@ data/
 # Agent worktrees and session scratch. keel ignores this too; without it a `git add -A`
 # in the shared checkout sweeps another session's worktree into your commit.
 .claude/
+
+# Playwright MCP session dumps — browser-verification scratch, never source.
+.playwright-mcp/
