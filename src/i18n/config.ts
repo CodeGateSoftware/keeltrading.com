@@ -24,6 +24,7 @@ export const pageKeys = [
   "features",
   "install",
   "docs",
+  "assistant",
   "news",
   "community",
   "compliance",

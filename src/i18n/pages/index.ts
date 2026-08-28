@@ -3,6 +3,7 @@ import { home, type HomeContent } from "./home";
 import { features, type FeaturesContent } from "./features";
 import { install, type InstallContent } from "./install";
 import { docs, type DocsContent } from "./docs";
+import { assistant, type AssistantContent } from "./assistant";
 import { news, type NewsContent } from "./news";
 import { community, type CommunityContent } from "./community";
 import { compliance, type ComplianceContent } from "./compliance";
@@ -22,6 +23,7 @@ export const pageDicts: Record<Exclude<PageKey, "guides">, LocalizedPage<unknown
   features,
   install,
   docs,
+  assistant,
   news,
   community,
   compliance,
@@ -35,6 +37,7 @@ export type {
   FeaturesContent,
   InstallContent,
   DocsContent,
+  AssistantContent,
   NewsContent,
   CommunityContent,
   ComplianceContent,

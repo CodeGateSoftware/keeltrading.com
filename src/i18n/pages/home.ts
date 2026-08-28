@@ -1,10 +1,28 @@
 import type { LocalizedPage } from "../config";
+import type { EngineSource } from "../../lib/engine-url";
 
 /**
  * Home (FR-2): what keel is in plain English (and plain Arabic), the honest
  * posture first, and the primary CTAs. Copy is grounded in the engine repo's
  * README — nothing here claims more than the repo can show (FR-2 rule).
+ *
+ * #119 — the cards also carry the evidence stack and the read-only MCP
+ * server, each with the same "verify in the repository" pointer the Features
+ * page uses (#91: the path, never a URL; HomePage pins it to the resolved
+ * release tag).
  */
+export interface HomeCard {
+  title: string;
+  body: string;
+  /** The "verify in the repository" pointer, as the Features page carries it:
+   *  a repo-relative path — HomePage builds the href at the ref this build
+   *  resolved, so the reader lands on the code the release they run contains. */
+  verify: EngineSource & { label: string };
+  /** When set, the card links into that site page (#119: the MCP card pairs
+   *  with the AI-assistant page #118, so the capability has a front door). */
+  page?: "assistant";
+}
+
 export interface HomeContent {
   rev: string;
   title: string;
@@ -23,7 +41,8 @@ export interface HomeContent {
     experimentLabel: string;
     announcementLabel: string;
   };
-  cards: { title: string; body: string }[];
+  verifyNote: string;
+  cards: HomeCard[];
   fatwa: {
     quote: string;
     body: string[];
@@ -36,7 +55,7 @@ export interface HomeContent {
 
 export const home: LocalizedPage<HomeContent> = {
   en: {
-    rev: "2026-08-20.4",
+    rev: "2026-08-28.2",
     title: "keel: the open-source Shariah compliance engine for crypto",
     description:
       "The open-source engine that enforces Shariah compliance on spot crypto: attested screening that fails closed and rails no order can skip. Not a fatwa engine.",
@@ -56,18 +75,33 @@ export const home: LocalizedPage<HomeContent> = {
       experimentLabel: "Read the experiment record",
       announcementLabel: "Read the announcement",
     },
+    verifyNote: "Verify in the repository",
     cards: [
       {
         title: "Screening that fails closed",
         body: "Market facts are computed; Shariah classifications are attested by a human — with a source and a name — never inferred from price data. An asset without an attestation is rejected, not passed by default.",
+        verify: { label: "compliance/screen.py", path: "keel/compliance/screen.py" },
       },
       {
         title: "Eighteen rails no order can skip",
         body: "Spend caps, drawdown breakers, exposure limits, no-martingale, feed-staleness checks, and a kill-switch that fails closed: when something breaks, it refuses rather than allows. Then the fiqh-derived rails — the venue subscription attestation, and the constructive-possession (qabd) check, which holds that an asset you cannot withdraw may never have been validly possessed.",
+        verify: { label: "execution/guards.py", path: "keel/execution/guards.py" },
       },
       {
         title: "Gates that refuse to flatter",
         body: "A rule walks candidate → paper → live. Promotion clears performance floors and an overfitting check: the probability of backtest overfitting, computed by combinatorially symmetric cross-validation (PBO/CSCV). A rule that looks brilliant on a single in-sample parameter set is exactly what that second gate exists to distrust.",
+        verify: { label: "agent.py — RULE_REGISTRY", path: "keel/agent.py" },
+      },
+      {
+        title: "An evidence stack that can say no",
+        body: "Every backtest trial is appended to a hash-chained trials ledger — keel trials verify walks the chain and reports any break. Around it, research modules that answer the honest questions: rule-family significance tested against break-even priced at the fee actually paid, probability of backtest overfitting (PBO/CSCV), Deflated Sharpe and Minimum Backtest Length, Monte Carlo and candle-bootstrap resampling, rolling-origin walk-forward. All report-only, under one rule — the Strathern rail: a score may report, and may gate, but may never be a ranking key.",
+        verify: { label: "keel/research/", path: "keel/research", kind: "tree" },
+      },
+      {
+        title: "A read-only MCP server for your assistant",
+        body: "Point your own assistant at your own keel: keel mcp serves eight read-only tools over stdio — doctor findings, the capability inventory, profiles, orders, the veto log, the purification report, the trials ledger, the research corpora. It cannot place, halt, attest, promote or arm anything: the write surface does not exist, and PRAGMA query_only = ON enforces read-only at the engine level. No hosted chatbot, no account — the server is a local process on your machine.",
+        verify: { label: "keel/mcp/tools.py", path: "keel/mcp/tools.py" },
+        page: "assistant",
       },
     ],
     fatwa: {
@@ -105,8 +139,8 @@ export const home: LocalizedPage<HomeContent> = {
   },
 
   ar: {
-    rev: "2026-08-20.4",
-    translatedFromRev: "2026-08-20.4",
+    rev: "2026-08-28.2",
+    translatedFromRev: "2026-08-28.2",
     title: "كيل: محرّك امتثال شرعي مفتوح المصدر للعملات المشفّرة",
     description:
       "المحرّك مفتوح المصدر الذي يُنفِّذ الامتثال الشرعي في التداول الفوري للعملات المشفّرة: فرزٌ موثَّق يرفض عند الفشل، وسككُ أمانٍ لا يتجاوزها أيُّ أمر. وليس محرّك فتاوى.",
@@ -126,18 +160,33 @@ export const home: LocalizedPage<HomeContent> = {
       experimentLabel: "اقرأ سجلّ التجربة",
       announcementLabel: "اقرأ الإعلان",
     },
+    verifyNote: "تحقّق في المستودع",
     cards: [
       {
         title: "فرزٌ يرفض عند الفشل",
         body: "وقائعُ السوق تُحسَب؛ أمّا التصنيفات الشرعية فيوثّقها إنسانٌ — بمصدرٍ واسمٍ منسوب — ولا تُستنبَط من بيانات الأسعار أبدًا. والأصلُ الذي لا توثيق له مرفوضٌ، لا مقبولٌ افتراضيًّا.",
+        verify: { label: "compliance/screen.py", path: "keel/compliance/screen.py" },
       },
       {
         title: "ثماني عشرة سكةَ أمانٍ لا يتجاوزها أيُّ أمر",
         body: "سقوفُ إنفاق، وقواطعُ تراجُعٍ (drawdown)، وحدودُ تعرُّض، ومنعُ مضاعفة الخسارة (المارتينغال)، وفحوصُ تقادُم موجزات البيانات، ومفتاحُ إيقافٍ يرفض عند الفشل — إضافةً إلى ما اشتُقّ من الفقه: توثيقُ الاشتراك في المنصّة، وفحصُ القبض الحُكمي (qabd) القائمُ على أنّ الأصل الذي لا يمكن سحبُه قد لا يكون قد قُبِض قبضًا صحيحًا.",
+        verify: { label: "execution/guards.py", path: "keel/execution/guards.py" },
       },
       {
         title: "بواباتٌ لا تُجامِل",
         body: "تنتقل القاعدة من مرشَّحةٍ إلى تجريبيةٍ (paper) إلى حيّة. ولا تُرقَّى إلا إذا اجتازت حدودًا دنيا للأداء وفحصًا للإفراط في المُلاءمة — أي احتمالَ إفراط الاختبار الرجعي في المُلاءمة، محسوبًا بالتحقّق المتقاطع المتناظر توفيقيًّا (PBO/CSCV) — فالقاعدة التي تبدو عبقريةً على مجموعةِ وسائطَ واحدةٍ داخل العيّنة هي بالضبط ما وُجدت البوابةُ الثانية للارتياب فيه.",
+        verify: { label: "agent.py — RULE_REGISTRY", path: "keel/agent.py" },
+      },
+      {
+        title: "كومةُ أدلّةٍ تستطيع قولَ «لا»",
+        body: "كلُّ تجربةِ اختبارٍ رجعيٍّ تُضاف إلى سجلِّ تجاربَ مُسلسَلٍ بالتلبيد — والأمر keel trials verify يمشي على السلسلة ويُبلغ عن أيّ انكسار. وحول السجلِّ وحداتُ بحثٍ تجيب عن الأسئلة الصادقة: أهمّيّةُ عائلة القواعد مقيسةً مقابل نقطة التعادل المسعَّرة بالرسوم المدفوعة فعلًا، واحتمالُ الإفراط في المُلاءمة بالاختبار الرجعي (PBO/CSCV)، ونسبةُ شارب المُفرَّغة (Deflated Sharpe) والحدُّ الأدنى لطول الاختبار، ومحاكاةُ مونت كارلو وإعادةُ المعاينة بالشموع، والتحقّقُ المتقدِّم متعدِّد النوافذ (walk-forward). وكلُّها للتقرير فقط، تحت قاعدةٍ واحدة — سكةُ Strathern: الدرجةُ قد تُخبِر وقد تحبس، أمّا أن تكون مفتاحَ ترتيبٍ فلا أبدًا.",
+        verify: { label: "keel/research/", path: "keel/research", kind: "tree" },
+      },
+      {
+        title: "خادمُ MCP للقراءة فقط، لمساعدك الذكي",
+        body: "وجِّه مساعدك الذكيَّ إلى كيلِك أنت: الأمر keel mcp يقدّم ثماني أدواتٍ للقراءة فقط عبر stdio — نتائجُ الفحص، وجردُ القدرات، والملفاتُ، والأوامر، وسجلُّ الرفض، وتقريرُ التطهير، وسجلُّ التجارب، ومصادرُ البحث. ولا يستطيع إصدارَ أمرًا أو إيقافَه أو توثيقَ شيءٍ أو ترقيتَه أو تسليحَه: فسطحُ الكتابة غير موجودٍ أصلًا، وPRAGMA query_only = ON يفرض القراءةَ فقط على مستوى المحرّك. لا روبوتَ محادثةٍ مستضاف ولا حساب — الخادمُ عمليةٌ محليّةٌ على جهازك.",
+        verify: { label: "keel/mcp/tools.py", path: "keel/mcp/tools.py" },
+        page: "assistant",
       },
     ],
     fatwa: {
@@ -166,8 +215,8 @@ export const home: LocalizedPage<HomeContent> = {
   },
 
   fr: {
-    rev: "2026-08-20.4",
-    translatedFromRev: "2026-08-20.4",
+    rev: "2026-08-28.2",
+    translatedFromRev: "2026-08-28.2",
     title: "keel : le moteur open-source de conformité Shariah pour les cryptomonnaies",
     description:
       "Le moteur open-source qui applique la conformité Shariah au trading de crypto au comptant : un filtrage attesté qui bloque par défaut, des garde-fous qu'aucun ordre ne contourne. Pas un moteur de fatwas.",
@@ -186,18 +235,33 @@ export const home: LocalizedPage<HomeContent> = {
       experimentLabel: "Lire le compte rendu de l'expérience",
       announcementLabel: "Lire l'annonce",
     },
+    verifyNote: "Vérifier dans le dépôt",
     cards: [
       {
         title: "Un filtrage qui bloque par défaut",
         body: "Les faits de marché se calculent ; les classifications Shariah, elles, sont attestées par un humain — avec une source et un nom — jamais déduites des cours. Un actif sans attestation est rejeté, pas admis par défaut.",
+        verify: { label: "compliance/screen.py", path: "keel/compliance/screen.py" },
       },
       {
         title: "Dix-huit garde-fous qu'aucun ordre ne contourne",
         body: "Plafonds de dépense, disjoncteurs de perte maximale (drawdown), limites d'exposition, interdiction de la martingale, contrôles de fraîcheur des données, un coupe-circuit qui se ferme en cas de défaillance — auxquels s'ajoutent ceux qui découlent du fiqh : l'attestation d'abonnement à la plateforme et le contrôle de prise de possession (qabd), au motif qu'un actif impossible à retirer n'a peut-être jamais été valablement possédé.",
+        verify: { label: "execution/guards.py", path: "keel/execution/guards.py" },
       },
       {
         title: "Des verrous qui ne flattent personne",
         body: "Une règle passe par trois états : candidate, papier, réel. Pour être promue, elle doit franchir des seuils de performance et un contrôle de surapprentissage — la probabilité que le backtest soit surajusté, calculée par validation croisée combinatoirement symétrique (PBO/CSCV) — car une règle qui brille sur un seul jeu de paramètres, à l'intérieur de l'échantillon, est précisément ce dont le second verrou est là pour se méfier.",
+        verify: { label: "agent.py — RULE_REGISTRY", path: "keel/agent.py" },
+      },
+      {
+        title: "Une pile de preuves capable de dire non",
+        body: "Chaque essai de backtest est ajouté à un registre d'essais chaîné par hachage — keel trials verify parcourt la chaîne et signale toute rupture. Autour de lui, des modules de recherche qui répondent aux questions honnêtes : significativité de la famille de règles testée contre le point mort aux frais réellement payés, probabilité de surapprentissage du backtest (PBO/CSCV), ratio de Sharpe dégonflé et longueur minimale de backtest, Monte Carlo et rééchantillonnage par bougies, validation walk-forward à origine glissante. Tous en mode rapport uniquement, sous une seule règle — le rail Strathern : un score peut informer et peut verrouiller, mais ne peut jamais servir de clé de classement.",
+        verify: { label: "keel/research/", path: "keel/research", kind: "tree" },
+      },
+      {
+        title: "Un serveur MCP en lecture seule pour votre assistant",
+        body: "Pointez votre propre assistant sur votre propre keel : keel mcp sert huit outils en lecture seule via stdio — constats du doctor, inventaire des capacités, profils, ordres, journal des vetos, rapport de purification, registre des essais, corpus de recherche. Il ne peut ni passer, ni arrêter, ni attester, ni promouvoir, ni armer quoi que ce soit : la surface d'écriture n'existe pas, et PRAGMA query_only = ON impose la lecture seule au niveau du moteur. Pas de chatbot hébergé, pas de compte — le serveur est un processus local sur votre machine.",
+        verify: { label: "keel/mcp/tools.py", path: "keel/mcp/tools.py" },
+        page: "assistant",
       },
     ],
     fatwa: {
