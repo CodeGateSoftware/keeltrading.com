@@ -98,9 +98,9 @@ export interface InstallContent {
   thenTitle: string;
   allFilesTitle: string;
   terminal: TerminalInstallCopy;
-  getStarted: { title: string; body: string; link: string   /** #97 — desktop bundles lag the wheels release; {v}=bundle version, {lv}=latest. */
+  getStarted: { title: string; body: string; link: string };
+  /** #97 — desktop bundles lag the wheels release; {v}=bundle version, {lv}=latest. */
   desktopLags: string;
-};
   browserTitle: string;
   browserBody: string;
   paperFirstTitle: string;
@@ -127,7 +127,7 @@ export const install: LocalizedPage<InstallContent> = {
     downloadTitle: "Download keel",
     versionPrefix: "Latest release",
     requirements: "Requires Python 3.11 or later · downloaded from GitHub Releases — never mirrored here",
-    desktopLags: "Desktop build {v} — engine fixes reach pip and the installer first ({lv}); bundles follow per app release.",
+  desktopLags: "Desktop build {v} — engine fixes reach pip and the installer first ({lv}); bundles follow per app release.",
   otherPlatforms: "Linux and everything else: same wheels from the release page.",
     historyLink: "Every version, newest first — the full changelog",
     cards: [
@@ -241,7 +241,7 @@ export const install: LocalizedPage<InstallContent> = {
     downloadTitle: "تنزيل كيل",
     versionPrefix: "أحدث إصدار",
     requirements: "يتطلّب Python 3.11 أو أحدث · التنزيل من GitHub Releases — ولا يُنسخ هنا أبدًا",
-    desktopLags: "بناءُ سطح المكتب {v} — تصل إصلاحاتُ المحرّك إلى pip والمُثبِّت أولًا ({lv})؛ وتتبعها الحزمُ مع كلِّ إصدارٍ للتطبيق.",
+  desktopLags: "بناءُ سطح المكتب {v} — تصل إصلاحاتُ المحرّك إلى pip والمُثبِّت أولًا ({lv})؛ وتتبعها الحزمُ مع كلِّ إصدارٍ للتطبيق.",
   otherPlatforms: "لينكس وغيره: حزم wheel نفسها متاحةٌ في صفحة الإصدار.",
     historyLink: "كلُّ الإصدارات، من الأحدث إلى الأقدم — السجلُّ الكامل للتغييرات",
     cards: [
@@ -355,7 +355,7 @@ export const install: LocalizedPage<InstallContent> = {
     downloadTitle: "Télécharger keel",
     versionPrefix: "Dernière version",
     requirements: "Nécessite Python 3.11 ou plus · téléchargé depuis GitHub Releases — jamais recopié ici",
-    desktopLags: "Build bureau {v} — les correctifs du moteur arrivent d'abord via pip et l'installateur ({lv}) ; les bundles suivent à chaque version de l'appli.",
+  desktopLags: "Build bureau {v} — les correctifs du moteur arrivent d'abord via pip et l'installateur ({lv}) ; les bundles suivent à chaque version de l'appli.",
   otherPlatforms: "Linux et le reste : les mêmes wheels, depuis la page des versions.",
     historyLink: "Toutes les versions, de la plus récente à la plus ancienne — le journal complet",
     cards: [
