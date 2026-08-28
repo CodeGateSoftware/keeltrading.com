@@ -98,7 +98,9 @@ export interface InstallContent {
   thenTitle: string;
   allFilesTitle: string;
   terminal: TerminalInstallCopy;
-  getStarted: { title: string; body: string; link: string };
+  getStarted: { title: string; body: string; link: string   /** #97 — desktop bundles lag the wheels release; {v}=bundle version, {lv}=latest. */
+  desktopLags: string;
+};
   browserTitle: string;
   browserBody: string;
   paperFirstTitle: string;
@@ -118,14 +120,15 @@ export interface InstallContent {
 
 export const install: LocalizedPage<InstallContent> = {
   en: {
-    rev: "2026-08-25.1",
+    rev: "2026-08-28.1",
     title: "Download keel — macOS & Windows",
     description:
       "Download keel for macOS or Windows. Version and links come from GitHub Releases at build time; the five-minute source path is here too.",
     downloadTitle: "Download keel",
     versionPrefix: "Latest release",
     requirements: "Requires Python 3.11 or later · downloaded from GitHub Releases — never mirrored here",
-    otherPlatforms: "Linux and everything else: same wheels from the release page.",
+    desktopLags: "Desktop build {v} — engine fixes reach pip and the installer first ({lv}); bundles follow per app release.",
+  otherPlatforms: "Linux and everything else: same wheels from the release page.",
     historyLink: "Every version, newest first — the full changelog",
     cards: [
       {
@@ -230,15 +233,16 @@ export const install: LocalizedPage<InstallContent> = {
   },
 
   ar: {
-    rev: "2026-08-25.1",
-    translatedFromRev: "2026-08-25.1",
+    rev: "2026-08-28.1",
+    translatedFromRev: "2026-08-28.1",
     title: "تنزيل كيل — macOS وWindows",
     description:
       "نزّل كيل لنظام macOS أو Windows. ويأتي رقمُ الإصدار وروابطه من GitHub Releases وقت البناء؛ ومسارُ التثبيت من المصدر في خمس دقائق هنا أيضًا.",
     downloadTitle: "تنزيل كيل",
     versionPrefix: "أحدث إصدار",
     requirements: "يتطلّب Python 3.11 أو أحدث · التنزيل من GitHub Releases — ولا يُنسخ هنا أبدًا",
-    otherPlatforms: "لينكس وغيره: حزم wheel نفسها متاحةٌ في صفحة الإصدار.",
+    desktopLags: "بناءُ سطح المكتب {v} — تصل إصلاحاتُ المحرّك إلى pip والمُثبِّت أولًا ({lv})؛ وتتبعها الحزمُ مع كلِّ إصدارٍ للتطبيق.",
+  otherPlatforms: "لينكس وغيره: حزم wheel نفسها متاحةٌ في صفحة الإصدار.",
     historyLink: "كلُّ الإصدارات، من الأحدث إلى الأقدم — السجلُّ الكامل للتغييرات",
     cards: [
       {
@@ -343,15 +347,16 @@ export const install: LocalizedPage<InstallContent> = {
   },
 
   fr: {
-    rev: "2026-08-25.1",
-    translatedFromRev: "2026-08-25.1",
+    rev: "2026-08-28.1",
+    translatedFromRev: "2026-08-28.1",
     title: "Télécharger keel — macOS et Windows",
     description:
       "Téléchargez keel pour macOS ou Windows. Le numéro de version et les liens proviennent de GitHub Releases, récupérés au moment du build ; le parcours en cinq minutes depuis les sources figure également ici.",
     downloadTitle: "Télécharger keel",
     versionPrefix: "Dernière version",
     requirements: "Nécessite Python 3.11 ou plus · téléchargé depuis GitHub Releases — jamais recopié ici",
-    otherPlatforms: "Linux et le reste : les mêmes wheels, depuis la page des versions.",
+    desktopLags: "Build bureau {v} — les correctifs du moteur arrivent d'abord via pip et l'installateur ({lv}) ; les bundles suivent à chaque version de l'appli.",
+  otherPlatforms: "Linux et le reste : les mêmes wheels, depuis la page des versions.",
     historyLink: "Toutes les versions, de la plus récente à la plus ancienne — le journal complet",
     cards: [
       {

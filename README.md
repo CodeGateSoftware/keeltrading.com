@@ -11,12 +11,12 @@ news from GitHub Discussions, and download buttons pointing at GitHub Releases.
 Community interaction (posting, voting, polling) stays on GitHub — the site
 surfaces and translates, it never duplicates.
 
-**Status: v1 implemented** against the
+**Status: v1 implemented and live** at
+[keeltrading.com](https://keeltrading.com) (custom domain wired, GSC verified
+with the sitemap submitted) against the
 [PRD](docs/superpowers/specs/2026-08-19-website-prd.md) (`Phase 15 — Public
-website v1`). Deploys run from GitHub Actions (add two repo secrets + one
-variable per [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) and the site goes live
-on `*.pages.dev` immediately); the custom domain is deferred until its
-registrar completes (PRD §11). SEO strategy and roadmap:
+website v1`). Deploys run from GitHub Actions per
+[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md). SEO strategy and roadmap:
 [docs/seo/](docs/seo/SEO-STRATEGY.md).
 
 ## What is in here
@@ -33,7 +33,12 @@ registrar completes (PRD §11). SEO strategy and roadmap:
   docs/DEPLOYMENT.md), refreshed by an hourly rebuild workflow.
 - **Downloads (FR-6)** — version number, asset links, and the versioned pip
   command come from the GitHub Releases REST endpoint at build time. Buttons
-  link directly to GitHub; binaries are never mirrored here.
+  link directly to GitHub; binaries are never mirrored here. The page also
+  carries the engine's auditable terminal installer
+  (`curl -fsSL …/scripts/install.sh | bash`, served from the default branch)
+  and, since v0.11, the unsigned macOS/Windows desktop bundles — deep-linked
+  from the newest release that carries them, with the bundle/engine version
+  split stated honestly when patch releases ship wheels only (#97).
 - **i18n (FR-7/FR-8)** — English (source of truth) and a full Arabic edition
   with RTL layouts designed in from the first component, hreflang alternates,
   per-locale sitemaps, a "last translated against English revision" marker on
