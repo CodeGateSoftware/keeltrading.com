@@ -88,7 +88,7 @@ const explainersLabel =
   </div>
 
   {
-    (["guides", "reference", "research"] as const).map((sectionId) => {
+    (["guides", "reference", "decisions", "research"] as const).map((sectionId) => {
       const section = meta.sections.find((s) => s.id === sectionId);
       const docs = meta.docs.filter((doc) => doc.section === sectionId);
       if (!section || docs.length === 0) return null;

@@ -22,6 +22,33 @@
       "fr": "Le raisonnement Shariah que keel encode, règle par règle, chacun avec sa source dans le dépôt — publié pour être audité et contesté."
     },
     {
+      "path": "docs/decisions/0001-desktop-update-path.md",
+      "slug": "decision-0001-desktop-update-path",
+      "title": "Decision 0001: the desktop update path",
+      "en": "Why the desktop app never self-updates: updating means deliberately downloading the new installer — a trust posture chosen over an update channel that would itself need securing.",
+      "ar": "لماذا لا يُحدِّث تطبيقُ سطح المكتب نفسَه أبدًا: التحديثُ يعني تنزيلَ المُثبِّت الجديد عن قصد — موقفُ ثقةٍ اختير على قناةِ تحديثٍ تحتاج هي نفسها إلى تحصين.",
+      "section": "decisions",
+      "fr": "Pourquoi l'application de bureau ne se met jamais à jour elle-même : la mise à jour passe par le téléchargement délibéré du nouvel installateur — une posture de confiance préférée à un canal de mise à jour qu'il faudrait lui-même sécuriser."
+    },
+    {
+      "path": "docs/decisions/0002-sqlite-persistence.md",
+      "slug": "decision-0002-sqlite-persistence",
+      "title": "Decision 0002: SQLite persistence",
+      "en": "Why persistence is SQLite with one writer per file — stated as load-bearing, not a limitation, with the named triggers that alone would reopen the question.",
+      "ar": "لماذا هي مكانُ البيانات ‏SQLite بكاتبٍ واحد لكل ملف — قاعدةٌ حاملةٌ لا قيدًا مؤقتًا، مع مُحفِّزاتٍ مسمّاةٍ وحدها تفتح السؤالَ من جديد.",
+      "section": "decisions",
+      "fr": "Pourquoi la persistance est SQLite avec un seul écrivain par fichier — énoncé comme porteur et non comme limite, avec les déclencheurs nommés qui seuls rouvriraient la question."
+    },
+    {
+      "path": "docs/decisions/0003-commands-layer-survey.md",
+      "slug": "decision-0003-commands-layer-survey",
+      "title": "Decision 0003: the commands-layer survey",
+      "en": "The measurement-first survey of the commands layer — what each module's role is, and why \"larger than the engine\" dissolved before the survey ran.",
+      "ar": "المسحُ القياسيُّ الأوّل لطبقة الأوامر — ما دورُ كلِّ وحدةٍ، ولماذا ذاب وصفُ «أكبر من المحرّك» قبل أن يبدأ المسح.",
+      "section": "decisions",
+      "fr": "L'enquête mesure-d'abord de la couche commands — le rôle de chaque module, et pourquoi « plus grande que le moteur » s'est dissous avant même que l'enquête ne commence."
+    },
+    {
       "path": "docs/desktop-install.md",
       "slug": "desktop-install",
       "title": "Installing the desktop app",
@@ -130,6 +157,12 @@
       "en": "Reference",
       "ar": "مرجع",
       "fr": "Référence"
+    },
+    {
+      "id": "decisions",
+      "en": "Decisions",
+      "ar": "سجلّات القرارات",
+      "fr": "Décisions"
     },
     {
       "id": "research",

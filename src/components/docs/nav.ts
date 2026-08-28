@@ -20,7 +20,7 @@ export function readDataFile<T>(name: string): T | null {
   }
 }
 
-export type SectionId = "get-started" | "guides" | "reference" | "research";
+export type SectionId = "get-started" | "guides" | "reference" | "decisions" | "research";
 
 export interface DocMeta {
   slug: string;
@@ -75,6 +75,9 @@ export const sectionIcons: Record<SectionId, string> = {
   // open book
   reference:
     '<path d="M12 5c-2-1.4-4.5-1.7-7-1v14c2.5-.7 5-.4 7 1 2-1.4 4.5-1.7 7-1V4c-2.5-.7-5-.4-7 1Zm0 0v14" fill="none"/>',
+  // a record with a ruling: the document, and the check that settles it
+  decisions:
+    '<path d="M7 3h7l4 4v14H7z" fill="none"/><path d="M14 3v4h4" fill="none"/><path d="m10 14 2 2 4-4" fill="none"/>',
   // flask
   research:
     '<path d="M10 3v6L4.5 18a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L14 9V3M8.5 3h7" fill="none"/>',
@@ -99,9 +102,12 @@ export interface NavDoc {
   section: SectionId;
 }
 
-/** Flattened reading order: sidebar order == prev/next order. */
+/** Flattened reading order: sidebar order == prev/next order. Decisions sit
+ *  between reference and research: the "what it is" pages, then the recorded
+ *  "why it is that way", then the measurements. Within the section, manifest
+ *  order is ADR number (0001, 0002, 0003, …). */
 export function readingOrder(meta: MetaFile): NavDoc[] {
-  const order: SectionId[] = ["guides", "reference", "research"];
+  const order: SectionId[] = ["guides", "reference", "decisions", "research"];
   return order.flatMap((section) =>
     meta.docs.filter((doc) => doc.section === section).map((doc) => ({ slug: doc.slug, title: doc.title, section })),
   );
