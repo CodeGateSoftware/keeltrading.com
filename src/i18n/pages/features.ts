@@ -29,10 +29,10 @@ export interface FeaturesContent {
 
 export const features: LocalizedPage<FeaturesContent> = {
   en: {
-    rev: "2026-08-20.3",
+    rev: "2026-08-28.1",
     title: "Shariah Compliance Engine Features — keel",
     description:
-      "Attested screening that fails closed, 18 rails no order can skip, gates checked for overfitting, and honest measurement against DCA — all mapped to source.",
+      "Attested screening that fails closed, 18 rails no order can skip, gates checked for overfitting, honest measurement against DCA, and execution hardened for correctness — all mapped to source.",
     intro:
       "This page describes only what the engine repository can show. Each section links to the source that proves it — if a claim ever drifts from the code, the link is how you catch us.",
     verifyNote: "Verify in the repository",
@@ -78,6 +78,31 @@ export const features: LocalizedPage<FeaturesContent> = {
         verify: { label: "packages/", path: "packages", kind: "tree" },
       },
       {
+        title: "A bracket is one order kind, because two legs race",
+        body: "The port that adapters implement gained a bracket as a single order kind — BracketGTC, an exit bracket that closes a held position — not two orders to place and pair client-side. Two separately placed legs race: if one fills and the survivor is never cancelled, a live order remains able to sell a position that is already closed, and two legs each carrying the full quantity commit that position twice. One native order removes both failure modes by construction. This is stage one, port vocabulary: every adapter maps it, the conformance suite pins it, and keel's live path still places the venue's own native bracket directly — moving that call onto the port is the next stage. It is correctness work: nothing here claims the engine trades better, only that there are fewer ways to be wrong.",
+        verify: { label: "orders.py — BracketGTC", path: "packages/keel-broker-api/keel_broker_api/orders.py" },
+      },
+      {
+        title: "Order size quantized to the venue's precision — an exit is never blocked",
+        body: "A risk-sized order almost never lands on a round number, and a venue rejects a size that carries more decimals than the product's increment — the engine's first risk-sized live order was refused on exactly that: a formatting error, not a rail. Sizes are now quantized down to the increment the venue declares for the product, on both sides of the trade. When the increment is unknown, the two sides fail in opposite directions, deliberately: a BUY is refused — a refused entry costs nothing — while a SELL is sent as-is and logged, because an exit that cannot leave is a worse failure than an entry that cannot start. A size that quantizes down to zero is refused outright.",
+        verify: { label: "execution/executor.py", path: "keel/execution/executor.py" },
+      },
+      {
+        title: "Partial fills are a state of their own; an exit releases only what sold",
+        body: "A market order that only partly fills is no longer forced to look either pending or filled: 0 < filled < ordered is its own non-terminal state, with the venue-observed quantity recorded beside the ordered one and the venue's running average as the fill price. Everything downstream uses what actually executed — the averaging basis counts a partial BUY at its filled quantity, never at a size that bought nothing. An entry that only partly fills warns loudly, because its exit bracket was sized for the ordered quantity and may exceed what is actually held; resizing it is deliberately an operator action, not an automatic one. An exit that only partly fills books the outcome for the quantity that actually sold and withholds release of the still-held remainder — a tranche closes only when its fill covers it. Which side the warning belongs to is pinned by test.",
+        verify: { label: "execution/reconcile.py", path: "keel/execution/reconcile.py" },
+      },
+      {
+        title: "The crash ledger is written before the cancel, so a dead roll is loud",
+        body: "Rolling a stop means cancelling the resting bracket and placing its replacement — and a process dying between the two used to leave the position both naked and silent, because reconciliation deliberately stays quiet about rows with no recorded intent, so as not to train the alert to be ignored. The order of operations is now reversed: the unbracketed-intent record — the crash ledger naming the position that lost its protection — is written before the cancel is issued. A roll that dies mid-flight is loud on the very next reconciliation cycle, carrying the numbers needed to re-place the bracket.",
+        verify: { label: "execution/executor.py — _roll_stop", path: "keel/execution/executor.py" },
+      },
+      {
+        title: "Robinhood: the venue's own rules checked before an order is sent",
+        body: "The Robinhood adapter — still optional, still deliberately unwired — reads the per-pair rules the venue publishes (a minimum order size denominated in quote currency, the size increment, a maximum) and checks every order against them before submission, so a sub-minimum or off-increment order is refused locally instead of discovered at the venue. And its best_bid_ask endpoint is not a book snapshot — the two legs are sampled independently and cross on the most liquid pairs — so the adapter returns a quote only when the venue's own numbers order coherently, and refuses to synthesize one otherwise.",
+        verify: { label: "keel-broker-robinhood/adapter.py", path: "packages/keel-broker-robinhood/keel_broker_robinhood/adapter.py" },
+      },
+      {
         title: "Confirm by default; autonomy changes who is asked",
         body: "keel previews each order and asks you at the terminal. Running headless, with no one to ask, it declines. keel autonomy on changes who is asked, never what is allowed. To stop trading, keel kill — the kill-switch fails closed.",
         verify: { label: "the README, 'How keel works'", path: "README.md", hash: "#how-keel-works" },
@@ -94,11 +119,11 @@ export const features: LocalizedPage<FeaturesContent> = {
   },
 
   ar: {
-    rev: "2026-08-20.3",
-    translatedFromRev: "2026-08-20.3",
+    rev: "2026-08-28.1",
+    translatedFromRev: "2026-08-28.1",
     title: "خصائص محرّك الامتثال الشرعي — كيل",
     description:
-      "فرزٌ موثَّق يرفض عند الفشل، و18 سكةَ أمانٍ لا تُتجاوَز، وبواباتُ ترقيةٍ تفحص الإفراط في المُلاءمة، وقياسٌ صادقٌ مقابل مؤشّر DCA — وكلُّ خاصيةٍ تشير إلى مصدرها في الشيفرة.",
+      "فرزٌ موثَّق يرفض عند الفشل، و18 سكةَ أمانٍ لا تُتجاوَز، وبواباتُ ترقيةٍ تفحص الإفراط في المُلاءمة، وقياسٌ صادقٌ مقابل مؤشّر DCA، وتنفيذٌ تُحصَّن فيه صحةُ الأوامر — وكلُّ خاصيةٍ تشير إلى مصدرها في الشيفرة.",
     intro:
       "لا تصف هذه الصفحة إلا ما يستطيع مستودعُ المحرّك إظهارَه. وكلُّ قسمٍ يرتبط بالمصدر الذي يُثبته — فإن انحرفت دعوى يومًا عن الشيفرة، فالرابط هو سبيلك إلى الإمساك بنا.",
     verifyNote: "تحقّق في المستودع",
@@ -144,6 +169,31 @@ export const features: LocalizedPage<FeaturesContent> = {
         verify: { label: "packages/", path: "packages", kind: "tree" },
       },
       {
+        title: "الأمرُ القَوْسي (bracket) نوعُ أمرٍ واحد — لأنّ ساقَيه تتراهنان",
+        body: "أضحى في المنفذ الذي تُنفّذه المحوّلاتُ القوسُ نوعَ أمرٍ واحد — BracketGTC، أمرُ خروجٍ يغلق مركزًا محتفَظًا به — لا أمرَين يُوضَعان ثم يُقترَنان لدى العميل. فساقان تُوضَعان كلٌّ على حدة تتراهنان: إن مُلئت إحداهما ولم تُلغَ الأخرى، بقي أمرٌ حيٌّ قادرٌ على بيعِ مركزٍ أُغلِق فعلًا، كما أنّ ساقين تحمل كلٌّ منهما الكميةَ الكاملة يلتزمان المركزَ مرّتين. أمرٌ أصيلٌ واحد يُزيل الفشلين معًا بحكم البناء. وهذه مرحلةٌ أولى، مفرداتُ منفذٍ فحسب: كلُّ محوّلٍ يرسم خرائطها، وحزمةُ اختبارات المطابقة تثبّتها، في حين أنّ مسار كيل الحيّ ما يزال يضع أمرَ المنصّة القَوْسيَّ الأصيل مباشرةً، ونقلَ هذا الاستدعاء إلى المنفذ هو المرحلةُ التالية. وهو عملُ تصحيحٍ لا أكثر: لا يدّعي شيءٌ هنا أنّ المحرّك يتاجر أفضل، بل أنّ طرقَ الخطأ صارت أقل.",
+        verify: { label: "orders.py — BracketGTC", path: "packages/keel-broker-api/keel_broker_api/orders.py" },
+      },
+      {
+        title: "حجمُ الأمر يُقرَّب إلى دقّة المنصّة — ولا يُعطَّل خروجٌ أبدًا",
+        body: "قلّما يقعُ أمرٌ محجَّمٌ بالمخاطرة على عددٍ صحيح، والمنصّةُ ترفض حجمًا يحمل خاناتٍ عشريةً أكثر من خطوة الزيادة التي يحدّدها المنتج — وقد رفضت المنصّةُ أولَ أمرٍ حيٍّ محجَّمٍ بالمخاطرة على هذا التحديد بالضبط: خطأُ تنسيقٍ لا سكةُ أمان. والآن يُقرَّب الحجمُ إلى الأسفل إلى مضاعفِ الزيادة التي تعلنها المنصّة للمنتج، على جانبَي الأمر معًا. وإذا كانت الزيادةُ مجهولةً فشِلَ الجانبان في اتجاهين متعاكسين عمدًا: الشراءُ يُرفَض — فالدخولُ المرفوض لا يكلّف شيئًا — أمّا البيعُ فيُرسَل كما هو مع تسجيلِ ذلك، لأنّ خروجًا لا يستطيع المغادرةَ أسوأُ من دخولٍ لا يستطيع البدء. وحجمٌ يتقرّب إلى الصفر يُرفَض رفضًا قاطعًا.",
+        verify: { label: "execution/executor.py", path: "keel/execution/executor.py" },
+      },
+      {
+        title: "التنفيذُ الجزئي حالةٌ قائمةٌ بذاتها؛ والخروجُ لا يُطلِق إلا ما بيع فعلًا",
+        body: "الأمرُ السوقي الذي لا يمتلئ إلا جزئيًّا لم يعد مجبَرًا على أن يبدو إمّا معلّقًا وإمّا منفَّذًا: فـ«أكبر من صفر وأقلّ من المطلوب» حالةٌ غير نهائيةٍ قائمةٌ بذاتها، تُسجَّل فيها الكميةُ التي رأت المنصّةُ تنفيذَها إلى جوار الكمية المطلوبة، ويُعتمد متوسطُ المنصّة الجاري سعرًا للتنفيذ. وكلُّ ما بعد ذلك يُحسَب على ما نُفّذ فعلًا — فأساسُ احتساب المتوسط تُحتسَب فيه المشترياتُ الجزئية عند كميتها المنفَّذة، لا عند حجمٍ لم يشترِ شيئًا. والدخولُ الذي لا يمتلئ إلا جزئيًّا يُحذَّر عنه بصوتٍ عالٍ، لأنّ أمرَ الحماية القَوْسي وُضع على الكمية المطلوبة وقد يتجاوز ما هو محتفَظٌ به فعلًا؛ وتغييرُ حجمه فعلُ مشغّلٍ عمدًا لا فعلٌ آلي. والخروجُ الذي لا يمتلئ إلا جزئيًّا يقيّد النتيجةَ على الكمية التي بيعت فعلًا ويحبس إطلاقَ ما بقي محتفَظًا به — فالشريحة لا تُغلَق إلا إذا غطّاها تنفيذُها. وأيُّ جانبٍ ينتمي إليه التحذيرُ مثبَّتٌ باختبار.",
+        verify: { label: "execution/reconcile.py", path: "keel/execution/reconcile.py" },
+      },
+      {
+        title: "سجلُّ الانهيار يُكتَب قبل الإلغاء، حتى يكون تحريكُ الوقف الميّت صاخبًا",
+        body: "تحريكُ الوقف يعني إلغاءَ أمر الحماية القائم ووضعَ بديله — وعمليّةٌ تموت بين الاثنين كانت تترك المركز عاريًا وصامتًا معًا، لأنّ المطابقة تتعمّد السكوتَ عن الصفوف التي لا نيّةَ مسجَّلةً لها، حتى لا يُدرَّب المنبّه على التجاهل. والآن انعكس ترتيبُ العمليّتين: سجلُّ نيّة «غير المحصَّن» (unbracketed) — سجلُّ الانهيار الذي يسمّي المركزَ الذي فقد حمايته — يُكتَب قبل أن يُصدَر الإلغاء. فتحريكُ وقفٍ يموت في منتصف الطريق يُسمَع في دورة المطابقة التالية نفسِها، حاملًا الأرقامَ اللازمة لإعادة وضع أمر الحماية.",
+        verify: { label: "execution/executor.py — _roll_stop", path: "keel/execution/executor.py" },
+      },
+      {
+        title: "Robinhood: قواعدُ المنصّة نفسها تُفحَص قبل إرسال أيّ أمر",
+        body: "محوّلُ Robinhood — الاختياريُّ غيرِ الموصول عمدًا كما كان — يقرأ الآن قواعدَ كلِّ زوجٍ تنشرها المنصّة (حدٍّ أدنى لحجم الأمر مُقوَّمًا بعملة التسعير، وخطوةَ الزيادة، وحدًّا أقصى) ويفحص كلَّ أمرٍ عليها قبل الإرسال، فما كان دون الحدّ الأدنى أو خارج خطوة الزيادة يُرفَض محليًّا لا عند المنصّة. كما أنّ نقطته best_bid_ask ليست لقطةَ دفترٍ — فساقاها تُعيَّنان كلٌّ على حدة وتتقاطعان على أكثر الأزواج سيولةً — فلا يُعيد المحوّل عرضًا إلا إذا رتّبت أرقامُ المنصّة نفسُها ترتيبًا متّسقًا، ويرفض تلفيقَ عرضٍ خلاف ذلك.",
+        verify: { label: "keel-broker-robinhood/adapter.py", path: "packages/keel-broker-robinhood/keel_broker_robinhood/adapter.py" },
+      },
+      {
         title: "التأكيدُ هو الأصل؛ والاستقلاليةُ تغيّر مَن يُسأل",
         body: "يعاين كيل كلَّ أمرٍ ويسأل عند الطرفية؛ وإن كان يعمل بلا واجهةٍ تفاعلية رفض الأمر. والأمر keel autonomy on يغيّر مَن يُسأل، لا ما يُسمح به. ولإيقاف التداول: keel kill — ومفتاحُ الإيقاف يرفض عند الفشل.",
         verify: { label: "الـREADME، «كيف يعمل كيل»", path: "README.md", hash: "#how-keel-works" },
@@ -160,11 +210,11 @@ export const features: LocalizedPage<FeaturesContent> = {
   },
 
   fr: {
-    rev: "2026-08-20.3",
-    translatedFromRev: "2026-08-20.3",
+    rev: "2026-08-28.1",
+    translatedFromRev: "2026-08-28.1",
     title: "Fonctionnalités du moteur de conformité — keel",
     description:
-      "Un filtrage attesté qui bloque par défaut, dix-huit garde-fous incontournables, des verrous de promotion avec contrôle de surapprentissage, une mesure honnête face au DCA — chaque fonctionnalité renvoie à sa source dans le code.",
+      "Un filtrage attesté qui bloque par défaut, dix-huit garde-fous incontournables, des verrous de promotion avec contrôle de surapprentissage, une mesure honnête face au DCA, une exécution durcie pour la justesse — chaque fonctionnalité renvoie à sa source dans le code.",
     intro:
       "Cette page ne décrit que ce que le dépôt du moteur peut montrer. Chaque section renvoie à la source qui l'atteste : si une affirmation s'écartait un jour du code, c'est par ce lien que vous nous prendriez en défaut.",
     verifyNote: "Vérifier dans le dépôt",
@@ -208,6 +258,31 @@ export const features: LocalizedPage<FeaturesContent> = {
         title: "Un port courtier, pas un enfermement propriétaire",
         body: "Les adaptateurs mettent en œuvre un seul contrat — le port keel-broker-api — et se déclarent sous le point d'entrée keel.brokers. Coinbase Advanced Trade est l'adaptateur de référence ; Robinhood est livré comme plateforme optionnelle, délibérément non raccordée ; un adaptateur Alpaca s'y est ajouté en v0.10.0. Une plateforme factice, volontairement divergente, maintient le port honnête : la suite de conformité (~3 000 tests) s'exécute sur les deux.",
         verify: { label: "packages/", path: "packages", kind: "tree" },
+      },
+      {
+        title: "Un bracket est un seul type d'ordre, parce que deux jambes font la course",
+        body: "Le port qu'implémentent les adaptateurs connaît désormais le bracket comme un type d'ordre unique — BracketGTC, un bracket de sortie qui clôture une position détenue — et non deux ordres à placer puis à apparier côté client. Deux jambes posées séparément font la course : si l'une se remplit et que la survivante n'est jamais annulée, un ordre vivant reste capable de vendre une position déjà close, et deux jambes portant chacune la quantité totale engagent la position deux fois. Un ordre natif unique supprime l'un et l'autre par construction. Ceci est l'étape un, du vocabulaire de port : chaque adaptateur le mappe, la suite de conformité l'épingle, et le chemin live de keel place encore directement le bracket natif de la plateforme — déplacer cet appel vers le port est l'étape suivante. C'est un travail de justesse : rien ici ne prétend que le moteur trade mieux, seulement qu'il y a moins de façons d'avoir tort.",
+        verify: { label: "orders.py — BracketGTC", path: "packages/keel-broker-api/keel_broker_api/orders.py" },
+      },
+      {
+        title: "Taille d'ordre quantifiée à la précision de la plateforme — une sortie n'est jamais bloquée",
+        body: "Un ordre dimensionné au risque tombe rarement sur un chiffre rond, et une plateforme rejette une taille qui porte plus de décimales que le pas du produit — le premier ordre live dimensionné au risque a été refusé exactement pour cela : une erreur de formatage, pas un garde-fou. Les tailles sont désormais quantifiées à la baisse au pas que la plateforme déclare pour le produit, des deux côtés de l'ordre. Quand le pas est inconnu, les deux côtés échouent dans des directions opposées, délibérément : un achat est refusé — une entrée refusée ne coûte rien — tandis qu'une vente part telle quelle et est journalisée, parce qu'une sortie qui ne peut pas partir est un échec plus grave qu'une entrée qui ne peut pas commencer. Une taille qui se quantifie à zéro est refusée net.",
+        verify: { label: "execution/executor.py", path: "keel/execution/executor.py" },
+      },
+      {
+        title: "Les exécutions partielles sont un état à part ; une sortie ne libère que ce qui s'est vendu",
+        body: "Un ordre au marché qui ne se remplit que partiellement n'est plus forcé de paraître soit en attente soit exécuté : 0 < rempli < demandé est un état non terminal à part, avec la quantité observée chez la plateforme enregistrée à côté de la quantité demandée, et la moyenne courante de la plateforme comme prix d'exécution. Tout ce qui est en aval calcule sur ce qui s'est réellement exécuté — la base de calcul de la moyenne pondérée compte un achat partiel à sa quantité remplie, jamais à une taille qui n'a rien acheté. Une entrée partiellement remplie alerte fort, car son bracket de sortie a été dimensionné pour la quantité demandée et peut dépasser ce qui est réellement détenu ; le redimensionner est délibérément une action d'opérateur, pas automatique. Une sortie partiellement remplie comptabilise le résultat pour la quantité réellement vendue et retient la libération du reliquat encore détenu — une tranche ne se clôture que lorsque son remplissage la couvre. Le côté auquel l'avertissement appartient est épinglé par un test.",
+        verify: { label: "execution/reconcile.py", path: "keel/execution/reconcile.py" },
+      },
+      {
+        title: "Le registre de crash s'écrit avant l'annulation, pour qu'un roll mort soit bruyant",
+        body: "Déplacer un stop, c'est annuler le bracket au repos puis placer son remplaçant — et un processus mourant entre les deux laissait la position nue ET silencieuse, parce que la réconciliation reste volontairement discrète sur les lignes sans intention enregistrée, pour ne pas dresser l'opérateur à ignorer l'alerte. L'ordre des opérations est désormais inversé : l'enregistrement d'intention « unbracketed » — le registre de crash qui nomme la position ayant perdu sa protection — s'écrit avant que l'annulation ne parte. Un roll qui meurt en vol est bruyant dès le cycle de réconciliation suivant, avec les chiffres nécessaires pour replacer le bracket.",
+        verify: { label: "execution/executor.py — _roll_stop", path: "keel/execution/executor.py" },
+      },
+      {
+        title: "Robinhood : les règles de la plateforme vérifiées avant l'envoi d'un ordre",
+        body: "L'adaptateur Robinhood — toujours optionnel, toujours délibérément non raccordé — lit les règles par paire que la plateforme publie (une taille minimale libellée dans la monnaie de cotation, le pas de taille, un maximum) et vérifie chaque ordre contre elles avant soumission : un ordre sous le minimum ou hors pas est refusé localement au lieu d'être découvert chez la plateforme. Et son point de terminaison best_bid_ask n'est pas un instantané de carnet — les deux jambes y sont échantillonnées indépendamment et se croisent sur les paires les plus liquides — donc l'adaptateur ne rend une cotation que lorsque les chiffres de la plateforme s'ordonnent de façon cohérente, et refuse d'en fabriquer une autrement.",
+        verify: { label: "keel-broker-robinhood/adapter.py", path: "packages/keel-broker-robinhood/keel_broker_robinhood/adapter.py" },
       },
       {
         title: "Confirmation par défaut ; l'autonomie change l'interlocuteur, pas la règle",
