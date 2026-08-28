@@ -20,6 +20,11 @@ const OUT = join(root, "data/release.json");
 mkdirSync(join(root, "data"), { recursive: true });
 
 const API = "https://api.github.com/repos/CodeGateSoftware/keel/releases/latest";
+// Patch releases since v0.11.1 ship wheels only; the macOS/Windows bundles
+// live in the newest release that carries them (#97). Own fetch — the
+// changelog's LIST_API const below would be a TDZ reference here.
+const PLATFORM_LIST_API = "https://api.github.com/repos/CodeGateSoftware/keel/releases?per_page=15";
+const PLATFORM_RE = /\.(dmg|pkg|exe|msi|zip)$/;
 const headers = {
   accept: "application/vnd.github+json",
   "user-agent": "keeltrading.com-release-fetch",
@@ -32,6 +37,7 @@ const FALLBACK = {
   url: "https://github.com/CodeGateSoftware/keel/releases/latest",
   publishedAt: null,
   assets: [],
+  platformRelease: null,
   fetchedAt: null,
 };
 
@@ -39,6 +45,28 @@ try {
   const response = await fetch(API, { headers });
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   const release = await response.json();
+
+  let platformRelease = null;
+  try {
+    const listResponse = await fetch(PLATFORM_LIST_API, { headers });
+    if (listResponse.ok) {
+      const releases = await listResponse.json();
+      const withBundles = (Array.isArray(releases) ? releases : []).find((r) =>
+        (r.assets ?? []).some((a) => PLATFORM_RE.test(a.name ?? "")),
+      );
+      if (withBundles) {
+        platformRelease = {
+          tag: withBundles.tag_name,
+          url: withBundles.html_url,
+          assets: withBundles.assets
+            .filter((a) => PLATFORM_RE.test(a.name ?? ""))
+            .map((a) => ({ name: a.name, url: a.browser_download_url })),
+        };
+      }
+    }
+  } catch {
+    // optional enrichment — the cards fall back to the release page without it
+  }
 
   const data = {
     tag: release.tag_name,
@@ -50,6 +78,7 @@ try {
       url: asset.browser_download_url,
       size: asset.size,
     })),
+    platformRelease,
     fetchedAt: new Date().toISOString(),
   };
   writeFileSync(OUT, JSON.stringify(data, null, 2) + "\n");

@@ -33,7 +33,7 @@ export const guides: Guide[] = [
       {
         title: "Step 1 — Install keel",
         body: [
-          "Follow the Download page for your platform: grab the wheels from the latest GitHub release, create a virtual environment, and install the keel_trader wheel by path.",
+          "Follow the Download page for your platform: grab the wheels from the latest GitHub release, create a virtual environment, and install the keel_trader wheel by path. (No terminal ceremony wanted? The engine's installer does the same from the published wheels: curl -fsSL https://raw.githubusercontent.com/CodeGateSoftware/keel/main/scripts/install.sh | bash — auditable line by line before you run it. This guide keeps the manual path so you see every piece.)",
           "Then verify the whole install — every keel distribution must report the same version:",
         ],
         code: "keel versions",

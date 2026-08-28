@@ -46,7 +46,22 @@ const platformAsset = (patterns: string[]) =>
 
 const macAsset = platformAsset(["darwin", "macos", ".dmg", ".pkg"]);
 const winAsset = platformAsset(["windows", "win32", "win64", ".exe", ".msi", ".zip"]);
-const cardTargets = [macAsset, winAsset];
+/**
+ * #97 — patch releases ship wheels only, so the desktop bundles live in the
+ * newest release that carries them. When the latest is wheel-only, the cards
+ * deep-link THAT release's assets, labeled with its version; pip and the
+ * installer stay on the latest. The split is stated, not implied.
+ */
+const platformRelease = release.platformRelease ?? null;
+const platformAssetFrom = (patterns: string[]) =>
+  platformRelease?.assets.find((asset) =>
+    patterns.some((pattern) => asset.name.includes(pattern)),
+  ) ?? null;
+const cardMac = macAsset ?? platformAssetFrom(["darwin", "macos", ".dmg", ".pkg"]);
+const cardWin = winAsset ?? platformAssetFrom(["windows", "win32", "win64", ".exe", ".msi", ".zip"]);
+const cardTargets = [cardMac, cardWin];
+const desktopLags = Boolean(!macAsset && !winAsset && (cardMac || cardWin));
+const desktopVersion = desktopLags ? (platformRelease?.tag ?? "").replace(/^v/, "") : version;
 
 /**
  * Whether this release ships anything an operating system will refuse to open. Gates the
@@ -165,6 +180,9 @@ const fromSourceCommands = [
                   {card.button}
                 </a>
                 {target && <span class="direct-file">{target.name}</span>}
+                {desktopLags && desktopVersion && (
+                  <span class="direct-file">{c.desktopLags.replace("{v}", desktopVersion).replace("{lv}", version ?? "")}</span>
+                )}
                 <div class="platform-steps">
                   <p class="shell-name">{card.shell}</p>
                   <CodeBlock code={card.codeComment + "\n" + venvCommands(os)} locale={locale} />
