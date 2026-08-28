@@ -125,7 +125,7 @@ export interface InstallContent {
 
 export const install: LocalizedPage<InstallContent> = {
   en: {
-    rev: "2026-08-28.6",
+    rev: "2026-08-28.7",
     title: "Download keel — macOS & Windows",
     description:
       "Download keel for macOS or Windows. Version and links come from GitHub Releases at build time; the five-minute source path is here too.",
@@ -184,7 +184,7 @@ export const install: LocalizedPage<InstallContent> = {
         "It finishes by running keel versions, and fails loudly if that does not come back clean.",
       ],
       updateTitle: "Keeping it current",
-      updateBody: "Re-running the installer moves the deployment to the latest release, in place. keel can also update itself from the folder it lives in: keel update --check reports what an update would do and changes nothing, and keel update applies it behind a typed confirmation. One caveat worth knowing before you rely on it: keel update installs through uv, and stops with a plain error when uv is absent. A deployment the script built without uv needs uv added before an update will apply. keel update refuses to touch a source checkout.",
+      updateBody: "Re-running the installer moves the deployment to the latest release, in place. keel can also update itself from the folder it lives in: keel update --check reports what an update would do and changes nothing, and keel update applies it behind a typed confirmation. One caveat worth knowing before you rely on it: keel update installs through uv, and stops with a plain error when uv is absent. A deployment the script built without uv needs uv added before an update will apply. keel update refuses to touch a source checkout, and a desktop-app install is the other thing it declines: for the app, downloading the new release's installer is the update path — the refusal says so and points you there.",
     },
     paperFirstTitle: "Start on paper — free, and nothing at risk",
     paperFirstBody: "For the cautious first step: the paper profile is free and educational, with simulated fills and no real orders. It is built for learning the workflow before any live decision. It needs no funded venue account and no trading credentials; the only key it asks for is a free, read-only market-data key, used to fetch candle history. The live profile is deliberately harder to reach — attestations, the promotion gauntlet and typed human confirmations all stand in the way.",
@@ -230,7 +230,7 @@ export const install: LocalizedPage<InstallContent> = {
       ],
       verifyTitle: "Please check what you downloaded first",
       verifyLead:
-        "We would rather not simply ask you to click past a security warning — keel is a program you may give exchange API keys to. Every release carries proof of where its files came from, which answers the same question a certificate answers: was this built from keel's own source, by keel's own release pipeline? A SHA256SUMS.txt file is attached to every release too.",
+        "We would rather not simply ask you to click past a security warning — keel is a program you may give exchange API keys to. Every release carries proof of where its files came from, which answers the same question a certificate answers: was this built from keel's own source, by keel's own release pipeline? Per-platform checksum files are attached to every release too (SHA256SUMS-macOS-arm64.txt, -macOS-x86_64.txt, -Windows-x86_64.txt — one per download).",
       verifyFail:
         "If either check fails, do not open the file. A failing check means it is not the file we built, and no amount of clicking Open Anyway makes that safe.",
       notMeaningTitle: "What this does not mean",
@@ -248,8 +248,8 @@ export const install: LocalizedPage<InstallContent> = {
   },
 
   ar: {
-    rev: "2026-08-28.6",
-    translatedFromRev: "2026-08-28.6",
+    rev: "2026-08-28.7",
+    translatedFromRev: "2026-08-28.7",
     title: "تنزيل كيل — macOS وWindows",
     description:
       "نزّل كيل لنظام macOS أو Windows. ويأتي رقمُ الإصدار وروابطه من GitHub Releases وقت البناء؛ ومسارُ التثبيت من المصدر في خمس دقائق هنا أيضًا.",
@@ -308,7 +308,7 @@ export const install: LocalizedPage<InstallContent> = {
         "وينتهي بتشغيل الأمر ‏keel versions، ويفشل فشلًا صريحًا إن لم تأتِ نتيجتُه نظيفة.",
       ],
       updateTitle: "إبقاؤه محدَّثًا",
-      updateBody: "إعادةُ تشغيل المثبِّت تنقل التثبيت إلى أحدث إصدارٍ في مكانه. ويستطيع كيل أيضًا أن يحدّث نفسه من المجلّد الذي يسكنه: فالأمر ‏keel update --check يعرض ما سيفعله التحديث ولا يغيّر شيئًا، والأمر ‏keel update ينفّذه بعد تأكيدٍ تكتبه بيدك. وثمّة تحفّظٌ يحسن أن تعرفه قبل الاعتماد عليه: فالأمر ‏keel update يثبّت عبر ‏uv، ويتوقّف بخطأٍ صريحٍ حين يغيب ‏uv. ويحتاج التثبيتُ الذي بناه السكربت دون ‏uv إلى إضافة ‏uv قبل أن يسري أيُّ تحديث. أمّا نسخةُ المصدر فيرفض ‏keel update المساسَ بها.",
+      updateBody: "إعادةُ تشغيل المثبِّت تنقل التثبيت إلى أحدث إصدارٍ في مكانه. ويستطيع كيل أيضًا أن يحدّث نفسه من المجلّد الذي يسكنه: فالأمر ‏keel update --check يعرض ما سيفعله التحديث ولا يغيّر شيئًا، والأمر ‏keel update ينفّذه بعد تأكيدٍ تكتبه بيدك. وثمّة تحفّظٌ يحسن أن تعرفه قبل الاعتماد عليه: فالأمر ‏keel update يثبّت عبر ‏uv، ويتوقّف بخطأٍ صريحٍ حين يغيب ‏uv. ويحتاج التثبيتُ الذي بناه السكربت دون ‏uv إلى إضافة ‏uv قبل أن يسري أيُّ تحديث. أمّا نسخةُ المصدر فيرفض ‏keel update المساسَ بها، وتثبيتُ تطبيق سطح المكتب هو الشيءُ الآخر الذي يرفضه: فبالنسبة للتطبيق، تنزيلُ مثبِّت الإصدار الجديد هو طريقُ التحديث — ورفضُ الأمر يقول ذلك ويدلّك عليه.",
     },
     paperFirstTitle: "ابدأ بالتداول التجريبي — مجّانًا، ولا شيء في خطر",
     paperFirstBody: "للخطوة الأولى الحذرة: نمطُ التداول التجريبي مجّانيٌّ وتعليمي — تنفيذٌ مُحاكًى ولا أوامرَ حقيقية — بُني لتتعلّم سير العمل قبل أيّ قرارٍ في التشغيل الحيّ. وهو لا يحتاج إلى حسابٍ مموَّلٍ لدى منصّة ولا إلى بيانات اعتمادٍ للتداول؛ والمفتاح الوحيد الذي يطلبه مفتاحُ بيانات سوقٍ مجّانيٌّ للقراءة فقط لجلب تاريخ الشموع. أمّا النمط الحيّ فالوصول إليه أصعبُ عن قصد: إذ تقف في الطريق التوثيقاتُ، ومسارُ بوابة الترقية، والتأكيداتُ البشرية المكتوبة.",
@@ -354,7 +354,7 @@ export const install: LocalizedPage<InstallContent> = {
       ],
       verifyTitle: "من فضلك تحقّق ممّا نزّلته أولًا",
       verifyLead:
-        "لا يطيب لنا أن نطلب منك مجرّد تجاوز تحذيرٍ أمني — فكيل برنامجٌ قد تعطيه مفاتيح API لمنصّة تداول. وكلُّ إصدارٍ يحمل إثباتًا لمصدر ملفّاته، وهو يجيب عن السؤال نفسه الذي تجيب عنه الشهادة: هل بُني هذا من مصدر كيل نفسه، وعبر خطّ إصدار كيل نفسه؟ ويُرفق بكلّ إصدارٍ ملفُّ SHA256SUMS.txt أيضًا.",
+        "لا يطيب لنا أن نطلب منك مجرّد تجاوز تحذيرٍ أمني — فكيل برنامجٌ قد تعطيه مفاتيح API لمنصّة تداول. وكلُّ إصدارٍ يحمل إثباتًا لمصدر ملفّاته، وهو يجيب عن السؤال نفسه الذي تجيب عنه الشهادة: هل بُني هذا من مصدر كيل نفسه، وعبر خطّ إصدار كيل نفسه؟ وتُرفق بكلّ إصدارٍ ملفاتُ بصماتٍ لكلّ منصّة (SHA256SUMS-macOS-arm64.txt و-macOS-x86_64.txt و-Windows-x86_64.txt — ملفٌّ لكلّ تنزيل).",
       verifyFail:
         "إن أخفق أيٌّ من الفحصين فلا تفتح الملفّ. فإخفاقه يعني أنه ليس الملفّ الذي بنيناه، ولن يجعله الضغطُ على ‏Open Anyway آمنًا.",
       notMeaningTitle: "ما لا يعنيه هذا التحذير",
@@ -372,8 +372,8 @@ export const install: LocalizedPage<InstallContent> = {
   },
 
   fr: {
-    rev: "2026-08-28.6",
-    translatedFromRev: "2026-08-28.6",
+    rev: "2026-08-28.7",
+    translatedFromRev: "2026-08-28.7",
     title: "Télécharger keel — macOS et Windows",
     description:
       "Téléchargez keel pour macOS ou Windows. Le numéro de version et les liens proviennent de GitHub Releases, récupérés au moment du build ; le parcours en cinq minutes depuis les sources figure également ici.",
@@ -478,7 +478,7 @@ export const install: LocalizedPage<InstallContent> = {
       ],
       verifyTitle: "Vérifiez d'abord ce que vous avez téléchargé",
       verifyLead:
-        "Nous préférons ne pas nous contenter de vous demander de passer outre un avertissement de sécurité : keel est un programme auquel vous confierez peut-être les clés d'API d'une plateforme d'échange. Chaque version porte une preuve de l'origine de ses fichiers, qui répond à la même question qu'un certificat : ce fichier a-t-il bien été construit à partir des sources de keel, par la chaîne de publication de keel ? Un fichier SHA256SUMS.txt accompagne également chaque version.",
+        "Nous préférons ne pas nous contenter de vous demander de passer outre un avertissement de sécurité : keel est un programme auquel vous confierez peut-être les clés d'API d'une plateforme d'échange. Chaque version porte une preuve de l'origine de ses fichiers, qui répond à la même question qu'un certificat : ce fichier a-t-il bien été construit à partir des sources de keel, par la chaîne de publication de keel ? Des fichiers de somme de contrôle par plateforme accompagnent chaque version (SHA256SUMS-macOS-arm64.txt, -macOS-x86_64.txt, -Windows-x86_64.txt — un par téléchargement).",
       verifyFail:
         "Si l'une des deux vérifications échoue, n'ouvrez pas le fichier. Un échec signifie que ce n'est pas le fichier que nous avons construit, et aucun « Ouvrir quand même » n'y changera rien.",
       notMeaningTitle: "Ce que cela ne signifie pas",
