@@ -101,6 +101,10 @@ export interface InstallContent {
   getStarted: { title: string; body: string; link: string };
   /** #97 — desktop bundles lag the wheels release; {v}=bundle version, {lv}=latest. */
   desktopLags: string;
+  /** #106 — the phone visitor's honest answer. */
+  phoneTitle: string;
+  phoneBody: string;
+  phoneDocsLink: string;
   browserTitle: string;
   browserBody: string;
   paperFirstTitle: string;
@@ -120,13 +124,16 @@ export interface InstallContent {
 
 export const install: LocalizedPage<InstallContent> = {
   en: {
-    rev: "2026-08-28.2",
+    rev: "2026-08-28.3",
     title: "Download keel — macOS & Windows",
     description:
       "Download keel for macOS or Windows. Version and links come from GitHub Releases at build time; the five-minute source path is here too.",
     downloadTitle: "Download keel",
     versionPrefix: "Latest release",
     requirements: "Requires Python 3.14 or later · downloaded from GitHub Releases — never mirrored here",
+  phoneTitle: "On a phone?",
+  phoneBody: "keel does not install on Android or iPhone — there is no app, and nothing to install on a phone. The engine holds your keys and enforces your rules on your computer, and its console is bound to that machine alone, by design. From a phone, the documentation and guides are the useful part; installing and trading happen at your desk.",
+  phoneDocsLink: "Read the docs and guides",
   desktopLags: "Desktop build {v} — engine fixes reach pip and the installer first ({lv}); bundles follow per app release.",
   otherPlatforms: "Linux and everything else: same wheels from the release page.",
     historyLink: "Every version, newest first — the full changelog",
@@ -233,14 +240,17 @@ export const install: LocalizedPage<InstallContent> = {
   },
 
   ar: {
-    rev: "2026-08-28.2",
-    translatedFromRev: "2026-08-28.2",
+    rev: "2026-08-28.3",
+    translatedFromRev: "2026-08-28.3",
     title: "تنزيل كيل — macOS وWindows",
     description:
       "نزّل كيل لنظام macOS أو Windows. ويأتي رقمُ الإصدار وروابطه من GitHub Releases وقت البناء؛ ومسارُ التثبيت من المصدر في خمس دقائق هنا أيضًا.",
     downloadTitle: "تنزيل كيل",
     versionPrefix: "أحدث إصدار",
     requirements: "يتطلّب Python 3.14 أو أحدث · التنزيل من GitHub Releases — ولا يُنسخ هنا أبدًا",
+  phoneTitle: "على هاتف؟",
+  phoneBody: "لا يُثبَّت كيل على أندرويد ولا على آيفون — لا يوجد تطبيق، ولا شيءَ يُثبَّت على هاتف. فالمحرّك يحفظ مفاتيحك وينفّذ قواعدك على حاسوبك، وواجهتُه مقيّدةٌ بذلك الجهاز وحده عمدًا. من الهاتف، التوثيقُ والأدلة هي الجزءُ المفيد؛ أمّا التثبيت والتداول فيحدثان على مكتبك.",
+  phoneDocsLink: "اقرأ التوثيق والأدلة",
   desktopLags: "بناءُ سطح المكتب {v} — تصل إصلاحاتُ المحرّك إلى pip والمُثبِّت أولًا ({lv})؛ وتتبعها الحزمُ مع كلِّ إصدارٍ للتطبيق.",
   otherPlatforms: "لينكس وغيره: حزم wheel نفسها متاحةٌ في صفحة الإصدار.",
     historyLink: "كلُّ الإصدارات، من الأحدث إلى الأقدم — السجلُّ الكامل للتغييرات",
@@ -347,14 +357,17 @@ export const install: LocalizedPage<InstallContent> = {
   },
 
   fr: {
-    rev: "2026-08-28.2",
-    translatedFromRev: "2026-08-28.2",
+    rev: "2026-08-28.3",
+    translatedFromRev: "2026-08-28.3",
     title: "Télécharger keel — macOS et Windows",
     description:
       "Téléchargez keel pour macOS ou Windows. Le numéro de version et les liens proviennent de GitHub Releases, récupérés au moment du build ; le parcours en cinq minutes depuis les sources figure également ici.",
     downloadTitle: "Télécharger keel",
     versionPrefix: "Dernière version",
     requirements: "Nécessite Python 3.14 ou plus · téléchargé depuis GitHub Releases — jamais recopié ici",
+  phoneTitle: "Sur un téléphone ?",
+  phoneBody: "keel ne s'installe ni sur Android ni sur iPhone — il n'y a pas d'application, rien à installer sur un téléphone. Le moteur garde vos clés et applique vos règles sur votre ordinateur, et sa console est liée à cette machine seule, par conception. Depuis un téléphone, la documentation et les guides sont la partie utile ; installer et trader se font à votre bureau.",
+  phoneDocsLink: "Lire la documentation et les guides",
   desktopLags: "Build bureau {v} — les correctifs du moteur arrivent d'abord via pip et l'installateur ({lv}) ; les bundles suivent à chaque version de l'appli.",
   otherPlatforms: "Linux et le reste : les mêmes wheels, depuis la page des versions.",
     historyLink: "Toutes les versions, de la plus récente à la plus ancienne — le journal complet",
