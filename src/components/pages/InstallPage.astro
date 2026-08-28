@@ -22,6 +22,8 @@ interface ReleaseData {
   url: string;
   publishedAt: string | null;
   assets: { name: string; url: string; size: number }[];
+  /** #97 — newest release carrying desktop bundles, when the latest is wheels-only. */
+  platformRelease: { tag: string; url: string; assets: { name: string; url: string }[] } | null;
   fetchedAt: string | null;
 }
 const release: ReleaseData =
@@ -31,6 +33,7 @@ const release: ReleaseData =
     url: "https://github.com/CodeGateSoftware/keel/releases/latest",
     publishedAt: null,
     assets: [],
+    platformRelease: null,
     fetchedAt: null,
   };
 
@@ -54,7 +57,7 @@ const winAsset = platformAsset(["windows", "win32", "win64", ".exe", ".msi", ".z
  */
 const platformRelease = release.platformRelease ?? null;
 const platformAssetFrom = (patterns: string[]) =>
-  platformRelease?.assets.find((asset) =>
+  platformRelease?.assets.find((asset: { name: string }) =>
     patterns.some((pattern) => asset.name.includes(pattern)),
   ) ?? null;
 const cardMac = macAsset ?? platformAssetFrom(["darwin", "macos", ".dmg", ".pkg"]);
