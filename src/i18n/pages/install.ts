@@ -14,8 +14,6 @@ import type { LocalizedPage } from "../config";
 export interface PlatformCardCopy {
   name: string;
   button: string;
-  shell: string;
-  codeComment: string;
 }
 
 /**
@@ -101,6 +99,9 @@ export interface InstallContent {
   getStarted: { title: string; body: string; link: string };
   /** #97 — desktop bundles lag the wheels release; {v}=bundle version, {lv}=latest. */
   desktopLags: string;
+  /** #113 — the newcomer's five-step path. */
+  simplePath: { title: string; steps: { title: string; body: string }[] };
+  detailsTitle: string;
   /** #106 — the phone visitor's honest answer. */
   phoneTitle: string;
   phoneBody: string;
@@ -124,13 +125,24 @@ export interface InstallContent {
 
 export const install: LocalizedPage<InstallContent> = {
   en: {
-    rev: "2026-08-28.4",
+    rev: "2026-08-28.5",
     title: "Download keel — macOS & Windows",
     description:
       "Download keel for macOS or Windows. Version and links come from GitHub Releases at build time; the five-minute source path is here too.",
     downloadTitle: "Download keel",
     versionPrefix: "Latest release",
     requirements: "Requires Python 3.14 or later · downloaded from GitHub Releases — never mirrored here",
+  simplePath: {
+    title: "The short path",
+    steps: [
+      { title: "Download", body: "Pick your platform's button below. That is the whole first step." },
+      { title: "Install", body: "Double-click what you downloaded (Windows: a setup wizard walks you through). Your computer will warn about the unsigned build — one click to continue, and The details below explains why, and how to verify what you downloaded." },
+      { title: "Launch", body: "The app opens keel in your browser: a first-run checklist walks you in, and your credentials go to your operating system's keychain." },
+      { title: "Choose paper", body: "Free, simulated, nothing at risk. Paper mode needs no funded account and no trading keys — only a free read-only market-data key. Learn the whole workflow here first." },
+      { title: "Go live — deliberately harder", body: "When you are ready: attest your venue (Coinbase today), your rules must pass the promotion gate, and every live action asks for your typed confirmation. That is not friction for its own sake — it is the product." },
+    ],
+  },
+  detailsTitle: "The details — terminal installs, updates, building from source, and why your computer warns you",
   phoneTitle: "On a phone?",
   phoneBody: "keel does not install on Android or iPhone — there is no app, and nothing to install on a phone. The engine holds your keys and enforces your rules on your computer, and its console is bound to that machine alone, by design. From a phone, the documentation and guides are the useful part; installing and trading happen at your desk.",
   phoneDocsLink: "Read the docs and guides",
@@ -141,14 +153,10 @@ export const install: LocalizedPage<InstallContent> = {
       {
         name: "macOS",
         button: "Download for macOS",
-        shell: "Terminal",
-        codeComment: "# after downloading the wheels into this folder",
       },
       {
         name: "Windows",
         button: "Download for Windows",
-        shell: "PowerShell",
-        codeComment: "# after downloading the wheels into this folder",
       },
     ],
     thenTitle: "Then install the wheels",
@@ -240,14 +248,25 @@ export const install: LocalizedPage<InstallContent> = {
   },
 
   ar: {
-    rev: "2026-08-28.4",
-    translatedFromRev: "2026-08-28.4",
+    rev: "2026-08-28.5",
+    translatedFromRev: "2026-08-28.5",
     title: "تنزيل كيل — macOS وWindows",
     description:
       "نزّل كيل لنظام macOS أو Windows. ويأتي رقمُ الإصدار وروابطه من GitHub Releases وقت البناء؛ ومسارُ التثبيت من المصدر في خمس دقائق هنا أيضًا.",
     downloadTitle: "تنزيل كيل",
     versionPrefix: "أحدث إصدار",
     requirements: "يتطلّب Python 3.14 أو أحدث · التنزيل من GitHub Releases — ولا يُنسخ هنا أبدًا",
+  simplePath: {
+    title: "المسار المختصر",
+    steps: [
+      { title: "نزّل", body: "اختر زرّ نظامك أدناه — هذه هي الخطوة الأولى كاملةً." },
+      { title: "ثبّت", body: "انقر نقرًا مزدوجًا على ما نزّلته (وعلى Windows يقودك معالجُ الإعداد خطوةً خطوة). سيحذّرك حاسوبك من أن الحزمة غير موقّعة — نقرةٌ واحدة للمتابعة، و«التفاصيل» أدناه تشرح السبب وكيف تتحقّق ممّا نزّلته." },
+      { title: "شغّل", body: "يفتح التطبيق كيل في متصفّحك: قائمةُ تحقّقٍ للتشغيل الأول ترشدك، وبياناتُ دخولك تُحفظ في سلسلة مفاتيح نظامك." },
+      { title: "اختر الورقي", body: "مجّاني، بمحاكاةٍ، ولا شيء في خطر. لا يحتاج النمطُ الورقي حسابًا ممولًا ولا مفاتيح تداول — بل مفتاحَ بياناتٍ للقراءة فقط ومجّاني. تعلّم سيرَ العمل كاملًا هنا أولًا." },
+      { title: "إلى الحيّ — أصعبُ عمدًا", body: "حين تجهز: وثّق منصّتك (Coinbase اليوم)، ويجب أن تجتاز قواعدُك بوابةَ الترقية، وكلُّ إجراءٍ حيّ يطلب تأكيدَك المكتوب. ليس هذا تعقيدًا لذاته — بل هو جوهرُ المنتج." },
+    ],
+  },
+  detailsTitle: "التفاصيل — التثبيت من الطرفية، والتحديثات، والبناء من المصدر، ولماذا يحذّرك حاسوبك",
   phoneTitle: "على هاتف؟",
   phoneBody: "لا يُثبَّت كيل على أندرويد ولا على آيفون — لا يوجد تطبيق، ولا شيءَ يُثبَّت على هاتف. فالمحرّك يحفظ مفاتيحك وينفّذ قواعدك على حاسوبك، وواجهتُه مقيّدةٌ بذلك الجهاز وحده عمدًا. من الهاتف، التوثيقُ والأدلة هي الجزءُ المفيد؛ أمّا التثبيت والتداول فيحدثان على مكتبك.",
   phoneDocsLink: "اقرأ التوثيق والأدلة",
@@ -258,14 +277,10 @@ export const install: LocalizedPage<InstallContent> = {
       {
         name: "macOS",
         button: "التنزيل لـ macOS",
-        shell: "Terminal",
-        codeComment: "# بعد تنزيل حزم wheel إلى هذا المجلد",
       },
       {
         name: "Windows",
         button: "التنزيل لـ Windows",
-        shell: "PowerShell",
-        codeComment: "# بعد تنزيل حزم wheel إلى هذا المجلد",
       },
     ],
     thenTitle: "ثم ثبّت حزم wheel",
@@ -357,14 +372,25 @@ export const install: LocalizedPage<InstallContent> = {
   },
 
   fr: {
-    rev: "2026-08-28.4",
-    translatedFromRev: "2026-08-28.4",
+    rev: "2026-08-28.5",
+    translatedFromRev: "2026-08-28.5",
     title: "Télécharger keel — macOS et Windows",
     description:
       "Téléchargez keel pour macOS ou Windows. Le numéro de version et les liens proviennent de GitHub Releases, récupérés au moment du build ; le parcours en cinq minutes depuis les sources figure également ici.",
     downloadTitle: "Télécharger keel",
     versionPrefix: "Dernière version",
     requirements: "Nécessite Python 3.14 ou plus · téléchargé depuis GitHub Releases — jamais recopié ici",
+  simplePath: {
+    title: "Le chemin court",
+    steps: [
+      { title: "Télécharger", body: "Choisissez le bouton de votre plateforme ci-dessous — c'est toute la première étape." },
+      { title: "Installer", body: "Double-cliquez sur le fichier téléchargé (sous Windows : un assistant d'installation vous guide). Votre ordinateur avertira que le build n'est pas signé — un clic pour continuer, et Les détails ci-dessous expliquent pourquoi, et comment vérifier ce que vous avez téléchargé." },
+      { title: "Lancer", body: "L'appli ouvre keel dans votre navigateur : une liste de contrôle au premier lancement vous accompagne, et vos identifiants vont dans le trousseau de votre système." },
+      { title: "Choisir le papier", body: "Gratuit, simulé, rien en jeu. Le mode papier n'exige ni compte financé ni clés de trading — seulement une clé de données de marché gratuite, en lecture seule. Apprenez tout le parcours ici d'abord." },
+      { title: "Passer au réel — volontairement plus dur", body: "Quand vous êtes prêt : attestez votre plateforme (Coinbase aujourd'hui), vos règles doivent franchir le verrou de promotion, et chaque action en réel demande votre confirmation tapée. Ce n'est pas de la friction gratuite — c'est le produit." },
+    ],
+  },
+  detailsTitle: "Les détails — installation au terminal, mises à jour, construction depuis les sources, et pourquoi votre ordinateur vous avertit",
   phoneTitle: "Sur un téléphone ?",
   phoneBody: "keel ne s'installe ni sur Android ni sur iPhone — il n'y a pas d'application, rien à installer sur un téléphone. Le moteur garde vos clés et applique vos règles sur votre ordinateur, et sa console est liée à cette machine seule, par conception. Depuis un téléphone, la documentation et les guides sont la partie utile ; installer et trader se font à votre bureau.",
   phoneDocsLink: "Lire la documentation et les guides",
@@ -375,14 +401,10 @@ export const install: LocalizedPage<InstallContent> = {
       {
         name: "macOS",
         button: "Télécharger pour macOS",
-        shell: "Terminal",
-        codeComment: "# après avoir téléchargé les wheels dans ce dossier",
       },
       {
         name: "Windows",
         button: "Télécharger pour Windows",
-        shell: "PowerShell",
-        codeComment: "# après avoir téléchargé les wheels dans ce dossier",
       },
     ],
     thenTitle: "Installez ensuite les wheels",

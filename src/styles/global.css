@@ -1444,6 +1444,86 @@ section {
   margin-top: 0.5rem;
 }
 
+/* #113 — the newcomer's five-step path */
+.short-path {
+  list-style: none;
+  display: grid;
+  gap: 0.9rem;
+  margin: 1.8rem 0 2.2rem;
+  padding: 0;
+  text-align: start;
+}
+
+.short-step {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+}
+
+.short-num {
+  flex-shrink: 0;
+  width: 1.9rem;
+  height: 1.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.short-step h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.02rem;
+}
+
+.short-step p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.93rem;
+  line-height: 1.65;
+}
+
+/* #113 — technical depth behind one click */
+.install-details {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  margin-block: 2.2rem;
+}
+
+.install-details > summary {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 1rem 1.2rem;
+  list-style: none;
+}
+
+.install-details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.install-details > summary::after {
+  content: "▾";
+  margin-inline-start: 0.5rem;
+  color: var(--muted);
+}
+
+.install-details[open] > summary::after {
+  content: "▴";
+}
+
+.install-details .details-body {
+  padding: 0 1.2rem 1.2rem;
+  border-top: 1px solid var(--border);
+}
+
 /* #106 — the phone visitor's answer: no app exists, nothing to install. */
 .phone-note {
   display: flex;
