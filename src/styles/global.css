@@ -408,13 +408,6 @@ section {
   flex: none;
 }
 
-.invocation-cite {
-  margin: 0;
-  font-size: 0.66rem;
-  letter-spacing: 0.12em;
-  color: var(--muted);
-}
-
 /* Theme toggle — original sun/moon geometry; the icon shown is the one you
    would switch TO (sun while dark, moon while light). */
 .theme-toggle {
