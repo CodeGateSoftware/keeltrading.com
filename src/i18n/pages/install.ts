@@ -125,7 +125,7 @@ export interface InstallContent {
 
 export const install: LocalizedPage<InstallContent> = {
   en: {
-    rev: "2026-08-28.5",
+    rev: "2026-08-28.6",
     title: "Download keel — macOS & Windows",
     description:
       "Download keel for macOS or Windows. Version and links come from GitHub Releases at build time; the five-minute source path is here too.",
@@ -136,8 +136,8 @@ export const install: LocalizedPage<InstallContent> = {
     title: "The short path",
     steps: [
       { title: "Download", body: "Pick your platform's button below. That is the whole first step." },
-      { title: "Install", body: "Double-click what you downloaded (Windows: a setup wizard walks you through). Your computer will warn about the unsigned build — one click to continue, and The details below explains why, and how to verify what you downloaded." },
-      { title: "Launch", body: "The app opens keel in your browser: a first-run checklist walks you in, and your credentials go to your operating system's keychain." },
+      { title: "Install", body: "Windows: run the downloaded file; if SmartScreen says \"Windows protected your PC\", click More info → Run anyway, and the setup wizard does the rest. macOS: open the .dmg and drag keel into Applications. The warning is about the unsigned build — The details below explains why, and how to verify what you downloaded." },
+      { title: "Launch", body: "macOS: the first open is refused once — System Settings → Privacy & Security → Open Anyway (the only way on current macOS). Windows: launch keel from the Start menu. keel opens in your browser with a first-run checklist, and your credentials go to your keychain. After that, every launch is a plain double-click." },
       { title: "Choose paper", body: "Free, simulated, nothing at risk. Paper mode needs no funded account and no trading keys — only a free read-only market-data key. Learn the whole workflow here first." },
       { title: "Go live — deliberately harder", body: "When you are ready: attest your venue (Coinbase today), your rules must pass the promotion gate, and every live action asks for your typed confirmation. That is not friction for its own sake — it is the product." },
     ],
@@ -248,8 +248,8 @@ export const install: LocalizedPage<InstallContent> = {
   },
 
   ar: {
-    rev: "2026-08-28.5",
-    translatedFromRev: "2026-08-28.5",
+    rev: "2026-08-28.6",
+    translatedFromRev: "2026-08-28.6",
     title: "تنزيل كيل — macOS وWindows",
     description:
       "نزّل كيل لنظام macOS أو Windows. ويأتي رقمُ الإصدار وروابطه من GitHub Releases وقت البناء؛ ومسارُ التثبيت من المصدر في خمس دقائق هنا أيضًا.",
@@ -260,8 +260,8 @@ export const install: LocalizedPage<InstallContent> = {
     title: "المسار المختصر",
     steps: [
       { title: "نزّل", body: "اختر زرّ نظامك أدناه — هذه هي الخطوة الأولى كاملةً." },
-      { title: "ثبّت", body: "انقر نقرًا مزدوجًا على ما نزّلته (وعلى Windows يقودك معالجُ الإعداد خطوةً خطوة). سيحذّرك حاسوبك من أن الحزمة غير موقّعة — نقرةٌ واحدة للمتابعة، و«التفاصيل» أدناه تشرح السبب وكيف تتحقّق ممّا نزّلته." },
-      { title: "شغّل", body: "يفتح التطبيق كيل في متصفّحك: قائمةُ تحقّقٍ للتشغيل الأول ترشدك، وبياناتُ دخولك تُحفظ في سلسلة مفاتيح نظامك." },
+      { title: "ثبّت", body: "على Windows: شغّل الملف الذي نزّلته؛ فإن ظهر تحذير SmartScreen ‏«Windows protected your PC» فاختر More info ثم Run anyway، ويتولّى معالجُ الإعداد الباقي. وعلى macOS: افتح ملف ‏.dmg واسحب كيل إلى مجلد Applications. التحذير سببُه أن الحزمة غير موقّعة — و«التفاصيل» أدناه تشرح السبب وكيف تتحقّق ممّا نزّلته." },
+      { title: "شغّل", body: "على macOS: يُرفض الفتح الأول مرةً واحدة — افتح System Settings ثم Privacy & Security واختر Open Anyway (وهذا هو الطريق الوحيد في نظام macOS الحالي). وعلى Windows: شغّل كيل من قائمة Start. يُفتح كيل في متصفّحك مع قائمةِ تحقّقٍ للتشغيل الأول، وتُحفظ بياناتُ دخولك في سلسلة المفاتيح. وبعدها يصبح كلُّ تشغيلٍ نقرةً مزدوجةً عادية." },
       { title: "اختر الورقي", body: "مجّاني، بمحاكاةٍ، ولا شيء في خطر. لا يحتاج النمطُ الورقي حسابًا ممولًا ولا مفاتيح تداول — بل مفتاحَ بياناتٍ للقراءة فقط ومجّاني. تعلّم سيرَ العمل كاملًا هنا أولًا." },
       { title: "إلى الحيّ — أصعبُ عمدًا", body: "حين تجهز: وثّق منصّتك (Coinbase اليوم)، ويجب أن تجتاز قواعدُك بوابةَ الترقية، وكلُّ إجراءٍ حيّ يطلب تأكيدَك المكتوب. ليس هذا تعقيدًا لذاته — بل هو جوهرُ المنتج." },
     ],
@@ -372,8 +372,8 @@ export const install: LocalizedPage<InstallContent> = {
   },
 
   fr: {
-    rev: "2026-08-28.5",
-    translatedFromRev: "2026-08-28.5",
+    rev: "2026-08-28.6",
+    translatedFromRev: "2026-08-28.6",
     title: "Télécharger keel — macOS et Windows",
     description:
       "Téléchargez keel pour macOS ou Windows. Le numéro de version et les liens proviennent de GitHub Releases, récupérés au moment du build ; le parcours en cinq minutes depuis les sources figure également ici.",
@@ -384,8 +384,8 @@ export const install: LocalizedPage<InstallContent> = {
     title: "Le chemin court",
     steps: [
       { title: "Télécharger", body: "Choisissez le bouton de votre plateforme ci-dessous — c'est toute la première étape." },
-      { title: "Installer", body: "Double-cliquez sur le fichier téléchargé (sous Windows : un assistant d'installation vous guide). Votre ordinateur avertira que le build n'est pas signé — un clic pour continuer, et Les détails ci-dessous expliquent pourquoi, et comment vérifier ce que vous avez téléchargé." },
-      { title: "Lancer", body: "L'appli ouvre keel dans votre navigateur : une liste de contrôle au premier lancement vous accompagne, et vos identifiants vont dans le trousseau de votre système." },
+      { title: "Installer", body: "Sous Windows : exécutez le fichier téléchargé ; si SmartScreen affiche « Windows protected your PC », cliquez More info puis Run anyway, et l'assistant d'installation fait le reste. Sous macOS : ouvrez le .dmg et glissez keel dans Applications. L'avertissement signale le build non signé — Les détails ci-dessous expliquent pourquoi, et comment vérifier ce que vous avez téléchargé." },
+      { title: "Lancer", body: "Sous macOS : la première ouverture est refusée une fois — Réglages Système → Confidentialité et sécurité → Ouvrir quand même (la seule voie sous macOS actuel). Sous Windows : lancez keel depuis le menu Démarrer. keel s'ouvre dans votre navigateur avec une liste de contrôle au premier lancement, et vos identifiants vont dans le trousseau. Ensuite, chaque lancement est un simple double-clic." },
       { title: "Choisir le papier", body: "Gratuit, simulé, rien en jeu. Le mode papier n'exige ni compte financé ni clés de trading — seulement une clé de données de marché gratuite, en lecture seule. Apprenez tout le parcours ici d'abord." },
       { title: "Passer au réel — volontairement plus dur", body: "Quand vous êtes prêt : attestez votre plateforme (Coinbase aujourd'hui), vos règles doivent franchir le verrou de promotion, et chaque action en réel demande votre confirmation tapée. Ce n'est pas de la friction gratuite — c'est le produit." },
     ],
