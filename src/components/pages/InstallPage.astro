@@ -199,6 +199,16 @@ const fromSourceCommands = [
       <p class="other-platforms">
         {c.otherPlatforms} <a href={release.url}>{chrome.actions.seeReleases} →</a>
       </p>
+
+      <aside class="phone-note" aria-label={c.phoneTitle}>
+        <span class="phone-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
+        </span>
+        <span>
+          <strong>{c.phoneTitle}</strong> {c.phoneBody}{" "}
+          <a href={localePath(locale, "docs")}>{c.phoneDocsLink} →</a>
+        </span>
+      </aside>
     </section>
 
     <div class="narrow prose">
