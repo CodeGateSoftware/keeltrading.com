@@ -19,7 +19,9 @@
  * `scripts/install.sh` — deliberately NOT pinnable. The file does not exist at
  * v0.11.2 (`git cat-file -e v0.11.2:scripts/install.sh` fails); it lives on the
  * default branch only. Pinning it would turn the install page's primary command
- * into a 404. The install page says so in its own copy.
+ * into a 404. The install page says so in its own copy. The exemption is by
+ * URL path, not by file — the guide and any future page may quote the same
+ * installer command (#97's guide line tripped the per-file form).
  *
  * `src/content/` — fetched release-note prose, gitignored, written by
  * scripts/fetch-release.mjs. Those links are quotes from releases as published;
@@ -44,6 +46,10 @@ const ALLOW = [
 
 const allowed = (rel) => ALLOW.some((a) => rel === a.path || rel.startsWith(a.path));
 
+/** The installer URL is exempt wherever it appears — see the header note. */
+const INSTALLER_URL = "/scripts/install.sh";
+const installerLink = (url) => url.includes(INSTALLER_URL);
+
 function* walk(dir) {
   for (const entry of readdirSync(dir)) {
     const full = join(dir, entry);
@@ -61,6 +67,9 @@ for (const file of walk(SRC)) {
     re.lastIndex = 0;
     let m;
     while ((m = re.exec(text)) !== null) {
+      // The match ends at the branch slash; the path follows. The installer
+      // URL is the one deliberately-main-pinned link — exempt it anywhere.
+      if (installerLink(text.slice(m.index, m.index + 160))) continue;
       const line = text.slice(0, m.index).split("\n").length;
       findings.push(`${rel}:${line} — engine link pinned to '${m[1]}': ${m[0]}`);
     }
