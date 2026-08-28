@@ -107,11 +107,13 @@ html {
   color-scheme: light dark;
 }
 
-/* The invocation — Amiri Quran (SIL OFL, see fonts/AmiriQuran-OFL.txt),
-   subset to the full verse ﴿وَقُلْ رَبِّ زِدْنِي عِلْمًا ١١٤﴾ (16KB) */
+/* The masthead du'a — Amiri Quran, subset to its exact glyphs
+   أغننا بحلالك عن حرامك (#108; new filename so cached old subsets don't serve
+   the previous verse's glyphs). A hadith supplication (Sunan al-Tirmidhī),
+   hence no Quranic brackets and no verse number in the masthead. */
 @font-face {
   font-family: "Amiri Quran";
-  src: url("/fonts/amiri-quran-slogan.woff2") format("woff2");
+  src: url("/fonts/amiri-quran-dua.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -362,6 +364,20 @@ section {
   font-size: 1.2rem;
   line-height: 1.9;
   color: var(--accent);
+}
+
+/* The du'a runs longer than the verse it replaced — one line even on
+   the narrowest phones (#108). */
+@media (max-width: 24.99rem) {
+  .invocation {
+    font-size: 1.02rem;
+  }
+}
+
+@media (max-width: 21.5rem) {
+  .invocation {
+    font-size: 0.9rem;
+  }
 }
 
 /* Variant C — gold ink: the gradient fills the glyphs; text stays selectable
