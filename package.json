@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "fetch": "node scripts/fetch-release.mjs && node scripts/fetch-engine-docs.mjs && node scripts/fetch-discussions.mjs",
+    "fetch": "node scripts/fetch-release.mjs && node scripts/fetch-engine-docs.mjs && node scripts/fetch-discussions.mjs && node scripts/fetch-milestones.mjs",
     "dev": "npm run fetch && astro dev",
     "build": "npm run fetch && astro build",
     "preview": "astro preview",

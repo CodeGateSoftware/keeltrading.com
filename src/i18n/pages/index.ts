@@ -9,6 +9,7 @@ import { compliance, type ComplianceContent } from "./compliance";
 import { compare, type CompareContent } from "./compare";
 import { about, type AboutContent } from "./about";
 import { changelog, type ChangelogContent } from "./changelog";
+import { roadmap, type RoadmapContent } from "./roadmap";
 
 /**
  * FR-8 — the layout reads this registry to stamp every translated page with
@@ -24,6 +25,7 @@ export const pageDicts: Record<Exclude<PageKey, "guides">, LocalizedPage<unknown
   docs,
   news,
   community,
+  roadmap,
   compliance,
   compare,
   about,
@@ -37,6 +39,7 @@ export type {
   DocsContent,
   NewsContent,
   CommunityContent,
+  RoadmapContent,
   ComplianceContent,
   CompareContent,
   AboutContent,

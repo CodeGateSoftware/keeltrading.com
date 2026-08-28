@@ -26,6 +26,7 @@ export const pageKeys = [
   "docs",
   "news",
   "community",
+  "roadmap",
   "compliance",
   "compare",
   "about",

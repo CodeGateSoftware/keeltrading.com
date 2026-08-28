@@ -1,0 +1,330 @@
+---
+import Base from "../../layouts/Base.astro";
+import { readDataFile } from "../docs/nav";
+import { roadmap } from "../../i18n/pages/roadmap";
+import { alternatesFor, formatDate, localePath, type Locale } from "../../i18n/config";
+import { t } from "../../i18n/ui";
+
+/**
+ * #117 — the Roadmap page: a read of the engine repo's GitHub milestones,
+ * filled at build time by scripts/fetch-milestones.mjs into
+ * data/milestones.json (gitignored; this component only reads). Milestone
+ * and issue titles stay in their original language — they are the repo's
+ * own wording. Every item links to its issue; there is no voting, no
+ * account, and no subscribe box (#117's non-goals — the site only reads).
+ */
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const c = roadmap[locale];
+const chrome = t(locale);
+
+interface RoadmapItem {
+  number: number;
+  title: string;
+  state: string;
+  isPullRequest: boolean;
+  url: string;
+}
+interface RoadmapMilestone {
+  number: number;
+  title: string;
+  description: string;
+  state: string;
+  url: string;
+  openIssues: number;
+  closedIssues: number;
+  dueOn: string | null;
+  closedAt: string | null;
+  items: RoadmapItem[];
+}
+interface MilestonesFile {
+  milestonesUrl: string;
+  fetchedAt: string | null;
+  milestones: RoadmapMilestone[];
+}
+
+const data: MilestonesFile =
+  readDataFile<MilestonesFile>("milestones.json") ?? {
+    milestonesUrl: "https://github.com/CodeGateSoftware/keel/milestones",
+    fetchedAt: null,
+    milestones: [],
+  };
+
+/** The fetch script already orders them: open (dated then undated) →
+ *  recently closed. Splitting preserves that order on each side. */
+const open = data.milestones.filter((milestone) => milestone.state === "open");
+const closed = data.milestones.filter((milestone) => milestone.state === "closed");
+
+/** Full counts travel with each milestone; items are capped in the script. */
+const overflow = (milestone: RoadmapMilestone) =>
+  Math.max(0, milestone.openIssues + milestone.closedIssues - milestone.items.length);
+---
+
+<Base
+  locale={locale}
+  pageKey="roadmap"
+  title={c.title}
+  description={c.description}
+  path={localePath(locale, "roadmap")}
+  alternates={alternatesFor("roadmap")}
+>
+  <div class="container">
+    <section class="hero">
+      <h1>{c.title}</h1>
+      {c.intro.map((paragraph) => <p class="lede">{paragraph}</p>)}
+    </section>
+
+    <div class="narrow">
+      {
+        data.fetchedAt && (
+          <p class="doc-meta">{c.refreshedAt(formatDate(data.fetchedAt))}</p>
+        )
+      }
+
+      {
+        data.milestones.length === 0 ? (
+          <div class="stale-banner" role="note">
+            <p>{c.empty}</p>
+            <p>
+              <a href={data.milestonesUrl}>
+                {chrome.actions.viewOnGitHub} →
+              </a>
+            </p>
+          </div>
+        ) : (
+          <>
+            {open.length > 0 && (
+              <section aria-labelledby="roadmap-open">
+                <h2 id="roadmap-open">{c.openTitle}</h2>
+                <ul class="milestones">
+                  {open.map((milestone) => (
+                    <li class="card milestone">
+                      <h3>
+                        <a href={milestone.url}>{milestone.title}</a>
+                      </h3>
+                      {milestone.description && <p class="desc">{milestone.description}</p>}
+                      <p class="milestone-meta">
+                        <span>
+                          {milestone.dueOn ? c.dueOn(formatDate(milestone.dueOn)) : c.noDate}
+                        </span>
+                        <span class="dot" aria-hidden="true">·</span>
+                        <span>
+                          {c.progress(milestone.closedIssues, milestone.openIssues + milestone.closedIssues)}
+                        </span>
+                      </p>
+                      {milestone.items.length > 0 && (
+                        <ul class="roadmap-items">
+                          {milestone.items.map((item) => (
+                            <li class:item-open={item.state === "open"} class:item-done={item.state !== "open"}>
+                              <a href={item.url}>
+                                <span class="state" aria-hidden="true">
+                                  {item.state === "open" ? "○" : "●"}
+                                </span>
+                                <span class="state-label">
+                                  {item.state === "open" ? c.itemOpen : c.itemDone}
+                                </span>
+                                {item.isPullRequest && <span class="kind">{c.pullRequest}</span>}
+                                <span class="item-title">{item.title}</span>
+                                <span class="num">#{item.number}</span>
+                              </a>
+                            </li>
+                          ))}
+                          {overflow(milestone) > 0 && (
+                            <li class="overflow">
+                              <a href={milestone.url}>{c.moreOnGitHub(overflow(milestone))} →</a>
+                            </li>
+                          )}
+                        </ul>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {closed.length > 0 && (
+              <section class="shipped" aria-labelledby="roadmap-closed">
+                <h2 id="roadmap-closed">{c.closedTitle}</h2>
+                <ul class="milestones">
+                  {closed.map((milestone) => (
+                    <li class="card milestone">
+                      <h3>
+                        <a href={milestone.url}>{milestone.title}</a>
+                      </h3>
+                      {milestone.description && <p class="desc">{milestone.description}</p>}
+                      <p class="milestone-meta">
+                        {milestone.closedAt && (
+                          <span>{c.closedOn(formatDate(milestone.closedAt))}</span>
+                        )}
+                      </p>
+                      {milestone.items.length > 0 && (
+                        <ul class="roadmap-items compact">
+                          {milestone.items.map((item) => (
+                            <li class:item-done={item.state !== "open"} class:item-open={item.state === "open"}>
+                              <a href={item.url}>
+                                <span class="state" aria-hidden="true">
+                                  {item.state === "open" ? "○" : "●"}
+                                </span>
+                                <span class="state-label">
+                                  {item.state === "open" ? c.itemOpen : c.itemDone}
+                                </span>
+                                {item.isPullRequest && <span class="kind">{c.pullRequest}</span>}
+                                <span class="item-title">{item.title}</span>
+                                <span class="num">#{item.number}</span>
+                              </a>
+                            </li>
+                          ))}
+                          {overflow(milestone) > 0 && (
+                            <li class="overflow">
+                              <a href={milestone.url}>{c.moreOnGitHub(overflow(milestone))} →</a>
+                            </li>
+                          )}
+                        </ul>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+          </>
+        )
+      }
+    </div>
+  </div>
+</Base>
+
+<style>
+  /* #117 — milestone cards. Reuses .card for the surface; these shape the
+     meta line and the item list inside. Logical properties only, so the
+     Arabic edition mirrors correctly. */
+  .milestones {
+    list-style: none;
+    margin: 1.25rem 0 2rem;
+    padding: 0;
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .milestone h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.12rem;
+    line-height: 1.4;
+  }
+
+  .milestone h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .milestone h3 a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 3px;
+  }
+
+  .milestone .desc {
+    color: var(--muted);
+    font-size: 0.97rem;
+    margin: 0 0 0.75rem;
+  }
+
+  .milestone-meta {
+    color: var(--muted);
+    font-size: 0.88rem;
+    margin: 0 0 0.25rem;
+  }
+
+  .milestone-meta .dot {
+    margin-inline: 0.4em;
+    opacity: 0.6;
+  }
+
+  .roadmap-items {
+    list-style: none;
+    margin: 0.9rem 0 0;
+    padding: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .roadmap-items li {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .roadmap-items li:last-child {
+    border-bottom: 0;
+  }
+
+  .roadmap-items a {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.15rem 0.45rem;
+    padding-block: 0.5rem;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .roadmap-items a:hover .item-title {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 3px;
+  }
+
+  /* Open/done markers: a ring for open, a filled dot for done — shape
+     carries the state, the label spells it out. */
+  .roadmap-items .state {
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+
+  .roadmap-items .state-label,
+  .roadmap-items .kind {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.05rem 0.5rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .roadmap-items li.item-done .state,
+  .roadmap-items li.item-done .state-label {
+    color: var(--accent, var(--link));
+    border-color: color-mix(in oklab, var(--accent, var(--link)) 40%, var(--border));
+  }
+
+  .roadmap-items .item-title {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .roadmap-items .num {
+    color: var(--muted);
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
+
+  .roadmap-items .overflow a,
+  .overflow {
+    color: var(--muted);
+    font-size: 0.88rem;
+  }
+
+  /* Recently-shipped section: quieter, compact list. */
+  .shipped {
+    border-top: 1px solid var(--border);
+    padding-top: 1.75rem;
+  }
+
+  .roadmap-items.compact a {
+    padding-block: 0.4rem;
+    font-size: 0.9rem;
+  }
+</style>
