@@ -65,31 +65,8 @@ const cardWin = winAsset ?? platformAssetFrom(["windows", "win32", "win64", ".ex
 const cardTargets = [cardMac, cardWin];
 const desktopLags = Boolean(!macAsset && !winAsset && (cardMac || cardWin));
 const desktopVersion = desktopLags ? (platformRelease?.tag ?? "").replace(/^v/, "") : version;
-
-/**
- * Whether this release ships anything an operating system will refuse to open. Gates the
- * unsigned-build note: the wheels are not signed either, but pip does not warn about them, so a
- * Gatekeeper explanation shown beside a wheels-only release would be a warning about nothing.
- */
 const hasPlatformBundle = Boolean(macAsset || winAsset);
-
-const venvCommands = (os: "mac" | "win"): string => {
-  const whl = "keel_trader-" + (version ?? "<version>") + "-py3-none-any.whl";
-  if (os === "mac") {
-    return [
-      "mkdir keel && cd keel",
-      "python3 -m venv .venv && source .venv/bin/activate",
-      "pip install --find-links . ./" + whl,
-      "keel versions",
-    ].join("\n");
-  }
-  return [
-    "mkdir keel; cd keel",
-    "py -m venv .venv; .\\.venv\\Scripts\\Activate.ps1",
-    "pip install --find-links . .\\" + whl,
-    "keel versions",
-  ].join("\n");
-};
+;
 
 /**
  * keel's terminal installer (#86). The script is served from the DEFAULT BRANCH — it has
@@ -160,15 +137,34 @@ const fromSourceCommands = [
         <a href={localePath(locale, "changelog")}>{c.historyLink}</a>
       </p>
 
+            <section>
+        <div class="stale-banner" role="note">
+          <strong>{c.fromReleaseWarning}</strong>
+        </div>
+      </section>
+
+      <ol class="short-path" aria-label={c.simplePath.title}>
+        {
+          c.simplePath.steps.map((step, i) => (
+            <li class="short-step">
+              <span class="short-num" aria-hidden="true">{i + 1}</span>
+              <div>
+                <h2>{step.title}</h2>
+                <p>{step.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+
       <div class="download-grid">
         {
           c.cards.map((card, index) => {
-            const os = index === 0 ? "mac" : "win";
             const target = cardTargets[index] ?? null;
             return (
               <div class="download-card">
                 <span class="platform-icon" aria-hidden="true">
-                  {os === "mac" ? (
+                  {index === 0 ? (
                     <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
                     </svg>
@@ -186,10 +182,6 @@ const fromSourceCommands = [
                 {desktopLags && desktopVersion && (
                   <span class="direct-file">{c.desktopLags.replace("{v}", desktopVersion).replace("{lv}", version ?? "")}</span>
                 )}
-                <div class="platform-steps">
-                  <p class="shell-name">{card.shell}</p>
-                  <CodeBlock code={card.codeComment + "\n" + venvCommands(os)} locale={locale} />
-                </div>
               </div>
             );
           })
@@ -212,7 +204,21 @@ const fromSourceCommands = [
     </section>
 
     <div class="narrow prose">
-      {/* Placed FIRST, ahead of the release-file list and the from-source path: a reader who
+      {/* #113 — the newcomer's narrative first: paper-first and the guided tour.
+          Everything terminal-shaped lives behind one collapsed details element. */}
+            <section class="operators-aside">
+        <h2>{c.paperFirstTitle}</h2>
+        <p>{c.paperFirstBody}</p>
+
+        <h2>{c.getStarted.title}</h2>
+        <p>{c.getStarted.body}</p>
+        <p><a class="button" href={`${localePath("en", "guides")}first-run/`}>{c.getStarted.link} →</a></p>
+      </section>
+
+      <details class="install-details" id="details">
+        <summary>{c.detailsTitle}</summary>
+        <div class="details-body">
+                {/* Placed FIRST, ahead of the release-file list and the from-source path: a reader who
           already has a terminal should meet the one-command road before the wheels-by-hand
           ceremony, not after it. The from-source section stays last — it is for people who
           want the repository, not the release. */}
@@ -315,19 +321,12 @@ const fromSourceCommands = [
         </p>
       </section>
 
-      <section class="operators-aside">
-        <h2>{c.paperFirstTitle}</h2>
-        <p>{c.paperFirstBody}</p>
-
-        <h2>{c.getStarted.title}</h2>
-        <p>{c.getStarted.body}</p>
-        <p><a class="button" href={`${localePath("en", "guides")}first-run/`}>{c.getStarted.link} →</a></p>
-
+          <section class="prose">
         <h2>{c.browserTitle}</h2>
         <p>{c.browserBody}</p>
       </section>
 
-      <section id="from-source">
+                <section id="from-source">
         <h2>{c.fromSource.title}</h2>
         <p>{c.fromSource.lead}</p>
         <ul>
@@ -340,8 +339,10 @@ const fromSourceCommands = [
           <a href={`${localePath("en", "docs")}go-live-runbook/`}>{c.fromSource.next} →</a>
         </p>
       </section>
+        </div>
+      </details>
 
-      <ForOperators locale={locale} />
+            <ForOperators locale={locale} />
     </div>
   </div>
 </Base>
