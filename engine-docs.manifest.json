@@ -22,6 +22,15 @@
       "fr": "Le raisonnement Shariah que keel encode, règle par règle, chacun avec sa source dans le dépôt — publié pour être audité et contesté."
     },
     {
+      "path": "docs/desktop-install.md",
+      "slug": "desktop-install",
+      "title": "Installing the desktop app",
+      "en": "Why your computer warns you about keel's desktop builds — unsigned, because code-signing certificates cost money the project doesn't have — what macOS and Windows each show, and the install path that draws no warning at all.",
+      "ar": "لماذا يحذّرك حاسوبك من نسخ كيل لسطح المكتب — غير موقَّعة لأن شهادات التوقيع تكلف مالًا لا يملكه المشروع — وماذا يعرض كلٌّ من macOS وWindows، وطريقُ التثبيت الذي لا يثير أيّ تحذير.",
+      "section": "guides",
+      "fr": "Pourquoi votre ordinateur avertit au sujet des builds desktop de keel — non signées, car les certificats de signature coûtent un argent que le projet n'a pas — ce que macOS et Windows affichent chacun, et le chemin d'installation qui ne déclenche aucun avertissement."
+    },
+    {
       "path": "docs/operator-runbook.md",
       "slug": "operator-runbook",
       "title": "Operator runbook",
@@ -56,6 +65,33 @@
       "ar": "لماذا يوجد النمط الساعي: القواعد نفسها على شموع الساعة تُطلق 49.4 إشارة لكل أصل-سنة بدل 2.15.",
       "section": "research",
       "fr": "Pourquoi le profil horaire existe : mesurées sur des bougies ONE_HOUR, les mêmes règles déclenchent 49,4 signaux par actif et par an, au lieu de 2,15."
+    },
+    {
+      "path": "docs/experiments/2026-08-21-rule-family-significance.md",
+      "slug": "experiment-rule-family-significance",
+      "title": "Experiment: rule-family significance",
+      "en": "Is any family's edge distinguishable from zero at the fee actually paid? Measured over every product's full cached history: none is, in any fee regime — the tool's job was to be able to say no, and it says no.",
+      "ar": "هل تنفصل أفضليةُ أيِّ عائلةِ قواعد عن الصفر عند الرسوم المدفوعة فعلًا؟ قياسٌ على كامل التاريخ المخزَّن لكلِّ منتج: لا تنفصل أيٌّ منها في أيّ نظام رسوم — والغاية من الأداة أن تستطيع قولَ لا، فتقول لا.",
+      "section": "research",
+      "fr": "L'avantage d'une famille se distingue-t-il de zéro aux frais réellement payés ? Mesuré sur tout l'historique en cache de chaque produit : aucun ne s'en distingue, dans aucun régime de frais — le rôle de l'outil était de pouvoir dire non, et il dit non."
+    },
+    {
+      "path": "docs/experiments/2026-08-22-optuna-parameter-study.md",
+      "slug": "experiment-optuna-parameter-study",
+      "title": "Experiment: the Optuna parameter study",
+      "en": "An optimizer pointed at the rule families to see whether any candidate deserved the gauntlet: the promotion gate refused every cell, and the fitted winners were booked diagnostic-only — never auto-tuned lives.",
+      "ar": "وجِّه مُحسِّنٌ نحو عائلات القواعد ليرى إن كان أيُّ مرشَّحٍ يستحقّ المسارَ العقابيّ: رفضت بوابةُ الترقية كلَّ خلية، وسُجِّل الفائزون المُواءَمون للتشخيص وحده — لا حياةً مضبوطةً آليًّا أبدًا.",
+      "section": "research",
+      "fr": "Un optimiseur pointé sur les familles de règles pour voir si un candidat méritait le parcours : le verrou de promotion a refusé chaque cellule, et les gagnants ajustés ont été consignés à titre de diagnostic uniquement — jamais des vies réglées automatiquement."
+    },
+    {
+      "path": "docs/experiments/2026-08-22-trailing-vs-static-exits.md",
+      "slug": "experiment-trailing-vs-static-exits",
+      "title": "Experiment: trailing vs static exits",
+      "en": "The ratchet-only exit policy — wired, then measured against static exits at the fee actually paid: trailing makes both families clearly worse, so the defaults stay off. The capability exists; the measurement says not to turn it on.",
+      "ar": "سياسةُ الخروج ذاتُ السقّاطةِ وحدها — وُصِلت ثم قيست مقابل الخروج الثابت عند الرسوم المدفوعة فعلًا: التتبُّع يجعل العائلتين أسوأ بوضوح، فتبقى الإعدادات الافتراضية موقوفة. القدرةُ موجودة، والقياسُ يقول لا تُشغِلها.",
+      "section": "research",
+      "fr": "La politique de sortie à cliquet uniquement — câblée, puis mesurée face aux sorties statiques aux frais réellement payés : le trailing dégrade nettement les deux familles, donc les défauts restent désactivés. La capacité existe ; la mesure dit de ne pas l'activer."
     },
     {
       "path": "docs/research/2026-08-18-lahlou-speculation-risk-sources.md",
