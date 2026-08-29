@@ -57,6 +57,10 @@ const data: MilestonesFile =
  *  recently closed. Splitting preserves that order on each side. */
 const open = data.milestones.filter((milestone) => milestone.state === "open");
 const closed = data.milestones.filter((milestone) => milestone.state === "closed");
+/** #129 — the full journey, oldest first. */
+const journey = [...closed].sort(
+  (a, b) => (a.closedAt ?? "").localeCompare(b.closedAt ?? ""),
+);
 
 /** Full counts travel with each milestone; items are capped in the script. */
 const overflow = (milestone: RoadmapMilestone) =>
@@ -142,6 +146,30 @@ const overflow = (milestone: RoadmapMilestone) =>
                     </li>
                   ))}
                 </ul>
+              </section>
+            )}
+
+            {journey.length > 0 && (
+              <section class="journey" aria-labelledby="roadmap-journey">
+                <h2 id="roadmap-journey">{c.journeyTitle}</h2>
+                <p class="journey-intro">{c.journeyIntro}</p>
+                <ol class="journey-timeline">
+                  {journey.map((milestone) => (
+                    <li class="card milestone">
+                      <h3>
+                        <a href={milestone.url}>{milestone.title}</a>
+                      </h3>
+                      {milestone.description && <p class="desc">{milestone.description}</p>}
+                      <p class="milestone-meta">
+                        {milestone.closedAt && (
+                          <span>{c.closedOn(formatDate(milestone.closedAt))}</span>
+                        )}
+                        <span class="dot" aria-hidden="true">·</span>
+                        <span>{c.progress(milestone.closedIssues, milestone.closedIssues + milestone.openIssues)}</span>
+                      </p>
+                    </li>
+                  ))}
+                </ol>
               </section>
             )}
 
@@ -315,6 +343,59 @@ const overflow = (milestone: RoadmapMilestone) =>
   .overflow {
     color: var(--muted);
     font-size: 0.88rem;
+  }
+
+  /* #129 — the journey: a vertical timeline, oldest at the top. */
+  .journey {
+    margin-block: 2.5rem;
+  }
+
+  .journey-intro {
+    color: var(--muted);
+    font-size: 0.95rem;
+    max-width: 58ch;
+  }
+
+  .journey-timeline {
+    list-style: none;
+    margin: 1.2rem 0 0;
+    padding: 0;
+    position: relative;
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .journey-timeline::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0.55rem;
+    top: 0.6rem;
+    bottom: 0.6rem;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .journey-timeline .milestone {
+    margin: 0;
+    padding-inline-start: 2rem;
+    position: relative;
+    border: 1px solid var(--border);
+  }
+
+  .journey-timeline .milestone::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: -0.35rem;
+    top: 1.2rem;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 999px;
+    background: var(--accent);
+    border: 2px solid var(--surface);
+  }
+
+  .journey-timeline .milestone-meta {
+    margin: 0.35rem 0 0;
   }
 
   /* Recently-shipped section: quieter, compact list. */

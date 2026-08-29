@@ -22,6 +22,9 @@ export interface RoadmapContent {
   openTitle: string;
   /** Section heading above the recently closed milestones. */
   closedTitle: string;
+  /** #129 — the chronological journey, oldest first. */
+  journeyTitle: string;
+  journeyIntro: string;
   /** Milestone due date, when the repo sets one. */
   dueOn: (date: string) => string;
   /** A milestone with no due date says so — never an invented date. */
@@ -45,7 +48,7 @@ export interface RoadmapContent {
 
 export const roadmap: LocalizedPage<RoadmapContent> = {
   en: {
-    rev: "2026-08-28.1",
+    rev: "2026-08-29.1",
     title: "keel Roadmap — read from the repo, refreshed hourly",
     description:
       "keel's roadmap: the open milestones of CodeGateSoftware/keel and the issues under them, read from GitHub at build time. An open milestone is an intention, not a commitment.",
@@ -54,6 +57,9 @@ export const roadmap: LocalizedPage<RoadmapContent> = {
       "An open milestone is an intention, not a commitment, and a date on one is a target, not a promise. Work ships when it is honest to say it shipped — the changelog records what actually landed.",
     ],
     openTitle: "In progress — open milestones",
+    journeyTitle: "The journey so far",
+    journeyIntro:
+      "Every closed milestone, oldest first — the project's history read straight from the repository, dated by GitHub on the day each phase actually finished. No narrative was written after the fact; this is the record.",
     closedTitle: "Recently shipped",
     dueOn: (date) => `Target date: ${date}`,
     noDate: "No date set",
@@ -70,8 +76,8 @@ export const roadmap: LocalizedPage<RoadmapContent> = {
   },
 
   ar: {
-    rev: "2026-08-28.1",
-    translatedFromRev: "2026-08-28.1",
+    rev: "2026-08-29.1",
+    translatedFromRev: "2026-08-29.1",
     title: "خارطةُ طريق كيل — تُقرأ من المستودع وتتجدّد كل ساعة",
     description:
       "خارطةُ طريق كيل: المراحلُ المفتوحة في CodeGateSoftware/keel والبنودُ تحتها، تُجلب من GitHub وقت البناء. والمرحلةُ المفتوحة نيّةٌ لا التزام.",
@@ -80,6 +86,9 @@ export const roadmap: LocalizedPage<RoadmapContent> = {
       "المرحلةُ المفتوحة نيّةٌ لا التزام، والتاريخُ عليها هدفٌ لا وعد. ويُنجَز العمل حين يصحّ قولُ إنه أُنجز — وسجلُّ التغييرات يوثّق ما هبط فعلًا.",
     ],
     openTitle: "قيدُ العمل — مراحلُ مفتوحة",
+    journeyTitle: "المسيرةُ حتى الآن",
+    journeyIntro:
+      "كلُّ المعالم المغلقة، من الأقدم إلى الأحدث — تاريخُ المشروع مقروءًا من المستودع مباشرةً، بتواريخٍ دوّنها GitHub في اليوم الذي اكتملت فيه كلُّ مرحلةٍ فعلًا. لا سردَ كُتب بعد وقوعه؛ هذا هو السجلّ.",
     closedTitle: "أُنجز مؤخّرًا",
     dueOn: (date) => `تاريخٌ مستهدف: ${date}`,
     noDate: "لم يُحدَّد تاريخ",
@@ -96,8 +105,8 @@ export const roadmap: LocalizedPage<RoadmapContent> = {
   },
 
   fr: {
-    rev: "2026-08-28.1",
-    translatedFromRev: "2026-08-28.1",
+    rev: "2026-08-29.1",
+    translatedFromRev: "2026-08-29.1",
     title: "Feuille de route de keel — lue depuis le dépôt, actualisée toutes les heures",
     description:
       "La feuille de route de keel : les jalons ouverts de CodeGateSoftware/keel et leurs tickets, lus depuis GitHub à la construction. Un jalon ouvert est une intention, pas un engagement.",
@@ -106,6 +115,9 @@ export const roadmap: LocalizedPage<RoadmapContent> = {
       "Un jalon ouvert est une intention, pas un engagement, et sa date est un objectif, pas une promesse. Le travail est livré quand il est honnête de dire qu'il l'est — le journal des versions consigne ce qui a réellement atterri.",
     ],
     openTitle: "En cours — jalons ouverts",
+    journeyTitle: "Le parcours jusqu'ici",
+    journeyIntro:
+      "Chaque jalon fermé, du plus ancien au plus récent — l'histoire du projet lue directement du dépôt, datée par GitHub au jour où chaque phase s'est réellement achevée. Aucun récit écrit après coup ; ceci est la trace.",
     closedTitle: "Livré récemment",
     dueOn: (date) => `Date cible : ${date}`,
     noDate: "Aucune date fixée",
