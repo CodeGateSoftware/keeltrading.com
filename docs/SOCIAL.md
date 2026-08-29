@@ -29,7 +29,7 @@ Record every account's credential recovery in the owner's password manager
 |---|---|---|---|
 | 1 | **X/Twitter** | Dev + fintech crowd (EN); baseline discovery; where OSS lives publicly | 2–4 posts/wk |
 | 1 | **Telegram channel** | The Arabic crypto/Islamic-finance audience's water cooler; broadcast-only mirrors announcements | auto (RSS → channel) |
-| 2 | **YouTube** | The Arabic SERP research showed YouTube scholars dominate this topic — the core AR audience consumes video; TUI walkthroughs and methodology explainers fit | 1–2 videos/mo |
+| 2 | **YouTube** | The Arabic SERP research showed YouTube scholars dominate this topic — the core AR audience consumes video; web-console walkthroughs and methodology explainers fit | 1–2 videos/mo |
 | 3 | Instagram / TikTok | Mass AR/FR audience; 60-second "what is qabd" style explainers | weekly, repurposed |
 | 3 | LinkedIn | Islamic-finance professionals, if enterprise ever matters | monthly |
 
@@ -47,7 +47,7 @@ Record every account's credential recovery in the owner's password manager
 5. Never answer "is X halal?" — the fatwa boundary is the product's edge.
    Redirect to the compliance methodology and fiqh-basis.
 6. Venue names nominatively only; never imply endorsement.
-7. Screenshots of the TUI (public/get-started/) and numbers from the
+7. Screenshots of the web console (public/get-started/) and numbers from the
    experiment record are the visual language. No stock chart imagery, no
    rockets, no lambos — a keel, a terminal, a table of honest numbers.
 
@@ -63,11 +63,11 @@ The project already produces content weekly — social mostly re-shapes it:
 - Release notes → version post with the install card
 - Glossary terms → definition-of-the-week (EN + AR) — definition-shaped
   content is what AI engines and fatwa-fatigued readers both want
-- Get Started screenshots → TUI walkthrough threads
+- Get Started screenshots → web-console walkthrough threads
 
 **Created (phase-gated):**
-- YouTube: "Run keel in five minutes" (screen recording of the actual TUI),
-  "What attestation means", AR-language methodology explainers
+- YouTube: "Run keel in five minutes" (screen recording of the actual web
+  console), "What attestation means", AR-language methodology explainers
 - Instagram/TikTok: 60-second explainers from the glossary, AR-first
 
 ## 5. Wiring into the site (after accounts exist)

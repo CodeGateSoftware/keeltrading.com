@@ -1,9 +1,11 @@
 /**
  * Get Started guides — editorial, site-authored newbie walkthroughs (EN for
- * now, like the engine documents themselves). Every command and screen below
- * was verified against keel v0.10.0: the TUI screenshots in
- * public/get-started/ were captured from a real `keel tui` session on a
- * fresh `keel init` working directory.
+ * now, like the engine documents themselves). Every command, page and button
+ * below was verified against keel v0.12.2: the screenshots in
+ * public/get-started/ were captured by scripts/render-webui-shots.mjs from a
+ * real `keel serve` console on a fresh paper working directory — the curses
+ * TUI these guides used to teach was deleted from the engine before v0.12.2
+ * (keel#541), and the web console replaced it.
  */
 export interface GuideStep {
   title: string;
@@ -26,9 +28,9 @@ export const guides: Guide[] = [
     slug: "first-run",
     title: "1 · Install and first run",
     description:
-      "From a fresh download to the operator console on your screen: scaffold a working directory and take the tour.",
+      "From a fresh download to the web console in your browser: scaffold a working directory and take the tour.",
     intro:
-      "This guide starts from nothing and ends with the keel console running on your machine. Everything here is read-only and paper-side — no funds, no keys, nothing can trade. Ten minutes, four commands.",
+      "This guide starts from nothing and ends with the keel console open in your browser. Everything here is read-only and paper-side — no funds, no keys, nothing can trade. Ten minutes, four commands.",
     steps: [
       {
         title: "Step 1 — Install keel",
@@ -41,42 +43,42 @@ export const guides: Guide[] = [
       {
         title: "Step 2 — Scaffold a working directory",
         body: [
-          "keel keeps everything — config, database, logs — in one working directory. Create a fresh folder and scaffold it:",
+          "keel keeps everything — config, database, logs — in one working directory. Create a fresh folder and write the two pieces with the commands that name exactly what each one writes. (keel init runs these same two back to back, but its seeding step resolves the database through keel's state-root rules, which cannot see a folder that has no config.yaml yet — as two commands in this order, the second sees the config the first wrote, and the database lands in your folder.)",
         ],
-        code: "mkdir keel-paper && cd keel-paper\nkeel init",
-        shot: "/get-started/tui-main.png",
+        code: "mkdir keel-paper && cd keel-paper\nkeel init-config\nkeel rules seed",
+        shot: "/get-started/webui-setup.png",
         shotCaption:
-          "The dashboard after a fresh keel init: paper mode, kill-switch ENGAGED by default, 32 rule candidates seeded, no data yet. Exactly what a safe starting point looks like.",
+          "The console's Setup page after the scaffold (yours will show your folder's paths): config file, database and the 32-rule library done; a market-data credential and everything judgement-shaped still outstanding. Paper places nothing.",
       },
       {
-        title: "What keel init created",
+        title: "What the scaffold created",
         body: [
           "config.yaml — the deployment's settings, written in the dev/paper profile. Review the allowlist, caps, and auto_trade sections before anything else.",
           "keel.db — the local SQLite database (rules, trials, orders). logs/ — what the engine did and why.",
-          "keel init also seeds the rule registry: 32 rule-product candidates (four rule families across the default allowlist), all in candidate status. Nothing is live; nothing trades.",
+          "keel rules seed also populates the rule registry: 32 rule-product candidates — four rule families (pullback_continuation, rsi_meanrev, dca, turtle_breakout) across the default eight-product allowlist — all in candidate status. Nothing is live; nothing trades.",
         ],
       },
       {
-        title: "Step 3 — Open the operator console",
+        title: "Step 3 — Open the web console",
         body: [
-          "The console (we call it the TUI) is a live, full-screen dashboard. Start it with:",
+          "The console is a small web page the engine itself serves, bound to your machine's loopback address only:",
         ],
-        code: "keel tui",
+        code: "keel serve",
       },
       {
-        title: "Step 4 — Take the tour: nine menus",
+        title: "Step 4 — Take the tour: seven views",
         body: [
-          "Press m to open the menu. Everything keel does lives behind these nine entries — the guides that follow walk through the ones you'll use first: Rules, Compliance, and Data.",
+          "keel serve prints a URL carrying a one-time token for this run, opens your browser, and from there everything lives behind the header's seven views. Status (the page you land on) answers \"is it alive\"; Setup is the checklist of what this deployment still needs; Activity, Insights, Rules and Venues report what keel did and found; Gates lists every capability-increasing action and what gates it. The eighth header entry, Docs, links out to the documentation you are reading.",
         ],
-        shot: "/get-started/tui-menu.png",
+        shot: "/get-started/webui-status.png",
         shotCaption:
-          "The console menu (m): Dashboard, Profile, Trading, Rules, Compliance, Data, Research, Account, Help. Number keys jump; q or Esc returns to the dashboard.",
+          "The console's Status view with the seven-view header: Status, Setup, Activity, Insights, Rules, Venues, Gates. The paper badge (top right) is the deployment's mode; the footer says it is served from this machine only.",
       },
       {
         title: "Step 5 — Read the dashboard",
         body: [
-          "Back on the dashboard (Esc), read it top to bottom: the deployment profile and mode, the kill-switch state, autonomy, drawdown ceilings, rail 17's attestation state, cash, positions, rules, and data freshness for every allowlisted product.",
-          "The footer is your keyboard map: h help, i insights, r refresh, a autonomy, f fetch — and s/p/d/v/m switch overlays. Press ? anywhere for the current screen's help.",
+          "Read the Status page top to bottom: the mode and kill-switch state (ENGAGED on a fresh install), autonomy, rail 11's drawdown breaker; the equity card — high-water mark, paper cash, drawdown against its ceilings; rail 17's withdrawal attestation; the market session. Below the cards, three tables: open positions, rule counts (candidate=32), and data freshness — \"No market data yet\", which the next guide fixes.",
+          "The page re-reads itself every fifteen seconds, so the figures move without you reloading. The theme toggle in the header is yours; the mode badge is the config's, and no page in this console can change it — that is a terminal action by design.",
         ],
       },
       {
@@ -99,17 +101,19 @@ export const guides: Guide[] = [
         title: "Step 1 — Get a read-only market-data key",
         body: [
           "Candle history is fetched through Coinbase's authenticated client, so keel fetch needs a free Coinbase Developer Platform (CDP) key with read-only permissions — market data only, no trading scope.",
-          "Put the key and secret in .env in your working directory (copy .env.example if you came from the source path). Without a key, keel fetch fails with an AuthenticationError — that is by design, not a bug.",
+          "Give it to keel from the terminal — it prompts with the echo off and stores the pair in your operating system's keychain, not in a file, and never on the command line where shell history could keep it:",
         ],
+        code: "keel credentials set CDP_API_KEY",
+        shot: "/get-started/webui-fetch.png",
+        shotCaption:
+          "The Setup page's paper-stage checklist, scrolled to the two steps this guide touches: the credential step's Save a market-data credential form (key and secret, straight into the OS keychain), and the Market data step below it.",
       },
       {
         title: "Step 2 — Warm the candle cache",
         body: [
-          "From the console, press f (or open the Data menu, entry 6) and run fetch — or from the terminal:",
+          "On the console's Setup page, the Market data step has a Fetch market data button — it runs the fetch as a background job and the page shows its progress. Or run it from the terminal:",
         ],
         code: "keel fetch",
-        shot: "/get-started/tui-data.png",
-        shotCaption: "The Data menu: fetch warms the candle cache for every allowlisted product; freshness, gap repair, and db import live here too.",
       },
       {
         title: "Step 3 — Run the simulation",
@@ -128,10 +132,11 @@ export const guides: Guide[] = [
       {
         title: "Step 5 — Watch the distance to the gate",
         body: [
-          "The console's insights view (i) reports read-only promotion-gate distance: how far each rule is from the floors it must clear. Use it to see whether a rule is weeks or years from eligibility.",
+          "The console's Insights view reports read-only promotion-gate distance: how far each rule is from the floors it must clear. On a fresh deployment its gate-distance table says so plainly — no rule has the 20 trades the sample floor needs — which is exactly the report's TRAIN-MORE, one click away, re-read every fifteen seconds.",
         ],
-        shot: "/get-started/tui-insights.png",
-        shotCaption: "Insights (i): promotion-gate distance and reporting, read-only.",
+        shot: "/get-started/webui-insights.png",
+        shotCaption:
+          "The Insights view: the account card with its drawdown ceilings, promotion-gate distance, and the journal — read-only reporting.",
       },
       {
         title: "Next",
@@ -152,18 +157,18 @@ export const guides: Guide[] = [
       {
         title: "Step 1 — Understand profiles",
         body: [
-          "A profile is a config.yaml + database pair. keel init gave you the dev/paper profile. The console's Profile menu (2) switches between discovered profiles — daily paper, live, paper-hourly — and LIVE always asks first. Profiles share nothing: separate databases, separate accounts.",
+          "A profile is a config.yaml + database pair, one folder, sharing nothing: separate databases, separate accounts. The folder you are in is the deployment keel operates — the console's Setup page names the config and database files it resolved, and the mode badge in the header says what that config declares. Switching profiles is changing folder, not clicking: mode is a config edit plus a terminal action, and LIVE always asks first. The console displays the mode; it cannot change it.",
         ],
       },
       {
         title: "Step 2 — Start the agent in paper mode",
         body: [
-          "From the terminal:",
+          "From the terminal, in the deployment folder:",
         ],
         code: "keel agent",
-        shot: "/get-started/tui-rules.png",
+        shot: "/get-started/webui-rules.png",
         shotCaption:
-          "The Rules console (4): the lifecycle ledger — every rule with the stage it has reached. candidate → paper → live is the only road to live trading.",
+          "The console's Rules view — the lifecycle ledger. While the agent runs, every rule is still a candidate and the live-rules table is empty: candidate → paper → live is the only road to live trading.",
       },
       {
         title: "Step 3 — Confirm every order",
@@ -174,7 +179,7 @@ export const guides: Guide[] = [
       {
         title: "Step 4 — The kill-switch fails closed",
         body: [
-          "To stop everything: keel kill — from the terminal or the console's Trading menu. It halts trading immediately and stays engaged until you explicitly resume (keel resume asks first, deliberately). A brand-new install starts with the kill-switch ENGAGED; you saw it on the dashboard.",
+          "To stop everything: keel kill — always allowed, from any terminal. It halts trading immediately and stays engaged until you explicitly resume (keel resume asks first, deliberately). A brand-new install starts with the kill-switch ENGAGED — you saw it on the Status page, and your agent's first cycle on a fresh deployment says it too, logging skipped: kill_switch. The console's Gates view names keel resume for what it is — a capability-increasing action behind the terminal gate.",
         ],
       },
       {
@@ -189,50 +194,45 @@ export const guides: Guide[] = [
     slug: "compliance-attest",
     title: "4 · Attestations before anything is live",
     description:
-      "The compliance menu in practice: screening, asset attestations, the venue subscription, and withdrawal capability.",
+      "The Setup checklist's live stage in practice: screening, asset attestations, the venue subscription, and withdrawal capability.",
     intro:
-      "keel never derives a Shariah classification from market data — you record rulings, with sources, and the engine enforces them. This guide walks the Compliance menu: the work that makes a live profile possible.",
+      "keel never derives a Shariah classification from market data — you record rulings, with sources, and the engine enforces them. This guide walks the \"To go live\" stage of the console's Setup checklist and the Gates view behind it: the work that makes a live profile possible.",
     steps: [
       {
-        title: "Step 1 — Open the Compliance menu",
+        title: "Step 1 — Where the compliance work lives",
         body: [
-          "In the console, press m and choose Compliance (5). Everything compliance-shaped lives here — and all of it links back to a source you supply.",
+          "The console's Setup page ends in a stage headed To go live — every attestation the rails refuse to trade without, each with its state and the command that records it. The Gates view is the other half of the picture: every action that increases what keel can do without asking again, and the interactive-terminal gate each one passes through. The view states it plainly: it cannot perform any of them.",
         ],
-        shot: "/get-started/tui-compliance.png",
+        shot: "/get-started/webui-gates.png",
         shotCaption:
-          "The Compliance menu: screen, propose, attest, exemptions, subscription, purification.",
+          "The Gates view: keel autonomy on, keel resume, keel withdrawals attest --enabled and friends — each with what it increases, and the terminal gate (a typed yes at an interactive TTY) it must pass.",
       },
       {
-        title: "Step 2 — Screen the allowlist",
+        title: "Step 2 — Screen and attest the allowlist",
         body: [
-          "screen shows every allowlisted product's admission verdict. Market facts are computed; Shariah classifications are attested, never inferred — an asset without an attestation is rejected, not passed by default.",
+          "The Setup checklist's step \"Every allowlisted asset screened and attested\" is judgement-shaped, and the page says what that means: keel can record your ruling; it must never choose it for you. Market facts are computed; Shariah classifications are attested, never inferred — an asset without an attestation is unknown, not fine, and the step's detail reads \"unattested: ADA, BTC, …\" until you clear it.",
+          "The step's own form — Record this attestation — asks for exactly the ruling: asset code, sector, backing ('ayn, dayn, or native), whether holding it earns a return, a source, and your name. Nothing is pre-filled or defaulted; an attestation without a cited source is refused like a missing one. The same action at the terminal:",
         ],
+        code: "keel assets attest --asset X --sector ... --backing ... --source ...",
       },
       {
-        title: "Step 3 — Record an asset attestation",
+        title: "Step 3 — Attest the venue subscription (rail 14)",
         body: [
-          "From the terminal (or the menu's attest entry), record a classification with a source and your name:",
+          "Rail 14 refuses live BUYs until the operator attests the venue's subscription — the monthly allowance actually spent. What you pay the venue is a fact only you have; keel cannot read your billing. This one stays at the terminal — the checklist itself prints the command — and keel subscription show reads it back:",
         ],
-        code: "keel assets attest",
+        code: "keel subscription attest --venue ... --tier ...",
       },
       {
-        title: "Step 4 — Attest the venue subscription (rail 14)",
+        title: "Step 4 — Attest withdrawal capability (rail 17)",
         body: [
-          "Rail 14 refuses live BUYs until the operator attests the venue's subscription — the monthly allowance actually spent. keel subscription shows and records it.",
+          "Rail 17 encodes qabd (§65.4): an asset that cannot be withdrawn may not have been validly possessed. keel withdrawals attest records withdrawal-capability attestations per product — the attestation carries a 7-day TTL and needs an interactive terminal, as both the checklist and the Gates view say outright.",
         ],
-        code: "keel subscription",
+        code: "keel withdrawals attest --enabled",
       },
       {
-        title: "Step 5 — Attest withdrawal capability (rail 17)",
+        title: "Step 5 — Purification, honestly",
         body: [
-          "Rail 17 encodes qabd (§65.4): an asset that cannot be withdrawn may not have been validly possessed. keel withdrawals records withdrawal-capability attestations per product.",
-        ],
-        code: "keel withdrawals",
-      },
-      {
-        title: "Step 6 — Purification, honestly",
-        body: [
-          "keel purification reports non-compliant income owed to charity (KB §65.9) from what actually ran through the engine. Account-level duties no rail can see — disabling USDC rewards on idle balances, chiefly — stay on the operator's checklist, in the operator runbook.",
+          "keel purification reports non-compliant income owed to charity (KB §65.9) from what actually ran through the engine. Account-level duties no rail can see — disabling USDC rewards on idle balances, chiefly — appear in the checklist as the venue-interest step, and keel will never show that one as done: the venue's API does not expose enrolment, and a green check that verifies nothing turns an open risk into a false assurance. It stays on the operator's checklist, in the operator runbook.",
         ],
       },
       {
