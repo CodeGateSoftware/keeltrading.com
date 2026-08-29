@@ -14,6 +14,25 @@ import type { LocalizedPage } from "../config";
  * Sonar: parallel tri-locale blocks trip the duplication gate otherwise —
  * see CONTRIBUTING.md; fields stay flat single strings / small functions.
  */
+/**
+ * #132 — era markers: the month-year chapter headings ("July 2026") that
+ * break the journey timeline. The date always derives from the milestone's
+ * closedAt; only its rendering is localized, never hand-written.
+ *
+ * Gregorian and UTC — the calendar and day GitHub itself recorded — so the
+ * label can't drift with the build machine's timezone or locale defaults.
+ * `ar-MA` is deliberate: Moroccan month names (يوليوز, غشت) in Western
+ * digits, matching the site's numeric dates; MSA's يوليو/أغسطس would read
+ * as a different register than the Arabic edition's voice.
+ */
+const eraLabel = (locale: string, iso: string): string =>
+  new Intl.DateTimeFormat(locale, {
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+    calendar: "gregory",
+  }).format(new Date(`${iso.slice(0, 10)}T00:00:00Z`));
+
 export interface RoadmapContent {
   title: string;
   description: string;
@@ -25,6 +44,9 @@ export interface RoadmapContent {
   /** #129 — the chronological journey, oldest first. */
   journeyTitle: string;
   journeyIntro: string;
+  /** #132 — the chapter heading a run of closed milestones shares on the
+   *  journey timeline; derived from closedAt's month and year. */
+  formatEra: (iso: string) => string;
   /** Milestone due date, when the repo sets one. */
   dueOn: (date: string) => string;
   /** A milestone with no due date says so — never an invented date. */
@@ -48,7 +70,7 @@ export interface RoadmapContent {
 
 export const roadmap: LocalizedPage<RoadmapContent> = {
   en: {
-    rev: "2026-08-29.1",
+    rev: "2026-08-29.2",
     title: "keel Roadmap — read from the repo, refreshed hourly",
     description:
       "keel's roadmap: the open milestones of CodeGateSoftware/keel and the issues under them, read from GitHub at build time. An open milestone is an intention, not a commitment.",
@@ -60,6 +82,7 @@ export const roadmap: LocalizedPage<RoadmapContent> = {
     journeyTitle: "The journey so far",
     journeyIntro:
       "Every closed milestone, oldest first — the project's history read straight from the repository, dated by GitHub on the day each phase actually finished. No narrative was written after the fact; this is the record.",
+    formatEra: (iso) => eraLabel("en", iso),
     closedTitle: "Recently shipped",
     dueOn: (date) => `Target date: ${date}`,
     noDate: "No date set",
@@ -76,8 +99,8 @@ export const roadmap: LocalizedPage<RoadmapContent> = {
   },
 
   ar: {
-    rev: "2026-08-29.1",
-    translatedFromRev: "2026-08-29.1",
+    rev: "2026-08-29.2",
+    translatedFromRev: "2026-08-29.2",
     title: "خارطةُ طريق كيل — تُقرأ من المستودع وتتجدّد كل ساعة",
     description:
       "خارطةُ طريق كيل: المراحلُ المفتوحة في CodeGateSoftware/keel والبنودُ تحتها، تُجلب من GitHub وقت البناء. والمرحلةُ المفتوحة نيّةٌ لا التزام.",
@@ -89,6 +112,7 @@ export const roadmap: LocalizedPage<RoadmapContent> = {
     journeyTitle: "المسيرةُ حتى الآن",
     journeyIntro:
       "كلُّ المعالم المغلقة، من الأقدم إلى الأحدث — تاريخُ المشروع مقروءًا من المستودع مباشرةً، بتواريخٍ دوّنها GitHub في اليوم الذي اكتملت فيه كلُّ مرحلةٍ فعلًا. لا سردَ كُتب بعد وقوعه؛ هذا هو السجلّ.",
+    formatEra: (iso) => eraLabel("ar-MA", iso),
     closedTitle: "أُنجز مؤخّرًا",
     dueOn: (date) => `تاريخٌ مستهدف: ${date}`,
     noDate: "لم يُحدَّد تاريخ",
@@ -105,8 +129,8 @@ export const roadmap: LocalizedPage<RoadmapContent> = {
   },
 
   fr: {
-    rev: "2026-08-29.1",
-    translatedFromRev: "2026-08-29.1",
+    rev: "2026-08-29.2",
+    translatedFromRev: "2026-08-29.2",
     title: "Feuille de route de keel — lue depuis le dépôt, actualisée toutes les heures",
     description:
       "La feuille de route de keel : les jalons ouverts de CodeGateSoftware/keel et leurs tickets, lus depuis GitHub à la construction. Un jalon ouvert est une intention, pas un engagement.",
@@ -118,6 +142,7 @@ export const roadmap: LocalizedPage<RoadmapContent> = {
     journeyTitle: "Le parcours jusqu'ici",
     journeyIntro:
       "Chaque jalon fermé, du plus ancien au plus récent — l'histoire du projet lue directement du dépôt, datée par GitHub au jour où chaque phase s'est réellement achevée. Aucun récit écrit après coup ; ceci est la trace.",
+    formatEra: (iso) => eraLabel("fr", iso),
     closedTitle: "Livré récemment",
     dueOn: (date) => `Date cible : ${date}`,
     noDate: "Aucune date fixée",
