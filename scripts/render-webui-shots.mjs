@@ -35,6 +35,7 @@
  */
 import { spawn, spawnSync } from "node:child_process";
 import { mkdir, rm } from "node:fs/promises";
+import { mkdtempSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import puppeteer from "puppeteer-core";
