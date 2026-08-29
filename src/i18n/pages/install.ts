@@ -190,7 +190,7 @@ export const install: LocalizedPage<InstallContent> = {
     paperFirstBody: "For the cautious first step: the paper profile is free and educational, with simulated fills and no real orders. It is built for learning the workflow before any live decision. It needs no funded venue account and no trading credentials; the only key it asks for is a free, read-only market-data key, used to fetch candle history. The live profile is deliberately harder to reach — attestations, the promotion gauntlet and typed human confirmations all stand in the way.",
     getStarted: {
       title: "New here? Start with the Get Started guide",
-      body: "A step-by-step walkthrough — first simulation, the paper profile, the operator console — with screenshots of every screen.",
+      body: "A step-by-step walkthrough — first simulation, the paper profile, the web console — with screenshots of every screen.",
       link: "Open Get Started",
     },
     browserTitle: "Work from the browser — the desktop app",
@@ -438,7 +438,7 @@ export const install: LocalizedPage<InstallContent> = {
     paperFirstBody: "Pour un premier pas prudent : le profil papier est gratuit et pédagogique — exécutions simulées, aucun ordre réel — conçu pour apprendre le fonctionnement avant toute décision en réel. Il ne réclame ni compte approvisionné sur une plateforme, ni identifiants de trading ; la seule clé demandée est une clé de données de marché gratuite, en lecture seule, pour récupérer l'historique des bougies. Le profil réel, lui, se mérite délibérément : attestations, parcours de promotion et confirmations tapées à la main se dressent sur la route.",
     getStarted: {
       title: "Nouveau ici ? Commencez par le guide Premiers pas",
-      body: "Un parcours pas à pas — première simulation, profil papier, console de l'opérateur — avec une capture de chaque écran.",
+      body: "Un parcours pas à pas — première simulation, profil papier, console web — avec une capture de chaque écran.",
       link: "Ouvrir Premiers pas",
     },
     browserTitle: "Travailler depuis le navigateur — l'application de bureau",
