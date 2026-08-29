@@ -36,6 +36,7 @@
 import { spawn, spawnSync } from "node:child_process";
 import { mkdir, rm } from "node:fs/promises";
 import { join, resolve } from "node:path";
+import { tmpdir } from "node:os";
 import puppeteer from "puppeteer-core";
 
 const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
@@ -47,7 +48,7 @@ const arg = (name, fallback) => {
   const i = args.indexOf(`--${name}`);
   return i !== -1 && args[i + 1] ? args[i + 1] : fallback;
 };
-const KEEL_DIR = resolve(arg("keel-dir", "/tmp/keel-engine-r123"));
+const KEEL_DIR = resolve(arg("keel-dir", join(tmpdir(), "keel-engine-shots")));
 const PORT = Number(arg("port", "8911"));
 const OUT_DIR = resolve(arg("out", "public/get-started"));
 const KEEP = args.includes("--keep"); // keep the scratch deployment for inspection
@@ -67,13 +68,11 @@ function run(cwd, ...argv) {
 
 // 1. scaffold a fresh paper deployment -----------------------------------------------------------
 
-// A stable path rather than mkdtemp: the Setup view prints its working
-// directory on screen, and the guide screenshots should show a plausible one
-// (/tmp/keel-paper — the folder guide 1 tells you to create), not a random
-// suffix. Wiped first so re-runs are reproducible.
-const scratch = "/tmp/keel-paper";
-await rm(scratch, { recursive: true, force: true });
-await mkdir(scratch, { recursive: true });
+// mkdtemp, not a fixed name under /tmp: a predictable path in a
+// world-writable directory is a symlink-attack surface (SonarCloud S5443),
+// even for a local capture script. The Setup screenshot shows the path of
+// the run that produced it — illustrative, not contractural.
+const scratch = mkdtempSync(join(tmpdir(), "keel-paper-"));
 console.log(`scaffolding deployment in ${scratch}`);
 run(scratch, "init-config"); // writes config.yaml — the dev/paper template
 run(scratch, "rules", "seed"); // the 32 candidate rules, nothing live
