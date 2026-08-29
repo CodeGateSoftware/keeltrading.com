@@ -19,8 +19,14 @@ export const ui = {
       community: "Community",
       roadmap: "Roadmap",
       compliance: "Compliance",
-      compare: "Compare",
       about: "About",
+    },
+    /** #131 — the four top-level groups the nav collapses into. */
+    navGroups: {
+      product: "Product",
+      docs: "Docs",
+      community: "Community",
+      company: "Company",
     },
     actions: {
       install: "Install",
@@ -127,8 +133,14 @@ export const ui = {
       community: "المجتمع",
       roadmap: "خارطة الطريق",
       compliance: "الامتثال",
-      compare: "مقارنة",
       about: "حول المشروع",
+    },
+    /** #131 — المجموعات الأربع التي ينهار إليها التنقّل. */
+    navGroups: {
+      product: "المنتج",
+      docs: "الوثائق",
+      community: "المجتمع",
+      company: "الشركة",
     },
     actions: {
       install: "ثبّت كيل",
@@ -233,8 +245,14 @@ export const ui = {
       community: "Communauté",
       roadmap: "Feuille de route",
       compliance: "Conformité",
-      compare: "Comparatif",
       about: "À propos",
+    },
+    /** #131 — les quatre groupes racine du menu. */
+    navGroups: {
+      product: "Produit",
+      docs: "Docs",
+      community: "Communauté",
+      company: "Entreprise",
     },
     actions: {
       install: "Installer",
