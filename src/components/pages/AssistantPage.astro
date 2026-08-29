@@ -1,0 +1,148 @@
+---
+import Base from "../../layouts/Base.astro";
+import CodeBlock from "../CodeBlock.astro";
+import ForOperators from "../ForOperators.astro";
+import HonestBox from "../HonestBox.astro";
+import {
+  assistant,
+  assistantVerify,
+  RUN_COMMAND,
+  CLIENT_CONFIG,
+} from "../../i18n/pages/assistant";
+import { alternatesFor, localePath, type Locale } from "../../i18n/config";
+import { engineSourceUrl } from "../../lib/engine-url";
+
+/**
+ * #118 — the AI-assistant page: keel's honest answer to hosted chatbots is
+ * "point your own assistant at your own keel". Every claim carries a verify
+ * link into the engine repository at the ref this build resolved (#91), the
+ * two command blocks are single-sourced verbatim from docs/mcp-server.md, and
+ * the full document is fetched into Docs by scripts/fetch-engine-docs.mjs.
+ */
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const c = assistant[locale];
+
+const serverDocHref = engineSourceUrl(assistantVerify.serverDoc);
+const toolsHref = engineSourceUrl(assistantVerify.tools);
+const readonlyTestHref = engineSourceUrl(assistantVerify.readonlyTest);
+/** The full document, rendered from the fetched content collection. */
+const docsPageHref = `${localePath("en", "docs")}mcp-server/`;
+
+const boundaryLinks = [
+  {
+    label:
+      locale === "ar"
+        ? "صفحةُ الخادم في مستودع المحرّك"
+        : locale === "fr"
+          ? "la page du serveur dans le dépôt du moteur"
+          : "the server's page in the engine repository",
+    href: serverDocHref,
+  },
+];
+
+const operatorLinks =
+  locale === "ar"
+    ? [
+        { label: "المرجعُ الكامل للخادم (الوثائق، بالإنجليزية)", href: docsPageHref },
+        { label: "كتاب تشغيل المشغّل (الوثائق)", href: localePath("ar", "docs") },
+        { label: "شيفرة المحرّك", href: "https://github.com/CodeGateSoftware/keel" },
+      ]
+    : locale === "fr"
+      ? [
+          { label: "La référence complète du serveur (Documentation, EN)", href: docsPageHref },
+          { label: "Le runbook opérateur (Documentation)", href: `${localePath("en", "docs")}operator-runbook/` },
+          { label: "Le code source du moteur", href: "https://github.com/CodeGateSoftware/keel" },
+        ]
+      : [
+          { label: "The full server reference (Docs)", href: docsPageHref },
+          { label: "Operator runbook (Docs)", href: `${localePath("en", "docs")}operator-runbook/` },
+          { label: "Engine source", href: "https://github.com/CodeGateSoftware/keel" },
+        ];
+---
+
+<Base
+  locale={locale}
+  pageKey="assistant"
+  title={c.title}
+  description={c.description}
+  path={localePath(locale, "assistant")}
+  alternates={alternatesFor("assistant")}
+>
+  <div class="container">
+    <section class="hero">
+      <p class="eyebrow">{c.hero.eyebrow}</p>
+      <h1>{c.hero.heading}</h1>
+      <p class="lede">{c.hero.sub}</p>
+    </section>
+
+    <div class="narrow">
+      <HonestBox title={c.boundary.title} paragraphs={c.boundary.body} links={boundaryLinks} />
+
+      <section class="prose">
+        <h2>{c.whatIs.title}</h2>
+        <p>{c.whatIs.sentence}</p>
+        {c.whatIs.body.map((paragraph) => <p>{paragraph}</p>)}
+      </section>
+
+      <section class="feature-section prose">
+        <h2>{c.connect.title}</h2>
+        <p>{c.connect.intro}</p>
+        <p class="connect-label">{c.connect.runLabel}</p>
+        <CodeBlock code={RUN_COMMAND} locale={locale} />
+        <p class="connect-label">{c.connect.configLabel}</p>
+        <CodeBlock code={CLIENT_CONFIG} locale={locale} />
+        <p>{c.connect.clientsNote}</p>
+        <p class="verify">
+          {c.connect.verifyNote}{locale === "fr" ? "\u00A0:" : ":"}
+          <a href={serverDocHref} class="mono">{assistantVerify.serverDoc.label}</a> ·
+          <a href={docsPageHref} lang="en">{c.docsNote}</a>
+        </p>
+      </section>
+
+      <section class="feature-section prose">
+        <h2>{c.tools.title}</h2>
+        <p>{c.tools.intro}</p>
+        <ul class="feature-points tool-list">
+          {
+            c.tools.items.map((tool) => (
+              <li>
+                <code>{tool.name}</code> — {tool.what}
+              </li>
+            ))
+          }
+        </ul>
+        <p class="verify">
+          {c.tools.verifyNote}{locale === "fr" ? "\u00A0:" : ":"} <a href={toolsHref} class="mono">{assistantVerify.tools.label}</a>
+        </p>
+      </section>
+
+      <section class="feature-section prose">
+        <h2>{c.cannot.title}</h2>
+        <p>{c.cannot.intro}</p>
+        <ul class="feature-points">
+          {c.cannot.points.map((point) => <li>{point}</li>)}
+        </ul>
+        {c.cannot.enforcement.map((paragraph) => <p>{paragraph}</p>)}
+        <p class="verify">
+          {c.cannot.verifyNote}{locale === "fr" ? "\u00A0:" : ":"} <a href={readonlyTestHref} class="mono">{assistantVerify.readonlyTest.label}</a>
+        </p>
+      </section>
+
+      <section class="feature-section prose">
+        <h2>{c.fit.title}</h2>
+        {c.fit.body.map((paragraph) => <p>{paragraph}</p>)}
+        <p class="verify">
+          <a href="https://github.com/CodeGateSoftware/keel/issues/579" class="mono">keel#579</a> ·
+          <a href={serverDocHref} class="mono">{assistantVerify.serverDoc.label}</a>
+        </p>
+        <p class="fit-punchline">{c.fit.punchline}</p>
+      </section>
+
+      <ForOperators locale={locale} links={operatorLinks} />
+    </div>
+  </div>
+</Base>

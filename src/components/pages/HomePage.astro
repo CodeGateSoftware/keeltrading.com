@@ -11,7 +11,7 @@ import {
   ENGINE_URL,
 } from "../../i18n/config";
 import { t } from "../../i18n/ui";
-import { engineBlobUrl } from "../../lib/engine-url";
+import { engineBlobUrl, engineSourceUrl } from "../../lib/engine-url";
 
 interface Props {
   locale: Locale;
@@ -115,9 +115,22 @@ const fiqhHref =
       <ul class="card-grid">
         {
           c.cards.map((card) => (
-            <li class="card">
-              <h3>{card.title}</h3>
-              <p>{card.body}</p>
+            <li class={card.page ? "card arrow" : "card"}>
+              {card.page ? (
+                <a href={localePath(locale, card.page)}>
+                  <h3>{card.title}</h3>
+                  <p>{card.body}</p>
+                </a>
+              ) : (
+                <>
+                  <h3>{card.title}</h3>
+                  <p>{card.body}</p>
+                </>
+              )}
+              <p class="verify">
+                {c.verifyNote}{locale === "fr" ? "\u00A0:" : ":"}{" "}
+                <a href={engineSourceUrl(card.verify)} class="mono">{card.verify.label}</a>
+              </p>
             </li>
           ))
         }

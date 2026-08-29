@@ -76,6 +76,15 @@
       "fr": "Le chemin vers un premier ordre réel supervisé — promotion, papier et étapes soumises à une validation humaine."
     },
     {
+      "path": "docs/mcp-server.md",
+      "slug": "mcp-server",
+      "title": "The read-only MCP server",
+      "en": "keel mcp: the eight read-only tools an assistant can call — doctor, capabilities, profiles, orders, veto_log, purification, trials, reports — and the fence, in six walls, that keeps them read-only.",
+      "ar": "‏keel mcp: الأدوات الثماني للقراءة فقط التي يستطيع المساعدُ الذكي استدعاءها — doctor وcapabilities وprofiles وorders وveto_log وpurification وtrials وreports — والسياجُ الذي يُبقيها للقراءة فقط.",
+      "section": "reference",
+      "fr": "keel mcp : les huit outils en lecture seule qu'un assistant peut appeler — doctor, capabilities, profiles, orders, veto_log, purification, trials, reports — et la clôture, en six murs, qui les garde en lecture seule."
+    },
+    {
       "path": "docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
       "slug": "experiment-honest-result-restated",
       "title": "Experiment: the honest result, restated",
