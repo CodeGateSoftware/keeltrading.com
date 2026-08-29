@@ -230,7 +230,7 @@ export const install: LocalizedPage<InstallContent> = {
       ],
       verifyTitle: "Please check what you downloaded first",
       verifyLead:
-        "We would rather not simply ask you to click past a security warning — keel is a program you may give exchange API keys to. Every release carries proof of where its files came from, which answers the same question a certificate answers: was this built from keel's own source, by keel's own release pipeline? Per-platform checksum files are attached to every release too (SHA256SUMS-macOS-arm64.txt, -macOS-x86_64.txt, -Windows-x86_64.txt — one per download).",
+        "We would rather not simply ask you to click past a security warning — keel is a program you may give exchange API keys to. Every release carries proof of where its files came from, which answers the same question a certificate answers: was this built from keel's own source, by keel's own release pipeline? Per-platform checksum files are attached to every release since v0.12.0 (SHA256SUMS-macOS-arm64.txt, -macOS-x86_64.txt, -Windows-x86_64.txt — one per download).",
       verifyFail:
         "If either check fails, do not open the file. A failing check means it is not the file we built, and no amount of clicking Open Anyway makes that safe.",
       notMeaningTitle: "What this does not mean",
@@ -354,7 +354,7 @@ export const install: LocalizedPage<InstallContent> = {
       ],
       verifyTitle: "من فضلك تحقّق ممّا نزّلته أولًا",
       verifyLead:
-        "لا يطيب لنا أن نطلب منك مجرّد تجاوز تحذيرٍ أمني — فكيل برنامجٌ قد تعطيه مفاتيح API لمنصّة تداول. وكلُّ إصدارٍ يحمل إثباتًا لمصدر ملفّاته، وهو يجيب عن السؤال نفسه الذي تجيب عنه الشهادة: هل بُني هذا من مصدر كيل نفسه، وعبر خطّ إصدار كيل نفسه؟ وتُرفق بكلّ إصدارٍ ملفاتُ بصماتٍ لكلّ منصّة (SHA256SUMS-macOS-arm64.txt و-macOS-x86_64.txt و-Windows-x86_64.txt — ملفٌّ لكلّ تنزيل).",
+        "لا يطيب لنا أن نطلب منك مجرّد تجاوز تحذيرٍ أمني — فكيل برنامجٌ قد تعطيه مفاتيح API لمنصّة تداول. وكلُّ إصدارٍ يحمل إثباتًا لمصدر ملفّاته، وهو يجيب عن السؤال نفسه الذي تجيب عنه الشهادة: هل بُني هذا من مصدر كيل نفسه، وعبر خطّ إصدار كيل نفسه؟ وتُرفق بكلّ إصدارٍ منذ v0.12.0 ملفاتُ بصماتٍ لكلّ منصّة (SHA256SUMS-macOS-arm64.txt و-macOS-x86_64.txt و-Windows-x86_64.txt — ملفٌّ لكلّ تنزيل).",
       verifyFail:
         "إن أخفق أيٌّ من الفحصين فلا تفتح الملفّ. فإخفاقه يعني أنه ليس الملفّ الذي بنيناه، ولن يجعله الضغطُ على ‏Open Anyway آمنًا.",
       notMeaningTitle: "ما لا يعنيه هذا التحذير",
@@ -478,7 +478,7 @@ export const install: LocalizedPage<InstallContent> = {
       ],
       verifyTitle: "Vérifiez d'abord ce que vous avez téléchargé",
       verifyLead:
-        "Nous préférons ne pas nous contenter de vous demander de passer outre un avertissement de sécurité : keel est un programme auquel vous confierez peut-être les clés d'API d'une plateforme d'échange. Chaque version porte une preuve de l'origine de ses fichiers, qui répond à la même question qu'un certificat : ce fichier a-t-il bien été construit à partir des sources de keel, par la chaîne de publication de keel ? Des fichiers de somme de contrôle par plateforme accompagnent chaque version (SHA256SUMS-macOS-arm64.txt, -macOS-x86_64.txt, -Windows-x86_64.txt — un par téléchargement).",
+        "Nous préférons ne pas nous contenter de vous demander de passer outre un avertissement de sécurité : keel est un programme auquel vous confierez peut-être les clés d'API d'une plateforme d'échange. Chaque version porte une preuve de l'origine de ses fichiers, qui répond à la même question qu'un certificat : ce fichier a-t-il bien été construit à partir des sources de keel, par la chaîne de publication de keel ? Des fichiers de somme de contrôle par plateforme accompagnent chaque version depuis la v0.12.0 (SHA256SUMS-macOS-arm64.txt, -macOS-x86_64.txt, -Windows-x86_64.txt — un par téléchargement).",
       verifyFail:
         "Si l'une des deux vérifications échoue, n'ouvrez pas le fichier. Un échec signifie que ce n'est pas le fichier que nous avons construit, et aucun « Ouvrir quand même » n'y changera rien.",
       notMeaningTitle: "Ce que cela ne signifie pas",

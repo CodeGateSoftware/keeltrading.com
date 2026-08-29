@@ -24,7 +24,7 @@ const REPO_API = "https://api.github.com/repos/CodeGateSoftware/keel";
 const MILESTONES_URL = "https://github.com/CodeGateSoftware/keel/milestones";
 /** Open milestones first (that's the roadmap), then the recently shipped. */
 const OPEN_API = `${REPO_API}/milestones?state=open&per_page=50`;
-const CLOSED_API = `${REPO_API}/milestones?state=closed&per_page=10`;
+const CLOSED_API = `${REPO_API}/milestones?state=closed&per_page=100`;
 /** Issues *and* PRs under one milestone — the issues endpoint returns both. */
 const itemsApi = (number) => `${REPO_API}/issues?milestone=${number}&state=all&per_page=100`;
 
