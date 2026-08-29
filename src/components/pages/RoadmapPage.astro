@@ -65,6 +65,81 @@ const journey = [...closed].sort(
 /** Full counts travel with each milestone; items are capped in the script. */
 const overflow = (milestone: RoadmapMilestone) =>
   Math.max(0, milestone.openIssues + milestone.closedIssues - milestone.items.length);
+
+/** #132 — the lede: the first sentence of the description, not the whole
+ *  block — the rest of the story stays where GitHub keeps it, one link
+ *  away. Two guards, both from the real data: a one-word sentence
+ *  ("BLOCKING.") is not a lede, so sentences accumulate up to a floor; and
+ *  a change-log description that is one giant sentence (Phase 13's is
+ *  ~800 characters of it) is cut at a ceiling, on a word boundary, with an
+ *  ellipsis marking the cut. */
+const LEDE_FLOOR = 24;
+const LEDE_CEILING = 220;
+const ledeOf = (description: string): { lede: string; continues: boolean } => {
+  const text = description.trim();
+  const sentences = (text.match(/[^.!?]+[.!?]+(?=\s|$)/g) ?? []).map((sentence) =>
+    sentence.trim(),
+  );
+  let taken = "";
+  for (const sentence of sentences) {
+    taken = taken ? `${taken} ${sentence}` : sentence;
+    if (taken.length >= LEDE_FLOOR) break;
+  }
+  if (!taken) taken = text;
+  if (taken.length <= LEDE_CEILING) {
+    return { lede: taken, continues: taken.length < text.length };
+  }
+  const cut = taken.slice(0, LEDE_CEILING);
+  const edge = cut.lastIndexOf(" ");
+  return {
+    lede: `${(edge > LEDE_FLOOR ? cut.slice(0, edge) : cut).trimEnd()}…`,
+    continues: true,
+  };
+};
+
+/** #132 — Jesse's shape: the timeline breaks into chapters at each new
+ *  month in the closedAt dates ("July 2026" → "August 2026"). Labels derive
+ *  from the data — c.formatEra, never hand-written — and a closed milestone
+ *  GitHub left undated falls back to the honest no-date chapter instead of
+ *  an invented one. */
+interface JourneyEntry {
+  milestone: RoadmapMilestone;
+  /** Position in the whole journey, oldest = 0 — drives the alternating
+   *  sides, so the zigzag carries across era boundaries instead of
+   *  restarting with each chapter. */
+  index: number;
+  /** The first sentence of the description — the entry's prose. */
+  lede: string;
+  /** The description continues past the lede (on the milestone's page). */
+  continues: boolean;
+}
+interface JourneyEra {
+  /** closedAt's YYYY-MM; "undated" when GitHub recorded no date. */
+  key: string;
+  label: string;
+  entries: JourneyEntry[];
+}
+
+const eras: JourneyEra[] = [];
+let journeyIndex = 0;
+for (const milestone of journey) {
+  const entry: JourneyEntry = {
+    milestone,
+    index: journeyIndex++,
+    ...ledeOf(milestone.description ?? ""),
+  };
+  const key = milestone.closedAt?.slice(0, 7) ?? "undated";
+  const current = eras.at(-1);
+  if (current?.key === key) {
+    current.entries.push(entry);
+  } else {
+    eras.push({
+      key,
+      label: milestone.closedAt ? c.formatEra(milestone.closedAt) : c.noDate,
+      entries: [entry],
+    });
+  }
+}
 ---
 
 <Base
@@ -89,7 +164,7 @@ const overflow = (milestone: RoadmapMilestone) =>
       }
 
       {
-        data.milestones.length === 0 ? (
+        data.milestones.length === 0 && (
           <div class="stale-banner" role="note">
             <p>{c.empty}</p>
             <p>
@@ -98,8 +173,64 @@ const overflow = (milestone: RoadmapMilestone) =>
               </a>
             </p>
           </div>
-        ) : (
-          <>
+        )
+      }
+    </div>
+
+    {
+      data.milestones.length > 0 && (
+        <>
+          {/* #132 — story first: the journey leads the page and, unlike the
+              reading column below, takes the container's full width — the
+              alternating map needs the breadth; its prose stays ≤ 58ch. */}
+          {journey.length > 0 && (
+            <section class="journey" aria-labelledby="roadmap-journey">
+              <h2 id="roadmap-journey">{c.journeyTitle}</h2>
+              <p class="journey-intro">{c.journeyIntro}</p>
+              <div class="journey-timeline">
+                {eras.map((era) => (
+                  <div class="era">
+                    <h3 class="era-marker">{era.label}</h3>
+                    <ol class="era-entries">
+                      {era.entries.map(({ milestone, index, lede, continues }) => (
+                        <li
+                          class:list={[
+                            "card",
+                            "entry",
+                            index % 2 === 0 ? "entry-start" : "entry-end",
+                          ]}
+                        >
+                          <h4 class="entry-title">
+                            <a href={milestone.url}>{milestone.title}</a>
+                          </h4>
+                          {lede && <p class="entry-lede">{lede}</p>}
+                          <p class="milestone-meta">
+                            {milestone.closedAt && (
+                              <span>{c.closedOn(formatDate(milestone.closedAt))}</span>
+                            )}
+                            <span class="dot" aria-hidden="true">·</span>
+                            <span>
+                              {c.progress(
+                                milestone.closedIssues,
+                                milestone.closedIssues + milestone.openIssues,
+                              )}
+                            </span>
+                          </p>
+                          {continues && (
+                            <a class="rest" href={milestone.url}>
+                              {c.viewMilestone} →
+                            </a>
+                          )}
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <div class="narrow">
             {open.length > 0 && (
               <section aria-labelledby="roadmap-open">
                 <h2 id="roadmap-open">{c.openTitle}</h2>
@@ -149,30 +280,6 @@ const overflow = (milestone: RoadmapMilestone) =>
               </section>
             )}
 
-            {journey.length > 0 && (
-              <section class="journey" aria-labelledby="roadmap-journey">
-                <h2 id="roadmap-journey">{c.journeyTitle}</h2>
-                <p class="journey-intro">{c.journeyIntro}</p>
-                <ol class="journey-timeline">
-                  {journey.map((milestone) => (
-                    <li class="card milestone">
-                      <h3>
-                        <a href={milestone.url}>{milestone.title}</a>
-                      </h3>
-                      {milestone.description && <p class="desc">{milestone.description}</p>}
-                      <p class="milestone-meta">
-                        {milestone.closedAt && (
-                          <span>{c.closedOn(formatDate(milestone.closedAt))}</span>
-                        )}
-                        <span class="dot" aria-hidden="true">·</span>
-                        <span>{c.progress(milestone.closedIssues, milestone.closedIssues + milestone.openIssues)}</span>
-                      </p>
-                    </li>
-                  ))}
-                </ol>
-              </section>
-            )}
-
             {closed.length > 0 && (
               <section class="shipped" aria-labelledby="roadmap-closed">
                 <h2 id="roadmap-closed">{c.closedTitle}</h2>
@@ -217,10 +324,10 @@ const overflow = (milestone: RoadmapMilestone) =>
                 </ul>
               </section>
             )}
-          </>
-        )
-      }
-    </div>
+          </div>
+        </>
+      )
+    }
   </div>
 </Base>
 
@@ -345,7 +452,12 @@ const overflow = (milestone: RoadmapMilestone) =>
     font-size: 0.88rem;
   }
 
-  /* #129 — the journey: a vertical timeline, oldest at the top. */
+  /* #132 — the journey as Jesse's vertical historical map. From lg up: a
+     center spine, entries alternating sides, era markers centered on the
+     spine breaking it into chapters. Below lg the spine hugs the
+     inline-start edge and every entry sits on one side — alternating is
+     unreadable at 390px — with the era markers inline. Logical properties
+     only, so the Arabic edition mirrors: spine, sides and dots included. */
   .journey {
     margin-block: 2.5rem;
   }
@@ -357,36 +469,75 @@ const overflow = (milestone: RoadmapMilestone) =>
   }
 
   .journey-timeline {
-    list-style: none;
-    margin: 1.2rem 0 0;
-    padding: 0;
+    /* The rail's distance from the timeline's inline-start edge (mobile),
+       and the gap between the centered spine and a card (desktop). */
+    --spine: 0.7rem;
+    --gutter: 1.9rem;
     position: relative;
-    display: grid;
-    gap: 0.9rem;
+    margin-block: 2.25rem 0.5rem;
   }
 
+  /* One spine behind everything — era markers and dot beads sit on top of
+     it, so the line reads as passing behind each chapter and each entry. */
   .journey-timeline::before {
     content: "";
     position: absolute;
-    inset-inline-start: 0.55rem;
-    top: 0.6rem;
-    bottom: 0.6rem;
+    inset-inline-start: calc(var(--spine) - 1px);
+    top: 1rem;
+    bottom: 1rem;
     width: 2px;
-    background: var(--border);
+    border-radius: 2px;
+    background: color-mix(in oklab, var(--accent) 30%, var(--border));
   }
 
-  .journey-timeline .milestone {
+  /* Chapter heading: a pill sitting on the spine, breaking it. The label
+     derives from closedAt (see c.formatEra) — the marker is data, not
+     decoration, so it stays a real heading. */
+  .era-marker {
+    position: relative; /* above the spine */
+    width: max-content;
+    margin: 0 0 1.3rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--surface);
+    border: 1px solid color-mix(in oklab, var(--accent) 35%, var(--border));
+    border-radius: 999px;
+    padding: 0.32rem 0.95rem;
+  }
+
+  /* Letter-spacing pulls Arabic script apart — the joined letters must
+     stay joined, so the RTL edition tracks normally. */
+  :global([dir="rtl"]) .era-marker {
+    letter-spacing: normal;
+  }
+
+  .era + .era {
+    margin-block-start: 2.1rem;
+  }
+
+  .era-entries {
+    list-style: none;
     margin: 0;
-    padding-inline-start: 2rem;
-    position: relative;
-    border: 1px solid var(--border);
+    padding: 0;
+    display: grid;
+    gap: 1rem;
   }
 
-  .journey-timeline .milestone::before {
+  .entry {
+    position: relative;
+    margin-inline-start: 2.2rem; /* clear of the rail */
+  }
+
+  /* The dot: an accent bead on the spine, ringed with the page surface so
+     the line visually passes behind it. */
+  .entry::before {
     content: "";
     position: absolute;
-    inset-inline-start: -0.35rem;
-    top: 1.2rem;
+    inset-inline-start: calc(-2.2rem + var(--spine) - 0.35rem);
+    top: 1.15rem;
     width: 0.7rem;
     height: 0.7rem;
     border-radius: 999px;
@@ -394,8 +545,90 @@ const overflow = (milestone: RoadmapMilestone) =>
     border: 2px solid var(--surface);
   }
 
-  .journey-timeline .milestone-meta {
+  .entry-title {
+    margin: 0 0 0.5rem;
+    font-size: 1.08rem;
+    line-height: 1.4;
+  }
+
+  .entry-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .entry-title a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 3px;
+  }
+
+  /* The story leads: the first sentence reads as prose, not as muted
+     metadata — the rest stays one link away, on GitHub. */
+  .entry-lede {
+    color: var(--ink);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    margin: 0 0 0.75rem;
+    overflow-wrap: anywhere;
+  }
+
+  .entry .milestone-meta {
     margin: 0.35rem 0 0;
+  }
+
+  .entry .rest {
+    display: inline-block;
+    margin-top: 0.55rem;
+    font-size: 0.88rem;
+    color: var(--link);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklab, var(--link) 40%, transparent);
+    text-underline-offset: 3px;
+  }
+
+  /* ≥ lg (64rem, the site's own large breakpoint) — Jesse's map: the spine
+     centers, entries alternate sides, era markers center on the spine.
+     Sides come from the server-computed index, not :nth-child, so the
+     zigzag carries across the chapter boundaries. */
+  @media (min-width: 64rem) {
+    /* inset-inline: 0 + auto margins centers the 2px line in either
+       direction — left:0;right:0;width:2px;margin:auto. */
+    .journey-timeline::before {
+      inset-inline-start: 0;
+      inset-inline-end: 0;
+      margin-inline: auto;
+    }
+
+    .era-marker {
+      margin-inline: auto;
+    }
+
+    .era-entries {
+      gap: 1.25rem;
+    }
+
+    .entry {
+      margin-inline-start: 0;
+      width: calc(50% - var(--gutter));
+    }
+
+    .entry-start {
+      justify-self: start;
+    }
+
+    .entry-end {
+      justify-self: end;
+    }
+
+    .entry::before {
+      inset-inline-start: auto;
+      inset-inline-end: calc(-1 * var(--gutter) - 0.35rem);
+    }
+
+    .entry-end::before {
+      inset-inline-end: auto;
+      inset-inline-start: calc(-1 * var(--gutter) - 0.35rem);
+    }
   }
 
   /* Recently-shipped section: quieter, compact list. */
