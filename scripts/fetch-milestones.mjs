@@ -33,8 +33,9 @@ const itemsApi = (number) => `${REPO_API}/issues?milestone=${number}&state=all&p
  *  open/closed counts stay in the output, so the page can say "and N more". */
 const MAX_ITEMS_PER_MILESTONE = 30;
 /** Recently-shipped section: enough to show momentum, not a full history. */
-const MAX_CLOSED_MILESTONES = 5;
-
+// #129 — the journey shows every closed milestone; the count is small
+// (14-25) and the data is cheap. The roadmap reads the same file.
+const MAX_CLOSED_MILESTONES = 100;
 const headers = {
   accept: "application/vnd.github+json",
   "user-agent": "keeltrading.com-milestones-fetch",
