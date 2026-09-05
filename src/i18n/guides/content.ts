@@ -1,7 +1,7 @@
 /**
  * Get Started guides — editorial, site-authored newbie walkthroughs (EN for
  * now, like the engine documents themselves). Every command, page and button
- * below was verified against keel v0.12.2: the screenshots in
+ * below was verified against keel v0.13.2: the screenshots in
  * public/get-started/ were captured by scripts/render-webui-shots.mjs from a
  * real `keel serve` console on a fresh paper working directory — the curses
  * TUI these guides used to teach was deleted from the engine before v0.12.2
@@ -66,13 +66,13 @@ export const guides: Guide[] = [
         code: "keel serve",
       },
       {
-        title: "Step 4 — Take the tour: seven views",
+        title: "Step 4 — Take the tour: eight views",
         body: [
-          "keel serve prints a URL carrying a one-time token for this run, opens your browser, and from there everything lives behind the header's seven views. Status (the page you land on) answers \"is it alive\"; Setup is the checklist of what this deployment still needs; Activity, Insights, Rules and Venues report what keel did and found; Gates lists every capability-increasing action and what gates it. The eighth header entry, Docs, links out to the documentation you are reading.",
+          "keel serve prints a URL carrying a one-time token for this run, opens your browser, and from there everything lives behind the header's eight views. Status (the page you land on) answers \"is it alive\"; Setup is the checklist of what this deployment still needs; Activity, Insights, Rules and Venues report what keel did and found; Orders is the ledger of every order placed, each carrying the venue's own bid and ask at the moment keel submitted it; Gates lists every capability-increasing action and what gates it. The ninth header entry, Docs, links out to the documentation you are reading.",
         ],
         shot: "/get-started/webui-status.png",
         shotCaption:
-          "The console's Status view with the seven-view header: Status, Setup, Activity, Insights, Rules, Venues, Gates. The paper badge (top right) is the deployment's mode; the footer says it is served from this machine only.",
+          "The console's Status view with the eight-view header: Status, Setup, Activity, Orders, Insights, Rules, Venues, Gates. The paper badge (top right) is the deployment's mode; the footer says it is served from this machine only.",
       },
       {
         title: "Step 5 — Read the dashboard",
@@ -205,7 +205,7 @@ export const guides: Guide[] = [
         ],
         shot: "/get-started/webui-gates.png",
         shotCaption:
-          "The Gates view: keel autonomy on, keel resume, keel withdrawals attest --enabled and friends — each with what it increases, and the terminal gate (a typed yes at an interactive TTY) it must pass.",
+          "The Gates view: eight actions — keel autonomy on, keel resume, keel withdrawals attest --enabled, keel scope attest --trading and the rest — each with what it increases, and the terminal gate (a typed yes at an interactive TTY) it must pass.",
       },
       {
         title: "Step 2 — Screen and attest the allowlist",
@@ -230,7 +230,14 @@ export const guides: Guide[] = [
         code: "keel withdrawals attest --enabled",
       },
       {
-        title: "Step 5 — Purification, honestly",
+        title: "Step 5 — Attest the venue's trade scope (rail 20)",
+        body: [
+          "A credential that reads fine is not evidence it can trade: keel has watched a well-formed key pass every read and still have its first live order refused by the venue. Rail 20 closes that hole by failing closed — until a venue is attested, keel ships unable to place a live entry on it at all. keel scope attest --trading releases that veto, so it demands a typed yes at a terminal; --read-only only ever reduces capability and stays ungated. The record is bound to the credential that earned it, so a rotated key means re-attesting. Like rail 17, this is entries-only — exits are never affected, because an exit must always be able to leave.",
+        ],
+        code: "keel scope attest --trading",
+      },
+      {
+        title: "Step 6 — Purification, honestly",
         body: [
           "keel purification reports non-compliant income owed to charity (KB §65.9) from what actually ran through the engine. Account-level duties no rail can see — disabling USDC rewards on idle balances, chiefly — appear in the checklist as the venue-interest step, and keel will never show that one as done: the venue's API does not expose enrolment, and a green check that verifies nothing turns an open risk into a false assurance. It stays on the operator's checklist, in the operator runbook.",
         ],
