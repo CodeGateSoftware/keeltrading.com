@@ -22,6 +22,15 @@
       "fr": "Le raisonnement Shariah que keel encode, règle par règle, chacun avec sa source dans le dépôt — publié pour être audité et contesté."
     },
     {
+      "path": "docs/architecture.md",
+      "slug": "architecture",
+      "title": "Software Architecture Record",
+      "en": "The system as verified, not as imagined — what keel is, the packages it ships in, the choices holding it up, and, issue by issue, what is not built yet.",
+      "ar": "النظامُ كما جرى التحقّقُ منه، لا كما يُتصوَّر — ما هو كيل، والحزمُ التي يُشحن بها، والقراراتُ الحاملةُ له، وما لم يُبْنَ بعدُ، مسألةً مسألةً.",
+      "fr": "Le système tel qu'il est vérifié, non tel qu'on l'imagine — ce qu'est keel, les paquets qu'il livre, les choix qui le portent, et, ticket par ticket, ce qui n'est pas encore construit.",
+      "section": "reference"
+    },
+    {
       "path": "docs/decisions/0001-desktop-update-path.md",
       "slug": "decision-0001-desktop-update-path",
       "title": "Decision 0001: the desktop update path",
@@ -47,6 +56,15 @@
       "ar": "المسحُ القياسيُّ الأوّل لطبقة الأوامر — ما دورُ كلِّ وحدةٍ، ولماذا ذاب وصفُ «أكبر من المحرّك» قبل أن يبدأ المسح.",
       "section": "decisions",
       "fr": "L'enquête mesure-d'abord de la couche commands — le rôle de chaque module, et pourquoi « plus grande que le moteur » s'est dissous avant même que l'enquête ne commence."
+    },
+    {
+      "path": "docs/decisions/0004-monetisation-not-now.md",
+      "slug": "decision-0004-monetisation-not-now",
+      "title": "Decision 0004: monetisation is not now",
+      "en": "Why keel does not monetise yet, and why affiliate links are a permanent no rather than a “not yet”: referral revenue would be a direct stake in the same fee schedule keel's credibility depends on assessing without one.",
+      "ar": "لماذا لا يُحصِّل كيل مالًا الآن، ولماذا روابطُ الإحالة رفضٌ دائمٌ لا «ليس بعد»: فعائدُ الإحالة حصّةٌ مباشرةٌ في جدول الرسوم نفسِه الذي تقوم مصداقيةُ كيل على تقييمه بلا مصلحةٍ فيه.",
+      "fr": "Pourquoi keel ne se monétise pas maintenant, et pourquoi les liens d'affiliation sont un non définitif plutôt qu'un « pas encore » : un revenu de parrainage serait un intérêt direct dans le barème de frais que la crédibilité de keel repose sur sa capacité à évaluer sans intérêt.",
+      "section": "decisions"
     },
     {
       "path": "docs/desktop-install.md",
@@ -83,6 +101,15 @@
       "ar": "‏keel mcp: الأدوات الثماني للقراءة فقط التي يستطيع المساعدُ الذكي استدعاءها — doctor وcapabilities وprofiles وorders وveto_log وpurification وtrials وreports — والسياجُ الذي يُبقيها للقراءة فقط.",
       "section": "reference",
       "fr": "keel mcp : les huit outils en lecture seule qu'un assistant peut appeler — doctor, capabilities, profiles, orders, veto_log, purification, trials, reports — et la clôture, en six murs, qui les garde en lecture seule."
+    },
+    {
+      "path": "docs/research-toolkit.md",
+      "slug": "research-toolkit",
+      "title": "The research toolkit",
+      "en": "The thirteen evidence modules keel research fronts — each with the question it answers and, to be read just as carefully, the question it refuses to answer.",
+      "ar": "وحداتُ الأدلّةِ الثلاث عشرة التي يقف عليها أمرُ keel research — كلٌّ منها بالسؤال الذي تجيب عنه، وبالسؤال الذي ترفض الإجابةَ عنه، وهذا الثاني يُقرأ بالعناية نفسِها.",
+      "fr": "Les treize modules de preuve que keel research met en façade — chacun avec la question à laquelle il répond et, à lire avec autant d'attention, celle à laquelle il refuse de répondre.",
+      "section": "research"
     },
     {
       "path": "docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
