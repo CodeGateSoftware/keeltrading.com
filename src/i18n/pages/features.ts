@@ -29,10 +29,10 @@ export interface FeaturesContent {
 
 export const features: LocalizedPage<FeaturesContent> = {
   en: {
-    rev: "2026-08-28.1",
+    rev: "2026-09-05.1",
     title: "Shariah Compliance Engine Features — keel",
     description:
-      "Attested screening that fails closed, 18 rails no order can skip, gates checked for overfitting, honest measurement against DCA, and execution hardened for correctness — all mapped to source.",
+      "Attested screening that fails closed, 20 rails no order can skip, gates checked for overfitting, honest measurement against DCA, and execution hardened for correctness — all mapped to source.",
     intro:
       "This page describes only what the engine repository can show. Each section links to the source that proves it — if a claim ever drifts from the code, the link is how you catch us.",
     verifyNote: "Verify in the repository",
@@ -43,8 +43,8 @@ export const features: LocalizedPage<FeaturesContent> = {
         verify: { label: "compliance/screen.py", path: "keel/compliance/screen.py" },
       },
       {
-        title: "The rails — eighteen checks no order can skip",
-        body: "Deterministic guards that nothing can override, not even autonomy mode:",
+        title: "The rails — twenty checks no order can skip",
+        body: "Deterministic guards that nothing can override, not even autonomy mode. Twenty of them — numbered 1–14 and 16–21, because rail 15 was retired and its number was never reused:",
         points: [
           "The halal allowlist, per-order and per-day spend caps, exposure and concentration caps",
           "Correlation-aware sizing, a minimum-move floor, no-martingale and no-stop-widening",
@@ -53,9 +53,16 @@ export const features: LocalizedPage<FeaturesContent> = {
           "Rail 14 — venue subscription/withdrawal attestations: live BUYs are refused until the operator attests",
           "Rail 17 — §65.4 qabd: withdrawal capability is attested and enforced, because an asset that cannot be withdrawn may not have been validly possessed",
           "A maximum-spread entry gate that refuses live BUYs at a spread of 50 basis points or wider, and refuses outright if the order book cannot be read",
+          "Rail 20 — trade scope: a credential that reads fine is not evidence it can trade, so every live entry is vetoed until the venue itself has confirmed that credential may place one",
+          "Rail 21 — base balance: a SELL is refused when the venue affirmatively reports no holding, and deliberately let through when the balance is merely unknown, because a blocked exit strands a position that wanted out",
           "A rail veto names the rail that fired and the command that clears it",
         ],
         verify: { label: "execution/guards.py", path: "keel/execution/guards.py" },
+      },
+      {
+        title: "Trade scope — the venue gets to falsify what the operator attested",
+        body: "A credential that reads cleanly is not evidence it can trade. A well-formed key whose every read succeeded still had its first live order refused: You do not have permission to perform this action. So the operator's claim that a venue's key may place live entries is now a record the venue itself can overturn — keel scope attest writes the operator's half, a refusal from the venue overwrites it, and the record is bound to the fingerprint of the credential that earned it, so swapping the key does not inherit the old key's permission. Rail 20 reads that record and vetoes live entries for as long as it says no. Exits are deliberately untouched, because an exit must always be able to leave.",
+        verify: { label: "commands/scope.py", path: "keel/commands/scope.py" },
       },
       {
         title: "Strategy gates — candidate → paper → live",
@@ -64,8 +71,18 @@ export const features: LocalizedPage<FeaturesContent> = {
       },
       {
         title: "Honest measurement, against DCA",
-        body: "keel simulate replays the real rules over fetched history, compares against a simple DCA benchmark, and writes a GO-LIVE / TRAIN-MORE report naming every gate and its numbers. The backtester prices per-product slippage scaled from each asset's real liquidity, from 5 to 50 basis points, so results cannot be flattered by thin order books. On the default rules it will very likely tell you TRAIN-MORE. That is the engine working, not broken.",
+        body: "keel simulate replays the real rules over fetched history, compares against a simple DCA benchmark, and writes a GO-LIVE / TRAIN-MORE report naming every gate and its numbers. The backtester prices slippage per product, scaled from each asset's own liquidity — from 5 basis points at the most liquid end up to 183.8, the rate the thinnest name in the measured universe pays — so a result cannot be flattered by a thin order book. Measured across that universe, not one of the 24 assets reaches the 5bp floor. The report states which pass used which rate, because the edge table prices per product while the account pass and the DCA benchmark are still flat. On the default rules it will very likely tell you TRAIN-MORE. That is the engine working, not broken.",
         verify: { label: "the experiment record", path: "docs/experiments", kind: "tree" },
+      },
+      {
+        title: "The order ledger records the book keel was actually filled against",
+        body: "The orders table had been written since the beginning with no surface reading it, so \"what did keel buy and sell, and at what price\" was answerable only by opening SQLite by hand. It is a service now: keel orders renders the report, and the local web console projects that same report rather than recomputing it, so the two front ends cannot drift apart. Each order carries the venue's own top of book at the moment of submission, stored as the bid and the ask rather than as a single spread number — a spread computed and then stored loses the two numbers it came from. At this deployment's order sizes the spread is very nearly the whole cost, so it is now recorded as evidence instead of reconstructed afterwards.",
+        verify: { label: "commands/orders.py", path: "keel/commands/orders.py" },
+      },
+      {
+        title: "keel research — one front door over thirteen evidence modules",
+        body: "The evidence toolkit had thirteen modules and nowhere that said so; six of them were reachable only by reading the source. keel research index now names all thirteen — what each one answers, what it cannot answer, and the command that runs it. It adds no statistics of its own: the five that already had a home under keel trials are registered a second time as the same command objects, never copies, because a front door that reimplements drifts the moment one copy takes a bugfix the other does not. The \"cannot answer\" column is meant to be read as carefully as the other one.",
+        verify: { label: "commands/research.py", path: "keel/commands/research.py" },
       },
       {
         title: "Three deployment profiles that share nothing",
@@ -74,7 +91,7 @@ export const features: LocalizedPage<FeaturesContent> = {
       },
       {
         title: "A broker port, not a broker lock-in",
-        body: "Adapters implement one contract — the keel-broker-api port — and register under the keel.brokers entry point. Coinbase Advanced Trade is the reference adapter; Robinhood ships as an optional, deliberately unwired venue; an Alpaca adapter joined in v0.10.0. A deliberately divergent fake venue keeps the port honest: the conformance suite, about 3,000 tests, runs against both.",
+        body: "Adapters implement one contract — the keel-broker-api port — and register under the keel.brokers entry point. Coinbase Advanced Trade is the reference adapter; Robinhood ships as an optional, deliberately unwired venue; an Alpaca adapter joined in v0.10.0. A deliberately divergent fake venue keeps the port honest: the conformance suite runs against both, inside a suite of about 5,000 tests.",
         verify: { label: "packages/", path: "packages", kind: "tree" },
       },
       {
@@ -119,11 +136,11 @@ export const features: LocalizedPage<FeaturesContent> = {
   },
 
   ar: {
-    rev: "2026-08-28.1",
-    translatedFromRev: "2026-08-28.1",
+    rev: "2026-09-05.1",
+    translatedFromRev: "2026-09-05.1",
     title: "خصائص محرّك الامتثال الشرعي — كيل",
     description:
-      "فرزٌ موثَّق يرفض عند الفشل، و18 سكةَ أمانٍ لا تُتجاوَز، وبواباتُ ترقيةٍ تفحص الإفراط في المُلاءمة، وقياسٌ صادقٌ مقابل مؤشّر DCA، وتنفيذٌ تُحصَّن فيه صحةُ الأوامر — وكلُّ خاصيةٍ تشير إلى مصدرها في الشيفرة.",
+      "فرزٌ موثَّق يرفض عند الفشل، و20 سكةَ أمانٍ لا تُتجاوَز، وبواباتُ ترقيةٍ تفحص الإفراط في المُلاءمة، وقياسٌ صادقٌ مقابل مؤشّر DCA، وتنفيذٌ تُحصَّن فيه صحةُ الأوامر — وكلُّ خاصيةٍ تشير إلى مصدرها في الشيفرة.",
     intro:
       "لا تصف هذه الصفحة إلا ما يستطيع مستودعُ المحرّك إظهارَه. وكلُّ قسمٍ يرتبط بالمصدر الذي يُثبته — فإن انحرفت دعوى يومًا عن الشيفرة، فالرابط هو سبيلك إلى الإمساك بنا.",
     verifyNote: "تحقّق في المستودع",
@@ -134,8 +151,8 @@ export const features: LocalizedPage<FeaturesContent> = {
         verify: { label: "compliance/screen.py", path: "keel/compliance/screen.py" },
       },
       {
-        title: "سكك الأمان — ثمانية عشر فحصًا لا يتجاوزها أيُّ أمر",
-        body: "ضوابطُ حتميةٌ لا يتجاوزها شيء، ولا حتى وضعُ الاستقلالية:",
+        title: "سكك الأمان — عشرون فحصًا لا يتجاوزها أيُّ أمر",
+        body: "ضوابطُ حتميةٌ لا يتجاوزها شيء، ولا حتى وضعُ الاستقلالية. وهي عشرون، مرقَّمةٌ من 1 إلى 14 ومن 16 إلى 21، إذ أُلغيت السكةُ 15 ولم يُعَد استعمالُ رقمها:",
         points: [
           "قائمةُ الأصول الحلال المسموح بها، وسقوفُ الإنفاق للأمر الواحد ولليوم، وسقوفُ التعرُّض والتركيز",
           "تحجيمٌ يراعي الارتباط، وحدٌّ أدنى لحركة السعر، ومنعُ المارتينغال ومنعُ توسيع وقف الخسارة",
@@ -144,9 +161,16 @@ export const features: LocalizedPage<FeaturesContent> = {
           "السكة 14 — توثيقُ الاشتراك في المنصّة وقابليةِ السحب منها: تُرفض أوامرُ الشراء الحيّة حتى يوثّق المشغّل",
           "السكة 17 — القبض الحُكمي §65.4: تُوثَّق قابليةُ السحب وتُنفَّذ، لأن الأصل الذي لا يمكن سحبُه قد لا يكون قد قُبِض قبضًا صحيحًا",
           "بوابةُ دخولٍ بحدٍّ أقصى لفارق السعر: ترفض الشراء الحيّ عند 50 نقطة أساسٍ أو أكثر، وترفض كذلك عند تعذُّر قراءة دفتر الأوامر",
+          "السكة 20 — نطاقُ التداول: نجاحُ القراءة بمفتاحٍ ما ليس دليلًا على أنه يستطيع التداول، فيُرفض كلُّ دخولٍ حيٍّ حتى تؤكّد المنصّةُ نفسُها أنّ هذا المفتاح يجوز له وضعُ أمرِ دخول",
+          "السكة 21 — رصيدُ الأصل: يُرفض البيعُ إذا أفادت المنصّةُ صراحةً بعدم وجود رصيد، ويُمرَّر عمدًا إذا كان الرصيدُ مجهولًا لا غير، لأنّ منعَ الخروج يحبس مركزًا أراد الخروج",
           "رفضُ السكة يسمّي نفسه ويسمّي الأمرَ الذي يرفعه",
         ],
         verify: { label: "execution/guards.py", path: "keel/execution/guards.py" },
+      },
+      {
+        title: "نطاقُ التداول — المنصّةُ نفسُها تستطيع تكذيبَ ما وثّقه المشغّل",
+        body: "نجاحُ القراءة بمفتاحٍ ما ليس دليلًا على أنه يستطيع التداول: مفتاحٌ سليمُ الصياغة نجحت به كلُّ قراءة، ثم رُفض أولُ أمرٍ حيٍّ به بعبارة «ليست لديك صلاحيةُ القيام بهذا الإجراء». فصار ادّعاءُ المشغّل أنّ مفتاح المنصّة يجوز له وضعُ أوامر دخولٍ حيّةٍ سجلًّا تستطيع المنصّةُ نفسُها نقضَه — الأمرُ keel scope attest يكتب نصيبَ المشغّل، ورفضُ المنصّة يمحوه، والسجلُّ مربوطٌ ببصمة المفتاح الذي كسبه، فلا يرث مفتاحٌ جديدٌ إذنَ سابقِه. وتقرأ السكةُ 20 هذا السجلَّ فترفض الدخولَ الحيَّ ما دام يقول لا. أمّا الخروجُ فلا يُمَسّ عمدًا، إذ يجب أن يبقى الخروجُ ممكنًا دائمًا.",
+        verify: { label: "commands/scope.py", path: "keel/commands/scope.py" },
       },
       {
         title: "بوابات الاستراتيجية — مرشَّحة ← تجريبية ← حيّة",
@@ -155,8 +179,18 @@ export const features: LocalizedPage<FeaturesContent> = {
       },
       {
         title: "قياسٌ صادق، مقابل الشراء الدوري المنتظم",
-        body: "يعيد الأمر keel simulate تشغيلَ القواعد الحقيقية على التاريخ المجلوب، ويقارنها بمؤشّرٍ مرجعيٍّ بسيطٍ هو الشراء الدوري المنتظم (DCA)، ويكتب تقرير GO-LIVE أو TRAIN-MORE مسمّيًا كلَّ بوابةٍ وأرقامَها. ويُسعّر المحرّك الرجعي الانزلاقَ لكلِّ منتجٍ على قدر سيولته الفعلية (5–50 نقطة أساس)، فلا يمكن تجميلُ النتائج بدفاترِ أوامرَ ضعيفةِ السيولة. وعلى القواعد الافتراضية سيقول لك على الأرجح TRAIN-MORE — وهذا دليلُ عمل المحرّك لا دليلُ عطبه.",
+        body: "يعيد الأمر keel simulate تشغيلَ القواعد الحقيقية على التاريخ المجلوب، ويقارنها بمؤشّرٍ مرجعيٍّ بسيطٍ هو الشراء الدوري المنتظم (DCA)، ويكتب تقرير GO-LIVE أو TRAIN-MORE مسمّيًا كلَّ بوابةٍ وأرقامَها. ويُسعّر المحرّك الرجعي الانزلاقَ لكلِّ منتجٍ على قدر سيولته هو — من 5 نقاط أساسٍ عند أعلى السيولة إلى 183.8، وهو ما يدفعه أرقُّ الأصول في الكون المقيس — فلا يمكن تجميلُ نتيجةٍ بدفترِ أوامرَ ضعيفِ السيولة. وبالقياس على ذلك الكون، لا يبلغ أرضيةَ الخمس نقاطٍ ولا أصلٌ واحدٌ من الأربعة والعشرين. ويذكر التقريرُ أيَّ تمريرةٍ استعملت أيَّ سعر، لأنّ جدول الأفضلية يُسعَّر لكلِّ منتج بينما تمريرةُ الحساب والمؤشّرُ المرجعي ما يزالان بسعرٍ ثابت. وعلى القواعد الافتراضية سيقول لك على الأرجح TRAIN-MORE — وهذا دليلُ عمل المحرّك لا دليلُ عطبه.",
         verify: { label: "سجلّ التجارب", path: "docs/experiments", kind: "tree" },
+      },
+      {
+        title: "سجلُّ الأوامر يقيّد دفترَ السوق الذي نُفِّذ عليه الأمرُ فعلًا",
+        body: "كان جدولُ الأوامر يُكتَب منذ البداية ولا واجهةَ تقرؤه، فكان سؤالُ «ماذا اشترى كيل وباع، وبأيّ سعر» لا يُجاب إلا بفتح قاعدة البيانات يدويًّا. صار الآن خدمةً: الأمرُ keel orders يعرض التقرير، وتعرض لوحةُ الويب المحليّة التقريرَ نفسَه بدل إعادة حسابه، فلا تفترق الواجهتان. ويحمل كلُّ أمرٍ أعلى دفترِ المنصّة لحظةَ الإرسال، محفوظًا عرضًا وطلبًا لا رقمَ فارقٍ واحدًا — فالفارقُ إذا حُسب ثمّ خُزّن ضاع الرقمان اللذان جاء منهما. وعند أحجام هذا النشر يكاد الفارقُ يكون التكلفةَ كلَّها، فسُجّل دليلًا بدل أن يُعاد بناؤه لاحقًا.",
+        verify: { label: "commands/orders.py", path: "keel/commands/orders.py" },
+      },
+      {
+        title: "keel research — بابٌ واحدٌ على ثلاث عشرة وحدةَ أدلّة",
+        body: "كانت عُدّةُ الأدلّة ثلاثَ عشرة وحدةً بلا موضعٍ واحدٍ يقول ذلك؛ وستٌّ منها لا تُبلَغ إلا بقراءة الشيفرة. والآن يسمّي الأمرُ keel research index الثلاثَ عشرةَ جميعًا — ما تجيب عنه كلُّ وحدة، وما لا تستطيع الإجابةَ عنه، والأمرُ الذي يشغّلها. ولا يضيف إحصاءً من عنده: فالخمسُ التي كان لها موضعٌ تحت keel trials مُسجَّلةٌ مرّةً ثانيةً بوصفها الكائناتِ نفسَها لا نسخًا عنها، لأنّ بابًا يعيد التنفيذَ يفترق عن أصله لحظةَ يُصلَح أحدُ النسختين دون الأخرى. وعمودُ «ما لا تستطيع الإجابةَ عنه» يُقرأ بالعناية نفسِها التي يُقرأ بها الآخر.",
+        verify: { label: "commands/research.py", path: "keel/commands/research.py" },
       },
       {
         title: "ثلاثة أنماط نشرٍ لا يتقاسم أيٌّ منها شيئًا",
@@ -165,7 +199,7 @@ export const features: LocalizedPage<FeaturesContent> = {
       },
       {
         title: "منفذُ وسطاءٍ، لا ارتهانٌ لوسيط",
-        body: "تُنفّذ المحوّلات عقدًا واحدًا — منفذ keel-broker-api — وتُسجَّل تحت نقطة الدخول keel.brokers. ومحوّل Coinbase Advanced Trade هو المحوّل المرجعي؛ ويُسلَّم Robinhood منصّةً اختياريةً غيرَ موصولةٍ عمدًا؛ وانضمّ محوّل Alpaca في الإصدار v0.10.0. وثمّة منصّةٌ وهميةٌ متعمَّدةُ الاختلاف تُبقي المنفذ أمينًا: إذ تعمل حزمةُ اختبارات المطابقة (نحو 3,000 اختبار) على الاثنتين معًا.",
+        body: "تُنفّذ المحوّلات عقدًا واحدًا — منفذ keel-broker-api — وتُسجَّل تحت نقطة الدخول keel.brokers. ومحوّل Coinbase Advanced Trade هو المحوّل المرجعي؛ ويُسلَّم Robinhood منصّةً اختياريةً غيرَ موصولةٍ عمدًا؛ وانضمّ محوّل Alpaca في الإصدار v0.10.0. وثمّة منصّةٌ وهميةٌ متعمَّدةُ الاختلاف تُبقي المنفذ أمينًا: إذ تعمل حزمةُ اختبارات المطابقة على الاثنتين معًا، ضمن حزمةِ اختباراتٍ تناهز 5,000 اختبار.",
         verify: { label: "packages/", path: "packages", kind: "tree" },
       },
       {
@@ -210,11 +244,11 @@ export const features: LocalizedPage<FeaturesContent> = {
   },
 
   fr: {
-    rev: "2026-08-28.1",
-    translatedFromRev: "2026-08-28.1",
+    rev: "2026-09-05.1",
+    translatedFromRev: "2026-09-05.1",
     title: "Fonctionnalités du moteur de conformité — keel",
     description:
-      "Un filtrage attesté qui bloque par défaut, dix-huit garde-fous incontournables, des verrous de promotion avec contrôle de surapprentissage, une mesure honnête face au DCA, une exécution durcie pour la justesse — chaque fonctionnalité renvoie à sa source dans le code.",
+      "Un filtrage attesté qui bloque par défaut, vingt garde-fous incontournables, des verrous de promotion avec contrôle de surapprentissage, une mesure honnête face au DCA, une exécution durcie pour la justesse — chaque fonctionnalité renvoie à sa source dans le code.",
     intro:
       "Cette page ne décrit que ce que le dépôt du moteur peut montrer. Chaque section renvoie à la source qui l'atteste : si une affirmation s'écartait un jour du code, c'est par ce lien que vous nous prendriez en défaut.",
     verifyNote: "Vérifier dans le dépôt",
@@ -225,8 +259,8 @@ export const features: LocalizedPage<FeaturesContent> = {
         verify: { label: "compliance/screen.py", path: "keel/compliance/screen.py" },
       },
       {
-        title: "Les garde-fous (rails) — dix-huit contrôles qu'aucun ordre ne contourne",
-        body: "Des contrôles déterministes que rien ne peut désactiver, pas même le mode autonome :",
+        title: "Les garde-fous (rails) — vingt contrôles qu'aucun ordre ne contourne",
+        body: "Des contrôles déterministes que rien ne peut désactiver, pas même le mode autonome. Ils sont vingt, numérotés de 1 à 14 et de 16 à 21 — le garde-fou 15 a été retiré et son numéro jamais réattribué :",
         points: [
           "La liste blanche halal, les plafonds de dépense par ordre et par jour, les plafonds d'exposition et de concentration",
           "Un dimensionnement qui tient compte des corrélations, un seuil de mouvement minimal, l'interdiction de la martingale et de l'élargissement des stops",
@@ -235,9 +269,16 @@ export const features: LocalizedPage<FeaturesContent> = {
           "Garde-fou 14 — attestations d'abonnement et de retrait sur la plateforme : tout achat réel est refusé tant que l'opérateur n'a pas attesté",
           "Garde-fou 17 — qabd §65.4 : la capacité de retrait est attestée puis appliquée, au motif qu'un actif impossible à retirer n'a peut-être jamais été valablement possédé",
           "Un plafond d'écart (spread) à l'entrée, qui refuse tout achat réel à partir de 50 points de base et bloque d'office si le carnet est illisible",
+          "Garde-fou 20 — périmètre de négociation : une clé qui lit correctement ne prouve pas qu'elle peut négocier ; toute entrée réelle est refusée tant que la plateforme elle-même n'a pas confirmé que cette clé peut en placer une",
+          "Garde-fou 21 — solde de l'actif : une vente est refusée lorsque la plateforme signale explicitement l'absence de solde, et délibérément laissée passer lorsque le solde est simplement inconnu, car bloquer une sortie enferme une position qui voulait sortir",
           "Tout veto d'un garde-fou se nomme et indique la commande qui le lève",
         ],
         verify: { label: "execution/guards.py", path: "keel/execution/guards.py" },
+      },
+      {
+        title: "Périmètre de négociation — c'est la plateforme qui peut démentir l'attestation de l'opérateur",
+        body: "Une clé qui lit correctement ne prouve pas qu'elle peut négocier : une clé bien formée, dont toutes les lectures aboutissaient, s'est vu refuser son premier ordre réel — « vous n'avez pas la permission d'effectuer cette action ». L'affirmation de l'opérateur selon laquelle la clé d'une plateforme peut placer des entrées réelles est donc devenue un enregistrement que la plateforme elle-même peut renverser : keel scope attest écrit la moitié de l'opérateur, un refus de la plateforme l'écrase, et l'enregistrement est lié à l'empreinte de la clé qui l'a obtenu — changer de clé n'hérite donc pas de l'autorisation de l'ancienne. Le garde-fou 20 lit cet enregistrement et refuse les entrées réelles tant qu'il dit non. Les sorties restent délibérément intactes, car une sortie doit toujours pouvoir partir.",
+        verify: { label: "commands/scope.py", path: "keel/commands/scope.py" },
       },
       {
         title: "Verrous de stratégie — candidate → papier → réel",
@@ -246,8 +287,18 @@ export const features: LocalizedPage<FeaturesContent> = {
       },
       {
         title: "Mesure honnête, face au DCA",
-        body: "keel simulate rejoue les vraies règles sur l'historique récupéré, les compare à la référence DCA et rédige un rapport GO-LIVE / TRAIN-MORE qui nomme chaque verrou et ses chiffres. Le backtesteur applique à chaque produit un glissement calibré sur sa liquidité réelle (5 à 50 points de base), afin qu'aucun résultat ne puisse être flatté par un carnet d'ordres peu liquide. Sur les règles par défaut, il vous répondra très probablement TRAIN-MORE : c'est le moteur qui fonctionne, pas une panne.",
+        body: "keel simulate rejoue les vraies règles sur l'historique récupéré, les compare à la référence DCA et rédige un rapport GO-LIVE / TRAIN-MORE qui nomme chaque verrou et ses chiffres. Le backtesteur applique à chaque produit un glissement calibré sur sa propre liquidité — de 5 points de base à l'extrémité la plus liquide jusqu'à 183,8, le taux que paie le nom le plus étroit de l'univers mesuré — afin qu'aucun résultat ne puisse être flatté par un carnet d'ordres peu liquide. Sur cet univers, pas un seul des 24 actifs n'atteint le plancher de 5 points de base. Le rapport indique quelle passe emploie quel taux, car le tableau d'avantage est tarifé par produit tandis que la passe de compte et la référence DCA restent à taux fixe. Sur les règles par défaut, il vous répondra très probablement TRAIN-MORE : c'est le moteur qui fonctionne, pas une panne.",
         verify: { label: "le registre des expériences", path: "docs/experiments", kind: "tree" },
+      },
+      {
+        title: "Le registre des ordres consigne le carnet sur lequel keel a réellement été exécuté",
+        body: "La table des ordres était écrite depuis le début sans qu'aucune surface ne la lise : « qu'a acheté et vendu keel, et à quel prix » n'avait de réponse qu'en ouvrant SQLite à la main. C'est un service désormais : keel orders affiche le rapport, et la console web locale projette ce même rapport au lieu de le recalculer, de sorte que les deux interfaces ne peuvent pas diverger. Chaque ordre porte le haut du carnet de la plateforme au moment de la soumission, conservé comme la paire achat/vente et non comme un unique chiffre d'écart — un écart calculé puis stocké perd les deux nombres dont il provient. Aux tailles d'ordre de ce déploiement, l'écart constitue presque tout le coût : il est donc consigné comme preuve plutôt que reconstruit après coup.",
+        verify: { label: "commands/orders.py", path: "keel/commands/orders.py" },
+      },
+      {
+        title: "keel research — une porte d'entrée unique sur treize modules de preuve",
+        body: "La boîte à outils comptait treize modules et aucun endroit ne le disait ; six d'entre eux n'étaient atteignables qu'en lisant le code. keel research index les nomme désormais tous les treize — ce à quoi chacun répond, ce à quoi il ne peut pas répondre, et la commande qui l'exécute. Il n'ajoute aucune statistique propre : les cinq qui avaient déjà leur place sous keel trials y sont enregistrés une seconde fois comme les mêmes objets de commande, jamais des copies, car une porte d'entrée qui réimplémente diverge dès que l'une des copies reçoit un correctif que l'autre n'a pas. La colonne « ne peut pas répondre » est à lire avec autant d'attention que l'autre.",
+        verify: { label: "commands/research.py", path: "keel/commands/research.py" },
       },
       {
         title: "Trois profils de déploiement qui ne partagent rien",
@@ -256,7 +307,7 @@ export const features: LocalizedPage<FeaturesContent> = {
       },
       {
         title: "Un port courtier, pas un enfermement propriétaire",
-        body: "Les adaptateurs mettent en œuvre un seul contrat — le port keel-broker-api — et se déclarent sous le point d'entrée keel.brokers. Coinbase Advanced Trade est l'adaptateur de référence ; Robinhood est livré comme plateforme optionnelle, délibérément non raccordée ; un adaptateur Alpaca s'y est ajouté en v0.10.0. Une plateforme factice, volontairement divergente, maintient le port honnête : la suite de conformité (~3 000 tests) s'exécute sur les deux.",
+        body: "Les adaptateurs mettent en œuvre un seul contrat — le port keel-broker-api — et se déclarent sous le point d'entrée keel.brokers. Coinbase Advanced Trade est l'adaptateur de référence ; Robinhood est livré comme plateforme optionnelle, délibérément non raccordée ; un adaptateur Alpaca s'y est ajouté en v0.10.0. Une plateforme factice, volontairement divergente, maintient le port honnête : la suite de conformité s'exécute sur les deux, au sein d'une base d'environ 5 000 tests.",
         verify: { label: "packages/", path: "packages", kind: "tree" },
       },
       {
