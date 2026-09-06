@@ -181,7 +181,7 @@ const contentFor = (
     Object.entries(content).map(([key, texts]) => [key, texts[locale]]),
   ) as unknown as Omit<CompareContent, "rev" | "translatedFromRev">;
 
-const REV = "2026-08-21.1";
+const REV = "2026-09-02.1";
 
 export const compare: LocalizedPage<CompareContent> = {
   en: { rev: REV, ...contentFor("en") },
@@ -337,9 +337,9 @@ const table: { label: LocalizedCell; cells: [Cell, Cell, Cell, Cell, Cell] }[] =
     },
     cells: [
       {
-        en: "Attested screening that fails closed + 18 rails no order can skip (including qabd)",
-        ar: "فرزٌ موثَّق يرفض عند الفشل + 18 سكةَ أمانٍ لا تُتجاوَز (منها القبض الحُكمي)",
-        fr: "Filtrage attesté qui bloque par défaut + 18 garde-fous incontournables (dont le qabd)",
+        en: "Attested screening that fails closed + 20 rails no order can skip (including qabd)",
+        ar: "فرزٌ موثَّق يرفض عند الفشل + 20 سكةَ أمانٍ لا تُتجاوَز (منها القبض الحُكمي)",
+        fr: "Filtrage attesté qui bloque par défaut + 20 garde-fous incontournables (dont le qabd)",
       },
       NOT_BUILT_IN,
       NOT_BUILT_IN,
