@@ -67,6 +67,15 @@
       "section": "decisions"
     },
     {
+      "path": "docs/decisions/0005-options.md",
+      "slug": "decision-0005-options",
+      "title": "Decision 0005: options",
+      "en": "Why keel does not trade options — refused on operational grounds, with the permissibility question expressly not reached, and the four facts that would reopen it.",
+      "ar": "لماذا لا يتداول كيل الخيارات — رُفضت لأسبابٍ تشغيلية، مع الامتناع صراحةً عن الخوض في مسألة الجواز، والحقائق الأربع التي تعيد فتحها.",
+      "fr": "Pourquoi keel ne négocie pas d'options — refusées pour des raisons opérationnelles, la question de la licéité n'étant expressément pas abordée, et les quatre faits qui la rouvriraient.",
+      "section": "decisions"
+    },
+    {
       "path": "docs/desktop-install.md",
       "slug": "desktop-install",
       "title": "Installing the desktop app",
