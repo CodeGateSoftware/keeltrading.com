@@ -1,7 +1,7 @@
 /**
  * Get Started guides — editorial, site-authored newbie walkthroughs (EN for
  * now, like the engine documents themselves). Every command, page and button
- * below was verified against keel v0.13.2: the screenshots in
+ * below was verified against keel v0.16.0: the screenshots in
  * public/get-started/ were captured by scripts/render-webui-shots.mjs from a
  * real `keel serve` console on a fresh paper working directory — the curses
  * TUI these guides used to teach was deleted from the engine before v0.12.2
@@ -66,13 +66,13 @@ export const guides: Guide[] = [
         code: "keel serve",
       },
       {
-        title: "Step 4 — Take the tour: eight views",
+        title: "Step 4 — Take the tour: thirteen views",
         body: [
-          "keel serve prints a URL carrying a one-time token for this run, opens your browser, and from there everything lives behind the header's eight views. Status (the page you land on) answers \"is it alive\"; Setup is the checklist of what this deployment still needs; Activity, Insights, Rules and Venues report what keel did and found; Orders is the ledger of every order placed, each carrying the venue's own bid and ask at the moment keel submitted it; Gates lists every capability-increasing action and what gates it. The ninth header entry, Docs, links out to the documentation you are reading.",
+          "keel serve prints a URL carrying a one-time token for this run, opens your browser, and from there everything lives behind the header's thirteen views. Status (the page you land on) answers \"is it alive\"; Setup is the checklist of what this deployment still needs. Activity, Insights, Rules and Venues report what keel did and found. Orders is the ledger of every order placed, each carrying the venue's own bid and ask at the moment keel submitted it; Positions marks what is held at the rails' own price; Balances shows what a cycle actually recorded; Timeline is one chronology assembled over four separate stores. Research publishes the evidence record — rejected trials included — and what a fill is assumed to cost on each product. Plans is a transparency artifact with nothing to click. Gates lists every capability-increasing action and what gates it, and since v0.15.0 two of them can be run from the browser itself. The fourteenth header entry, Docs, links out to the documentation you are reading.",
         ],
         shot: "/get-started/webui-status.png",
         shotCaption:
-          "The console's Status view with the eight-view header: Status, Setup, Activity, Orders, Insights, Rules, Venues, Gates. The paper badge (top right) is the deployment's mode; the footer says it is served from this machine only.",
+          "The console's Status view. The header carries thirteen views — Status, Setup, Activity, Orders, Positions, Balances, Timeline, Insights, Research, Rules, Venues, Gates, Plans — and this screenshot predates the six added since v0.13.2. The paper badge (top right) is the deployment's mode; the footer says it is served from this machine only.",
       },
       {
         title: "Step 5 — Read the dashboard",

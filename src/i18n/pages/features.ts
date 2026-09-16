@@ -29,10 +29,10 @@ export interface FeaturesContent {
 
 export const features: LocalizedPage<FeaturesContent> = {
   en: {
-    rev: "2026-09-05.1",
+    rev: "2026-09-16.1",
     title: "Shariah Compliance Engine Features — keel",
     description:
-      "Attested screening that fails closed, 20 rails no order can skip, gates checked for overfitting, honest measurement against DCA, and execution hardened for correctness — all mapped to source.",
+      "Attested screening that fails closed, 21 rails no order can skip, gates checked for overfitting, honest measurement against DCA, and execution hardened for correctness — all mapped to source.",
     intro:
       "This page describes only what the engine repository can show. Each section links to the source that proves it — if a claim ever drifts from the code, the link is how you catch us.",
     verifyNote: "Verify in the repository",
@@ -43,8 +43,8 @@ export const features: LocalizedPage<FeaturesContent> = {
         verify: { label: "compliance/screen.py", path: "keel/compliance/screen.py" },
       },
       {
-        title: "The rails — twenty checks no order can skip",
-        body: "Deterministic guards that nothing can override, not even autonomy mode. Twenty of them — numbered 1–14 and 16–21, because rail 15 was retired and its number was never reused:",
+        title: "The rails — twenty-one checks no order can skip",
+        body: "Deterministic guards that nothing can override, not even autonomy mode. Twenty-one of them — numbered 1–14 and 16–22, because rail 15 was retired and its number was never reused:",
         points: [
           "The halal allowlist, per-order and per-day spend caps, exposure and concentration caps",
           "Correlation-aware sizing, a minimum-move floor, no-martingale and no-stop-widening",
@@ -55,6 +55,7 @@ export const features: LocalizedPage<FeaturesContent> = {
           "A maximum-spread entry gate that refuses live BUYs at a spread of 50 basis points or wider, and refuses outright if the order book cannot be read",
           "Rail 20 — trade scope: a credential that reads fine is not evidence it can trade, so every live entry is vetoed until the venue itself has confirmed that credential may place one",
           "Rail 21 — base balance: a SELL is refused when the venue affirmatively reports no holding, and deliberately let through when the balance is merely unknown, because a blocked exit strands a position that wanted out",
+          "Rail 22 — cash posture: a venue must be attested as cash-only, and that attestation is bound to the credential that earned it and expires, because a margin-enabled account can borrow without ever being asked",
           "A rail veto names the rail that fired and the command that clears it",
         ],
         verify: { label: "execution/guards.py", path: "keel/execution/guards.py" },
@@ -80,8 +81,8 @@ export const features: LocalizedPage<FeaturesContent> = {
         verify: { label: "commands/orders.py", path: "keel/commands/orders.py" },
       },
       {
-        title: "keel research — one front door over thirteen evidence modules",
-        body: "The evidence toolkit had thirteen modules and nowhere that said so; six of them were reachable only by reading the source. keel research index now names all thirteen — what each one answers, what it cannot answer, and the command that runs it. It adds no statistics of its own: the five that already had a home under keel trials are registered a second time as the same command objects, never copies, because a front door that reimplements drifts the moment one copy takes a bugfix the other does not. The \"cannot answer\" column is meant to be read as carefully as the other one.",
+        title: "keel research — one front door over fourteen evidence modules",
+        body: "The evidence toolkit had thirteen modules and nowhere that said so; six of them were reachable only by reading the source. keel research index now names all fourteen — what each one answers, what it cannot answer, and the command that runs it. It adds no statistics of its own: the five that already had a home under keel trials are registered a second time as the same command objects, never copies, because a front door that reimplements drifts the moment one copy takes a bugfix the other does not. The \"cannot answer\" column is meant to be read as carefully as the other one.",
         verify: { label: "commands/research.py", path: "keel/commands/research.py" },
       },
       {
@@ -91,7 +92,7 @@ export const features: LocalizedPage<FeaturesContent> = {
       },
       {
         title: "A broker port, not a broker lock-in",
-        body: "Adapters implement one contract — the keel-broker-api port — and register under the keel.brokers entry point. Coinbase Advanced Trade is the reference adapter; Robinhood ships as an optional, deliberately unwired venue; an Alpaca adapter joined in v0.10.0. A deliberately divergent fake venue keeps the port honest: the conformance suite runs against both, inside a suite of about 5,000 tests.",
+        body: "Adapters implement one contract — the keel-broker-api port — and register under the keel.brokers entry point. Coinbase Advanced Trade is the reference adapter; Robinhood ships as an optional, deliberately unwired venue; an Alpaca adapter joined in v0.10.0; and a Kraken adapter is present as a port-complete stub whose every data and market method raises — it proves the port's shape, not that keel can trade there. A deliberately divergent fake venue keeps the port honest: the conformance suite runs against both, inside a suite of about 6,650 tests.",
         verify: { label: "packages/", path: "packages", kind: "tree" },
       },
       {
@@ -136,11 +137,11 @@ export const features: LocalizedPage<FeaturesContent> = {
   },
 
   ar: {
-    rev: "2026-09-05.1",
-    translatedFromRev: "2026-09-05.1",
+    rev: "2026-09-16.1",
+    translatedFromRev: "2026-09-16.1",
     title: "خصائص محرّك الامتثال الشرعي — كيل",
     description:
-      "فرزٌ موثَّق يرفض عند الفشل، و20 سكةَ أمانٍ لا تُتجاوَز، وبواباتُ ترقيةٍ تفحص الإفراط في المُلاءمة، وقياسٌ صادقٌ مقابل مؤشّر DCA، وتنفيذٌ تُحصَّن فيه صحةُ الأوامر — وكلُّ خاصيةٍ تشير إلى مصدرها في الشيفرة.",
+      "فرزٌ موثَّق يرفض عند الفشل، و21 سكةَ أمانٍ لا تُتجاوَز، وبواباتُ ترقيةٍ تفحص الإفراط في المُلاءمة، وقياسٌ صادقٌ مقابل مؤشّر DCA، وتنفيذٌ تُحصَّن فيه صحةُ الأوامر — وكلُّ خاصيةٍ تشير إلى مصدرها في الشيفرة.",
     intro:
       "لا تصف هذه الصفحة إلا ما يستطيع مستودعُ المحرّك إظهارَه. وكلُّ قسمٍ يرتبط بالمصدر الذي يُثبته — فإن انحرفت دعوى يومًا عن الشيفرة، فالرابط هو سبيلك إلى الإمساك بنا.",
     verifyNote: "تحقّق في المستودع",
@@ -151,8 +152,8 @@ export const features: LocalizedPage<FeaturesContent> = {
         verify: { label: "compliance/screen.py", path: "keel/compliance/screen.py" },
       },
       {
-        title: "سكك الأمان — عشرون فحصًا لا يتجاوزها أيُّ أمر",
-        body: "ضوابطُ حتميةٌ لا يتجاوزها شيء، ولا حتى وضعُ الاستقلالية. وهي عشرون، مرقَّمةٌ من 1 إلى 14 ومن 16 إلى 21، إذ أُلغيت السكةُ 15 ولم يُعَد استعمالُ رقمها:",
+        title: "سكك الأمان — إحدى وعشرون فحصًا لا يتجاوزها أيُّ أمر",
+        body: "ضوابطُ حتميةٌ لا يتجاوزها شيء، ولا حتى وضعُ الاستقلالية. وهي إحدى وعشرون، مرقَّمةٌ من 1 إلى 14 ومن 16 إلى 22، إذ أُلغيت السكةُ 15 ولم يُعَد استعمالُ رقمها:",
         points: [
           "قائمةُ الأصول الحلال المسموح بها، وسقوفُ الإنفاق للأمر الواحد ولليوم، وسقوفُ التعرُّض والتركيز",
           "تحجيمٌ يراعي الارتباط، وحدٌّ أدنى لحركة السعر، ومنعُ المارتينغال ومنعُ توسيع وقف الخسارة",
@@ -199,7 +200,7 @@ export const features: LocalizedPage<FeaturesContent> = {
       },
       {
         title: "منفذُ وسطاءٍ، لا ارتهانٌ لوسيط",
-        body: "تُنفّذ المحوّلات عقدًا واحدًا — منفذ keel-broker-api — وتُسجَّل تحت نقطة الدخول keel.brokers. ومحوّل Coinbase Advanced Trade هو المحوّل المرجعي؛ ويُسلَّم Robinhood منصّةً اختياريةً غيرَ موصولةٍ عمدًا؛ وانضمّ محوّل Alpaca في الإصدار v0.10.0. وثمّة منصّةٌ وهميةٌ متعمَّدةُ الاختلاف تُبقي المنفذ أمينًا: إذ تعمل حزمةُ اختبارات المطابقة على الاثنتين معًا، ضمن حزمةِ اختباراتٍ تناهز 5,000 اختبار.",
+        body: "تُنفّذ المحوّلات عقدًا واحدًا — منفذ keel-broker-api — وتُسجَّل تحت نقطة الدخول keel.brokers. ومحوّل Coinbase Advanced Trade هو المحوّل المرجعي؛ ويُسلَّم Robinhood منصّةً اختياريةً غيرَ موصولةٍ عمدًا؛ وانضمّ محوّل Alpaca في الإصدار v0.10.0؛ ويوجد محوّلُ Kraken هيكلًا مكتملَ المنفذ تُطلق كلُّ دواله للبيانات والسوق استثناءً — فهو يُثبت شكلَ المنفذ لا أنّ كيل يستطيع التداول هناك. وثمّة منصّةٌ وهميةٌ متعمَّدةُ الاختلاف تُبقي المنفذ أمينًا: إذ تعمل حزمةُ اختبارات المطابقة على الاثنتين معًا، ضمن حزمةِ اختباراتٍ تناهز 6,650 اختبارًا.",
         verify: { label: "packages/", path: "packages", kind: "tree" },
       },
       {
@@ -244,11 +245,11 @@ export const features: LocalizedPage<FeaturesContent> = {
   },
 
   fr: {
-    rev: "2026-09-05.1",
-    translatedFromRev: "2026-09-05.1",
+    rev: "2026-09-16.1",
+    translatedFromRev: "2026-09-16.1",
     title: "Fonctionnalités du moteur de conformité — keel",
     description:
-      "Un filtrage attesté qui bloque par défaut, vingt garde-fous incontournables, des verrous de promotion avec contrôle de surapprentissage, une mesure honnête face au DCA, une exécution durcie pour la justesse — chaque fonctionnalité renvoie à sa source dans le code.",
+      "Un filtrage attesté qui bloque par défaut, vingt-et-un garde-fous incontournables, des verrous de promotion avec contrôle de surapprentissage, une mesure honnête face au DCA, une exécution durcie pour la justesse — chaque fonctionnalité renvoie à sa source dans le code.",
     intro:
       "Cette page ne décrit que ce que le dépôt du moteur peut montrer. Chaque section renvoie à la source qui l'atteste : si une affirmation s'écartait un jour du code, c'est par ce lien que vous nous prendriez en défaut.",
     verifyNote: "Vérifier dans le dépôt",
@@ -259,8 +260,8 @@ export const features: LocalizedPage<FeaturesContent> = {
         verify: { label: "compliance/screen.py", path: "keel/compliance/screen.py" },
       },
       {
-        title: "Les garde-fous (rails) — vingt contrôles qu'aucun ordre ne contourne",
-        body: "Des contrôles déterministes que rien ne peut désactiver, pas même le mode autonome. Ils sont vingt, numérotés de 1 à 14 et de 16 à 21 — le garde-fou 15 a été retiré et son numéro jamais réattribué :",
+        title: "Les garde-fous (rails) — vingt-et-un contrôles qu'aucun ordre ne contourne",
+        body: "Des contrôles déterministes que rien ne peut désactiver, pas même le mode autonome. Ils sont vingt-et-un, numérotés de 1 à 14 et de 16 à 22 — le garde-fou 15 a été retiré et son numéro jamais réattribué :",
         points: [
           "La liste blanche halal, les plafonds de dépense par ordre et par jour, les plafonds d'exposition et de concentration",
           "Un dimensionnement qui tient compte des corrélations, un seuil de mouvement minimal, l'interdiction de la martingale et de l'élargissement des stops",
@@ -307,7 +308,7 @@ export const features: LocalizedPage<FeaturesContent> = {
       },
       {
         title: "Un port courtier, pas un enfermement propriétaire",
-        body: "Les adaptateurs mettent en œuvre un seul contrat — le port keel-broker-api — et se déclarent sous le point d'entrée keel.brokers. Coinbase Advanced Trade est l'adaptateur de référence ; Robinhood est livré comme plateforme optionnelle, délibérément non raccordée ; un adaptateur Alpaca s'y est ajouté en v0.10.0. Une plateforme factice, volontairement divergente, maintient le port honnête : la suite de conformité s'exécute sur les deux, au sein d'une base d'environ 5 000 tests.",
+        body: "Les adaptateurs mettent en œuvre un seul contrat — le port keel-broker-api — et se déclarent sous le point d'entrée keel.brokers. Coinbase Advanced Trade est l'adaptateur de référence ; Robinhood est livré comme plateforme optionnelle, délibérément non raccordée ; un adaptateur Alpaca s'y est ajouté en v0.10.0 ; et un adaptateur Kraken est présent à l'état d'ébauche complète du port, dont chaque méthode de données et de marché lève une exception — il atteste la forme du port, non que keel puisse y négocier. Une plateforme factice, volontairement divergente, maintient le port honnête : la suite de conformité s'exécute sur les deux, au sein d'une base d'environ 6 650 tests.",
         verify: { label: "packages/", path: "packages", kind: "tree" },
       },
       {

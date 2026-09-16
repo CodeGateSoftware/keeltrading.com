@@ -110,7 +110,7 @@ export const compliance: LocalizedPage<ComplianceContent> = {
         {
           label: "The honest result — experiment record",
           note: "No shipped rule family is net-positive at the taker fee actually paid; every number stated.",
-          path: "docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
+          path: "docs/experiments/2026-09-05-restatement-restated.md",
         },
         {
           label: "The glossary (docs/glossary.md)",
@@ -209,7 +209,7 @@ export const compliance: LocalizedPage<ComplianceContent> = {
         {
           label: "النتيجة الصادقة — سجلّ التجربة",
           note: "لا تحقّق أيُّ عائلةٍ من القواعد المُصدَّرة ربحًا صافيًا عند رسوم الآخذ الفعلية؛ وكلُّ الأرقام مذكورة.",
-          path: "docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
+          path: "docs/experiments/2026-09-05-restatement-restated.md",
         },
         {
           label: "المسرد (docs/glossary.md)",
@@ -308,7 +308,7 @@ export const compliance: LocalizedPage<ComplianceContent> = {
         {
           label: "Le résultat honnête — le compte rendu de l'expérience",
           note: "Aucune famille de règles livrée ne dégage un résultat net positif aux frais de preneur réellement payés ; tous les chiffres sont donnés.",
-          path: "docs/experiments/2026-08-13-restated-under-a-production-faithful-engine.md",
+          path: "docs/experiments/2026-09-05-restatement-restated.md",
         },
         {
           label: "Le glossaire (docs/glossary.md)",
