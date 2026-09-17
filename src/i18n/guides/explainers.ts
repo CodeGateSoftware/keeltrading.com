@@ -119,7 +119,7 @@ export const explainers: Explainer[] = [
       honestBox: {
         title: "Screening is not profitability",
         paragraphs: [
-          "What screening governs is admission, not results. No shipped rule family is net positive at the taker fee actually paid on Coinbase — about 1.2% on each side of a trade. Every signal rule keel ships has now been measured at its shipped defaults across 24 assets: 0 of 120 configurations cleared, and 0 of 138 counting every matrix run. Fees are not the whole cost either — priced at each asset's own liquidity rather than at a flat floor no asset reaches, the results fall further still.",
+          "What screening governs is admission, not results. No shipped rule family is net positive at the taker fee actually paid on Coinbase — about 1.2% on each side of a trade. Every signal rule keel ships has now been measured at its shipped defaults across 24 assets: 0 of 240 configurations cleared, re-run on v0.16.0 and priced per product. Fees are not the whole cost either — priced at each asset's own liquidity rather than at a flat floor no asset reaches, the results fall further still.",
           "A perfectly screened asset traded by a losing rule is still a losing trade. Compliance and performance are separate axes: the first is enforced by the engine, the second is reported honestly, first.",
         ],
         links: [
@@ -130,7 +130,7 @@ export const explainers: Explainer[] = [
       },
       footnote:
         "keel is not a fatwa engine, and this guide is neither a fatwa nor financial advice. The boundary gets its own treatment in Attestation is not a fatwa — and possession gets its own guide, Qabd (constructive possession) in spot crypto.",
-      rev: "2026-08-21.1",
+      rev: "2026-09-16.1",
     },
     ar: {
       title: "كيف يعمل الفرزُ الشرعي للعملات الرقمية فعلًا",
@@ -202,7 +202,7 @@ export const explainers: Explainer[] = [
       honestBox: {
         title: "الفرزُ ليس ربحية",
         paragraphs: [
-          "ما يحكمُه الفرزُ هو القبولُ لا النتائج. فلا تحقّق أيُّ عائلةٍ من القواعد المُصدَّرة ربحًا صافيًا عند رسوم الآخذ (taker) المدفوعة فعليًّا على منصّة Coinbase — نحو 1.2٪ لكلِّ طرفٍ من الصفقة. وقد قيست الآن كلُّ قاعدةِ إشارةٍ يُصدِّرها كيل عند إعداداتها المُصدَّرة على 24 أصلًا: صفرٌ من 120 تهيئةً اجتازت، وصفرٌ من 138 بعدِّ كلِّ مصفوفةٍ أُجريت. وليست الرسومُ كلَّ التكلفة أيضًا — فبتسعير كلِّ أصلٍ على قدر سيولته هو، لا على أرضيةٍ ثابتةٍ لا يبلغها أصل، تنخفض النتائج أكثر.",
+          "ما يحكمُه الفرزُ هو القبولُ لا النتائج. فلا تحقّق أيُّ عائلةٍ من القواعد المُصدَّرة ربحًا صافيًا عند رسوم الآخذ (taker) المدفوعة فعليًّا على منصّة Coinbase — نحو 1.2٪ لكلِّ طرفٍ من الصفقة. وقد قيست الآن كلُّ قاعدةِ إشارةٍ يُصدِّرها كيل عند إعداداتها المُصدَّرة على 24 أصلًا: صفرٌ من 240 تهيئةً اجتازت، بإعادة القياس على الإصدار v0.16.0 وبالتسعير لكلِّ منتج. وليست الرسومُ كلَّ التكلفة أيضًا — فبتسعير كلِّ أصلٍ على قدر سيولته هو، لا على أرضيةٍ ثابتةٍ لا يبلغها أصل، تنخفض النتائج أكثر.",
           "فالأصلُ المفروز فرزًا تامًّا إذا تداولته قاعدةٌ خاسرة فقد خسرت. الامتثالُ والأداء محوران مختلفان: الأول يُنفّذه المحرّك، والثاني يُبلَّغ عنه بصدقٍ أولًا.",
         ],
         links: [
@@ -213,8 +213,8 @@ export const explainers: Explainer[] = [
       },
       footnote:
         "كيل ليس محرّك فتاوى، وهذه المقالة ليست فتوى ولا نصيحةً مالية. فالحدُّ الفاصل له مقالُه الخاص «التوثيقُ ليس فتوى» — وللقبض دليلٌ خاصٌّ به: «القبضُ الحُكمي في العملات الفورية».",
-      rev: "2026-08-21.1",
-      translatedFromRev: "2026-08-21.1",
+      rev: "2026-09-16.1",
+      translatedFromRev: "2026-09-16.1",
     },
   },
   {
@@ -250,7 +250,7 @@ export const explainers: Explainer[] = [
         {
           heading: "Rail 17: the test as code",
           paragraphs: [
-            "Rail 17 is one of the two rails, among keel's twenty, that encode a fiqh ruling as an executable check — the other is rail 21, which refuses to sell what the account does not own. Its mechanics are deliberately blunt. The operator attests withdrawal capability per product with keel withdrawals attest. The attestation is live-read on every order intent — not cached from yesterday's session. It expires after seven days, because a stale attestation is no better than none: capability demonstrated last month says nothing about this morning. And when the attestation is missing or expired, acquisition fails closed — refusing to decide is the decision.",
+            "Rail 17 is one of the two rails, among keel's twenty-one, that encode a fiqh ruling as an executable check — the other is rail 21, which refuses to sell what the account does not own. Its mechanics are deliberately blunt. The operator attests withdrawal capability per product with keel withdrawals attest. The attestation is live-read on every order intent — not cached from yesterday's session. It expires after seven days, because a stale attestation is no better than none: capability demonstrated last month says nothing about this morning. And when the attestation is missing or expired, acquisition fails closed — refusing to decide is the decision.",
             "And the rail enforces the attestation; it never produces it. Whether possession is valid in your school's reading is your attestation's question. The rail only refuses to let the engine keep buying what nobody has evidenced it can withdraw.",
           ],
         },
@@ -278,7 +278,7 @@ export const explainers: Explainer[] = [
         {
           heading: "The other rails, for contrast",
           paragraphs: [
-            "Rail 17's uniqueness is easier to see against its neighbours. Of keel's twenty rails (numbered 1–14 and 16–21 — there is no rail 15), two encode a fiqh ruling: rail 17, and rail 21, which refuses a SELL for a base the venue reports the account does not hold — bay' ma la yamlik, the sale of what one does not own. Rail 17 remains the only rail that encodes qabd. Rails 1, 18, and 19 enforce what the screen and the charter admit: the allowlist itself, settlement confined to the operator's configured currencies, and the requirement that every product id be a well-formed spot pair. The rest are prudential — spend caps, drawdown breakers, exposure limits, and rail 20's veto on a venue credential nobody has attested for trading — risk and operational discipline carrying no religious claim.",
+            "Rail 17's uniqueness is easier to see against its neighbours. Of keel's twenty-one rails (numbered 1–14 and 16–22 — there is no rail 15), two encode a fiqh ruling: rail 17, and rail 21, which refuses a SELL for a base the venue reports the account does not hold — bay' ma la yamlik, the sale of what one does not own. Rail 17 remains the only rail that encodes qabd. Rails 1, 18, and 19 enforce what the screen and the charter admit: the allowlist itself, settlement confined to the operator's configured currencies, and the requirement that every product id be a well-formed spot pair. The rest are prudential — spend caps, drawdown breakers, exposure limits, and rail 20's veto on a venue credential nobody has attested for trading — risk and operational discipline carrying no religious claim.",
             "The fiqh content behind the spot-only charter is real enough: what makes speculation maisir, the basis records from §65.6, is non-ownership, non-delivery, or difference-settlement — not frequency, and not price speculation as such. But the rails that enforce spot-only are the agent's charter, justified by measurement and verified against the venue's actual listings — which is why their justification never has to overreach into doctrine.",
           ],
         },
@@ -286,7 +286,7 @@ export const explainers: Explainer[] = [
       honestBox: {
         title: "Possession is not profitability",
         paragraphs: [
-          "Rail 17 protects the validity of acquisition, not the outcome of trading. No shipped rule family is net positive at the taker fee actually paid on Coinbase — about 1.2% on each side of a trade; 0 of 120 configurations cleared across every signal rule keel ships, and 0 of 138 counting every matrix run. A fully qabd-compliant fill on a fully screened asset can still be a losing trade — the two axes are independent, and both are reported.",
+          "Rail 17 protects the validity of acquisition, not the outcome of trading. No shipped rule family is net positive at the taker fee actually paid on Coinbase — about 1.2% on each side of a trade; 0 of 240 configurations cleared across every signal rule keel ships, priced per product. A fully qabd-compliant fill on a fully screened asset can still be a losing trade — the two axes are independent, and both are reported.",
           "That is not a caveat bolted onto the compliance story; it is the same honesty applied to numbers instead of rulings. The honest result is linked from the repository's first screen, and it asks for no one's endorsement — the rail and the report are two halves of one posture.",
         ],
         links: [
@@ -297,7 +297,7 @@ export const explainers: Explainer[] = [
       },
       footnote:
         "keel is not a fatwa engine, and this guide is neither a fatwa nor financial advice. How screening admits assets at all is the subject of How Shariah crypto screening actually works — and the governance boundary is the subject of Attestation is not a fatwa.",
-      rev: "2026-09-02.1",
+      rev: "2026-09-16.1",
     },
     ar: {
       title: "القبضُ الحُكمي في العملات الرقمية الفورية: شرح",
@@ -366,7 +366,7 @@ export const explainers: Explainer[] = [
       honestBox: {
         title: "القبضُ ليس ربحية",
         paragraphs: [
-          "تحمي السكةُ 17 صحةَ الاقتناء، لا مآلَ التداول. فلا تحقّق أيُّ عائلةٍ من القواعد المُصدَّرة ربحًا صافيًا عند رسوم الآخذ المدفوعة فعليًّا على منصّة Coinbase — نحو 1.2٪ لكلِّ طرفٍ من الصفقة؛ صفرٌ من 120 تهيئةً اجتازت عبر كلِّ قاعدةِ إشارةٍ يُصدِّرها كيل، وصفرٌ من 138 بعدِّ كلِّ مصفوفةٍ أُجريت. فتنفيذٌ مستوفٍ للقبض على أصلٍ مفروزٍ فرزًا تامًّا قد يظلُّ صفقةً خاسرة — المحوران مستقلّان، وكلاهما يُبلَّغ عنه.",
+          "تحمي السكةُ 17 صحةَ الاقتناء، لا مآلَ التداول. فلا تحقّق أيُّ عائلةٍ من القواعد المُصدَّرة ربحًا صافيًا عند رسوم الآخذ المدفوعة فعليًّا على منصّة Coinbase — نحو 1.2٪ لكلِّ طرفٍ من الصفقة؛ صفرٌ من 240 تهيئةً اجتازت عبر كلِّ قاعدةِ إشارةٍ يُصدِّرها كيل، بالتسعير لكلِّ منتج. فتنفيذٌ مستوفٍ للقبض على أصلٍ مفروزٍ فرزًا تامًّا قد يظلُّ صفقةً خاسرة — المحوران مستقلّان، وكلاهما يُبلَّغ عنه.",
           "وهذا ليس تنبيهًا لُصق بقصة الامتثال من خارجها؛ بل هو الصدقُ نفسُه مطبَّقًا على الأرقام بدل الأحكام. فالنتيجةُ الصادقة موصولةٌ من أول شاشةٍ في المستودع، ولا تطلب من أحدٍ أن يوافق عليها — السكةُ والتقرير شطران لوضعٍ واحد.",
         ],
         links: [
@@ -377,8 +377,8 @@ export const explainers: Explainer[] = [
       },
       footnote:
         "كيل ليس محرّك فتاوى، وهذه المقالة ليست فتوى ولا نصيحةً مالية. أمّا كيف يُدخل الفرزُ الأصولَ أصلًا فموضوعُ «كيف يعمل الفرزُ الشرعي للعملات الرقمية فعلًا» — وحدُّ الحوكمة موضوعُ «التوثيقُ ليس فتوى».",
-      rev: "2026-09-02.1",
-      translatedFromRev: "2026-09-02.1",
+      rev: "2026-09-16.1",
+      translatedFromRev: "2026-09-16.1",
     },
   },
   {
@@ -442,7 +442,7 @@ export const explainers: Explainer[] = [
         {
           heading: "What the boundary is not",
           paragraphs: [
-            "The boundary is not soft enforcement. Everything attested is enforced deterministically: every order intent passes through twenty un-overridable rails, and an asset without an attestation never trades — the machine's neutrality about rulings coexists with total firmness in executing them. Refusing to be the mufti does not make keel a lighter enforcement engine; it makes the enforcement attributable.",
+            "The boundary is not soft enforcement. Everything attested is enforced deterministically: every order intent passes through twenty-one un-overridable rails, and an asset without an attestation never trades — the machine's neutrality about rulings coexists with total firmness in executing them. Refusing to be the mufti does not make keel a lighter enforcement engine; it makes the enforcement attributable.",
             "Nor is the boundary a hedge bolted on for liability. It is the mechanism that lets the engine be audited at all: because every enforced ruling resolves to a record with a source and a name, disagreement has a place to land — your own database — instead of a black box you can only take or leave. keel's own one-line pitch for reviewers says it plainly: classifications are attested, never inferred, and enforced deterministically. The first two clauses are the boundary; the third is the product.",
           ],
         },
@@ -456,7 +456,7 @@ export const explainers: Explainer[] = [
       honestBox: {
         title: "The boundary extends to results",
         paragraphs: [
-          "A review would not endorse performance — and nothing on this site asks you to, either. No shipped rule family is net positive at the taker fee actually paid on Coinbase: about 1.2% on each side of a trade, and 0 of 120 configurations cleared across every signal rule keel ships. This site used to add that the rules touch break-even inside the venue's fee-free allowance; that claim was priced at a slippage floor no asset reaches, and it has been withdrawn. Enforcement and honesty are separate products; keel ships both.",
+          "A review would not endorse performance — and nothing on this site asks you to, either. No shipped rule family is net positive at the taker fee actually paid on Coinbase: about 1.2% on each side of a trade, and 0 of 240 configurations cleared across every signal rule keel ships. This site used to add that the rules touch break-even inside the venue's fee-free allowance; that claim was priced at a slippage floor no asset reaches, and it has been withdrawn. Enforcement and honesty are separate products; keel ships both.",
           "The refusal runs in both directions: the engine will not issue your rulings, and it does not ask you to endorse its numbers. One posture, two directions — enforcement of what you attest, honesty about what it measures.",
         ],
         links: [
@@ -467,7 +467,7 @@ export const explainers: Explainer[] = [
       },
       footnote:
         "keel is not a fatwa engine, and this guide is neither a fatwa nor financial advice. How assets are admitted at all is the subject of How Shariah crypto screening actually works — and possession, of Qabd (constructive possession) in spot crypto.",
-      rev: "2026-09-02.1",
+      rev: "2026-09-16.1",
     },
     ar: {
       title: "التوثيقُ ليس فتوى",
@@ -542,7 +542,7 @@ export const explainers: Explainer[] = [
       honestBox: {
         title: "الحدُّ يمتدُّ إلى النتائج",
         paragraphs: [
-          "لن توافقَ المراجعةُ على الأداء — ولا شيءٌ في هذا الموقع يطلب منك ذلك أصلًا. فلا تحقّق أيُّ عائلةٍ من القواعد المُصدَّرة ربحًا صافيًا عند رسوم الآخذ المدفوعة فعليًّا على منصّة Coinbase: نحو 1.2٪ لكلِّ طرفٍ من الصفقة، وصفرٌ من 120 تهيئةً اجتازت عبر كلِّ قاعدةِ إشارةٍ يُصدِّرها كيل. وكان هذا الموقع يضيف أنّ القواعد تلامس نقطة التعادل داخل الحصّة المعفاة من الرسوم؛ وتلك الدعوى كانت مُسعَّرةً عند أرضيةِ انزلاقٍ لا يبلغها أيُّ أصل، وقد سُحبت. الإنفاذُ والصدق منتجان منفصلان — وكيل تشحنهما معًا.",
+          "لن توافقَ المراجعةُ على الأداء — ولا شيءٌ في هذا الموقع يطلب منك ذلك أصلًا. فلا تحقّق أيُّ عائلةٍ من القواعد المُصدَّرة ربحًا صافيًا عند رسوم الآخذ المدفوعة فعليًّا على منصّة Coinbase: نحو 1.2٪ لكلِّ طرفٍ من الصفقة، وصفرٌ من 240 تهيئةً اجتازت عبر كلِّ قاعدةِ إشارةٍ يُصدِّرها كيل. وكان هذا الموقع يضيف أنّ القواعد تلامس نقطة التعادل داخل الحصّة المعفاة من الرسوم؛ وتلك الدعوى كانت مُسعَّرةً عند أرضيةِ انزلاقٍ لا يبلغها أيُّ أصل، وقد سُحبت. الإنفاذُ والصدق منتجان منفصلان — وكيل تشحنهما معًا.",
           "والامتناعُ يجري في الاتجاهين معًا: فالمحرّك لا يُصدر أحكامَك، ولا يطلب منك أن توافق على أرقامه. وضعٌ واحدٌ باتجاهين اثنين — إنفاذٌ أمينٌ لما توثّقه، وصدقٌ كاملٌ فيما يقيسه.",
         ],
         links: [
@@ -553,8 +553,8 @@ export const explainers: Explainer[] = [
       },
       footnote:
         "كيل ليس محرّك فتاوى، وهذه المقالة ليست فتوى ولا نصيحةً مالية. أمّا كيف تُدخل الأصولُ أصلًا فموضوعُ «كيف يعمل الفرزُ الشرعي للعملات الرقمية فعلًا» — والقبضُ موضوعُ «القبضُ الحُكمي في العملات الرقمية الفورية».",
-      rev: "2026-09-02.1",
-      translatedFromRev: "2026-09-02.1",
+      rev: "2026-09-16.1",
+      translatedFromRev: "2026-09-16.1",
     },
   },
 ];

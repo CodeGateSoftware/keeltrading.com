@@ -57,7 +57,7 @@ export interface HomeContent {
 
 export const home: LocalizedPage<HomeContent> = {
   en: {
-    rev: "2026-09-05.1",
+    rev: "2026-09-16.1",
     title: "keel: the open-source Shariah compliance engine for crypto",
     description:
       "The open-source engine that enforces Shariah compliance on spot crypto: attested screening that fails closed and rails no order can skip. Not a fatwa engine.",
@@ -71,9 +71,9 @@ export const home: LocalizedPage<HomeContent> = {
       summaryBadge:
         "In plain words: after the fees and the spreads actually paid, none of keel's shipped rules is profitable and none beats simple dollar-cost averaging (DCA) — including inside the venue's fee-free allowance, where this page used to say they touched break-even.",
       body: [
-        "No shipped rule family is net positive at the taker fee actually paid on Coinbase — about 1.2% on each side of a trade. Every signal rule keel ships has now been measured at its shipped defaults across 24 assets: 0 of 120 configurations cleared. Counting every matrix we have run, it is 0 of 138.",
+        "No shipped rule family is net positive at the taker fee actually paid on Coinbase — about 1.2% on each side of a trade. Every signal rule keel ships has now been measured at its shipped defaults across 24 assets, re-run on v0.16.0 and priced at what each asset's own book plausibly costs: 0 of 240 configurations cleared. Not one, at the fee this account actually pays.",
         "Fees are not the whole cost, and we had been understating the rest. keel prices each asset's spread from its own liquidity — and when we finally measured that against the universe, not one of the 24 assets trades at the 5 basis points our earlier numbers assumed. The range is 1.1 to 36.8 times that floor, with a median near ten times it. Charged honestly, the median result across the matrix drops by 0.09 and the one configuration that had looked positive disappears. The error in our own cost model was larger than the best genuine improvement any rule change of ours has produced.",
-        "That correction reaches a claim this page used to make, so we are withdrawing it here rather than quietly editing it. We said the rules sit at break-even inside the venue's fee-free monthly allowance — a 14.9% win rate against a 14.88% break-even. That 14.88% was computed at the 5 basis points nothing actually trades at; the same note's own sensitivity check fails the claim at twice that, and the measured median is ten times it. The allowance is still the single largest term in the result, worth around 14 points of break-even — more than any change we have made to a rule. It is the boundary between decisively negative and clearly negative, not between negative and profitable.",
+        "That correction reaches a claim this page used to make, so we are withdrawing it here rather than quietly editing it. We said the rules sit at break-even inside the venue's fee-free monthly allowance — a 14.9% win rate against a 14.88% break-even. That 14.88% was computed at the 5 basis points nothing actually trades at. Re-derived at the spread the assets are actually assumed to pay — a median ten times that floor — break-even inside the allowance is 20.5%, against the same 14.9% win rate. Roughly five and a half points underwater, inside the window we used to call break-even. The allowance is still the single largest term in the result, worth around 14 points of break-even — more than any change we have made to a rule. It is the boundary between decisively negative and clearly negative, not between negative and profitable.",
         "The point of this project is the enforcement machinery and the honest measurement of what runs through it, not a claim of profit. Every result is compared against a simple buy-every-period (DCA) benchmark, and the reference rules currently do not beat it after fees. We would rather you know that on the front page than discover it yourself. And we are working hard to improve the results of the algorithms and the strategies. We will report our progress here.",
       ],
       experimentLabel: "Read the experiment record",
@@ -88,7 +88,7 @@ export const home: LocalizedPage<HomeContent> = {
         verify: { label: "compliance/screen.py", path: "keel/compliance/screen.py" },
       },
       {
-        title: "Twenty rails no order can skip",
+        title: "Twenty-one rails no order can skip",
         body: "Spend caps, drawdown breakers, exposure limits, no-martingale, feed-staleness checks, and a kill-switch that fails closed: when something breaks, it refuses rather than allows. Then the fiqh-derived rails — the venue subscription attestation, the constructive-possession (qabd) check, which holds that an asset you cannot withdraw may never have been validly possessed, and a refusal to sell a base the venue reports the account does not hold, because selling what you do not own is bay' ma la yamlik.",
         verify: { label: "execution/guards.py", path: "keel/execution/guards.py" },
       },
@@ -144,8 +144,8 @@ export const home: LocalizedPage<HomeContent> = {
   },
 
   ar: {
-    rev: "2026-09-05.1",
-    translatedFromRev: "2026-09-05.1",
+    rev: "2026-09-16.1",
+    translatedFromRev: "2026-09-16.1",
     title: "كيل: محرّك امتثال شرعي مفتوح المصدر للعملات المشفّرة",
     description:
       "المحرّك مفتوح المصدر الذي يُنفِّذ الامتثال الشرعي في التداول الفوري للعملات المشفّرة: فرزٌ موثَّق يرفض عند الفشل، وسككُ أمانٍ لا يتجاوزها أيُّ أمر. وليس محرّك فتاوى.",
@@ -159,9 +159,9 @@ export const home: LocalizedPage<HomeContent> = {
       summaryBadgeAr:
         "بلغةٍ مبسّطة: بعد خصم الرسوم وفوارقِ الأسعار المدفوعة فعليًّا، لا تحقّق أيُّ قاعدةٍ من قواعد كيل المُصدَّرة ربحًا ولا تتفوّق على الشراء الدوري المنتظم (DCA) — حتى داخل الحصّة الشهرية المعفاة من الرسوم، حيث كانت هذه الصفحة تقول إنّها تلامس نقطة التعادل.",
       body: [
-        "لا تحقّق أيُّ عائلةٍ من القواعد المُصدَّرة ربحًا صافيًا عند رسوم الآخذ (taker) المدفوعة فعليًّا على منصّة Coinbase‏ (نحو 1.2٪ لكلِّ طرفٍ من الصفقة). وقد قيست الآن كلُّ قاعدةِ إشارةٍ يُصدِّرها كيل عند إعداداتها المُصدَّرة على 24 أصلًا: صفرٌ من 120 تهيئةً اجتازت. وبعدِّ كلِّ مصفوفةٍ أجريناها: صفرٌ من 138.",
+        "لا تحقّق أيُّ عائلةٍ من القواعد المُصدَّرة ربحًا صافيًا عند رسوم الآخذ (taker) المدفوعة فعليًّا على منصّة Coinbase‏ (نحو 1.2٪ لكلِّ طرفٍ من الصفقة). وقد قيست الآن كلُّ قاعدةِ إشارةٍ يُصدِّرها كيل عند إعداداتها المُصدَّرة على 24 أصلًا، وأُعيد القياسُ على الإصدار v0.16.0 بتسعيرِ ما يكلّفه دفترُ كلِّ أصلٍ على الأرجح: صفرٌ من 240 تهيئةً اجتازت. ولا واحدة، عند الرسوم التي يدفعها هذا الحساب فعلًا.",
         "وليست الرسومُ كلَّ التكلفة، وقد كنّا نبخس ما بقي منها. فكيل يُسعّر فارقَ سعر كلِّ أصلٍ من سيولته هو — ولمّا قِسنا ذلك أخيرًا على الكون كلِّه، لم يتداول ولا أصلٌ واحدٌ من الأربعة والعشرين عند نقاط الأساس الخمس التي افترضتها أرقامُنا السابقة. بل يمتدّ المدى من 1.1 إلى 36.8 ضعفَ تلك الأرضية، ووسيطُه قرابةَ عشرة أضعافها. وبالتسعير الأمين ينخفض وسيطُ النتيجة عبر المصفوفة بمقدار 0.09، وتختفي التهيئةُ الوحيدة التي بدت موجبة. فقد كان الخطأ في نموذج تكلفتنا نحن أكبرَ من أفضل تحسينٍ حقيقيٍّ أنتجه أيُّ تعديلٍ أجريناه على قاعدة.",
-        "وهذا التصحيح يطال دعوى كانت هذه الصفحة تقولها، فنحن نسحبها هنا جهارًا بدل تعديلها في صمت. قلنا إنّ القواعد تقف عند نقطة التعادل داخل الحصّة الشهرية المعفاة من الرسوم — نسبةُ ربحٍ 14.9٪ مقابل تعادلٍ عند 14.88٪. وتلك الـ14.88٪ حُسبت عند نقاط الأساس الخمس التي لا يتداول عندها شيء؛ بل إنّ فحص الحساسية في المذكّرة نفسِها يُسقط الدعوى عند ضعفَي ذلك، والوسيطُ المقيس عشرةُ أضعافه. وتبقى الحصّةُ أكبرَ حدٍّ منفردٍ في النتيجة، إذ تساوي نحو 14 نقطةً من التعادل — أكثرَ من أيّ تغييرٍ أدخلناه على قاعدة. لكنّها حدٌّ بين السالب القاطع والسالب الواضح، لا بين السالب والرابح.",
+        "وهذا التصحيح يطال دعوى كانت هذه الصفحة تقولها، فنحن نسحبها هنا جهارًا بدل تعديلها في صمت. قلنا إنّ القواعد تقف عند نقطة التعادل داخل الحصّة الشهرية المعفاة من الرسوم — نسبةُ ربحٍ 14.9٪ مقابل تعادلٍ عند 14.88٪. وتلك الـ14.88٪ حُسبت عند نقاط الأساس الخمس التي لا يتداول عندها شيء. وبإعادة الاشتقاق عند الفارق الذي يُفترض أنّ الأصول تدفعه فعلًا — ووسيطُه عشرةُ أضعاف تلك الأرضية — تصير نقطةُ التعادل داخل الحصّة 20.5٪ مقابل نسبة الربح نفسِها 14.9٪. أي نحو خمس نقاطٍ ونصفٍ تحت الماء، داخل النافذة التي كنّا نسمّيها تعادلًا. وتبقى الحصّةُ أكبرَ حدٍّ منفردٍ في النتيجة، إذ تساوي نحو 14 نقطةً من التعادل — أكثرَ من أيّ تغييرٍ أدخلناه على قاعدة. لكنّها حدٌّ بين السالب القاطع والسالب الواضح، لا بين السالب والرابح.",
         "والغاية من هذا المشروع هي آلياتُ الإنفاذ والقياسُ الصادق لما يمرّ عبرها — لا ادّعاءُ الربح. فكلُّ نتيجةٍ تُقارَن بمؤشّرٍ مرجعيٍّ بسيط هو الشراء الدوري المنتظم (DCA)، والقواعد المرجعية لا تتفوّق عليه بعد خصم الرسوم. ونحن نفضّل أن تعرف ذلك من الصفحة الأولى على أن تكتشفه بنفسك. ونعمل جاهدين على تحسين نتائج الخوارزميات والاستراتيجيات — وسنوافيك بما نُحرزه أوّلًا بأوّل.",
       ],
       experimentLabel: "اقرأ سجلّ التجربة",
@@ -176,7 +176,7 @@ export const home: LocalizedPage<HomeContent> = {
         verify: { label: "compliance/screen.py", path: "keel/compliance/screen.py" },
       },
       {
-        title: "عشرون سكةَ أمانٍ لا يتجاوزها أيُّ أمر",
+        title: "إحدى وعشرون سكةَ أمانٍ لا يتجاوزها أيُّ أمر",
         body: "سقوفُ إنفاق، وقواطعُ تراجُعٍ (drawdown)، وحدودُ تعرُّض، ومنعُ مضاعفة الخسارة (المارتينغال)، وفحوصُ تقادُم موجزات البيانات، ومفتاحُ إيقافٍ يرفض عند الفشل — إضافةً إلى ما اشتُقّ من الفقه: توثيقُ الاشتراك في المنصّة، وفحصُ القبض الحُكمي (qabd) القائمُ على أنّ الأصل الذي لا يمكن سحبُه قد لا يكون قد قُبِض قبضًا صحيحًا، ورفضُ بيعِ أصلٍ تُفيد المنصّةُ أنّ الحساب لا يملكه، لأنّ بيعَ ما لا تملك غيرُ جائز.",
         verify: { label: "execution/guards.py", path: "keel/execution/guards.py" },
       },
@@ -223,8 +223,8 @@ export const home: LocalizedPage<HomeContent> = {
   },
 
   fr: {
-    rev: "2026-09-05.1",
-    translatedFromRev: "2026-09-05.1",
+    rev: "2026-09-16.1",
+    translatedFromRev: "2026-09-16.1",
     title: "keel : le moteur open-source de conformité Shariah pour les cryptomonnaies",
     description:
       "Le moteur open-source qui applique la conformité Shariah au trading de crypto au comptant : un filtrage attesté qui bloque par défaut, des garde-fous qu'aucun ordre ne contourne. Pas un moteur de fatwas.",
@@ -237,9 +237,9 @@ export const home: LocalizedPage<HomeContent> = {
       title: "Le résultat honnête, annoncé d'emblée",
       summaryBadgeFr: "En clair : une fois les frais et les écarts de cotation réellement payés déduits, aucune règle livrée de keel n'est rentable et aucune ne bat le simple achat périodique (DCA) — y compris dans le quota mensuel sans frais, où cette page affirmait qu'elles touchaient le point mort.",
       body: [
-        "Aucune famille de règles livrée ne dégage un résultat net positif aux frais de preneur (taker) réellement payés sur Coinbase (~1,2 % par sens). Chaque règle de signal que keel livre a désormais été mesurée à ses réglages livrés sur 24 actifs : 0 configuration sur 120 n'a franchi le seuil. Toutes matrices confondues, c'est 0 sur 138.",
+        "Aucune famille de règles livrée ne dégage un résultat net positif aux frais de preneur (taker) réellement payés sur Coinbase (~1,2 % par sens). Chaque règle de signal que keel livre a désormais été mesurée à ses réglages livrés sur 24 actifs, rejouée sur la v0.16.0 et tarifée au coût plausible du carnet propre à chaque actif : 0 configuration sur 240 n'a franchi le seuil. Pas une seule, aux frais que ce compte paie réellement.",
         "Les frais ne sont pas tout le coût, et nous sous-estimions le reste. keel calcule l'écart de cotation de chaque actif à partir de sa propre liquidité — et lorsque nous l'avons enfin mesuré sur l'ensemble de l'univers, pas un seul des 24 actifs ne se négocie aux 5 points de base que supposaient nos chiffres antérieurs. L'éventail va de 1,1 à 36,8 fois ce plancher, avec une médiane proche de dix fois. Facturé honnêtement, le résultat médian de la matrice recule de 0,09 et la seule configuration qui paraissait positive disparaît. L'erreur de notre propre modèle de coûts était plus grande que la meilleure amélioration réelle qu'aucune de nos modifications de règle ait produite.",
-        "Cette correction atteint une affirmation que portait cette page ; nous la retirons donc ici, plutôt que de la corriger en silence. Nous disions que les règles se situent au point mort dans le quota mensuel sans frais — 14,9 % de trades gagnants pour un seuil d'équilibre de 14,88 %. Ce 14,88 % était calculé aux 5 points de base auxquels rien ne se négocie ; le propre test de sensibilité de la note fait tomber l'affirmation au double de ce chiffre, et la médiane mesurée en vaut dix fois. Le quota reste le terme le plus lourd du résultat — environ 14 points de seuil d'équilibre, davantage que toute modification que nous ayons apportée à une règle. Mais c'est la frontière entre nettement perdant et clairement perdant, non entre perdant et rentable.",
+        "Cette correction atteint une affirmation que portait cette page ; nous la retirons donc ici, plutôt que de la corriger en silence. Nous disions que les règles se situent au point mort dans le quota mensuel sans frais — 14,9 % de trades gagnants pour un seuil d'équilibre de 14,88 %. Ce 14,88 % était calculé aux 5 points de base auxquels rien ne se négocie. Recalculé à l'écart que les actifs sont réellement censés payer — une médiane valant dix fois ce plancher — le point mort dans le quota s'établit à 20,5 %, face au même taux de 14,9 %. Soit environ cinq points et demi sous l'eau, à l'intérieur de la fenêtre que nous appelions le point mort. Le quota reste le terme le plus lourd du résultat — environ 14 points de seuil d'équilibre, davantage que toute modification que nous ayons apportée à une règle. Mais c'est la frontière entre nettement perdant et clairement perdant, non entre perdant et rentable.",
         "Ce projet a pour objet la machinerie d'application, et la mesure honnête de ce qui la traverse — pas une promesse de gain. Chaque résultat est comparé à une référence simple, l'achat périodique (DCA), et les règles de référence ne la battent pas une fois les frais déduits. Nous préférons que vous l'appreniez dès la page d'accueil plutôt que de le découvrir par vous-même. Nous nous employons à améliorer les résultats des algorithmes et des stratégies, et nous rendrons compte de nos progrès.",
       ],
       experimentLabel: "Lire le compte rendu de l'expérience",
@@ -254,7 +254,7 @@ export const home: LocalizedPage<HomeContent> = {
         verify: { label: "compliance/screen.py", path: "keel/compliance/screen.py" },
       },
       {
-        title: "Vingt garde-fous qu'aucun ordre ne contourne",
+        title: "Vingt-et-un garde-fous qu'aucun ordre ne contourne",
         body: "Plafonds de dépense, disjoncteurs de perte maximale (drawdown), limites d'exposition, interdiction de la martingale, contrôles de fraîcheur des données, un coupe-circuit qui se ferme en cas de défaillance — auxquels s'ajoutent ceux qui découlent du fiqh : l'attestation d'abonnement à la plateforme, le contrôle de prise de possession (qabd), au motif qu'un actif impossible à retirer n'a peut-être jamais été valablement possédé, et le refus de vendre un actif que la plateforme déclare absent du compte, car vendre ce qu'on ne possède pas est bay' ma la yamlik.",
         verify: { label: "execution/guards.py", path: "keel/execution/guards.py" },
       },
