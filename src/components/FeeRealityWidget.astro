@@ -1,0 +1,780 @@
+---
+import { type Locale } from "../i18n/config";
+import { t } from "../i18n/ui";
+import { engineBlobUrl } from "../lib/engine-url";
+import experimentData from "../../data/fee-reality-experiments.json";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const chrome = t(locale);
+const uiText = chrome.feeReality;
+
+const experimentUrl = engineBlobUrl(
+  "docs/experiments/2026-08-21-rule-family-significance.md",
+);
+const dataJson = JSON.stringify(experimentData);
+---
+
+<section class="fee-reality-widget" data-experiments={dataJson}>
+  <div class="widget-header">
+    <div class="badge-row">
+      <span class="widget-tag">
+        {locale === "ar" ? "نموذج انهيار الرسوم" : locale === "fr" ? "Modèle d'effondrement" : "Interactive Fee Drag"}
+      </span>
+      <span class="widget-subtag">
+        {locale === "ar" ? "بيانات تجريبية من keel" : locale === "fr" ? "Données réelles de keel" : "Empirical keel data"}
+      </span>
+    </div>
+    <h2 class="widget-title">{uiText.title}</h2>
+    <p class="widget-subtitle">{uiText.subtitle}</p>
+  </div>
+
+  <div class="controls-grid">
+    <!-- Strategy selector -->
+    <div class="control-group strategy-group">
+      <label class="control-label">{uiText.strategyLabel}</label>
+      <div class="pill-group" role="tablist" aria-label={uiText.strategyLabel}>
+        <button type="button" class="pill-btn active" data-family="turtle_breakout" role="tab" aria-selected="true">
+          {uiText.turtle}
+        </button>
+        <button type="button" class="pill-btn" data-family="rsi_meanrev" role="tab" aria-selected="false">
+          {uiText.rsi}
+        </button>
+        <button type="button" class="pill-btn" data-family="pullback_continuation" role="tab" aria-selected="false">
+          {uiText.pullback}
+        </button>
+      </div>
+    </div>
+
+    <!-- Presets -->
+    <div class="control-group preset-group">
+      <label class="control-label">
+        {locale === "ar" ? "الإعدادات المسبقة للرسوم" : locale === "fr" ? "Préréglages de frais" : "Fee Presets"}
+      </label>
+      <div class="preset-buttons">
+        <button type="button" class="preset-btn active" data-fee="0" data-slippage="5">
+          {uiText.preset0}
+        </button>
+        <button type="button" class="preset-btn" data-fee="40" data-slippage="5">
+          {uiText.preset40}
+        </button>
+        <button type="button" class="preset-btn" data-fee="120" data-slippage="5">
+          {uiText.preset120}
+        </button>
+      </div>
+    </div>
+
+    <!-- Sliders -->
+    <div class="control-group sliders-group">
+      <div class="slider-row">
+        <div class="slider-header">
+          <label for="fee-slider">{uiText.feeLabel}</label>
+          <span class="mono-value" id="fee-value">0 bps (0.00%)</span>
+        </div>
+        <input type="range" id="fee-slider" min="0" max="150" step="1" value="0" class="range-slider" />
+      </div>
+
+      <div class="slider-row">
+        <div class="slider-header">
+          <label for="slippage-slider">{uiText.slippageLabel}</label>
+          <span class="mono-value" id="slippage-value">5 bps (0.05%)</span>
+        </div>
+        <input type="range" id="slippage-slider" min="0" max="25" step="1" value="5" class="range-slider" />
+      </div>
+    </div>
+  </div>
+
+  <!-- KPI Cards Grid -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <span class="kpi-label">{uiText.reqBreakEven}</span>
+      <span class="kpi-value mono" id="kpi-req-winrate">27.65%</span>
+      <span class="kpi-sub mono" id="kpi-payoff">Payoff b: 2.616</span>
+    </div>
+
+    <div class="kpi-card">
+      <span class="kpi-label">{uiText.obsWinRate}</span>
+      <span class="kpi-value mono" id="kpi-obs-winrate">24.82%</span>
+      <span class="kpi-sub text-muted" id="kpi-samples">n = 7,152 trades</span>
+    </div>
+
+    <div class="kpi-card highlight-card">
+      <span class="kpi-label">{uiText.netEdge}</span>
+      <span class="kpi-value mono" id="kpi-net-edge">-2.83%</span>
+      <span class="kpi-status-badge" id="kpi-status">Near Break-Even</span>
+    </div>
+
+    <div class="kpi-card">
+      <span class="kpi-label">{uiText.pfLabel}</span>
+      <span class="kpi-value mono" id="kpi-pf">1.442 → 0.90</span>
+      <span class="kpi-sub text-muted" id="kpi-pf-desc">Gross PF: 1.442</span>
+    </div>
+  </div>
+
+  <!-- Interactive SVG Equity Curve Chart -->
+  <div class="chart-container">
+    <div class="chart-header">
+      <span class="chart-title">
+        {locale === "ar" ? "مسار الرصيد عبر 100 صفقة" : locale === "fr" ? "Trajectoire du capital (100 trades)" : "Simulated Equity Curve (100 Trades)"}
+      </span>
+      <div class="chart-legend">
+        <span class="legend-item"><span class="legend-line baseline"></span> 0 bps Baseline</span>
+        <span class="legend-item"><span class="legend-line active"></span> Active Fee Drag</span>
+      </div>
+    </div>
+
+    <div class="svg-wrap">
+      <svg id="equity-svg" viewBox="0 0 600 240" preserveAspectRatio="none" aria-hidden="true">
+        <!-- Grid lines & Y-Axis labels -->
+        <g class="chart-grid">
+          <line x1="40" y1="20" x2="580" y2="20" stroke="var(--border)" stroke-dasharray="2,2" opacity="0.4" />
+          <text x="35" y="24" text-anchor="end" fill="var(--muted)" font-size="10" class="mono">$200</text>
+
+          <line x1="40" y1="67.5" x2="580" y2="67.5" stroke="var(--border)" stroke-dasharray="2,2" opacity="0.4" />
+          <text x="35" y="71.5" text-anchor="end" fill="var(--muted)" font-size="10" class="mono">$150</text>
+
+          <line x1="40" y1="115" x2="580" y2="115" stroke="var(--border)" opacity="0.7" />
+          <text x="35" y="119" text-anchor="end" fill="var(--muted)" font-size="10" class="mono font-bold">$100</text>
+
+          <line x1="40" y1="162.5" x2="580" y2="162.5" stroke="var(--border)" stroke-dasharray="2,2" opacity="0.4" />
+          <text x="35" y="166.5" text-anchor="end" fill="var(--muted)" font-size="10" class="mono">$50</text>
+
+          <line x1="40" y1="210" x2="580" y2="210" stroke="var(--border)" opacity="0.4" />
+          <text x="35" y="214" text-anchor="end" fill="var(--muted)" font-size="10" class="mono">$0</text>
+        </g>
+
+        <!-- Baseline equity curve (0 bps fee) -->
+        <path id="svg-baseline-path" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.6" d="" />
+
+        <!-- Active equity curve -->
+        <path id="svg-active-path" fill="none" stroke="var(--accent)" stroke-width="2.5" d="" />
+
+        <!-- Interactive Crosshair & Tooltip -->
+        <g id="svg-interactive-group" opacity="0">
+          <line id="svg-crosshair" x1="0" y1="20" x2="0" y2="210" stroke="var(--ink)" stroke-dasharray="2,2" stroke-width="1" opacity="0.7" />
+          <circle id="svg-dot-active" r="4" fill="var(--accent)" stroke="var(--surface)" stroke-width="2" />
+          <g id="svg-tooltip-bg">
+            <rect id="svg-tooltip-rect" width="120" height="34" rx="4" fill="var(--surface)" stroke="var(--border)" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.15))" />
+            <text id="svg-tooltip-text1" x="0" y="0" fill="var(--ink)" font-size="10" font-weight="bold" class="mono"></text>
+            <text id="svg-tooltip-text2" x="0" y="0" fill="var(--muted)" font-size="10" class="mono"></text>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="widget-footnote">
+    <p>{uiText.traceableNote}</p>
+    <p>
+      <a href={experimentUrl} target="_blank" rel="noopener noreferrer">
+        {locale === "ar" ? "المستند الأصلي التجريبي في GitHub ←" : locale === "fr" ? "Voir l'expérience sur GitHub →" : "View original experiment record on GitHub →"}
+      </a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .fee-reality-widget {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    margin-block: 2rem;
+    box-shadow: var(--shadow);
+  }
+
+  .widget-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .badge-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .widget-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    background: rgba(12, 93, 82, 0.12);
+    color: var(--accent);
+  }
+
+  .widget-subtag {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .widget-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.35rem;
+  }
+
+  .widget-subtitle {
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+
+  .controls-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  @media (min-width: 768px) {
+    .controls-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .strategy-group {
+      grid-column: span 2;
+    }
+  }
+
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .control-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .pill-group {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .pill-btn {
+    padding: 0.45rem 0.85rem;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--ink);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .pill-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .pill-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-contrast);
+  }
+
+  .preset-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .preset-btn {
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--ink);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .preset-btn:hover {
+    background: var(--surface);
+    border-color: var(--accent);
+  }
+
+  .preset-btn.active {
+    background: var(--surface);
+    border-color: var(--accent);
+    color: var(--accent);
+    font-weight: 600;
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+
+  .sliders-group {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .sliders-group {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .slider-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+  }
+
+  .range-slider {
+    width: 100%;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .kpi-card {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .highlight-card {
+    border-color: var(--accent);
+    background: rgba(12, 93, 82, 0.04);
+  }
+
+  .kpi-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    line-height: 1.2;
+  }
+
+  .kpi-value {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .kpi-sub {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .kpi-status-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    width: fit-content;
+    margin-top: 0.15rem;
+  }
+
+  .status-neutral {
+    background: var(--border);
+    color: var(--ink);
+  }
+
+  .status-warning {
+    background: rgba(217, 182, 78, 0.25);
+    color: #946c00;
+  }
+
+  .status-danger {
+    background: rgba(220, 38, 38, 0.15);
+    color: #dc2626;
+  }
+
+  :root[data-theme="dark"] .status-warning {
+    color: #f0d98a;
+  }
+
+  :root[data-theme="dark"] .status-danger {
+    color: #fca5a5;
+  }
+
+  .chart-container {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .chart-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .chart-legend {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .legend-line {
+    display: inline-block;
+    width: 16px;
+    height: 3px;
+    border-radius: 2px;
+  }
+
+  .legend-line.baseline {
+    background: var(--muted);
+    opacity: 0.6;
+    border-top: 1px dashed var(--muted);
+  }
+
+  .legend-line.active {
+    background: var(--accent);
+  }
+
+  .svg-wrap {
+    width: 100%;
+    position: relative;
+    cursor: crosshair;
+  }
+
+  #equity-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .widget-footnote {
+    font-size: 0.8rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .widget-footnote a {
+    color: var(--link);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .widget-footnote a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<script>
+  function initFeeRealityWidget() {
+    const widgetEl = document.querySelector('.fee-reality-widget');
+    if (!widgetEl) return;
+
+    const rawData = widgetEl.getAttribute('data-experiments');
+    if (!rawData) return;
+    const data = JSON.parse(rawData);
+
+    // Elements
+    const pillBtns = widgetEl.querySelectorAll('.pill-btn');
+    const presetBtns = widgetEl.querySelectorAll('.preset-btn');
+    const feeSlider = widgetEl.querySelector('#fee-slider') as HTMLInputElement;
+    const slippageSlider = widgetEl.querySelector('#slippage-slider') as HTMLInputElement;
+    const feeValueEl = widgetEl.querySelector('#fee-value');
+    const slippageValueEl = widgetEl.querySelector('#slippage-value');
+
+    const kpiReqWinrate = widgetEl.querySelector('#kpi-req-winrate');
+    const kpiPayoff = widgetEl.querySelector('#kpi-payoff');
+    const kpiObsWinrate = widgetEl.querySelector('#kpi-obs-winrate');
+    const kpiSamples = widgetEl.querySelector('#kpi-samples');
+    const kpiNetEdge = widgetEl.querySelector('#kpi-net-edge');
+    const kpiStatus = widgetEl.querySelector('#kpi-status');
+    const kpiPf = widgetEl.querySelector('#kpi-pf');
+    const kpiPfDesc = widgetEl.querySelector('#kpi-pf-desc');
+
+    const svgBaselinePath = widgetEl.querySelector('#svg-baseline-path');
+    const svgActivePath = widgetEl.querySelector('#svg-active-path');
+    const svgEl = widgetEl.querySelector('#equity-svg') as SVGSVGElement | null;
+    const interactiveGroup = widgetEl.querySelector('#svg-interactive-group') as SVGGElement | null;
+    const crosshair = widgetEl.querySelector('#svg-crosshair');
+    const dotActive = widgetEl.querySelector('#svg-dot-active');
+    const tooltipRect = widgetEl.querySelector('#svg-tooltip-rect');
+    const tooltipText1 = widgetEl.querySelector('#svg-tooltip-text1');
+    const tooltipText2 = widgetEl.querySelector('#svg-tooltip-text2');
+
+    let currentFamily = 'turtle_breakout';
+    let currentFeeBps = 0;
+    let currentSlippageBps = 5;
+
+    let cachedActiveEquitySeries: number[] = [];
+
+    function calculateMetrics(familyKey: string, feeBps: number, slippageBps: number) {
+      const family = data.families[familyKey];
+      const b0 = family.inside_allowance_0bp;
+      const b1 = family.outside_allowance_120bp;
+
+      const c0 = (2 * b0.fee_bps + b0.slippage_bps) / 10000;
+      const c1 = (2 * b1.fee_bps + b1.slippage_bps) / 10000;
+      const c = (2 * feeBps + slippageBps) / 10000;
+
+      let t = (c - c0) / (c1 - c0);
+      if (t < 0) t = 0;
+
+      const payoff_b = Math.max(0.01, b0.payoff_b + t * (b1.payoff_b - b0.payoff_b));
+      const reqWinRate = 1 / (1 + payoff_b);
+      const obsWinRate = Math.max(0.01, b0.observed_win_rate + t * (b1.observed_win_rate - b0.observed_win_rate));
+      const netEdge = obsWinRate - reqWinRate;
+      const netPF = (obsWinRate * payoff_b) / Math.max(0.001, (1 - obsWinRate));
+
+      return {
+        family,
+        payoff_b,
+        reqWinRate,
+        obsWinRate,
+        netEdge,
+        grossPF: b0.gross_profit_factor,
+        netPF
+      };
+    }
+
+    function generateEquityCurve(obsWinRate: number, payoff_b: number): number[] {
+      const series = [100];
+      let equity = 100;
+
+      for (let k = 1; k <= 100; k++) {
+        // Deterministic pseudo-random sequence for trade wins based on prime seed
+        const winProb = ((k * 137 + 29) % 100) / 100.0;
+        const isWin = winProb < obsWinRate;
+
+        if (isWin) {
+          equity *= (1 + 0.015 * payoff_b);
+        } else {
+          equity *= (1 - 0.015);
+        }
+
+        if (equity < 0) equity = 0;
+        series.push(equity);
+      }
+      return series;
+    }
+
+    function buildSvgPath(series: number[]): string {
+      const xStart = 40;
+      const xEnd = 580;
+      const plotWidth = xEnd - xStart;
+
+      // Y scale: $0 at y=210, $100 at y=115, $200 at y=20
+      return series.map((val, idx) => {
+        const x = xStart + idx * (plotWidth / 100);
+        const clampedVal = Math.min(200, Math.max(0, val));
+        const y = 20 + 190 * (1 - clampedVal / 200);
+        return `${idx === 0 ? 'M' : 'L'} ${x.toFixed(1)},${y.toFixed(1)}`;
+      }).join(' ');
+    }
+
+    function updateWidget() {
+      const m = calculateMetrics(currentFamily, currentFeeBps, currentSlippageBps);
+
+      // Update Labels
+      if (feeValueEl) feeValueEl.textContent = `${currentFeeBps} bps (${(currentFeeBps / 100).toFixed(2)}%)`;
+      if (slippageValueEl) slippageValueEl.textContent = `${currentSlippageBps} bps (${(currentSlippageBps / 100).toFixed(2)}%)`;
+
+      if (kpiReqWinrate) kpiReqWinrate.textContent = `${(m.reqWinRate * 100).toFixed(2)}%`;
+      if (kpiPayoff) kpiPayoff.textContent = `Payoff b: ${m.payoff_b.toFixed(3)}`;
+      if (kpiObsWinrate) kpiObsWinrate.textContent = `${(m.obsWinRate * 100).toFixed(2)}%`;
+      if (kpiSamples) kpiSamples.textContent = `n = ${m.family.n_pooled.toLocaleString()} trades`;
+
+      const edgePct = (m.netEdge * 100).toFixed(2);
+      if (kpiNetEdge) {
+        kpiNetEdge.textContent = `${m.netEdge >= 0 ? '+' : ''}${edgePct}%`;
+      }
+
+      if (kpiStatus) {
+        if (m.netEdge >= 0) {
+          kpiStatus.textContent = 'Positive Edge';
+          kpiStatus.className = 'kpi-status-badge status-neutral';
+        } else if (m.netEdge >= -0.10) {
+          kpiStatus.textContent = 'Near Break-Even';
+          kpiStatus.className = 'kpi-status-badge status-warning';
+        } else {
+          kpiStatus.textContent = 'Heavy Fee Collapse';
+          kpiStatus.className = 'kpi-status-badge status-danger';
+        }
+      }
+
+      if (kpiPf) kpiPf.textContent = `${m.grossPF.toFixed(2)} → ${m.netPF.toFixed(2)}`;
+      if (kpiPfDesc) kpiPfDesc.textContent = `Gross PF: ${m.grossPF.toFixed(2)}`;
+
+      // Update SVG Charts
+      const baselineMetrics = calculateMetrics(currentFamily, 0, 5);
+      const baselineSeries = generateEquityCurve(baselineMetrics.obsWinRate, baselineMetrics.payoff_b);
+      const activeSeries = generateEquityCurve(m.obsWinRate, m.payoff_b);
+
+      cachedActiveEquitySeries = activeSeries;
+
+      if (svgBaselinePath) svgBaselinePath.setAttribute('d', buildSvgPath(baselineSeries));
+      if (svgActivePath) {
+        svgActivePath.setAttribute('d', buildSvgPath(activeSeries));
+        if (m.netEdge < -0.10) {
+          svgActivePath.setAttribute('stroke', '#dc2626');
+        } else if (m.netEdge < 0) {
+          svgActivePath.setAttribute('stroke', 'var(--gold-1)');
+        } else {
+          svgActivePath.setAttribute('stroke', 'var(--accent)');
+        }
+      }
+    }
+
+    // Event handlers
+    pillBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        pillBtns.forEach((b) => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        currentFamily = btn.getAttribute('data-family') || 'turtle_breakout';
+        updateWidget();
+      });
+    });
+
+    presetBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        presetBtns.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        currentFeeBps = parseInt(btn.getAttribute('data-fee') || '0', 10);
+        currentSlippageBps = parseInt(btn.getAttribute('data-slippage') || '5', 10);
+
+        if (feeSlider) feeSlider.value = currentFeeBps.toString();
+        if (slippageSlider) slippageSlider.value = currentSlippageBps.toString();
+
+        updateWidget();
+      });
+    });
+
+    if (feeSlider) {
+      feeSlider.addEventListener('input', (e) => {
+        currentFeeBps = parseInt((e.target as HTMLInputElement).value, 10);
+        presetBtns.forEach((b) => b.classList.remove('active'));
+        updateWidget();
+      });
+    }
+
+    if (slippageSlider) {
+      slippageSlider.addEventListener('input', (e) => {
+        currentSlippageBps = parseInt((e.target as HTMLInputElement).value, 10);
+        presetBtns.forEach((b) => b.classList.remove('active'));
+        updateWidget();
+      });
+    }
+
+    // SVG Chart hover / touch interactions
+    if (svgEl && interactiveGroup) {
+      const handlePointer = (evt: MouseEvent | TouchEvent) => {
+        if (!cachedActiveEquitySeries.length) return;
+        const rect = svgEl.getBoundingClientRect();
+        const clientX = 'touches' in evt ? evt.touches[0]?.clientX ?? 0 : evt.clientX;
+        const svgX = ((clientX - rect.left) / rect.width) * 600;
+
+        if (svgX < 40 || svgX > 580) {
+          interactiveGroup.setAttribute('opacity', '0');
+          return;
+        }
+
+        const tradeIdx = Math.min(100, Math.max(0, Math.round(((svgX - 40) / 540) * 100)));
+        const eqVal = cachedActiveEquitySeries[tradeIdx] ?? 100;
+
+        const posX = 40 + tradeIdx * (540 / 100);
+        const clampedVal = Math.min(200, Math.max(0, eqVal));
+        const posY = 20 + 190 * (1 - clampedVal / 200);
+
+        interactiveGroup.setAttribute('opacity', '1');
+        if (crosshair) {
+          crosshair.setAttribute('x1', posX.toString());
+          crosshair.setAttribute('x2', posX.toString());
+        }
+        if (dotActive) {
+          dotActive.setAttribute('cx', posX.toString());
+          dotActive.setAttribute('cy', posY.toString());
+        }
+
+        // Position tooltip box
+        const tooltipX = posX > 450 ? posX - 130 : posX + 10;
+        const tooltipY = posY > 150 ? posY - 40 : posY + 10;
+
+        if (tooltipRect) {
+          tooltipRect.setAttribute('x', tooltipX.toString());
+          tooltipRect.setAttribute('y', tooltipY.toString());
+        }
+        if (tooltipText1) {
+          tooltipText1.setAttribute('x', (tooltipX + 8).toString());
+          tooltipText1.setAttribute('y', (tooltipY + 14).toString());
+          tooltipText1.textContent = `Trade #${tradeIdx}`;
+        }
+        if (tooltipText2) {
+          tooltipText2.setAttribute('x', (tooltipX + 8).toString());
+          tooltipText2.setAttribute('y', (tooltipY + 28).toString());
+          tooltipText2.textContent = `Equity: $${eqVal.toFixed(2)}`;
+        }
+      };
+
+      svgEl.addEventListener('mousemove', handlePointer);
+      svgEl.addEventListener('mouseleave', () => interactiveGroup.setAttribute('opacity', '0'));
+      svgEl.addEventListener('touchmove', handlePointer);
+      svgEl.addEventListener('touchend', () => interactiveGroup.setAttribute('opacity', '0'));
+    }
+
+    // Initial render
+    updateWidget();
+  }
+
+  // Run on DOM load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFeeRealityWidget);
+  } else {
+    initFeeRealityWidget();
+  }
+</script>
