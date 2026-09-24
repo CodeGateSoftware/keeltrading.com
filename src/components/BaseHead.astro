@@ -28,6 +28,22 @@ const analyticsToken = import.meta.env.PUBLIC_CF_ANALYTICS_TOKEN;
 /** Google Search Console verification token (URL-prefix method, #61); the
     Domain-property TXT method needs no code. Tokens are public by design. */
 const gscVerification = import.meta.env.PUBLIC_GSC_VERIFICATION_TOKEN;
+
+/** Organization JSON-LD graph (#15) — entity graph with sameAs social profiles. */
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "keel",
+  "url": SITE,
+  "logo": new URL("/og.png", SITE).href,
+  "sameAs": [
+    "https://github.com/CodeGateSoftware",
+    "https://x.com/keeltrading",
+    "https://t.me/keeltrading"
+  ]
+};
+
+const allJsonLd = [organizationJsonLd, ...jsonLd];
 ---
 
 <meta charset="utf-8" />
@@ -72,7 +88,7 @@ const gscVerification = import.meta.env.PUBLIC_GSC_VERIFICATION_TOKEN;
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={new URL("/og.png", SITE).href} />
 
-{jsonLd.map((entry) => (
+{allJsonLd.map((entry) => (
   <script type="application/ld+json" set:html={JSON.stringify(entry)} is:inline />
 ))}
 
