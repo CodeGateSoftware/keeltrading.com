@@ -99,6 +99,26 @@ export const ui = {
         "Downloads link directly to GitHub assets. This site never mirrors binaries.",
       copiedAtBuild: (date: string) => `Version data fetched from GitHub at build time, ${date}.`,
     },
+    feeReality: {
+      title: "The Fee Reality",
+      subtitle:
+        "Slide fees and spread to watch reference strategy families collapse when priced honestly. Rendered directly from keel's recorded experiment numbers.",
+      feeLabel: "Fee per leg (bps / %)",
+      slippageLabel: "Spread & slippage (bps)",
+      preset0: "0 bps (Fee-Free Allowance)",
+      preset40: "40 bps (Maker Fee)",
+      preset120: "120 bps (Coinbase Taker)",
+      strategyLabel: "Strategy Family",
+      turtle: "Turtle Breakout (Trend)",
+      rsi: "RSI Mean Reversion",
+      pullback: "Pullback Continuation",
+      reqBreakEven: "Required Break-Even Win Rate",
+      obsWinRate: "Observed Win Rate",
+      netEdge: "Net Edge / Fee Drag",
+      pfLabel: "Profit Factor (Gross → Net)",
+      traceableNote:
+        "Every displayed number is verifiable in keel's repo (docs/experiments/2026-08-21-rule-family-significance.md). No competitor names; generic TA rule families only.",
+    },
     footer: {
       disclaimerTitle: "Standing disclaimers",
       disclaimer:
@@ -212,6 +232,26 @@ export const ui = {
         "تشير روابط التنزيل مباشرةً إلى ملفات GitHub. وهذا الموقع لا ينسخ الملفات التنفيذية أبدًا.",
       copiedAtBuild: (date: string) => `جُلبت بيانات الإصدار من GitHub وقت البناء، في ${date}.`,
     },
+    feeReality: {
+      title: "حقيقة الرسوم وتأثيرها الحقيقي",
+      subtitle:
+        "حرّك الرسوم والفروق السعرية لشاهد كيف تنهار عائلات الاستراتيجيات المرجعية عند تقييمها بتكاليف واقعية. تُعرض البيانات مباشرةً من أرقام تجارب «كيل» المسجّلة.",
+      feeLabel: "الرسوم لكل صفقة (نقطة أساس / %)",
+      slippageLabel: "الفارق السعري والانزلاق (نقطة أساس)",
+      preset0: "0 نقطة أساس (السماح المجاني من الرسوم)",
+      preset40: "40 نقطة أساس (رسوم صانع السوق)",
+      preset120: "120 نقطة أساس (رسوم آخذ السوق Coinbase)",
+      strategyLabel: "عائلة الاستراتيجية",
+      turtle: "اختراق السلاحف (اتجاهي)",
+      rsi: "الارتداد للمتوسط عبر RSI",
+      pullback: "استمرار التراجع (Pullback)",
+      reqBreakEven: "نسبة الفوز المطلوبة للتعادل",
+      obsWinRate: "نسبة الفوز الملاحظة",
+      netEdge: "الميزة الصافية / سحب الرسوم",
+      pfLabel: "عامل الربحية (الإجمالي ← الصافي)",
+      traceableNote:
+        "كل رقم معروض قابل للتحقق منه في مستودع «كيل» (docs/experiments/2026-08-21-rule-family-significance.md). لا توجد أسماء منافسين؛ عائلات قواعد تحليل فني عامة فقط.",
+    },
     footer: {
       disclaimerTitle: "تنبيهاتٌ دائمة",
       disclaimer:
@@ -317,6 +357,26 @@ export const ui = {
       neverMirrored:
         "Les téléchargements pointent directement vers les fichiers hébergés par GitHub. Ce site n'héberge aucun binaire.",
       copiedAtBuild: (date: string) => `Données de version récupérées depuis GitHub au moment du build, le ${date}.`,
+    },
+    feeReality: {
+      title: "La Réalité des Frais",
+      subtitle:
+        "Ajustez les frais et le spread pour observer l'effondrement des familles de stratégies de référence lorsqu'elles sont évaluées honnêtement. Affiché directement depuis les chiffres d'expériences de keel.",
+      feeLabel: "Frais par ordre (bps / %)",
+      slippageLabel: "Spread & glissement (bps)",
+      preset0: "0 bps (Indemnité sans frais)",
+      preset40: "40 bps (Frais Maker)",
+      preset120: "120 bps (Frais Taker Coinbase)",
+      strategyLabel: "Famille de stratégie",
+      turtle: "Cassure Turtle (Tendance)",
+      rsi: "Retour à la moyenne RSI",
+      pullback: "Continuation de repli (Pullback)",
+      reqBreakEven: "Taux de réussite requis (Équilibre)",
+      obsWinRate: "Taux de réussite observé",
+      netEdge: "Avantage net / Impact des frais",
+      pfLabel: "Facteur de profit (Brut → Net)",
+      traceableNote:
+        "Chaque chiffre affiché est vérifiable dans le dépôt keel (docs/experiments/2026-08-21-rule-family-significance.md). Aucun nom de concurrent ; familles de règles TA génériques uniquement.",
     },
     footer: {
       disclaimerTitle: "Avertissements permanents",

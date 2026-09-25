@@ -1,6 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
 import HonestBox from "../HonestBox.astro";
+import FeeRealityWidget from "../FeeRealityWidget.astro";
 import ForOperators from "../ForOperators.astro";
 import { home } from "../../i18n/pages/home";
 import {
@@ -116,6 +117,8 @@ const fiqhHref =
       paragraphs={c.honest.body}
       links={honestLinks}
     />
+
+    <FeeRealityWidget locale={locale} />
 
     <section aria-label={c.cards[0]!.title}>
       <ul class="card-grid">
